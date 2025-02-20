@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.3.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Lib.Harmony.2.3.5\lib\net48\0Harmony.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
@@ -58,23 +59,54 @@
       <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompProperties_AbilityLightningStrike.cs" />
     <Compile Include="CompProperties_BindDead.cs" />
+    <Compile Include="CompProperties_ChainLightning.cs" />
+    <Compile Include="CompProperties_Fly.cs" />
+    <Compile Include="CompProperties_LightningRing.cs" />
+    <Compile Include="CompProperties_MagicalTome.cs" />
+    <Compile Include="CompProperties_WeaponThrow.cs" />
+    <Compile Include="DamageDef_Tranquilizer.cs" />
+    <Compile Include="DamageWorker_Tranquilizer.cs" />
     <Compile Include="DraftingUtility.cs" />
     <Compile Include="FormationUtils.cs" />
     <Compile Include="Gizmo_FormationControl.cs" />
+    <Compile Include="HediffCompProperties_MagicTattooBase.cs" />
+    <Compile Include="HediffCompProperties_MagicTattooGrantAbility.cs" />
+    <Compile Include="HediffComp_MagicTattooBase.cs" />
+    <Compile Include="HediffComp_MagicTattooGrantAbility.cs" />
     <Compile Include="Hediff_UndeadMaster.cs" />
     <Compile Include="ITab_UndeadMaster.cs" />
+    <Compile Include="JobDriver_BoidFormationFollow.cs" />
     <Compile Include="JobDriver_FormationFollow.cs" />
+    <Compile Include="JobGiver_BoidFormationFollow.cs" />
     <Compile Include="JobGiver_SummonedCreatureFightEnemy.cs" />
     <Compile Include="JobGiver_SummonedCreatureFollowMaster.cs" />
     <Compile Include="JobGiver_SummonedCreatureFormationFollow.cs" />
+    <Compile Include="LightningRingBehavior.cs" />
+    <Compile Include="LightningRingConfig.cs" />
+    <Compile Include="LightningStrike.cs" />
+    <Compile Include="MagicTattooRecipeDef.cs" />
+    <Compile Include="Projectile_Delegate.cs" />
+    <Compile Include="Projectile_MjolnirRebound.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeWorker_BaseAddMagicTattoo.cs" />
+    <Compile Include="RowLayoutManager.cs" />
+    <Compile Include="StaggeredChainLightning.cs" />
     <Compile Include="SummonPatches.cs" />
     <Compile Include="ThinkNode_ConditionalHasMaster.cs" />
     <Compile Include="ThinkNode_ConditionalHasNoMaster.cs" />
@@ -84,7 +116,10 @@
     <Compile Include="ThinkNode_ConditionalSelfOrMasterHasTarget.cs" />
     <Compile Include="ThinkNode_ConditionalShouldFollowFormation.cs" />
     <Compile Include="ThorDefOf.cs" />
+    <Compile Include="Ticker.cs" />
+    <Compile Include="TrackedMote.cs" />
     <Compile Include="UndeadHediffDef.cs" />
+    <Compile Include="VisualLightningStrike.cs" />
     <Compile Include="WorldComponent_DraftableCreatures.cs" />
   </ItemGroup>
   <ItemGroup>
