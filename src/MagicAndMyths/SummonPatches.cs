@@ -122,7 +122,7 @@ namespace MagicAndMyths
 
             public static Dictionary<HediffDef, ThinkTreeDef> ThinkTreeMap = new Dictionary<HediffDef, ThinkTreeDef>()
             {
-                { ThorDefOf.DeathKnight_Undead , ThorDefOf.DeathKnight_SummonedCreature}
+                { MagicAndMythDefOf.DeathKnight_Undead , MagicAndMythDefOf.DeathKnight_SummonedCreature}
             };
 
             private static bool HandleThinkTreePatch(Pawn_Thinker __instance, ref ThinkTreeDef __result, bool isConstant)
@@ -183,8 +183,8 @@ namespace MagicAndMyths
 
         public static bool TryMakeUndeadSummon(this Pawn pawn, Pawn Master)
         {
-            Hediff_UndeadMaster master = (Hediff_UndeadMaster)Master.health.GetOrAddHediff(ThorDefOf.DeathKnight_UndeadMaster);
-            Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(ThorDefOf.DeathKnight_Undead);
+            Hediff_UndeadMaster master = (Hediff_UndeadMaster)Master.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
+            Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
             if (master != null && undeadSummon != null)
             {
                 if (undeadSummon.Master != null)
@@ -225,7 +225,7 @@ namespace MagicAndMyths
 
         public static Pawn GetMaster(this Pawn pawn)
         {
-            Hediff_Undead shikigami = (Hediff_Undead)pawn.health.hediffSet.GetFirstHediffOfDef(ThorDefOf.DeathKnight_Undead);
+            Hediff_Undead shikigami = (Hediff_Undead)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_Undead);
             if (shikigami != null)
             {
                 return shikigami.Master;
@@ -235,12 +235,12 @@ namespace MagicAndMyths
         }
         public static Hediff_UndeadMaster GetUndeadMaster(this Pawn pawn)
         {
-            Hediff_UndeadMaster undeadMaster = (Hediff_UndeadMaster)pawn.health.hediffSet.GetFirstHediffOfDef(ThorDefOf.DeathKnight_UndeadMaster);
+            Hediff_UndeadMaster undeadMaster = (Hediff_UndeadMaster)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster);
             return undeadMaster;
         }
         public static bool IsMasterOf(this Pawn master, Pawn pawn)
         {
-            Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(ThorDefOf.DeathKnight_Undead);
+            Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
             if (master != null && undeadSummon != null)
             {
                 if (undeadSummon.Master != null)

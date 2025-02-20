@@ -31,7 +31,7 @@
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <comps>
-      <li Class="Thor.CompProperties_BoundPawn">
+      <li Class="Materia.CompProperties_BoundPawn">
         <summonedPawnKind>Mercenary_Gunner_Acidifier</summonedPawnKind>
       </li>
     </comps>

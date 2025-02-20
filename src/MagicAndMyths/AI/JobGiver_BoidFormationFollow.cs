@@ -29,7 +29,7 @@ namespace MagicAndMyths
                 return null;
             }
 
-            Hediff_UndeadMaster undeadMaster = followee.health.hediffSet.GetFirstHediffOfDef(ThorDefOf.DeathKnight_UndeadMaster) as Hediff_UndeadMaster;
+            Hediff_UndeadMaster undeadMaster = followee.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster) as Hediff_UndeadMaster;
             if (undeadMaster == null)
             {
                 return null;
@@ -41,7 +41,7 @@ namespace MagicAndMyths
                 return null;
             }
 
-            Job job = JobMaker.MakeJob(ThorDefOf.Thor_BoidFormationFollow, followee);
+            Job job = JobMaker.MakeJob(MagicAndMythDefOf.Thor_BoidFormationFollow, followee);
             job.expiryInterval = 100;
             job.followRadius = undeadMaster.FollowDistance;
             job.SetTarget(TargetIndex.A, followee);

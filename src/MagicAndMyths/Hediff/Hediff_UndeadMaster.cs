@@ -96,7 +96,7 @@ namespace MagicAndMyths
                 }
 
 
-                Hediff_Undead shikigami = (Hediff_Undead)summonedPawn.health.GetOrAddHediff(ThorDefOf.DeathKnight_Undead);
+                Hediff_Undead shikigami = (Hediff_Undead)summonedPawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
                 shikigami.SetMaster(pawn);
                 if (summonedPawn.abilities == null)
                 {
@@ -165,7 +165,7 @@ namespace MagicAndMyths
             }
 
             // Remove the Shikigami hediff
-            Hediff shikigamiHediff = undead.health.hediffSet.GetFirstHediffOfDef(ThorDefOf.DeathKnight_Undead);
+            Hediff shikigamiHediff = undead.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_Undead);
             if (shikigamiHediff != null)
             {
                 undead.health.RemoveHediff(shikigamiHediff);

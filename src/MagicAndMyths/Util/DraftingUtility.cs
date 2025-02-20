@@ -17,7 +17,24 @@ namespace MagicAndMyths
             }
         }
 
+        public static void DropAndEquip(this Pawn_EquipmentTracker equipment, ThingWithComps newEquipment)
+        {
+            if (equipment?.pawn == null || newEquipment == null) return;
 
+            // Check for existing weapon in the same equipment slot
+            var existingEquipment = equipment.AllEquipmentListForReading
+                .FirstOrDefault(x => x.def.equipmentType == newEquipment.def.equipmentType);
+
+            if (existingEquipment != null)
+            {
+                // Drop the existing equipment near the pawn
+                equipment.Remove(existingEquipment);
+                GenPlace.TryPlaceThing(existingEquipment, equipment.pawn.Position, equipment.pawn.Map, ThingPlaceMode.Near);
+            }
+
+            // Equip the new weapon
+            equipment.AddEquipment(newEquipment);
+        }
         public static void RegisterDraftableCreature(Pawn pawn)
         {
             if (DraftManager != null)

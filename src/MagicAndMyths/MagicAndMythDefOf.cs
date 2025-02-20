@@ -4,7 +4,7 @@ using Verse;
 namespace MagicAndMyths
 {
     [DefOf]
-    public static class ThorDefOf
+    public static class MagicAndMythDefOf
     {
         public static ThingDef Thor_PawnFlyer;
         public static ThingDef Thor_MjolnirProjectile;

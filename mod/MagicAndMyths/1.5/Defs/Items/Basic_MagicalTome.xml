@@ -60,7 +60,7 @@
       <developmentalStageFilter>Child, Adult</developmentalStageFilter>
     </apparel>
     <comps>
-      <li Class="Thor.CompProperties_MagicalTome">
+      <li Class="Materia.CompProperties_MagicalTome">
         <abilityDefs>
           <li>Thor_Fly</li>
         </abilityDefs>

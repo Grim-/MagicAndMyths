@@ -6,7 +6,7 @@ namespace MagicAndMyths
 {
     public class JobDriver_FormationFollow : JobDriver_FollowClose
     {
-        private Hediff_UndeadMaster Hediff_UndeadMaster => (Hediff_UndeadMaster)this.TargetPawnA.health.GetOrAddHediff(ThorDefOf.DeathKnight_UndeadMaster);
+        private Hediff_UndeadMaster Hediff_UndeadMaster => (Hediff_UndeadMaster)this.TargetPawnA.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
 
         private List<Pawn> GetAllActiveShadows()
         {

@@ -19,7 +19,7 @@ namespace MagicAndMyths
                 return false;
             }
 
-            Hediff_Undead undeadMaster = (Hediff_Undead)pawn.health.hediffSet.GetFirstHediffOfDef(ThorDefOf.DeathKnight_Undead);
+            Hediff_Undead undeadMaster = (Hediff_Undead)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_Undead);
             return undeadMaster != null && undeadMaster.CalledToArms;
         }
     }

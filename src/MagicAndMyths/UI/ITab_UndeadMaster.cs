@@ -25,14 +25,14 @@ namespace MagicAndMyths
             {
                 if (_UndeadMaster == null)
                 {
-                    _UndeadMaster = this.SelPawn.health.hediffSet.GetFirstHediffOfDef(ThorDefOf.DeathKnight_UndeadMaster) as Hediff_UndeadMaster;
+                    _UndeadMaster = this.SelPawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster) as Hediff_UndeadMaster;
                 }
 
                 return _UndeadMaster;
             }
         }
 
-        public override bool IsVisible => base.IsVisible && this.SelPawn != null && this.SelPawn.health.hediffSet.HasHediff(ThorDefOf.DeathKnight_UndeadMaster);
+        public override bool IsVisible => base.IsVisible && this.SelPawn != null && this.SelPawn.health.hediffSet.HasHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
 
 
         public ITab_UndeadMaster()

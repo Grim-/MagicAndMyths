@@ -8,7 +8,7 @@ namespace MagicAndMyths
     public class JobDriver_BoidFormationFollow : JobDriver_FollowClose
     {
         private Hediff_UndeadMaster UndeadMaster =>
-            (Hediff_UndeadMaster)this.TargetPawnA.health.hediffSet.GetFirstHediffOfDef(ThorDefOf.DeathKnight_UndeadMaster);
+            (Hediff_UndeadMaster)this.TargetPawnA.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster);
 
         private const float SEPARATION_WEIGHT = 1.5f;
         private const float COHESION_WEIGHT = 1.0f;

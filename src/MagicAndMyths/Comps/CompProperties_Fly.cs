@@ -21,7 +21,7 @@ namespace MagicAndMyths
 
 
             Map map = parent.pawn.Map;
-            PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(ThorDefOf.Thor_PawnFlyer, parent.pawn, target.Cell, null, null);
+            PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.Thor_PawnFlyer, parent.pawn, target.Cell, null, null);
             GenSpawn.Spawn(pawnFlyer, parent.pawn.Position, map);
         }
     }
