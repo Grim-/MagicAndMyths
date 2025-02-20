@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <JobDef>
+    <defName>Thor_FormationFollow</defName>
+    <driverClass>Thor.JobDriver_FormationFollow</driverClass>
+    <reportString>following in formation.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+
+    <JobDef>
+      <defName>Thor_BoidFormationFollow</defName>
+      <driverClass>Thor.JobDriver_BoidFormationFollow</driverClass>
+      <reportString>following in formation.</reportString>
+      <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    </JobDef>
+</Defs>
