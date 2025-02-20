@@ -267,10 +267,21 @@ namespace MagicAndMyths
                 HealthUtility.AdjustSeverity(pawn, hediff.def, healAmount);
             }
         }
-
         public static bool IsControlledSummon(this Pawn pawn)
         {
             return pawn.health.hediffSet.HasHediff<Hediff_Undead>();
+        }
+        public static bool IsControlledSummon(this Pawn pawn, out Hediff_Undead undead)
+        {
+            undead = null;
+
+            if (pawn.health.hediffSet.HasHediff<Hediff_Undead>())
+            {
+                undead = pawn.health.hediffSet.GetFirstHediff<Hediff_Undead>();
+                return true;
+            }
+
+            return false;
         }
     }
 }

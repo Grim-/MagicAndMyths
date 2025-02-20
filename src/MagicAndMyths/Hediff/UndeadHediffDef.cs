@@ -25,7 +25,8 @@ namespace MagicAndMyths
         public Pawn Master => referencedPawn;
         public override string Label => base.Label;
 
-        public bool CalledToArms = false;
+        public bool CalledToArms = true;
+        public bool AllowColonistBehaviour = false;
 
         public void SetMaster(Pawn pawn)
         {
@@ -71,6 +72,7 @@ namespace MagicAndMyths
             base.ExposeData();
             Scribe_References.Look(ref referencedPawn, "referencedPawn");
             Scribe_Values.Look(ref CalledToArms, "calledToArms");
+            Scribe_Values.Look(ref AllowColonistBehaviour, "allowColonistBehaviour");
             DraftingUtility.MakeDraftable(pawn);
         }
     }

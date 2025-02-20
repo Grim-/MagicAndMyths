@@ -73,6 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\ThinkNode_ConditionalIsColonistBehaviourAllowed.cs" />
+    <Compile Include="AI\ThinkNode_ConditionalIsInFormation.cs" />
     <Compile Include="Comps\High Tek Bow\BowModeDef.cs" />
     <Compile Include="Comps\High Tek Bow\BowModeWorker.cs" />
     <Compile Include="Comps\High Tek Bow\BowModeWorker_Beam.cs" />

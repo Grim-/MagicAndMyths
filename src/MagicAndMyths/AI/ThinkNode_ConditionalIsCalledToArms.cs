@@ -7,20 +7,12 @@ namespace MagicAndMyths
     {
         protected override bool Satisfied(Pawn pawn)
         {
-            if (pawn == null || !pawn.IsControlledSummon())
+            if (pawn == null || !pawn.IsControlledSummon(out Hediff_Undead undead) || undead.Master == null)
             {
                 return false;
             }
 
-            Pawn MasterPawn = pawn.GetMaster();
-
-            if (MasterPawn == null)
-            {
-                return false;
-            }
-
-            Hediff_Undead undeadMaster = (Hediff_Undead)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_Undead);
-            return undeadMaster != null && undeadMaster.CalledToArms;
+            return undead.CalledToArms;
         }
     }
 }

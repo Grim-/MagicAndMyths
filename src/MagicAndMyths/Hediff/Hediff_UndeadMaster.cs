@@ -69,6 +69,20 @@ namespace MagicAndMyths
             return activeUndead.FirstOrDefault(p => p == absorbedPawn);
         }
 
+
+        public bool UnSummonAll()
+        {
+            foreach (var creature in GetActiveCreatures())
+            {
+                if (!UnsummonCreature(creature))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public bool UnsummonCreature(Pawn pawn)
         {
             if (activeUndead.Remove(pawn))
@@ -83,12 +97,59 @@ namespace MagicAndMyths
             return false;
         }
 
-        public bool SummonCreature(Pawn absorbedPawn)
+        public void ToggleALLCallToArms()
         {
-            if (storedUndead.Contains(absorbedPawn))
+            foreach (var creature in GetActiveCreatures())
+            {
+                if (creature.IsControlledSummon(out Hediff_Undead undead))
+                {
+                    undead.CalledToArms = !undead.CalledToArms;
+                }
+            }
+        }
+        public void ToggleALLAllowColonistBehaviour()
+        {
+            foreach (var creature in GetActiveCreatures())
+            {
+                if (creature.IsControlledSummon(out Hediff_Undead undead))
+                {
+                    undead.AllowColonistBehaviour = !undead.AllowColonistBehaviour;
+                }
+            }
+        }
+
+        public bool SummonCreatureInFormation(Pawn absorbedPawn)
+        {
+            if (!HasAbsorbedCreature(absorbedPawn))
+            {
+                return false;
+            }
+
+            IntVec3 position = FormationUtils.GetFormationPosition(
+                FormationType,
+                pawn.Position.ToVector3Shifted(),
+                pawn.Rotation,
+                storedUndead.IndexOf(absorbedPawn),
+                storedUndead.Count);
+
+            if (SummonCreature(absorbedPawn, position))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool SummonCreature(Pawn absorbedPawn, IntVec3 Position)
+        {
+            if (HasAbsorbedCreature(absorbedPawn))
             {
                 Pawn summonedPawn = absorbedPawn;
-                GenSpawn.Spawn(summonedPawn, pawn.Position, pawn.Map);
+
+                if (!summonedPawn.Spawned)
+                {
+                    GenSpawn.Spawn(summonedPawn, Position, pawn.Map);
+                }
+
 
                 if (summonedPawn.Faction != Faction.OfPlayer)
                 {
@@ -146,6 +207,21 @@ namespace MagicAndMyths
             }
         }
 
+
+        public IntVec3 GetFormationPositionFor(Pawn Pawn)
+        {
+            if (activeUndead.Contains(Pawn))
+            {
+                return FormationUtils.GetFormationPosition(
+                    FormationType,
+                    pawn.Position.ToVector3(),
+                    pawn.Rotation,
+                    activeUndead.IndexOf(Pawn),
+                    activeUndead.Count);
+            }
+
+            return IntVec3.Invalid;
+        }
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
