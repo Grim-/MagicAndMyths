@@ -11,7 +11,7 @@
     <isBad>false</isBad>
     <duplicationAllowed>false</duplicationAllowed>
     <comps>
-      <li Class="Thor.HediffCompProperties_BoundWeapon">
+      <li Class="MagicAndMyths.HediffCompProperties_BoundWeapon">
       </li>
     </comps>
   </HediffDef>

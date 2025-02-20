@@ -85,7 +85,7 @@
       </li>
     </tools>
     <comps>
-      <li Class="Thor.CompProperties_BowModeSwitcher">
+      <li Class="MagicAndMyths.CompProperties_BowModeSwitcher">
         <defaultModeDef>StandardArrow</defaultModeDef>
         <allowedModeDefs>
           <li>StandardArrow</li>
@@ -116,7 +116,7 @@
     <drawOffscreen>true</drawOffscreen>
     <graphicData>
       <texPath>Things/Mote/GraserBeam</texPath>
-      <graphicClass>Thor.Graphic_MoteWithAgeSecsCustom</graphicClass>
+      <graphicClass>MagicAndMyths.Graphic_MoteWithAgeSecsCustom</graphicClass>
       <shaderType>MoteBeam</shaderType>
       <shaderParameters>
         <_ExtraTexA>/noise/Noise84</_ExtraTexA>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <Thor.BowModeDef>
+  <MagicAndMyths.BowModeDef>
     <defName>FireArrow</defName>
     <label>fire arrows</label>
     <description>Specialized arrows that ignite on impact, setting targets ablaze.</description>
@@ -9,7 +9,7 @@
     <warmupTime>1.3</warmupTime>
     <range>33</range>
     <requireLineOfSight>true</requireLineOfSight>
-  </Thor.BowModeDef>
+  </MagicAndMyths.BowModeDef>
 
   <!-- Fire Arrow -->
   <ThingDef ParentName="BaseIncendiaryProjectile">

@@ -13,7 +13,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="Thor.CompProperties_WeaponThrow">
+      <li Class="MagicAndMyths.CompProperties_WeaponThrow">
       </li>
     </comps>
   </AbilityDef>

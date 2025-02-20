@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <!-- Ammo Type Definitions -->
-  <Thor.BowModeDef>
+  <MagicAndMyths.BowModeDef>
     <defName>StandardArrow</defName>
     <label>standard arrows</label>
     <description>Standard high-tech arrows with balanced damage and range.</description>
@@ -10,7 +10,7 @@
     <warmupTime>1.3</warmupTime>
     <range>33</range>
     <requireLineOfSight>true</requireLineOfSight>
-  </Thor.BowModeDef>
+  </MagicAndMyths.BowModeDef>
 
   <!-- Standard Arrow -->
   <ThingDef ParentName="BaseBullet">

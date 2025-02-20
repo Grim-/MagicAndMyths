@@ -3,7 +3,7 @@
   <Operation Class="PatchOperationAdd">
     <xpath>/Defs/ThingDef[@Name="BasePawn"]/inspectorTabs</xpath>
     <value>
-      <li>Thor.ITab_UndeadMaster</li>
+      <li>MagicAndMyths.ITab_UndeadMaster</li>
     </value>
   </Operation>
 </Patch>

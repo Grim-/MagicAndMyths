@@ -61,7 +61,7 @@
       </li>
     </tools>
     <comps>
-      <li Class="Thor.CompProperties_BiocodableBinding">
+      <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
         <biocodeOnEquip>true</biocodeOnEquip>
         <requiredSkills>
           <!-- <li>
@@ -72,7 +72,7 @@
         <requiredTraits>
         </requiredTraits>
       </li>
-      <li Class="Thor.CompProperties_MateriaComp">
+      <li MayRequire="emo.com.materia" Class="Materia.CompProperties_MateriaComp">
         <materiaSlots>
           <li>
             <slotType>PurpleMateria</slotType>

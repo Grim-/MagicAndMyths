@@ -13,7 +13,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="Thor.CompProperties_ChainLightning">
+      <li Class="MagicAndMyths.CompProperties_ChainLightning">
       </li>
     </comps>
   </AbilityDef>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <Thor.DamageDef_Tranquilizer>
+  <MagicAndMyths.DamageDef_Tranquilizer>
     <defName>TranquilizerDamage</defName>
     <label>tranquilize</label>
-    <workerClass>Thor.DamageWorker_Tranquilizer</workerClass>
+    <workerClass>MagicAndMyths.DamageWorker_Tranquilizer</workerClass>
     <externalViolence>true</externalViolence>
     <deathMessage>{0} has been tranquilized to death.</deathMessage>
     <hediff>Cut</hediff>
@@ -17,5 +17,5 @@
     <buildingDamageFactor>0.3</buildingDamageFactor>
     <isRanged>true</isRanged>
     <makesBlood>true</makesBlood>
-  </Thor.DamageDef_Tranquilizer>
+  </MagicAndMyths.DamageDef_Tranquilizer>
 </Defs>

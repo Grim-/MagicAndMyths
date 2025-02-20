@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <Thor.UndeadHediffDef>
+  <MagicAndMyths.UndeadHediffDef>
     <defName>DeathKnight_Undead</defName>
     <label>undead</label>
     <description>This pawn is undead.</description>
-    <hediffClass>Thor.Hediff_Undead</hediffClass>
+    <hediffClass>MagicAndMyths.Hediff_Undead</hediffClass>
     <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1.0</maxSeverity>
@@ -19,9 +19,8 @@
       <li>Comfort</li>
       <li>RoomSize</li>
       <li>Outdoors</li>
-      <li>Chemical</li>
       <li>Learning</li>
       <li>Play</li>
     </disablesNeeds>
-  </Thor.UndeadHediffDef>
+  </MagicAndMyths.UndeadHediffDef>
 </Defs>

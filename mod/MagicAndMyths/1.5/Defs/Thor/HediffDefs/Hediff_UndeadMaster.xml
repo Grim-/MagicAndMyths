@@ -4,7 +4,7 @@
     <defName>DeathKnight_UndeadMaster</defName>
     <label>undead master</label>
     <description>This pawn is a master of the undead.</description>
-    <hediffClass>Thor.Hediff_UndeadMaster</hediffClass>
+    <hediffClass>MagicAndMyths.Hediff_UndeadMaster</hediffClass>
     <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1.0</maxSeverity>

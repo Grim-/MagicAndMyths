@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <Thor.BowModeDef>
+  <MagicAndMyths.BowModeDef>
     <defName>TranquilizerArrow</defName>
     <label>tranquilizer arrows</label>
     <description>Specialized arrows with sedative-filled tips that reduce consciousness on impact.</description>
@@ -9,7 +9,7 @@
     <warmupTime>1.3</warmupTime>
     <range>33</range>
     <requireLineOfSight>true</requireLineOfSight>
-  </Thor.BowModeDef>
+  </MagicAndMyths.BowModeDef>
 
   <!-- Tranquilizer Arrow Projectile Definition -->
   <ThingDef ParentName="BaseBullet">

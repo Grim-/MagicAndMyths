@@ -3,10 +3,10 @@
   <ThingDef ParentName="BaseBullet">
     <defName>Thor_MjolnirProjectile</defName>
     <label>Fire Arrow</label>
-    <thingClass>Thor.Projectile_MjolnirRebound</thingClass>
+    <thingClass>MagicAndMyths.Projectile_MjolnirRebound</thingClass>
     <graphicData>
       <texPath>Mjolnir</texPath>
-      <graphicClass>Thor.Graphic_SpinningProjectile</graphicClass>
+      <graphicClass>MagicAndMyths.Graphic_SpinningProjectile</graphicClass>
       <shaderType>TransparentPostLight</shaderType>
       <drawSize>1</drawSize>
       <drawRotated>true</drawRotated>
@@ -20,7 +20,7 @@
 
   <ThingDef>
     <defName>ChainLightningVisual</defName>
-    <thingClass>Thor.ChainLightningVisualEffect</thingClass>
+    <thingClass>MagicAndMyths.ChainLightningVisualEffect</thingClass>
     <label>chain lightning effect</label>
     <category>Ethereal</category>
     <tickerType>Normal</tickerType>

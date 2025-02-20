@@ -3,7 +3,7 @@
   <GeneDef>
     <defName>Gene_AsgardianThor</defName>
     <label>Asgardian (Thor)</label>
-    <description>Carriers of this gene should they be worthy shall have the power of Thor.</description>
+    <description>Carriers of this gene should they be worthy shall have the power of MagicAndMyths.</description>
     <resourceGizmoThresholds>
       <li>0.25</li>
       <li>0.5</li>
@@ -16,7 +16,7 @@
     <displayCategory>Hemogen</displayCategory>
     <displayOrderInCategory>-2</displayOrderInCategory>
     <customEffectDescriptions>
-      <li>Carriers of this gene should they be worthy shall have the power of Thor.</li>
+      <li>Carriers of this gene should they be worthy shall have the power of MagicAndMyths.</li>
     </customEffectDescriptions>
     <symbolPack>
       <prefixSymbols>

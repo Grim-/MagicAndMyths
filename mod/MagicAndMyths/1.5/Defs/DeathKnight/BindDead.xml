@@ -16,7 +16,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="Thor.CompProperties_BindDead">
+      <li Class="MagicAndMyths.CompProperties_BindDead">
       </li>
     </comps>
   </AbilityDef>

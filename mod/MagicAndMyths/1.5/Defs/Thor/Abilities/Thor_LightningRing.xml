@@ -14,7 +14,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="Thor.CompProperties_LightningRing">
+      <li Class="MagicAndMyths.CompProperties_LightningRing">
       </li>
     </comps>
   </AbilityDef>

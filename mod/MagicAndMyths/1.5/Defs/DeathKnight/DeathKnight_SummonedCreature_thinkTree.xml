@@ -4,26 +4,35 @@
     <defName>DeathKnight_SummonedCreature</defName>
     <thinkRoot Class="ThinkNode_Priority">
       <subNodes>
-        <!-- Basic survival nodes that always apply -->
+
+
+        <!-- 1 Basic survival nodes that always apply -->
         <li Class="ThinkNode_Subtree">
           <treeDef>Despawned</treeDef>
         </li>
+
+        <!-- 2 -->
         <li Class="ThinkNode_Subtree">
           <treeDef>Downed</treeDef>
         </li>
+
+        <!-- 3 -->
         <li Class="ThinkNode_ConditionalCanDoConstantThinkTreeJobNow">
           <subNodes>
             <li Class="JobGiver_FleePotentialExplosion" />
           </subNodes>
         </li>
 
-        <!-- Handle queued jobs regardless of mode -->
+        <!-- 4 Handle queued jobs regardless of mode -->
         <li Class="ThinkNode_QueuedJob" />
 
-        <!-- Split between ToArms and Normal behavior -->
-        <li Class="Thor.ThinkNode_ConditionalIsCalledToArms">
-          <!-- ToArms behavior -->
+        <!-- 5 If we have a master then do the things -->
+        <li Class="MagicAndMyths.ThinkNode_ConditionalHasNoMaster">
+          <invert>true</invert>
           <subNodes>
+
+
+            <!-- 5.1 -->
             <li Class="ThinkNode_ConditionalDrafted">
               <subNodes>
                 <li Class="ThinkNode_Tagger">
@@ -35,62 +44,124 @@
                 </li>
               </subNodes>
             </li>
-            <li Class="Thor.ThinkNode_ConditionalSelfOrMasterHasTarget">
+
+            <!--5.2 Split between ToArms and Normal behavior -->
+            <li Class="MagicAndMyths.ThinkNode_ConditionalIsCalledToArms">
+              <!-- ToArms behavior -->
               <subNodes>
-                <li Class="Thor.JobGiver_SummonedCreatureFightEnemy" />
-              </subNodes>
-            </li>
-            <li Class="Thor.ThinkNode_ConditionalHasMaster">
-              <subNodes>
-                <li Class="Thor.ThinkNode_ConditionalShouldFollowFormation">
+
+                <!--5.2.1 -->
+                <li Class="MagicAndMyths.ThinkNode_ConditionalSelfOrMasterHasTarget">
                   <subNodes>
-                    <li Class="Thor.JobGiver_SummonedCreatureFormationFollow" />
+                    <li Class="MagicAndMyths.JobGiver_SummonedCreatureFightEnemy" />
                   </subNodes>
                 </li>
-                <li Class="Thor.ThinkNode_ConditionalShouldFollowFormation">
+
+                <!--5.2.2 -->
+                <li Class="MagicAndMyths.ThinkNode_ConditionalHasMaster">
+                  <subNodes>
+
+                    <!--5.2.2.1 if we should follow in formation -->
+                    <li Class="MagicAndMyths.ThinkNode_ConditionalShouldFollowFormation">
+                      <subNodes>
+                        <li Class="MagicAndMyths.JobGiver_SummonedCreatureFormationFollow" />
+
+                        <!--5.2.2.1 if in formation position just stare -->
+                        <!-- <li Class="MagicAndMyths.ThinkNode_ConditionalIsInFormation">
+                          <subNodes>
+                            <li Class="JobGiver_StandAndStare" />
+                          </subNodes>
+                        </li> -->
+
+                        <!--5.2.2.1 if NOT in formation position move there -->
+                        <!-- <li Class="MagicAndMyths.ThinkNode_ConditionalIsInFormation">
+                          <invert>true</invert>
+                          <subNodes>
+                            <li Class="MagicAndMyths.JobGiver_SummonedCreatureFormationFollow" />
+                          </subNodes>
+                        </li> -->
+
+                      </subNodes>
+                    </li>
+
+                    <!--5.2.2.2 if we should NOT follow in formation -->
+                    <li Class="MagicAndMyths.ThinkNode_ConditionalShouldFollowFormation">
+                      <invert>true</invert>
+                      <subNodes>
+                          <li Class="MagicAndMyths.JobGiver_SummonedCreatureFollowMaster" />
+
+                        <!-- <li Class="MagicAndMyths.ThinkNode_ConditionalNearMaster">
+                          <invert>true</invert>
+                          <subNodes>
+                            <li Class="MagicAndMyths.JobGiver_SummonedCreatureFollowMaster" />
+                          </subNodes>
+                        </li>
+
+                        <li Class="MagicAndMyths.ThinkNode_ConditionalNearMaster">
+                          <subNodes>
+                            <li Class="JobGiver_StandAndStare" />
+                          </subNodes>
+                        </li> -->
+                      </subNodes>
+                    </li>
+
+                  </subNodes>
+                </li>
+              </subNodes>
+            </li>
+
+
+            <!--5.3 If Colonist behaviour allowed do Normal colonist behavior when not in ToArms mode -->
+            <li Class="MagicAndMyths.ThinkNode_ConditionalIsColonistBehaviourAllowed">
+              <subNodes>
+
+                <!--5.3.1 Normal colonist behavior when not in ToArms mode -->
+                <li Class="MagicAndMyths.ThinkNode_ConditionalIsCalledToArms">
                   <invert>true</invert>
                   <subNodes>
-                    <li Class="Thor.JobGiver_SummonedCreatureFollowMaster" />
+
+                    <!-- if human use human like tree -->
+                    <li Class="MagicAndMyths.ThinkNode_ConditionalIsHuman">
+                      <subNodes>
+                        <li Class="ThinkNode_Subtree">
+                          <treeDef>Humanlike</treeDef>
+                        </li>
+                      </subNodes>
+                    </li>
+
+                    <!-- if not human use animal tree, probably wont handle mechs well -->
+                    <li Class="MagicAndMyths.ThinkNode_ConditionalIsHuman">
+                      <invert>true</invert>
+                      <subNodes>
+                        <li Class="ThinkNode_Subtree">
+                          <treeDef>Animal</treeDef>
+                        </li>
+                      </subNodes>
+                    </li>
+
                   </subNodes>
                 </li>
+
               </subNodes>
             </li>
-          </subNodes>
-        </li>
 
-
-        <!-- Normal colonist behavior when not in ToArms mode -->
-        <li Class="Thor.ThinkNode_ConditionalIsCalledToArms">
-          <invert>true</invert>
-          <subNodes>
-
-
-            <!-- if human use human like tree -->
-            <li Class="Thor.ThinkNode_ConditionalIsHuman">
-              <subNodes>
-                <li Class="ThinkNode_Subtree">
-                  <treeDef>Humanlike</treeDef>
-                </li>
-              </subNodes>
-            </li>
-            <!-- if not human use animal tree, probably wont handle mechs well -->
-            <li Class="Thor.ThinkNode_ConditionalIsHuman">
+            <!--5.4 If Colonist behaviour not allowed, do nothing -->
+            <li Class="MagicAndMyths.ThinkNode_ConditionalIsColonistBehaviourAllowed">
               <invert>true</invert>
               <subNodes>
-                <li Class="ThinkNode_Subtree">
-                  <treeDef>Animal</treeDef>
-                </li>
+                <li Class="JobGiver_StandAndStare" />
               </subNodes>
             </li>
           </subNodes>
         </li>
 
-        <!-- Fallback behaviors -->
-        <li Class="Thor.ThinkNode_ConditionalHasNoMaster">
+        <!--6  fall back no master, wander anywhere -->
+        <li Class="MagicAndMyths.ThinkNode_ConditionalHasNoMaster">
           <subNodes>
             <li Class="JobGiver_WanderAnywhere" />
           </subNodes>
         </li>
+
       </subNodes>
     </thinkRoot>
   </ThinkTreeDef>

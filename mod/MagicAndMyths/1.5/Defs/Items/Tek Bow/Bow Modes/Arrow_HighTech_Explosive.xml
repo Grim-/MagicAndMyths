@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <Thor.BowModeDef>
+  <MagicAndMyths.BowModeDef>
     <defName>ExplosiveArrow</defName>
     <label>explosive arrows</label>
     <description>Heavy arrows with explosive tips that detonate on impact, dealing area damage.</description>
@@ -9,7 +9,7 @@
     <warmupTime>1.3</warmupTime>
     <range>33</range>
     <requireLineOfSight>true</requireLineOfSight>
-  </Thor.BowModeDef>
+  </MagicAndMyths.BowModeDef>
 
   <!-- Explosive Arrow -->
   <ThingDef ParentName="BaseGrenadeProjectile">
