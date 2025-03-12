@@ -16,5 +16,19 @@ namespace MagicAndMyths
         public static HediffDef DeathKnight_UndeadMaster;
         public static HediffDef DeathKnight_Undead;
         public static ThinkTreeDef DeathKnight_SummonedCreature;
+
+        public static StatDef MagicAndMyths_Will;
+
+
+        public static JobDef MagicAndMyths_InterruptableWait;
+
+        public static BackstoryDef MagicAndMyths_LesserUndead;
+
+        public static ThingDef MagicAndMyths_Reanimator;
+
+
+        public static JobDef GotoAndTalk;
+
+        public static QuestScriptDef Quest_DeathKnightStartingPath;
     }
 }

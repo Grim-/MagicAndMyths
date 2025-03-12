@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using RimWorld.Utility;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
+using Verse.AI;
 
 namespace MagicAndMyths
 {

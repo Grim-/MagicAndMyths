@@ -42,7 +42,7 @@ namespace MagicAndMyths
                 return null;
             }
 
-            var activeUndead = undeadMaster.GetActiveCreatures();
+            var activeUndead = undeadMaster.AllActive;
             if (activeUndead == null || !activeUndead.Contains(pawn))
             {
                 return null;

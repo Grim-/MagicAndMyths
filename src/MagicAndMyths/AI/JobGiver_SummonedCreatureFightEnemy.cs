@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using Verse;
 using Verse.AI;
 
@@ -36,6 +37,32 @@ namespace MagicAndMyths
             return job;
         }
 
+        protected override Thing FindAttackTarget(Pawn pawn)
+        {
+            if (pawn.IsPartOfSquad(out ISquadMember squadMember))
+            {
+                if (squadMember.SquadLeader.HostilityResponse == SquadHostility.Aggressive)
+                {
+
+
+                    IAttackTarget attackTarget = AttackTargetFinder.BestAttackTarget(pawn, TargetScanFlags.NeedReachable, new Predicate<Thing>(this.IsGoodTarget)
+                        , 0, squadMember.SquadLeader.FollowDistance, squadMember.SquadLeader.LeaderPosition);
+
+                    if (attackTarget != null)
+                    {
+                        return attackTarget.Thing;
+                    }
+                }
+            }
+            return base.FindAttackTarget(pawn);
+
+
+        }
+        protected virtual bool IsGoodTarget(Thing thing)
+        {
+            Pawn pawn;
+            return (pawn = (thing as Pawn)) != null && pawn.Spawned && !pawn.Downed && !pawn.IsPsychologicallyInvisible();
+        }
         protected override Pawn GetDefendee(Pawn pawn)
         {
             if (pawn.IsControlledSummon())

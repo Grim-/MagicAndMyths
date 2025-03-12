@@ -45,7 +45,7 @@ namespace MagicAndMyths
         #region Initialization
         public StaggeredChainLightning(Map map, Thing instigator, int lifeTimeTicks, int maxJumps, float jumpRadius,
             int damageAmount, DamageDef damageDef, Func<Thing, bool> targetValidator, int ticksBetweenJumps = 7, int effectLingerTicks = 120)
-            : base(lifeTimeTicks, null, false)
+            : base(lifeTimeTicks, null, null, false)
         {
             this.map = map;
             this.instigator = instigator;

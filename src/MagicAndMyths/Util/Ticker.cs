@@ -15,16 +15,20 @@ namespace MagicAndMyths
 
         private int RepeatAmount = -1;
 
+
+        protected Action _OnComplete;
+
         public Ticker()
         {
 
         }
 
-        public Ticker(int ticks, Action onTick, bool startAutomatically = true, int repeatCount = -1)
+        public Ticker(int ticks, Action onTick, Action onComplete,  bool startAutomatically = true, int repeatCount = -1)
         {
             Ticks = ticks;
             RepeatAmount = repeatCount;
             _OnTick = onTick;
+            _OnComplete = onComplete;
             CurrentTick = 0;
             if (startAutomatically) Start();
         }
@@ -66,6 +70,9 @@ namespace MagicAndMyths
         {
             IsRunning = false;
             IsFinished = true;
+
+            Log.Message("ticker complere");
+            _OnComplete?.Invoke();
             if (reset) Reset();
         }
 

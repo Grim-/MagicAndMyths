@@ -11,7 +11,7 @@ namespace MagicAndMyths
         private Vector2 scrollPosition = Vector2.zero;
         private const float ROW_HEIGHT = 40f;
         private const float ICON_SIZE = 30f;
-        private const float LABEL_WIDTH = 100f;
+        private const float LABEL_WIDTH = 130f;
         private const float HEALTH_WIDTH = 80f;
         private const float BUTTON_WIDTH = 70f;
         private const float COLUMN_SPACING = 5f;
@@ -53,13 +53,11 @@ namespace MagicAndMyths
 
             if (pawn != null && UndeadMaster != null)
             {
-                var absorbedCreatures = UndeadMaster.GetStored();
-                listingStandard.Label($"Total Absorbed Creatures: {absorbedCreatures.Count}");
-
+                var absorbedCreatures = UndeadMaster.AllActive;
                 DrawControlButtonsRow(listingStandard, absorbedCreatures);
                 listingStandard.Gap(10f);
                 listingStandard.GapLine();
-                DrawAbsorbedCreaturesList(pawn, absorbedCreatures, listingStandard);
+                DrawAbsorbedCreaturesList(pawn, listingStandard);
             }
             else
             {
@@ -116,23 +114,26 @@ namespace MagicAndMyths
                     Pawn newPawn = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
                         kind: PawnKindDefOf.Colonist,
                         mustBeCapableOfViolence: true,
-                        allowDead: false
+                        allowDead: false,
+                        faction: Faction.OfPlayer,
+                        context: PawnGenerationContext.NonPlayer
                     ));
 
                     if (newPawn != null)
                     {
-                        UndeadMaster.AbsorbCreature(newPawn);
+                        UndeadMaster.StoreCreature(newPawn);
                     }
                 }
             }
             TooltipHandler.TipRegion(rect, "Debug Generate 10");
         }
-   
+
+
         private void DrawToggleCallToArmsButton(Rect rect)
         {
             if (Widgets.ButtonText(rect, "Toggle CTA"))
             {
-                UndeadMaster.ToggleALLCallToArms();
+                UndeadMaster.SetAllState(SquadMemberState.CalledToArms);
             }
             TooltipHandler.TipRegion(rect, "Toggle Call To Arms");
         }
@@ -141,21 +142,17 @@ namespace MagicAndMyths
         {
             if (Widgets.ButtonText(rect, "Toggle Colonist"))
             {
-                UndeadMaster.ToggleALLAllowColonistBehaviour();
+                UndeadMaster.SetAllState(SquadMemberState.AtEase);
             }
             TooltipHandler.TipRegion(rect, "Toggle Allow Colonist Behaviour");
         }
 
 
-        private void DrawAbsorbedCreaturesList(Pawn pawn, List<Pawn> absorbedCreatures, Listing_Standard listingStandard)
+        private void DrawAbsorbedCreaturesList(Pawn pawn, Listing_Standard listingStandard)
         {
-            var groupedCreatures = absorbedCreatures
-                .GroupBy(c => c)
-                .OrderByDescending(g => g.Count());
-
-            foreach (var group in groupedCreatures)
+            foreach (var group in UndeadMaster.AllActive.ToArray())
             {
-                DrawRow(pawn, group.Key, listingStandard);
+                DrawRow(pawn, group, listingStandard);
             }
         }
 
@@ -165,63 +162,59 @@ namespace MagicAndMyths
             var layout = new RowLayoutManager(rowRect);
             Rect iconRect = layout.NextRect(ICON_SIZE, COLUMN_SPACING);
             Rect labelRect = layout.NextRect(LABEL_WIDTH, COLUMN_SPACING);
-            Rect healthRect = layout.NextRect(HEALTH_WIDTH, COLUMN_SPACING);
-            Rect summonButtonRect = layout.NextRect(BUTTON_WIDTH, COLUMN_SPACING);
+            Rect healthRect = layout.NextRect(layout.RemainingWidth - 70f);
             Rect removeButtonRect = layout.NextRect(BUTTON_WIDTH, COLUMN_SPACING);
-            Rect calledToArmsRect = layout.NextRect(30f);
-            Rect allowColonistBehaviourRect = layout.NextRect(30f);
-
 
             Hediff_Undead undead = absorbedCreature.health.hediffSet.GetFirstHediff<Hediff_Undead>();
 
-            Widgets.DrawTextureFitted(iconRect, absorbedCreature.kindDef.race.uiIcon, 1f);
-            Widgets.HyperlinkWithIcon(iconRect, new Dialog_InfoCard.Hyperlink(absorbedCreature.def));
+            Widgets.HyperlinkWithIcon(iconRect, new Dialog_InfoCard.Hyperlink(absorbedCreature, -1, true));
+
+            Text.Anchor = TextAnchor.MiddleLeft;
             Widgets.Label(labelRect, $"{absorbedCreature.Label}");
             Widgets.FillableBar(healthRect, absorbedCreature.health.summaryHealth.SummaryHealthPercent);
-
-            if (UndeadMaster.IsCreatureActive(absorbedCreature))
+            Text.Anchor = TextAnchor.UpperLeft;
+            if (UndeadMaster.IsPartOfSquad(absorbedCreature))
             {
-                if (Widgets.ButtonText(summonButtonRect, "UnSummon"))
+                if (Widgets.ButtonText(removeButtonRect, "Remove"))
                 {
-                    UndeadMaster.UnsummonCreature(absorbedCreature);
-                }
-            }
-            else
-            {
-                if (Widgets.ButtonText(summonButtonRect, "Summon"))
-                {
-                    UndeadMaster.SummonCreature(absorbedCreature, pawn.Position);
+                    UndeadMaster.RemoveFromSquad(absorbedCreature);
                 }
             }
 
             if (undead != null)
             {
-
-                TooltipHandler.TipRegion(calledToArmsRect, $"Call To Arms:\nWhen called to Arms, the unit follows in formation and defends their master, nothing else is considered.");
-                TooltipHandler.TipRegion(allowColonistBehaviourRect, $"Allow NaturalBehaviour:\nAllow a Pawn to behave as it would as a regular pawn.");
-
-                bool newInFormation = undead.CalledToArms;
-                Widgets.CheckboxLabeled(calledToArmsRect, "", ref newInFormation);
-                if (newInFormation != undead.CalledToArms)
+                if (Widgets.ButtonInvisible(iconRect, true))
                 {
-                    undead.CalledToArms = newInFormation;
+                    List<FloatMenuOption> gridOptions = new List<FloatMenuOption>();
+                    gridOptions.Add(new FloatMenuOption("Call To Arms", () =>
+                    {
+                        undead.SetCurrentMemberState(SquadMemberState.CalledToArms);
+                    }));
+
+                    gridOptions.Add(new FloatMenuOption("At Ease", () =>
+                    {
+                        undead.SetCurrentMemberState(SquadMemberState.AtEase);
+                    }));
+
+                    gridOptions.Add(new FloatMenuOption("Do Nothing", () =>
+                    {
+                        undead.SetCurrentMemberState(SquadMemberState.DoNothing);
+                    }));
+                    Find.WindowStack.Add(new FloatMenu(gridOptions));
                 }
 
 
-                bool newALlow = undead.AllowColonistBehaviour;
-                Widgets.CheckboxLabeled(allowColonistBehaviourRect, "", ref newALlow);
-                if (newInFormation != undead.AllowColonistBehaviour)
-                {
-                    undead.AllowColonistBehaviour = newInFormation;
-                }
+                TooltipHandler.TipRegion(iconRect, $"Change State\n\nCurrent:{undead.CurrentState}");
+                Widgets.DrawHighlightIfMouseover(iconRect);
             }
 
 
             if (Widgets.ButtonText(removeButtonRect, "Remove"))
             {
-                UndeadMaster.DeleteAbsorbedCreature(absorbedCreature);
+                UndeadMaster.RemoveFromSquad(absorbedCreature);
             }
-        }
 
+            Widgets.DrawLineHorizontal(iconRect.x, iconRect.yMax, iconRect.width);
+        }
     }
 }

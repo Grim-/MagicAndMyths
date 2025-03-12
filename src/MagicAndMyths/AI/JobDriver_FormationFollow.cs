@@ -10,7 +10,7 @@ namespace MagicAndMyths
 
         private List<Pawn> GetAllActiveShadows()
         {
-            return Hediff_UndeadMaster.GetActiveCreatures();
+            return Hediff_UndeadMaster.AllActive;
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -30,6 +30,7 @@ namespace MagicAndMyths
 
                     if (formationIndex == -1)
                     {
+                        Log.Message("Could not find formation index");
                         base.EndJobWith(JobCondition.Errored);
                         return;
                     }
@@ -61,6 +62,7 @@ namespace MagicAndMyths
 
                         if (!this.pawn.CanReach(targetCell, PathEndMode.OnCell, Danger.Deadly))
                         {
+                            Log.Message("cant reach target");
                             base.EndJobWith(JobCondition.Incompletable);
                             return;
                         }
@@ -94,11 +96,16 @@ namespace MagicAndMyths
                 return false;
             }
 
-            var shadows = undeadMaster.GetActiveCreatures();
+            var shadows = undeadMaster.AllActive;
             int index = shadows.IndexOf(follower);
 
             if (index == -1)
+            {
+
+                Log.Message("Could not find formation index");
                 return false;
+            }
+                
 
             IntVec3 targetCell = FormationUtils.GetFormationPosition(
                                 undeadMaster.FormationType,

@@ -127,14 +127,6 @@ namespace MagicAndMyths
             }
         }
 
-
-        public override void CompTick()
-        {
-            base.CompTick();
-
-
-        }
-
         public override void PostExposeData()
         {
             base.PostExposeData();

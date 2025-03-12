@@ -18,7 +18,7 @@ namespace MagicAndMyths
         private Mesh boltMesh;
 
         public LightningRingBehavior(List<LightningRingConfig> rings, IntVec3 center, Map map, int delayTicks)
-            : base(delayTicks, null, true, rings.Count)
+            : base(delayTicks, null, null, true, rings.Count)
         {
             this.rings = rings;
             this.center = center;

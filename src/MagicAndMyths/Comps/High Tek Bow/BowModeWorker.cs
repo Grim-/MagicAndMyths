@@ -57,7 +57,7 @@ namespace MagicAndMyths
                     sliderRect,
                     currentBurstCount,
                     1f,
-                    50f,
+                    8f,
                     false,
                     currentBurstCount.ToString(),
                     "2",

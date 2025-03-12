@@ -1,0 +1,33 @@
+﻿using Verse;
+using Verse.AI;
+
+namespace MagicAndMyths
+{
+    public class ThinkNode_ConditionalIsAtDefendPoint : ThinkNode_Conditional
+    {
+        protected override bool Satisfied(Pawn pawn)
+        {
+            if (pawn != null && pawn.IsPartOfSquad(out ISquadMember squadMember) && squadMember.CurrentState == SquadMemberState.DefendPoint &&
+                squadMember.DefendPoint != IntVec3.Invalid)
+            {
+
+                IntVec3 position = IntVec3.Invalid;
+                if (squadMember.SquadLeader.InFormation)
+                {
+                    position = squadMember.SquadLeader.GetFormationPositionFor(pawn, squadMember.DefendPoint);
+                }
+                else
+                {
+                    position = squadMember.DefendPoint;
+                }
+
+
+                if (squadMember.Pawn.Position.InHorDistOf(position, 1))
+                {
+                    return true;
+                }            
+            }
+            return false;
+        }
+    }
+}
