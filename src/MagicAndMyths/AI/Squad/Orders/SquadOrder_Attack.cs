@@ -6,6 +6,8 @@ namespace MagicAndMyths
 {
     public class SquadOrder_Attack : SquadOrderWorker
     {
+       // public override bool IsSquadOrder => false;
+
         public override bool CanExecuteOrder(LocalTargetInfo Target)
         {
             if (Target != null && Target.Thing != null || Target.Pawn != null)

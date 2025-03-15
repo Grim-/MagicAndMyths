@@ -69,7 +69,7 @@ namespace MagicAndMyths
         {
             public static bool Prefix(Pawn ___pawn, ref bool __result)
             {
-                if (___pawn.Faction == Faction.OfPlayer && ___pawn.IsControlledSummon())
+                if (___pawn.Faction == Faction.OfPlayer && (Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(___pawn, out Pawn original) ||  ___pawn.IsControlledSummon()))
                 {
                     __result = false;
                     return false;
@@ -100,61 +100,129 @@ namespace MagicAndMyths
                 return true;
             }
         }
-        //public static class Patch_Pawn_Thinker_ThinkTrees
-        //{
-        //    [HarmonyPatch(typeof(Pawn_Thinker), "MainThinkTree", MethodType.Getter)]
-        //    public static class Patch_MainThinkTree
-        //    {
-        //        public static bool Prefix(Pawn_Thinker __instance, ref ThinkTreeDef __result)
-        //        {
-        //            return HandleThinkTreePatch(__instance, ref __result, isConstant: false);
-        //        }
-        //    }
+        public static class Patch_Pawn_Thinker_ThinkTrees
+        {
+            [HarmonyPatch(typeof(Pawn_Thinker), "MainThinkTree", MethodType.Getter)]
+            public static class Patch_MainThinkTree
+            {
+                public static bool Prefix(Pawn_Thinker __instance, ref ThinkTreeDef __result)
+                {
+                    return HandleThinkTreePatch(__instance, ref __result, isConstant: false);
+                }
+            }
 
-        //    [HarmonyPatch(typeof(Pawn_Thinker), "ConstantThinkTree", MethodType.Getter)]
-        //    public static class Patch_ConstantThinkTree
-        //    {
-        //        public static bool Prefix(Pawn_Thinker __instance, ref ThinkTreeDef __result)
-        //        {
-        //            return HandleThinkTreePatch(__instance, ref __result, isConstant: true);
-        //        }
-        //    }
+            //[HarmonyPatch(typeof(Pawn_Thinker), "ConstantThinkTree", MethodType.Getter)]
+            //public static class Patch_ConstantThinkTree
+            //{
+            //    public static bool Prefix(Pawn_Thinker __instance, ref ThinkTreeDef __result)
+            //    {
+            //        return HandleThinkTreePatch(__instance, ref __result, isConstant: true);
+            //    }
+            //}
 
-        //    public static Dictionary<HediffDef, ThinkTreeDef> ThinkTreeMap = new Dictionary<HediffDef, ThinkTreeDef>()
-        //    {
-        //        { MagicAndMythDefOf.DeathKnight_Undead , MagicAndMythDefOf.DeathKnight_SummonedCreature}
-        //    };
+            private static bool HandleThinkTreePatch(Pawn_Thinker __instance, ref ThinkTreeDef __result, bool isConstant)
+            {
+                Pawn pawn = __instance.pawn;
 
-        //    private static bool HandleThinkTreePatch(Pawn_Thinker __instance, ref ThinkTreeDef __result, bool isConstant)
-        //    {
-        //        Pawn pawn = __instance.pawn;
+                if (pawn == null || pawn.Faction != Faction.OfPlayer)
+                    return true;
 
-        //        if (pawn == null || pawn.Faction != Faction.OfPlayer)
-        //            return true;
+                if (!isConstant && pawn.Spawned)
+                {
+                    if (Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(pawn, out Pawn original))
+                    {
+                        __result = MagicAndMythDefOf.MagicAndMyths_TransformationTree;
+                        return false;
+                    }
+                }
 
+                return true;
+            }
+        }
 
-        //        //only override main think tree
-        //        if (!isConstant && pawn.Spawned)
-        //        {
-        //            foreach (var item in ThinkTreeMap)
-        //            {
-        //                if (pawn == null || item.Key == null || item.Value == null)
-        //                {
-        //                    continue;
-        //                }
+        [HarmonyPatch(typeof(Pawn_DraftController), "ShowDraftGizmo", MethodType.Getter)]
+        public static class Patch_Pawn_DraftController
+        {
+            public static bool Prefix(Pawn_DraftController __instance, Pawn ___pawn, ref bool __result)
+            {
+                if (___pawn.Faction == Faction.OfPlayer && Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(___pawn, out Pawn original))
+                {
+                    __result = false;
+                    return false;
+                }
+                return true;
+            }
+        }
 
-        //                if (pawn.health.hediffSet.GetFirstHediffOfDef(item.Key) != null)
-        //                {
-        //                    __result = item.Value;
-        //                    return false;
-        //                }
-        //            }
-        //        }
+        [HarmonyPatch(typeof(AutoUndrafter), "ShouldAutoUndraft")]
+        public static class Patch_AutoUndrafter
+        {
+            public static bool Prefix(AutoUndrafter __instance, Pawn ___pawn, ref bool __result)
+            {
+                if (___pawn.Faction == Faction.OfPlayer && Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(___pawn, out Pawn original))
+                {
+                    __result = false;
+                    return false;
+                }
+                return true;
+            }
+        }
 
-        //        return true;
-        //    }
-        //}
+        [HarmonyPatch(typeof(ITab_Pawn_Gear), "IsVisible", MethodType.Getter)]
+        public static class Patch_ITab_Pawn_Gear
+        {
+            public static bool Prefix(ITab_Pawn_Gear __instance, ref bool __result)
+            {
+                Thing thing = Find.Selector.SingleSelectedThing;
 
+                if (thing != null && thing is Pawn selectedPawn)
+                {
+                    if (selectedPawn.Faction == Faction.OfPlayer && !selectedPawn.RaceProps.Humanlike && Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(selectedPawn, out Pawn original))
+                    {
+                        __result = false;
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(Designator_Slaughter), "CanDesignateThing")]
+        public static class Patch_Designator_Slaughter
+        {
+            public static bool Prefix(Designator_Slaughter __instance, Thing t, ref AcceptanceReport __result)
+            {
+                if (t is Pawn pawn)
+                {
+                    if (pawn.Faction == Faction.OfPlayer && Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(pawn, out Pawn original))
+                    {
+                        __result = AcceptanceReport.WasRejected;
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(Designator_ReleaseAnimalToWild), "CanDesignateThing")]
+        public static class Patch_Designator_ReleaseAnimalToWild
+        {
+            public static bool Prefix(Designator_ReleaseAnimalToWild __instance, Thing t, ref AcceptanceReport __result)
+            {
+                if (t is Pawn pawn)
+                {
+                    if (pawn.Faction == Faction.OfPlayer && Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(pawn, out Pawn original))
+                    {
+                        __result = AcceptanceReport.WasRejected;
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
 
         public static void TrainPawn(Pawn PawnToTrain, Pawn Trainer = null)
         {
@@ -176,9 +244,6 @@ namespace MagicAndMyths
                 }
             }
         }
-
-
-
 
         public static bool TryMakeSummonOf(this Pawn pawn, Pawn Master)
         {

@@ -40,7 +40,7 @@ namespace MagicAndMyths
         {
             if (pawn.IsPartOfSquad(out ISquadMember squadLeader))
             {
-                return squadLeader.SquadLeader.SquadLeader;
+                return squadLeader.SquadLeader.SquadLeaderPawn;
             }
             return null;
         }
@@ -49,7 +49,7 @@ namespace MagicAndMyths
         {
             if (pawn.IsPartOfSquad(out ISquadMember squadMember))
             {
-                return squadMember.SquadLeader.FollowDistance;
+                return squadMember.AssignedSquad.FollowDistance;
             }
 
             return 10f;

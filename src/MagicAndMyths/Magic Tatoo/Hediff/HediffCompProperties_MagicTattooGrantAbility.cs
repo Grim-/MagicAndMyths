@@ -59,4 +59,6 @@ namespace MagicAndMyths
             Scribe_References.Look(ref abilityRef, "abilityGranted");
         }
     }
+
+
 }

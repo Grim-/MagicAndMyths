@@ -12,9 +12,9 @@ namespace MagicAndMyths
             {
 
                 IntVec3 position = IntVec3.Invalid;
-                if (squadMember.SquadLeader.InFormation)
+                if (squadMember.AssignedSquad.InFormation)
                 {
-                    position = squadMember.SquadLeader.GetFormationPositionFor(pawn, squadMember.DefendPoint);
+                    position = squadMember.SquadLeader.GetFormationPositionFor(pawn, squadMember.DefendPoint, Rot4.North);
                 }
                 else
                 {

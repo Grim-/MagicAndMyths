@@ -13,19 +13,6 @@ namespace MagicAndMyths
 
     public class HediffComp_VerbGiverWithGizmos : HediffComp_VerbGiver
     {
-
-        public override void CompPostMake()
-        {
-            base.CompPostMake();
-
-            foreach (var item in this.VerbTracker.AllVerbs)
-            {
-                item.verbTracker = this.Pawn.verbTracker;
-                this.Pawn.VerbTracker.AllVerbs.Add(item);
-                Log.Message("added verb");
-            }
-        }
-
         //public override IEnumerable<Gizmo> CompGetGizmos()
         //{
         //    //if (this.VerbTracker != null)

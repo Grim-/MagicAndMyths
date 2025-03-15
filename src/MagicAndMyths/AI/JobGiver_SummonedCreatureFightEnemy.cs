@@ -26,7 +26,7 @@ namespace MagicAndMyths
 
             if (job != null)
             {
-                job.reportStringOverride = "Defending Summoner";
+                job.reportStringOverride = "Engaged in Squad combat";
             }
 
             if (pawn.mindState != null)
@@ -41,12 +41,12 @@ namespace MagicAndMyths
         {
             if (pawn.IsPartOfSquad(out ISquadMember squadMember))
             {
-                if (squadMember.SquadLeader.HostilityResponse == SquadHostility.Aggressive)
+                if (squadMember.AssignedSquad.HostilityResponse == SquadHostility.Aggressive)
                 {
 
 
                     IAttackTarget attackTarget = AttackTargetFinder.BestAttackTarget(pawn, TargetScanFlags.NeedReachable, new Predicate<Thing>(this.IsGoodTarget)
-                        , 0, squadMember.SquadLeader.FollowDistance, squadMember.SquadLeader.LeaderPosition);
+                        , 0, squadMember.AssignedSquad.FollowDistance, squadMember.SquadLeader.LeaderPosition);
 
                     if (attackTarget != null)
                     {
@@ -65,21 +65,30 @@ namespace MagicAndMyths
         }
         protected override Pawn GetDefendee(Pawn pawn)
         {
-            if (pawn.IsControlledSummon())
+            if (pawn.IsPartOfSquad(out ISquadMember squadMember))
             {
-                return pawn.GetMaster();
+                return squadMember.SquadLeader.SquadLeaderPawn;
             }
             return null;
         }
 
         protected override float GetFlagRadius(Pawn pawn)
         {
+            if (pawn.IsPartOfSquad(out ISquadMember squadMember))
+            {
+                return squadMember.AssignedSquad.AggresionDistance;
+            }
             return 10f;
         }
 
         protected override IntVec3 GetFlagPosition(Pawn pawn)
         {
-            return pawn.GetMaster().Position;
+            if (pawn.IsPartOfSquad(out ISquadMember squadMember))
+            {
+                return squadMember.SquadLeader.SquadLeaderPawn.Position;
+            }
+
+            return IntVec3.Invalid;
         }
     }
 }

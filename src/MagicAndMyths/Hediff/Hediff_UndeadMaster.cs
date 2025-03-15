@@ -9,20 +9,20 @@ using Verse.AI.Group;
 
 namespace MagicAndMyths
 {
-
-
     public class Hediff_UndeadMaster : HediffWithComps, IThingHolder, ISquadLeader
     {
         #region Fields and Properties
 
-        //1 will = 1 undead
-        private int undeadLimit => Mathf.CeilToInt(this.pawn.GetStatValue(MagicAndMythDefOf.MagicAndMyths_Will, true, 1200));
+
+        public int WillStat => Mathf.CeilToInt(this.pawn.GetStatValue(MagicAndMythDefOf.MagicAndMyths_Will, true, 1200));
+
+        public float WillCapacityAsPercent => (float)WillRequiredForUndead / (float)WillStat;
 
         // Only store the unspawned pawns in a ThingOwner, if it fucking worked
-        private ThingOwner<Pawn> storedCreature;
+        private ThingOwner storedCreature;
 
         // Keep active creatures as a simple list since they're spawned on the map
-        private HashSet<Pawn> activeCreature = new HashSet<Pawn>();
+       // private HashSet<Pawn> activeCreature = new HashSet<Pawn>();
 
         private float _FollowDistance = 5f;
         public float FollowDistance => _FollowDistance;
@@ -53,9 +53,9 @@ namespace MagicAndMyths
             }
         }
 
-        public List<Pawn> AllActive => activeCreature.ToList();
+        public List<Pawn> AllActive => _ActiveSquads.SelectMany(x=> x.Value.Members.ToList()).ToList();
 
-        public List<Pawn> AllStored => storedCreature.InnerListForReading;
+        public List<Pawn> AllStored => storedCreature.OfType<Pawn>().ToList();
 
         public int WillRequiredForUndead
         {
@@ -73,21 +73,37 @@ namespace MagicAndMyths
         }
 
 
-        public bool IsOverWillLimits => WillRequiredForUndead > this.undeadLimit;
+        public bool IsOverWillLimits => WillRequiredForUndead > this.WillStat;
 
         public IThingHolder ParentHolder => this.pawn.ParentHolder;
 
         public virtual IntVec3 LeaderPosition => this.pawn.Position;
 
-        public List<Pawn> SquadMembersPawns => activeCreature.ToList();
+        public List<Pawn> SquadMembersPawns
+        {
+            get
+            {
+                List<Pawn> allPawns = new List<Pawn>();
+                // Order by squad ID for consistent iteration
+                foreach (var item in _ActiveSquads.OrderBy(x => x.Key))
+                {
+                    foreach (var member in item.Value.Members)
+                    {
+                        allPawns.Add(member);
+                    }
+                }
+                return allPawns;
+            }
+        }
 
-        public Pawn SquadLeader => this.pawn;
 
-        bool ISquadLeader.InFormation => this.InFormation;
+        public Pawn SquadLeaderPawn => this.pawn;
+
+       // bool ISquadLeader.InFormation => this.InFormation;
 
 
-        public SquadHostility SquadHostilityResponse = SquadHostility.Aggressive;
-        public SquadHostility HostilityResponse => SquadHostilityResponse;
+        //public SquadHostility SquadHostilityResponse = SquadHostility.Aggressive;
+        //public SquadHostility HostilityResponse => SquadHostilityResponse;
 
         public List<ISquadMember> _SquadMembers = new List<ISquadMember>();
         public List<ISquadMember> SquadMembers => _SquadMembers;
@@ -100,6 +116,16 @@ namespace MagicAndMyths
             set =>this.SquadLord  = value;
         }
 
+        public float AggresionDistance => FollowDistance;
+
+        public SquadMemberState currentSquadState = SquadMemberState.CalledToArms;
+        public SquadMemberState SquadState => currentSquadState;
+
+
+
+        private Dictionary<int, Squad> _ActiveSquads = new Dictionary<int, Squad>();
+        public Dictionary<int, Squad> ActiveSquads => _ActiveSquads;
+
 
         #endregion
 
@@ -108,9 +134,7 @@ namespace MagicAndMyths
         {
             // Initialize ThingOwner with this as the owner
             storedCreature = new ThingOwner<Pawn>(this, false, LookMode.Deep);
-            activeCreature = new HashSet<Pawn>();
-
-          
+            _ActiveSquads = new Dictionary<int, Squad>();
         }
 
         public override void Tick()
@@ -126,19 +150,73 @@ namespace MagicAndMyths
 
         private void CheckWillLimit()
         {
-            if (WillRequiredForUndead > this.undeadLimit)
+            if (WillRequiredForUndead > this.WillStat)
             {
                 //pick pawns until under limit, turn them feral
 
                 Pawn pawn = this.AllActive.RandomElement();
 
-                if (WillRequiredForUndead > this.undeadLimit)
+                if (WillRequiredForUndead > this.WillStat)
                 {
              
                 }
             }
         }
 
+        public bool AddSquad(int squadID, List<Pawn> startingMembers)
+        {
+            if (!_ActiveSquads.ContainsKey(squadID))
+            {
+                _ActiveSquads.Add(squadID, CreateSquad(squadID));
+                return true;
+            }
+
+            return false;
+        }
+
+        public Squad GetOrAddSquad(int squadID)
+        {
+            if (_ActiveSquads.ContainsKey(squadID))
+            {
+                return _ActiveSquads[squadID];
+            }
+
+            Squad newSquad = CreateSquad(squadID);
+            _ActiveSquads.Add(squadID, newSquad);
+            return newSquad;
+        }
+        public Squad GetFirstOrAddSquad()
+        {
+            if (_ActiveSquads == null || _ActiveSquads.Count == 0)
+            {
+                Squad newSquad = CreateSquad(1);
+                _ActiveSquads.Add(1, newSquad);
+                return newSquad;
+            }
+            return _ActiveSquads.Values.First();
+        }
+
+        public bool RemoveSquad(int squadID)
+        {
+            if (_ActiveSquads.ContainsKey(squadID))
+            {
+                _ActiveSquads.Remove(squadID);
+                return true;
+            }
+            return false;
+        }
+
+
+        public Squad CreateSquad(int squadID)
+        {
+            return new Squad(squadID, this.pawn, FormationType, SquadHostility.Defensive);
+        }
+
+
+        public bool HasAnySquad()
+        {
+            return _ActiveSquads != null && _ActiveSquads.Count > 0;
+        }
 
         #region IThingHolder Implementation
         public ThingOwner GetDirectlyHeldThings()
@@ -156,38 +234,53 @@ namespace MagicAndMyths
         #region Formation Management
         public void SetFormation(FormationUtils.FormationType formationType)
         {
+            foreach (var item in _ActiveSquads)
+            {
+                item.Value.SetFormation(formationType);
+            }
+
             _FormationType = formationType;
         }
 
         public void SetFollowDistance(float distance)
         {
+            foreach (var item in _ActiveSquads)
+            {
+                item.Value.SetFollowDistance(distance);
+            }
             _FollowDistance = distance;
         }
 
         public void SetInFormation(bool inFormation)
         {
+            foreach (var item in _ActiveSquads)
+            {
+                item.Value.SetInFormation(inFormation);
+            }
             InFormation = inFormation;
         }
 
         public void ToggleInFormation()
         {
+            foreach (var item in _ActiveSquads)
+            {
+                item.Value.SetInFormation(!item.Value.InFormation);
+            }
             InFormation = !InFormation;
         }
         public void SetHositilityResponse(SquadHostility squadHostilityResponse)
         {
-            SquadHostilityResponse = squadHostilityResponse;
+           //SquadHostilityResponse = squadHostilityResponse;
         }
 
-        public IntVec3 GetFormationPositionFor(Pawn pawn, IntVec3 Origin)
+        public IntVec3 GetFormationPositionFor(Pawn pawn, IntVec3 Origin, Rot4 OriginRotation)
         {
-            if (activeCreature.Contains(pawn))
+            foreach (var squad in _ActiveSquads.OrderBy(x => x.Key))
             {
-                return FormationUtils.GetFormationPosition(
-                    FormationType,
-                    Origin.ToVector3(),
-                    this.pawn.Rotation,
-                    AllActive.IndexOf(pawn),
-                    AllActive.Count);
+                if (squad.Value.Members.Contains(pawn))
+                {
+                    return squad.Value.GetFormationPositionFor(pawn, Origin, OriginRotation);
+                }
             }
 
             return IntVec3.Invalid;
@@ -195,18 +288,11 @@ namespace MagicAndMyths
 
         public IntVec3 GetFormationPositionFor(Pawn pawn)
         {
-            return GetFormationPositionFor(pawn, this.pawn.Position);
+            return GetFormationPositionFor(pawn, this.pawn.Position, this.pawn.Rotation);
         }
         #endregion
 
         #region Summoning Management
-        /// <summary>
-        /// Checks if the pawn is currently in the stored undead list.
-        /// </summary>
-        public bool IsCreatureStored(Pawn pawn)
-        {
-            return storedCreature.Contains(pawn);
-        }
 
         /// <summary>
         /// Checks if a creature is currently active.
@@ -215,48 +301,19 @@ namespace MagicAndMyths
         /// <returns>True if the pawn is in the active list</returns>
         public bool IsPartOfSquad(Pawn pawn)
         {
-            return activeCreature.Contains(pawn);
-        }
-
-        /// <summary>
-        /// Adds a given pawn to the stored creatures list, removes it from the active list if present,
-        /// removes it from the map and stores it in the world.
-        /// </summary>
-        /// <param name="pawn">The pawn to store</param>
-        public void StoreCreature(Pawn pawn)
-        {
-            if (activeCreature.Contains(pawn))
-            {
-                activeCreature.Remove(pawn);
-            }
-
-
-            if (pawn.Faction != Faction.OfPlayer)
-            {
-                pawn.SetFaction(Faction.OfPlayer);
-            }
-
-
-            pawn.relations.ClearAllRelations();
-            // Must despawn before adding to ThingOwner
-            if (pawn.Spawned)
-            {
-                pawn.DeSpawn(DestroyMode.Vanish);
-            }
-
-            if (!storedCreature.Contains(pawn))
-            {
-                storedCreature.TryAdd(pawn, false);
-            }
-
-
-            Log.Message($"Successfully stored creature {pawn.Label}");
+            return _ActiveSquads.Any(x=> x.Value.Members.Contains(pawn));
         }
 
         public void SetupCreature(Pawn pawn)
         {
-            Hediff_Undead undeadHediff = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
-            undeadHediff.SetSquadLeader(this.pawn);
+            if (pawn.health.hediffSet.TryGetHediff<Hediff_Undead>(out Hediff_Undead undead))
+            {
+                undead.SetSquadLeader(this.pawn);
+            }
+            else
+            {
+                Log.Message($"no undead hediff found for {pawn.Label}");
+            }
 
             if (pawn.Faction != Faction.OfPlayer)
             {
@@ -297,13 +354,6 @@ namespace MagicAndMyths
                 return false;
             }
 
-            // Check if stored
-            if (!IsCreatureStored(pawn))
-            {
-                Log.Message($"Tried to Summon a creature that is not stored.");
-                return false;
-            }
-
             storedCreature.RemoveAll(x => x == pawn);
 
             if (AddToSquad(pawn))
@@ -332,25 +382,52 @@ namespace MagicAndMyths
         }
 
 
+        public bool IsPartOfAnySquad(Pawn pawn, out Squad squad)
+        {
+            squad = null;
+
+            foreach (var item in _ActiveSquads)
+            {
+                if (item.Value.Members.Contains(pawn))
+                {
+                    squad = item.Value;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public Squad GetSquadForPawn(Pawn pawn)
+        {
+            foreach (var item in _ActiveSquads)
+            {
+                if (item.Value.Members.Contains(pawn))
+                {
+                    return item.Value;
+                }
+            }
+
+            return null;
+        }
         public bool AddToSquad(Pawn pawn)
         {
-            if (!activeCreature.Contains(pawn))
+            if (!IsPartOfAnySquad(pawn, out Squad squad))
             {
-                activeCreature.Add(pawn);
+                Squad newSquad = GetFirstOrAddSquad();
 
-                if (pawn.IsPartOfSquad(out ISquadMember squadMember))
+                if (!newSquad.Members.Contains(pawn))
                 {
-                    _SquadMembers.Add(squadMember);
-                }
+                    newSquad.Members.Add(pawn);
 
-                //if (SquadLord != null)
-                //{
-                //    if (SquadLord.CanAddPawn(pawn))
-                //    {
-                //        SquadLord.AddPawn(pawn);
-                //    }
-                //}
-                return true;
+                    if (pawn.IsPartOfSquad(out ISquadMember squadMember))
+                    {
+                        _SquadMembers.Add(squadMember);
+                        squadMember.AssignedSquad = newSquad;
+                        squadMember.SetSquadLeader(this.pawn);
+                    }
+                    return true;
+                }
             }
             return false;
         }
@@ -358,31 +435,36 @@ namespace MagicAndMyths
         /// Completely removes a creature from both active and stored lists, and destroys it.
         /// </summary>
         /// <param name="pawn">The pawn to delete</param>
-        public bool RemoveFromSquad(Pawn pawn, bool alsoDestroy = false)
+        public bool RemoveFromSquad(Pawn pawn, bool kill = true, bool alsoDestroy = false)
         {
-            if (activeCreature.Contains(pawn))
+            if (IsPartOfAnySquad(pawn, out Squad squad))
             {
-                activeCreature.Remove(pawn);
+
+                if (squad.Members.Contains(pawn))
+                {
+                    squad.RemoveMember(pawn);
+                }
 
                 if (pawn.IsPartOfSquad(out ISquadMember squadMember))
                 {
                     if (_SquadMembers.Contains(squadMember))
                     {
                         _SquadMembers.Remove(squadMember);
+                        squadMember.SetSquadLeader(null);
+                        squadMember.AssignedSquad = null;
                     }
                 }
 
-                if (storedCreature.Contains(pawn))
+
+                if (pawn.health.hediffSet.TryGetHediff<Hediff_Undead>(out Hediff_Undead undead))
                 {
-                    storedCreature.Remove(pawn);
+                    pawn.health.RemoveHediff(undead);
                 }
-                //if (SquadLord != null)
-                //{
-                //    if (SquadLord.ownedPawns.Any(x=> x == pawn))
-                //    {
-                //        SquadLord.RemovePawn(pawn);
-                //    }
-                //}
+
+                if (kill && pawn.Spawned && !pawn.health.Dead)
+                {
+                    pawn.Kill(null);
+                }
 
                 if (alsoDestroy)
                 {
@@ -396,75 +478,6 @@ namespace MagicAndMyths
             }
             return false;
         }
-
-        /// <summary>
-        /// Summons a stored creature in formation.
-        /// </summary>
-        /// <param name="pawn">The pawn to summon</param>
-        /// <returns>True if successful, false otherwise</returns>
-        public bool SummonCreatureInFormation(Pawn pawn)
-        {
-            if (!IsCreatureStored(pawn))
-            {
-                Log.Message($"Tried to Summon a creature that is not stored.");
-                return false;
-            }
-
-            IntVec3 position = FormationUtils.GetFormationPosition(
-                FormationType,
-                this.pawn.Position.ToVector3Shifted(),
-                this.pawn.Rotation,
-                storedCreature.InnerListForReading.IndexOf(pawn),
-                storedCreature.Count);
-
-            return SummonCreature(pawn, position);
-        }
-        /// <summary>
-        /// Unsummons an active creature, moving it back to storage.
-        /// </summary>
-        /// <param name="pawn">The pawn to unsummon</param>
-        /// <returns>True if successful, false otherwise</returns>
-        public bool UnsummonCreature(Pawn pawn)
-        {
-            if (!activeCreature.Contains(pawn))
-            {
-                Log.Message("Tried to unsummon a creature is not in the active list");
-                return false;
-            }
-
-            // Remove from active list first
-            activeCreature.Remove(pawn);
-            // Add to storage
-            if (!storedCreature.Contains(pawn))
-            {
-                if (pawn.Spawned)
-                {
-                    pawn.DeSpawn(DestroyMode.Vanish);
-                }
-                storedCreature.TryAddOrTransfer(pawn, false);
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Unsummons all active creatures.
-        /// </summary>
-        /// <returns>True if all were unsummoned successfully</returns>
-        public bool UnSummonAll()
-        {
-            bool success = true;
-            foreach (var creature in AllActive.ToList())
-            {
-                if (!UnsummonCreature(creature))
-                {
-                    success = false;
-                }
-            }
-
-            return success;
-        }
-
         #endregion
 
         #region Behavior Control
@@ -478,6 +491,8 @@ namespace MagicAndMyths
                     undead.SetCurrentMemberState(squadMemberState);
                 }
             }
+
+            currentSquadState = squadMemberState;
         }
         #endregion
 
@@ -492,54 +507,35 @@ namespace MagicAndMyths
             yield return new Gizmo_FormationControl(this);
         }
 
-        public override void ExposeData()
+        public void ExecuteSquadOrder(SquadOrderDef orderDef, LocalTargetInfo target)
         {
-            base.ExposeData();
-
-
-            Scribe_Deep.Look<ThingOwner<Pawn>>(ref storedCreature, "storedCursedSpirits", new object[] { this });
-
-            Scribe_Collections.Look(ref activeCreature, "activeCursedSpirits", LookMode.Reference);
-
-            Scribe_Values.Look(ref _FormationType, "formationType", FormationUtils.FormationType.Column);
-            Scribe_Values.Look(ref _FollowDistance, "followDistance", 5f);
-            Scribe_Values.Look(ref InFormation, "inFormation", true);
-            Scribe_Values.Look(ref SquadHostilityResponse, "SquadHostilityResponse");
-
-            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            foreach (var squadMember in SquadMembersPawns)
             {
-                // Initialize collections if they're null
-                if (storedCreature == null)
-                    storedCreature = new ThingOwner<Pawn>(this, false, LookMode.Deep);
-
-                if (activeCreature == null)
-                    activeCreature = new HashSet<Pawn>();
-
-                // Clean up null references
-
-                var wew = activeCreature.ToList();
-                wew.RemoveAll(x => x == null);
-                activeCreature =  new HashSet<Pawn>(wew);
-
-                // Rebuild references between masters and summons
-                // This ensures all active summons have proper hediffs
-                foreach (var activePawn in activeCreature)
+                if (squadMember.IsPartOfSquad(out ISquadMember member))
                 {
-                    Log.Message($"REINIT PAWN {activePawn.Label}");
+                    SquadOrderWorker squadOrderWorker = orderDef.CreateWorker(this, member);
 
-                    if (activePawn.health != null)
+                    if (squadOrderWorker.CanExecuteOrder(target))
                     {
-                        Hediff_Undead undeadHediff = activePawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_Undead) as Hediff_Undead;
-                        if (undeadHediff != null)
-                        {
-                            undeadHediff.SetSquadLeader(this.pawn);
-                        }
+                        squadOrderWorker.ExecuteOrder(target);
                     }
                 }
             }
         }
 
 
+
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            Scribe_Deep.Look<ThingOwner>(ref storedCreature, "storedCursedSpirits", new object[] { this });
+            Scribe_Collections.Look(ref _ActiveSquads, "activeSquads", LookMode.Value, LookMode.Deep);
+            Scribe_Values.Look(ref _FormationType, "formationType", FormationUtils.FormationType.Column);
+            Scribe_Values.Look(ref _FollowDistance, "followDistance", 5f);
+            Scribe_Values.Look(ref InFormation, "inFormation", true);
+        }
 
         #endregion
     }

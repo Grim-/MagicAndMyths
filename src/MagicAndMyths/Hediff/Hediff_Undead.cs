@@ -12,7 +12,7 @@ namespace MagicAndMyths
         private Pawn referencedPawn;
         public Pawn Master => referencedPawn;
         public override string Label => base.Label;
-        public override string Description => base.Description + $"\nBound to {Master.Label}.";
+        public override string Description => base.Description + $"\nBound to {Master.Label}. Leader: {SquadLeader.SquadLeaderPawn.Name}";
 
         public ISquadLeader SquadLeader
         {
@@ -45,6 +45,14 @@ namespace MagicAndMyths
 
         private RotDrawMode _OverridenRotDrawMode = RotDrawMode.Dessicated;
         public RotDrawMode OverridenRotDrawMode => _OverridenRotDrawMode;
+
+
+        private Squad _AssignedSquad = null;
+        public Squad AssignedSquad
+        {
+            get => _AssignedSquad;
+            set => _AssignedSquad = value;
+        }
 
         public void SetSquadLeader(Pawn master)
         { 
@@ -136,31 +144,8 @@ namespace MagicAndMyths
                     Find.WindowStack.Add(new FloatMenu(gridOptions));
                 }
             };
-
-            //yield return new Command_Toggle()
-            //{
-            //    defaultLabel = "Toggle Called to Arms",
-            //    Disabled = false,
-            //    isActive = () => this.CalledToArms,
-            //    icon = TexButton.Add,
-            //    toggleAction = () =>
-            //    {
-            //        this.CalledToArms = !this.IsCalledToArms;
-            //    }
-            //};
-
-            //yield return new Command_Toggle()
-            //{
-            //    defaultLabel = "Toggle Colonist Behaviour",
-            //    Disabled = false,
-            //    isActive = () => this.AllowColonistBehaviour,
-            //    icon = TexButton.Add,
-            //    toggleAction = () =>
-            //    {
-            //        this.AllowColonistBehaviour = !this.AllowColonistBehaviour;
-            //    }
-            //};
         }
+
         private void ApplyVisual()
         {
             if (this.pawn.story != null)
@@ -179,7 +164,7 @@ namespace MagicAndMyths
 
             if (this.pawn != null && !this.pawn.Dead && !this.pawn.Destroyed && this.Def != null && this.pawn.IsHashIntervalTick(Def.regenTicks))
             {
-                this.pawn.QuickHeal(Def.baseHealAmount);
+                //this.pawn.QuickHeal(Def.baseHealAmount);
                 HandleNeeds();
 
                 if (this.Master == null)
@@ -199,9 +184,9 @@ namespace MagicAndMyths
 
         public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
         {
-            if (this.Master != null)
+            if (this.SquadLeader != null)
             {
-                this.Master.GetUndeadMaster()?.RemoveFromSquad(this.pawn, true);
+                this.SquadLeader.RemoveFromSquad(this.pawn, true);
             }
             base.Notify_PawnDied(dinfo, culprit);
         }
@@ -226,17 +211,12 @@ namespace MagicAndMyths
         public override void ExposeData()
         {
             base.ExposeData();
+
+            Scribe_References.Look(ref _AssignedSquad, "assignedSquad");
             Scribe_References.Look(ref referencedPawn, "referencedPawn");
             Scribe_Values.Look(ref squadMemberState, "squadMemberState");
             Scribe_Values.Look(ref preDefendState, "preDefendState");
             Scribe_Values.Look(ref DefendPoint, "defendPoint");
         }
-    }
-
-
-    public interface IRotDrawOverrider
-    {
-        bool ShouldOverride { get; }
-        RotDrawMode OverridenRotDrawMode { get; }
     }
 }

@@ -17,12 +17,14 @@ namespace MagicAndMyths
                 return false;
             }
 
-            if (squadLeader.SquadLeader == null)
+            if (squadLeader.AssignedSquad == null)
             {
                 return false;
             }
 
-            return squadLeader.SquadLeader.InFormation;
+
+            bool result = squadLeader.AssignedSquad.InFormation;
+            return result;
         }
     }
 }

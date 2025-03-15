@@ -7,9 +7,11 @@ namespace MagicAndMyths
 {
     public class CompProperties_RaiseAs : CompProperties_AbilityEffect
     {
+        public int raiseLimit = -1;
         public float radius = 15f;
         public bool canOnlyTargetHumanLike = true;
-        public PawnKindDef defToRaiseAs;
+
+        public UndeadDef undeadDef;
 
         public CompProperties_RaiseAs()
         {
@@ -21,9 +23,6 @@ namespace MagicAndMyths
         new CompProperties_RaiseAs Props => (CompProperties_RaiseAs)props;
         Hediff_UndeadMaster master;
 
-
-        private List<Ticker> tickers = new List<Ticker>();
-
         public override void Initialize(AbilityCompProperties props)
         {
             base.Initialize(props);
@@ -33,9 +32,17 @@ namespace MagicAndMyths
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);
-            List<Thing> thingsInRadius = GenRadial.RadialDistinctThingsAround(this.parent.pawn.Position, this.parent.pawn.Map, Props.radius, true).ToList();
+            List<Thing> thingsInRadius = GenRadial.RadialDistinctThingsAround(target.Cell, this.parent.pawn.Map, Props.radius, true).ToList();
+
+
+            int count = 0;
             foreach (var thing in thingsInRadius)
             {
+                if (Props.raiseLimit > 0 && count > Props.raiseLimit)
+                {
+                    break;
+                }
+
                 if (thing is Corpse corwpse && corwpse.InnerPawn != null)
                 {
 
@@ -44,57 +51,74 @@ namespace MagicAndMyths
                         continue;
                     }
 
-
+                    IntVec3 spawnPosition = corwpse.Position;
                     Pawn newPawn = null;
-
-                    if (Props.defToRaiseAs != null)
+                    if (Props.undeadDef != null)
                     {
-                        newPawn = GeneratePawnFromDef();
-                    }
-                    else
-                    {
-                        //use the pawn as it is
-
-                        if (ResurrectionUtility.TryResurrect(corwpse.InnerPawn))
+                        if (Props.undeadDef.kind != null)
                         {
+                            newPawn = GeneratePawnFromDef();
+                            if (newPawn != null)
+                            {
+                                newPawn.Name = corwpse.InnerPawn.Name;
+                                if (corwpse != null && !corwpse.Destroyed)
+                                {
+                                    corwpse.Destroy();
+                                }
+
+
+                                SetupRaisedPawn(newPawn, spawnPosition);
+                                count++;
+                            }
+                        }
+                        else
+                        {
+                            //use the pawn as it is
                             newPawn = corwpse.InnerPawn;
+
+                            if (ResurrectionUtility.TryResurrect(newPawn))
+                            {
+                                if (newPawn != null)
+                                {
+                                    SetupRaisedPawn(newPawn, spawnPosition);
+                                    count++;
+                                }
+                            }
                         }
                     }
 
 
-                    if (corwpse.InnerPawn.RaceProps.Humanlike)
-                    {
-                        IntVec3 spawnPosition = corwpse.Position;
-                        if (newPawn != null)
-                        {
-                            newPawn.Name = corwpse.InnerPawn.Name;
-                            corwpse.Destroy();
-                            newPawn.story.Childhood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
-                            newPawn.story.Adulthood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
 
-                            GenSpawn.Spawn(newPawn, spawnPosition, this.parent.pawn.Map);
-
-                            master.StoreCreature(newPawn);
-                            master.SummonCreature(newPawn, spawnPosition);
-                        }
-                    }
                 }
             }
+        }
+
+
+        private void SetupRaisedPawn(Pawn newPawn, IntVec3 spawnPosition)
+        {
+            newPawn.story.Childhood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
+            newPawn.story.Adulthood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
+
+            Hediff_Undead undeadHediff = (Hediff_Undead)newPawn.health.GetOrAddHediff(Props.undeadDef.hediff);
+            undeadHediff.SetSquadLeader(this.parent.pawn);
+
+            master.SummonCreature(newPawn, spawnPosition);
         }
 
         public override void DrawEffectPreview(LocalTargetInfo target)
         {
             base.DrawEffectPreview(target);
 
-            GenDraw.DrawFieldEdges(GenRadial.RadialDistinctThingsAround(this.parent.pawn.Position, this.parent.pawn.Map, Props.radius, true).Select(x => x.Position).ToList());
+            GenDraw.DrawFieldEdges(AffectedCells(target.Cell));
         }
-
-
-
+        private List<IntVec3> AffectedCells(IntVec3 origin)
+        {
+            return GenRadial.RadialCellsAround(origin, Props.radius, true).ToList();
+        }
         private Pawn GeneratePawnFromDef()
         {
             Pawn newPawn = PawnGenerator.GeneratePawn(
-            new PawnGenerationRequest(Props.defToRaiseAs, Faction.OfPlayer, PawnGenerationContext.NonPlayer, -1,
+            new PawnGenerationRequest(Props.undeadDef.kind, Faction.OfPlayer, PawnGenerationContext.NonPlayer, -1,
             true, false, false, false, true, 0, false, false, false, false, false, false, false, false, false, 0, 0, null, 0, null, null,
             new List<TraitDef>()
             {
@@ -111,5 +135,17 @@ namespace MagicAndMyths
 
             return newPawn;
         }
+    }
+
+
+    public class UndeadDef : Def
+    {
+        public int baseWillCost = 1;
+        public float willCostMultiplier = 1f;
+        public HediffDef hediff;
+        public PawnKindDef kind;
+
+        public List<BackstoryDef> childhoodBackstories;
+        public List<BackstoryDef> adulthoodBackstories;
     }
 }

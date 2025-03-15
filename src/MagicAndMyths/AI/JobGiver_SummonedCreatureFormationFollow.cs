@@ -8,16 +8,21 @@ namespace MagicAndMyths
     {
         protected override Pawn GetFollowee(Pawn pawn)
         {
-            if (pawn.IsControlledSummon())
+            if (pawn.IsPartOfSquad(out ISquadMember memeber))
             {
-                return pawn.GetMaster();
+                return memeber.SquadLeader.SquadLeaderPawn;
             }
             return null;
         }
 
         protected override float GetRadius(Pawn pawn)
         {
-            return pawn.GetMaster().GetUndeadMaster().FollowDistance;
+            if (pawn.IsPartOfSquad(out ISquadMember memeber))
+            {
+                return memeber.AssignedSquad.FollowDistance;
+            }
+
+            return 1f;
         }
 
         protected override Job TryGiveJob(Pawn pawn)
@@ -35,28 +40,32 @@ namespace MagicAndMyths
                 return null;
             }
 
-            Hediff_UndeadMaster undeadMaster = (Hediff_UndeadMaster)followee.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster);
-
-            if (undeadMaster == null)
+            if (!pawn.IsPartOfSquad(out ISquadMember memeber))
             {
                 return null;
             }
 
-            var activeUndead = undeadMaster.AllActive;
+     
+            if (memeber.SquadLeader.SquadLeaderPawn == null)
+            {
+                return null;
+            }
+
+            var activeUndead = memeber.SquadLeader.SquadMembersPawns;
             if (activeUndead == null || !activeUndead.Contains(pawn))
             {
                 return null;
             }
-            if (!JobDriver_FormationFollow.FarEnoughAndPossibleToStartJob(pawn, followee, undeadMaster, GetRadius(pawn)))
+            if (!JobDriver_FormationFollow.FarEnoughAndPossibleToStartJob(pawn, followee, memeber.SquadLeader, GetRadius(pawn)))
             {
                 return null;
             }
 
             Job job = JobMaker.MakeJob(MagicAndMythDefOf.Thor_FormationFollow, followee);
             job.expiryInterval = 200;
-            job.followRadius = undeadMaster.FollowDistance;
+            job.followRadius = memeber.AssignedSquad.FollowDistance;
             job.SetTarget(TargetIndex.A, followee);
-            job.reportStringOverride = $"Following {undeadMaster.pawn.LabelCap} in formation";
+            job.reportStringOverride = $"Following {memeber.SquadLeader.SquadLeaderPawn.LabelCap} in formation";
             return job;
         }
     }

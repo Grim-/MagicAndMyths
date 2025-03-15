@@ -11,6 +11,8 @@ namespace MagicAndMyths
 
         SquadMemberState CurrentState { get; }
 
+        Squad AssignedSquad { get; set; }
+
 
         void SetSquadLeader(Pawn squadLeader);
         void SetDefendPoint(IntVec3 targetPoint);

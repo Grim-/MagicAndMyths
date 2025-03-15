@@ -154,7 +154,7 @@ namespace MagicAndMyths
             {
                 if (Widgets.ButtonText(removeButtonRect, "Remove"))
                 {
-                    UndeadMaster.RemoveFromSquad(absorbedCreature);
+                    UndeadMaster.RemoveFromSquad(absorbedCreature, true);
                 }
             }
 

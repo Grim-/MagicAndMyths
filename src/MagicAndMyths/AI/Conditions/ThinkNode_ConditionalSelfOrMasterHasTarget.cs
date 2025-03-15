@@ -21,20 +21,24 @@ namespace MagicAndMyths
                 return false;
             }
 
-            Pawn master = pawn.GetMaster();
-            if (master == null)
+            if (!pawn.IsPartOfSquad(out ISquadMember squadMember))
             {
-               Log.Message("Master is null");
                 return false;
             }
 
-            if (pawn.mindState?.enemyTarget != null || master.mindState?.enemyTarget != null)
+            if (squadMember.SquadLeader.SquadLeaderPawn == null)
+            {
+                // Log.Message("Master is null");
+                return false;
+            }
+
+            if (pawn.mindState?.enemyTarget != null || squadMember.SquadLeader.SquadLeaderPawn.mindState?.enemyTarget != null)
             {
                // Log.Message("ThinkNode_ConditionalSelfOrMasterHasTarget pawn or master has target");
                 return true;
             }
 
-            if (pawn.Spawned && master.Spawned)
+            if (pawn.Spawned && squadMember.SquadLeader.SquadLeaderPawn.Spawned)
             {
                 if (pawn.Faction != null && PawnUtility.EnemiesAreNearby(pawn, 10, true))
                 {

@@ -26,13 +26,22 @@ namespace MagicAndMyths
             master = (Hediff_UndeadMaster)this.parent.pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
         }
 
+        public override void DrawEffectPreview(LocalTargetInfo target)
+        {
+            base.DrawEffectPreview(target);
+
+            GenDraw.DrawFieldEdges(AffectedCells(target.Cell));
+        }
+
+        private List<IntVec3> AffectedCells(IntVec3 origin)
+        {
+            return GenRadial.RadialCellsAround(origin, Props.radius, true).ToList();
+        }
+
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);
-            List<Thing> thingsInRadius = GenRadial.RadialDistinctThingsAround(this.parent.pawn.Position, this.parent.pawn.Map, Props.radius, true).ToList();
-
-
-            List<Pawn> rere = new List<Pawn>();
+            List<Thing> thingsInRadius = GenRadial.RadialDistinctThingsAround(target.Cell, this.parent.pawn.Map, Props.radius, true).ToList();
 
             foreach (var thing in thingsInRadius)
             {
@@ -42,7 +51,6 @@ namespace MagicAndMyths
                     if (ResurrectionUtility.TryResurrect(deadPawn))
                     {
                         IntVec3 position = thing.Position;
-                        master.StoreCreature(deadPawn);
                         master.SummonCreature(deadPawn, position);
                     }
                 }

@@ -25,22 +25,24 @@ namespace MagicAndMyths
                 yield return item;
             }
 
-            if (selPawn.Faction == Faction.OfPlayer && !Find.QuestManager.QuestsListForReading.Any(x=> x.root == MagicAndMythDefOf.Quest_DeathKnightStartingPath))
+            if (selPawn.Faction == Faction.OfPlayer)
             {
-                yield return new FloatMenuOption("Talk..", () =>
+                if (Find.QuestManager.QuestsListForReading.Any(x => x.root == MagicAndMythDefOf.Quest_DeathKnightStartingPath))
                 {
-                    // Messages.Message($"SPOKe", MessageTypeDefOf.PositiveEvent);
+                    yield return new FloatMenuOption("Talk.. (Quest already started)", () =>
+                    {
 
+                    }, MenuOptionPriority.DisabledOption);
+                }
+                else
+                {
+                    yield return new FloatMenuOption("Talk..", () =>
+                    {
                         Job job = JobMaker.MakeJob(MagicAndMythDefOf.GotoAndTalk, this.parent as Pawn);
                         selPawn.jobs.StartJob(job, JobCondition.InterruptForced);
+                    });
+                }
 
-     //               Slate newSlate = new Slate();
-					//newSlate.Set<string>("colonistQuestSubject", selPawn.ThingID);
-					//newSlate.Set<string>("colonistQuestSubjectName", selPawn.Label);
-
-	
-					//Find.QuestManager.Add(QuestUtility.GenerateQuestAndMakeAvailable(MagicAndMythDefOf.Quest_DeathKnightStartingPath, newSlate));
-                });
             }
         }
     }

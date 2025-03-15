@@ -6,13 +6,6 @@ namespace MagicAndMyths
 {
     public class JobDriver_FormationFollow : JobDriver_FollowClose
     {
-        private Hediff_UndeadMaster Hediff_UndeadMaster => (Hediff_UndeadMaster)this.TargetPawnA.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
-
-        private List<Pawn> GetAllActiveShadows()
-        {
-            return Hediff_UndeadMaster.AllActive;
-        }
-
         protected override IEnumerable<Toil> MakeNewToils()
         {
             this.FailOnDespawnedOrNull(TargetIndex.A);
@@ -25,38 +18,24 @@ namespace MagicAndMyths
 
                 if (!this.pawn.pather.Moving || this.pawn.IsHashIntervalTick(30))
                 {
-                    List<Pawn> activeShadows = GetAllActiveShadows();
-                    int formationIndex = activeShadows.IndexOf(this.pawn);
-
-                    if (formationIndex == -1)
+                    if (!this.pawn.IsPartOfSquad(out ISquadMember squadMember))
                     {
-                        Log.Message("Could not find formation index");
+                        Log.Message("Is not part of a squad.");
                         base.EndJobWith(JobCondition.Errored);
                         return;
                     }
 
-                    IntVec3 targetCell = FormationUtils.GetFormationPosition(
-                        Hediff_UndeadMaster.FormationType,
-                        followee.Position.ToVector3(),
-                        followee.Rotation,
-                        formationIndex,
-                        activeShadows.Count);
+                    IntVec3 targetCell = squadMember.SquadLeader.GetFormationPositionFor(pawn);
 
                     if (this.pawn.Position != targetCell)
                     {
+
                         if (!this.pawn.CanReach(targetCell, PathEndMode.OnCell, Danger.Deadly))
                         {
-                            for (int i = 0; i < 6; i++)
+                            IntVec3 newTargetCell = CellFinder.StandableCellNear(targetCell, this.pawn.Map, 2f); 
+                            if (this.pawn.CanReach(newTargetCell, PathEndMode.OnCell, Danger.Deadly))
                             {
-                                targetCell = CellFinder.StandableCellNear(targetCell, this.Map, 5);
-                                if (!this.pawn.CanReach(targetCell, PathEndMode.OnCell, Danger.Deadly))
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    break;
-                                }
+                                targetCell = newTargetCell;
                             }
                         }
 
@@ -87,7 +66,7 @@ namespace MagicAndMyths
             return this.job.GetTarget(TargetIndex.A) == j.GetTarget(TargetIndex.A);
         }
 
-        public static bool FarEnoughAndPossibleToStartJob(Pawn follower, Pawn followee, Hediff_UndeadMaster undeadMaster, float radius)
+        public static bool FarEnoughAndPossibleToStartJob(Pawn follower, Pawn followee, ISquadLeader undeadMaster, float radius)
         {
             if (radius <= 0f)
             {
@@ -95,24 +74,7 @@ namespace MagicAndMyths
                     follower.thingIDNumber ^ 843254009);
                 return false;
             }
-
-            var shadows = undeadMaster.AllActive;
-            int index = shadows.IndexOf(follower);
-
-            if (index == -1)
-            {
-
-                Log.Message("Could not find formation index");
-                return false;
-            }
-                
-
-            IntVec3 targetCell = FormationUtils.GetFormationPosition(
-                                undeadMaster.FormationType,
-                                followee.Position.ToVector3(),
-                                followee.Rotation,
-                                index,
-                                shadows.Count);
+            IntVec3 targetCell = undeadMaster.GetFormationPositionFor(follower);
 
             return follower.CanReach(targetCell, PathEndMode.OnCell, Danger.Deadly);
         }

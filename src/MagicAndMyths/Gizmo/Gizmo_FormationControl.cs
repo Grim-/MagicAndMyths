@@ -37,7 +37,7 @@ namespace MagicAndMyths
 
 
             Rect formationRect = new Rect(baseRect.x + 5f, baseRect.y + 5f, baseRect.width - 40f, 22f);
-            if (Widgets.ButtonText(formationRect, "Type: " + master.FormationType.ToString()))
+            if (Widgets.ButtonText(formationRect, "Formation: " + master.FormationType.ToString()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 foreach (FormationUtils.FormationType formation in Enum.GetValues(typeof(FormationUtils.FormationType)))
@@ -47,16 +47,6 @@ namespace MagicAndMyths
                         delegate { master.SetFormation(formation); }
                     ));
                 }
-
-                options.Add(new FloatMenuOption("do chant", () =>
-                {
-                    master.SquadLord = new Lord();
-                    master.SquadLord.loadID = Find.UniqueIDsManager.GetNextLordID();
-                    master.SquadLord.faction = this.master.SquadLeader.Faction;
-                    master.SquadLord.SetJob(new LordJob_HateChant());
-                    master.SquadLord.AddPawns(master.SquadMembersPawns);
-
-                }));
                 Find.WindowStack.Add(new FloatMenu(options));
             }
             if (Mouse.IsOver(formationRect))
@@ -100,36 +90,99 @@ namespace MagicAndMyths
         {
             GridLayout gridLayout = new GridLayout(rect, 4, 1);
             Rect cellRect = gridLayout.GetCellRect(0, 0);
+            List<FloatMenuGridOption> options = new List<FloatMenuGridOption>();
 
-            GUI.DrawTexture(cellRect, Command.BGTex);
-            if (Mouse.IsOver(cellRect))
+            GUI.DrawTexture(gridLayout.GetCellRect(0, 0), Command.BGTex);
+            if (Widgets.ButtonImage(gridLayout.GetCellRect(0, 0), GetCommandTexture(master.SquadState), true, GetSquadStateString(master.SquadState)))
             {
-                TooltipHandler.TipRegion(cellRect, "Toggle In Formation");
+                options.Add(new FloatMenuGridOption(GetCommandTexture(SquadMemberState.CalledToArms), () =>
+                {
+                    master.SetAllState(SquadMemberState.CalledToArms);
+
+                }, null, new TipSignal(GetSquadStateString(SquadMemberState.CalledToArms))));
+
+
+                options.Add(new FloatMenuGridOption(GetCommandTexture(SquadMemberState.AtEase), () =>
+                {
+                    master.SetAllState(SquadMemberState.AtEase);
+
+                }, null, new TipSignal(GetSquadStateString(SquadMemberState.AtEase))));
+
+
+                options.Add(new FloatMenuGridOption(GetCommandTexture(SquadMemberState.DoNothing), () =>
+                {
+                    master.SetAllState(SquadMemberState.DoNothing);
+                }, null, new TipSignal(GetSquadStateString(SquadMemberState.DoNothing))));
+
+                Find.WindowStack.Add(new FloatMenuGrid(options));
             }
-            if (Widgets.ButtonImage(cellRect, master.InFormation ? Widgets.CheckboxOnTex : Widgets.CheckboxOffTex))
-            {
-                master.SetInFormation(!master.InFormation);
-            }
- 
+
+
+
             GUI.DrawTexture(gridLayout.GetCellRect(1, 0), Command.BGTex);
-            //Widgets.DrawBoxSolidWithOutline(gridLayout.GetCellRect(1, 0), Color.clear, Color.white);
-            if (Widgets.ButtonImage(gridLayout.GetCellRect(1, 0), TexCommand.Draft, true, "Call To Arms"))
+            if (Widgets.ButtonImage(gridLayout.GetCellRect(1, 0), TexCommand.SquadAttack, true, "Extra Orders"))
             {
-                master.SetAllState(SquadMemberState.CalledToArms);
-            }
+                List<FloatMenuGridOption> extraOrders = new List<FloatMenuGridOption>();
 
-            GUI.DrawTexture(gridLayout.GetCellRect(2, 0), Command.BGTex);
-            // Widgets.DrawBoxSolidWithOutline(gridLayout.GetCellRect(2, 0), Color.clear, Color.white);
-            if (Widgets.ButtonImage(gridLayout.GetCellRect(2, 0), TexCommand.HoldOpen, true, "At Ease"))
-            {
-                master.SetAllState(SquadMemberState.AtEase);
-            }
+                foreach (var item in DefDatabase<SquadOrderDef>.AllDefsListForReading)
+                {
+                    if (item.requiresTarget)
+                    {
+                        extraOrders.Add(new FloatMenuGridOption(item.Icon, () =>
+                        {
+                            Find.Targeter.BeginTargeting(item.targetingParameters, (LocalTargetInfo target) =>
+                            {
+                                master.ExecuteSquadOrder(item, target);
+                            });
+                        }, null, new TipSignal(item.defName)));
+                    }
+                    else
+                    {
+                        extraOrders.Add(new FloatMenuGridOption(item.Icon, () =>
+                        {
+                            master.ExecuteSquadOrder(item, null);
+                        }));
 
-            GUI.DrawTexture(gridLayout.GetCellRect(3, 0), Command.BGTex);
-            //Widgets.DrawBoxSolidWithOutline(gridLayout.GetCellRect(3, 0), Color.clear, Color.white);
-            if (Widgets.ButtonImage(gridLayout.GetCellRect(3, 0), TexCommand.ForbidOn, true, "Do Nothing"))
+                    }
+                }
+
+                Find.WindowStack.Add(new FloatMenuGrid(extraOrders));
+            }
+        }
+
+
+        private string GetSquadStateString(SquadMemberState CalledToArms)
+        {
+            switch (CalledToArms)
             {
-                master.SetAllState(SquadMemberState.DoNothing);
+                case SquadMemberState.DoNothing:
+                    return "Do nothin";
+                case SquadMemberState.CalledToArms:
+                    return "Call to arms";
+                case SquadMemberState.AtEase:
+                    return "Stand down";
+                case SquadMemberState.DefendPoint:
+                    return "Defend point";
+                default:
+                    return "invalid state";
+            }
+        }
+
+        private Texture2D GetCommandTexture(SquadMemberState CalledToArms)
+        {
+
+            switch (CalledToArms)
+            {
+                case SquadMemberState.DoNothing:
+                    return TexCommand.ForbidOn;
+                case SquadMemberState.CalledToArms:
+                    return TexCommand.Draft; 
+                case SquadMemberState.AtEase:
+                    return TexCommand.HoldOpen;
+                case SquadMemberState.DefendPoint:
+                    return TexCommand.SquadAttack;
+                default:
+                    return TexCommand.DesirePower;
             }
 
         }
@@ -139,30 +192,10 @@ namespace MagicAndMyths
             GUI.DrawTexture(GridButtonRect, Command.BGTex);
 
             GridLayout gridLayout = new GridLayout(GridButtonRect, 3, 2);
-
-            //Widgets.DrawBoxSolidWithOutline(gridLayout.GetCellRect(0, 0), Color.clear, Color.white);
-            //if (Widgets.ButtonImage(gridLayout.GetCellRect(0, 0), TexCommand.Draft, true, "Call To Arms"))
-            //{
-            //    master.SetAllState(SquadMemberState.CalledToArms);
-            //}
-
-            //Widgets.DrawBoxSolidWithOutline(gridLayout.GetCellRect(1, 0), Color.clear, Color.white);
-            //if (Widgets.ButtonImage(gridLayout.GetCellRect(1, 0), TexCommand.HoldOpen, true, "At Ease"))
-            //{
-            //    master.SetAllState(SquadMemberState.AtEase);
-            //}
-
-            //Widgets.DrawBoxSolidWithOutline(gridLayout.GetCellRect(2, 0), Color.clear, Color.white);
-            //if (Widgets.ButtonImage(gridLayout.GetCellRect(2, 0), TexCommand.ForbidOn, true, "Do Nothing"))
-            //{
-            //    master.SetAllState(SquadMemberState.DoNothing);
-            //}
-
-            DrawSquadOrders(gridLayout);
+            //DrawSquadOrders(gridLayout);
         }
 
         LocalTargetInfo selectedTarget = null;
-        //create a button for each SquadOrder, activate it on click
         private void DrawSquadOrders(GridLayout gridLayout)
         {
             int startX = 0;
@@ -171,31 +204,19 @@ namespace MagicAndMyths
             foreach (var item in DefDatabase<SquadOrderDef>.AllDefsListForReading)
             {
                 GUI.DrawTexture(gridLayout.GetCellRect(startX, startY), Command.BGTex);
+
                 if (Widgets.ButtonImage(gridLayout.GetCellRect(startX, startY), item.Icon, true, item.defName))
                 {
                     if (item.requiresTarget)
                     {
-                        Find.Targeter.BeginTargeting(item.targetingParameters,
-                            (LocalTargetInfo target) =>
-                            {
-
-                                selectedTarget = target;
-                            }
-                        );
-                    }
-
-                    foreach (var squadMember in master.SquadMembersPawns)
-                    {
-                        if (squadMember.IsPartOfSquad(out ISquadMember member))
+                        Find.Targeter.BeginTargeting(item.targetingParameters, (LocalTargetInfo target) =>
                         {
-                            SquadOrderWorker squadOrderWorker = item.CreateWorker(member);
-
-                            if (squadOrderWorker.CanExecuteOrder(selectedTarget))
-                            {
-                                squadOrderWorker.ExecuteOrder(selectedTarget);
-                            }
-
-                        }
+                            master.ExecuteSquadOrder(item, target);
+                        });
+                    }
+                    else
+                    {
+                        master.ExecuteSquadOrder(item, null);
                     }
                 }
 
@@ -207,68 +228,6 @@ namespace MagicAndMyths
                     startY++;
                 }
             }
-        }
-
-        private void OrderUndeadToDefendPoint(LocalTargetInfo target)
-        {
-            if (target == null || master == null || master.SquadMembersPawns.NullOrEmpty())
-            {
-                return;
-            }
-
-            foreach (Pawn minion in master.SquadMembersPawns)
-            {
-                if (minion != null && minion.Spawned && !minion.Dead)
-                {
-                    if (minion.IsPartOfSquad(out ISquadMember squadMember))
-                    {
-                        squadMember.SetDefendPoint(target.Cell);
-                    }
-                }
-            }
-            // Display attack message
-            Messages.Message("Ordered to Defend point" + target.Label, MessageTypeDefOf.NeutralEvent);
-        }
-        private void ClearOrderUndeadToDefendPoint()
-        {
-            if (master == null || master.SquadMembersPawns.NullOrEmpty())
-            {
-                return;
-            }
-
-            foreach (Pawn minion in master.SquadMembersPawns)
-            {
-                if (minion != null && minion.Spawned && !minion.Dead)
-                {
-                    if (minion.IsPartOfSquad(out ISquadMember squadMember))
-                    {
-                        squadMember.ClearDefendPoint();
-                    }
-                }
-            }
-            // Display attack message
-            Messages.Message("Ordered to stop defending point", MessageTypeDefOf.NeutralEvent);
-        }
-        private void OrderUndeadToAttack(LocalTargetInfo target)
-        {
-            if (target == null || master == null || master.SquadMembersPawns.NullOrEmpty())
-            {
-                return;
-            }
-
-            foreach (Pawn minion in master.SquadMembersPawns)
-            {
-                if (minion != null && minion.Spawned && !minion.Dead)
-                {
-                    Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
-                    job.playerForced = true;
-                    job.killIncappedTarget = true;
-                    minion.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                }
-            }
-
-            // Display attack message
-            Messages.Message("Ordered to attack " + target.Label, MessageTypeDefOf.NeutralEvent);
         }
     }
 }

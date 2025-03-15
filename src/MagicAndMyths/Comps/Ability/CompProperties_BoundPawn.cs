@@ -1,7 +1,7 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
-using UnityEngine;
 using Verse;
+using Verse.AI.Group;
 
 namespace MagicAndMyths
 {
@@ -27,12 +27,24 @@ namespace MagicAndMyths
 
         public CompProperties_BoundPawn Props => (CompProperties_BoundPawn)props;
 
+        private int cooldownDurationTick = 6000;
+        private int cooldownTick = 0;
+        private bool isOnCooldown = false;
+
+        private int chargeTick = 0;
+
+        public float CurrentCharge => currentCharge;
+        public float MaxCharge => Props.maxCharge;
+
+        private Lord lord = null;
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
             if (!respawningAfterLoad)
             {
                 currentCharge = Props.maxCharge;
+                lord = LordMaker.MakeNewLord(Faction.OfPlayer, new LordJob_DefendPoint(this.parent.Position, 1, 6, false, false), this.parent.Map);
             }
         }
 
@@ -40,24 +52,101 @@ namespace MagicAndMyths
         {
             base.CompTick();
 
-            if (isSummoned && summonedPawn != null && !summonedPawn.Dead)
+
+            UpdateCooldown();
+
+
+            if (isSummoned)
             {
-                currentCharge -= Props.chargeUsagePerTick;
-                if (currentCharge <= 0f)
+                if (summonedPawn != null && !summonedPawn.Dead)
                 {
-                    UnsummonPawn();
+                    UseCharge(Props.chargeUsagePerTick);
                 }
             }
-            else if (!isSummoned && currentCharge < Props.maxCharge)
+            else
             {
-                currentCharge = Mathf.Min(Props.maxCharge, currentCharge + Props.chargeRegainPerTick);
+                GainCharge(Props.chargeRegainPerTick);
+
             }
+        }
+
+        public void GainCharge(float charge)
+        {
+            currentCharge += charge;
+
+            if (currentCharge >= MaxCharge)
+            {
+                currentCharge = MaxCharge;
+            }
+        }
+
+        public void UseCharge(float charge)
+        {
+            currentCharge -= charge;
+
+            if (currentCharge <= 0)
+            {
+                OnChargeDepleted();
+                currentCharge = 0;
+            }
+        }
+
+
+        private void OnChargeDepleted()
+        {
+            if (summonedPawn != null && summonedPawn.Spawned)
+            {
+                UnsummonPawn();
+            }
+        }
+
+        private void UpdateCooldown()
+        {
+            if (isOnCooldown)
+            {
+                cooldownTick--;
+
+                if (cooldownTick <= 0)
+                {
+                    EndCooldown();
+                }
+            }
+        }
+        private void StartCooldown()
+        {
+            cooldownTick = cooldownDurationTick;
+            isOnCooldown = true;
+        }
+
+        private void EndCooldown()
+        {
+            isOnCooldown = false;
+        }
+
+        public override void PostDestroy(DestroyMode mode, Map previousMap)
+        {
+            base.PostDestroy(mode, previousMap);
+
+            if (summonedPawn != null && summonedPawn.Spawned)
+            {
+                summonedPawn.Destroy();
+            }
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            string cooldownString = $"Recharging ticks remaining : {(cooldownTick).ToStringTicksToPeriod()}.";
+            string chargeString = $"Charge {CurrentCharge} / {MaxCharge}.";
+
+            return base.CompInspectStringExtra() + (isOnCooldown ? cooldownString + "\n\n" + chargeString : chargeString );
         }
 
         private void SummonPawn()
         {
-            if (summonedPawn != null && !summonedPawn.Dead || Props.summonedPawnKind == null)
+            if (summonedPawn != null && !summonedPawn.Dead || Props.summonedPawnKind == null || isOnCooldown)
                 return;
+
+            StartCooldown();
 
             PawnGenerationRequest request = new PawnGenerationRequest(
                 Props.summonedPawnKind,
@@ -75,16 +164,35 @@ namespace MagicAndMyths
             summonedPawn = PawnGenerator.GeneratePawn(request);
             GenSpawn.Spawn(summonedPawn, parent.Position, parent.Map);
             isSummoned = true;
+            summonedPawn.guest.SetNoInteraction();
+            lord.AddPawn(summonedPawn);
         }
+
+
 
         private void UnsummonPawn()
         {
-            if (summonedPawn != null && !summonedPawn.Dead)
+            if (summonedPawn != null && !summonedPawn.Destroyed)
             {
                 summonedPawn.Destroy();
                 summonedPawn = null;
             }
             isSummoned = false;
+        }
+
+        private void ToggleSummon()
+        {
+            if (!isSummoned)
+            {
+                if (currentCharge > 0f && !isOnCooldown)
+                {
+                    SummonPawn();
+                }               
+            }
+            else if (isSummoned)
+            {
+                UnsummonPawn();
+            }
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -95,28 +203,10 @@ namespace MagicAndMyths
                 defaultLabel = isSummoned ? "Unsummon" : "Summon",
                 defaultDesc = isSummoned ? "Dismiss the summoned pawn." : "Summon a pawn using charge energy.",
                 icon = TexButton.Banish,
-                action = delegate
-                {
-                    if (!isSummoned && currentCharge > 0f)
-                    {
-                        SummonPawn();
-                    }
-                    else if (isSummoned)
-                    {
-                        UnsummonPawn();
-                    }
-                }
+                action = ToggleSummon
             };
 
-            if (!isSummoned && currentCharge <= 0f)
-            {
-                summonGizmo.Disable("Insufficient charge");
-            }
-
             yield return summonGizmo;
-
-            // Charge meter gizmo
-            yield return new Gizmo_ChargeStatus(this);
         }
 
         public override void PostExposeData()
@@ -125,11 +215,8 @@ namespace MagicAndMyths
             Scribe_Values.Look(ref currentCharge, "currentCharge", 0f);
             Scribe_Values.Look(ref isSummoned, "isSummoned", false);
             Scribe_References.Look(ref summonedPawn, "summonedPawn");
+            Scribe_References.Look(ref lord, "lord");
         }
 
-
-        public float CurrentCharge => currentCharge;
-        public float MaxCharge => Props.maxCharge;
     }
-
 }

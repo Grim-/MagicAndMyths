@@ -24,9 +24,12 @@ namespace MagicAndMyths
         public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
         {
             Rect rect = new Rect(topLeft.x, topLeft.y, BarSize.x, BarSize.y);
+
+            Widgets.DrawWindowBackground(rect);
+
             float fillPercent = comp.CurrentCharge / comp.MaxCharge;
 
-            Widgets.FillableBar(rect, fillPercent);
+            Widgets.FillableBar(rect.CenteredOnYIn(rect), fillPercent);
 
             // Show charge percentage on mouseover
             if (Mouse.IsOver(rect))

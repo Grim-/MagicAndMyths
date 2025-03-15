@@ -25,14 +25,17 @@ namespace MagicAndMyths
         }
 
         public bool requiresTarget = true;
+        public bool isGeneralOrder = false;
         public TargetingParameters targetingParameters;
+        public SquadOrderSettings orderSettings;
         public Type workerClass;
 
-        public SquadOrderWorker CreateWorker(ISquadMember SquadMember)
+        public SquadOrderWorker CreateWorker(ISquadLeader SquadLeader, ISquadMember SquadMember)
         {
             SquadOrderWorker SquadOrderWorker = (SquadOrderWorker)Activator.CreateInstance(workerClass);
             SquadOrderWorker.SquadMember = SquadMember;
-            SquadOrderWorker.SquadLeader = SquadMember.SquadLeader;
+            SquadOrderWorker.SquadLeader = SquadLeader;
+            SquadOrderWorker.SquadOrderSettings = orderSettings;
             return SquadOrderWorker;
         }
     }

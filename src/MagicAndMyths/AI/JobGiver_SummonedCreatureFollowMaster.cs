@@ -10,10 +10,10 @@ namespace MagicAndMyths
 
         protected override Pawn GetFollowee(Pawn pawn)
         {
-            if (pawn.IsControlledSummon())
+            if (pawn.IsPartOfSquad(out ISquadMember squadMember))
             {
                 // Log.Error($"pawn is summon master is {pawn.GetMaster()}");
-                return pawn.GetMaster();
+                return squadMember.SquadLeader.SquadLeaderPawn;
             }
             return null;
         }

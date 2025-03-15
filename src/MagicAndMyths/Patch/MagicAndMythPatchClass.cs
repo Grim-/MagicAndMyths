@@ -3,6 +3,7 @@ using RimWorld;
 using RimWorld.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -17,78 +18,6 @@ namespace MagicAndMyths
         }
 
 
-
-        [HarmonyPatch(typeof(ReloadableUtility), "FindSomeReloadableComponent")]
-        public class ReloadableUtility_Patch
-        {
-            static void Postfix(Pawn pawn, bool allowForcedReload, ref IReloadableComp __result)
-            {
-                //dont know why this would eve rbe null, whatever
-                if (pawn.health != null)
-                {
-                    foreach (var item in pawn.health.hediffSet.hediffs)
-                    {
-                        if (item is IReloadableComp reloadableComp)
-                        {
-                            if (reloadableComp != null && reloadableComp.NeedsReload(allowForcedReload))
-                            {
-                                __result = reloadableComp;
-                                break;
-                            }
-
-                        }
-
-                        if (item is HediffWithComps withComps)
-                        {
-                            foreach (var comp in withComps.comps)
-                            {
-                                if (comp is IReloadableComp abilitycompreloadableComp)
-                                {
-                                    if (abilitycompreloadableComp != null && abilitycompreloadableComp.NeedsReload(allowForcedReload))
-                                    {
-                                        __result = abilitycompreloadableComp;
-                                        break;
-                                    }
-
-                                }
-
-                            }
-                        }
-
-                    }
-                }
-
-                if (pawn.abilities != null)
-                {
-                    foreach (var item in pawn.abilities.abilities)
-                    {
-                        if (item is IReloadableComp reloadableComp)
-                        {
-                            if (reloadableComp != null  && reloadableComp.NeedsReload(allowForcedReload))
-                            {
-                                __result = reloadableComp;
-                                break;
-                            }
-                 
-                        }
-
-                        foreach (var comp in item.comps)
-                        {
-                            if (comp is IReloadableComp abilitycompreloadableComp)
-                            {
-                                if (abilitycompreloadableComp != null && abilitycompreloadableComp.NeedsReload(allowForcedReload))
-                                {
-                                    __result = abilitycompreloadableComp;
-                                    break;
-                                }
-
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
 
         [HarmonyPatch(typeof(PawnRenderer), "CurRotDrawMode",  MethodType.Getter)]
         public class CurRotDrawMode_Patch
@@ -129,6 +58,24 @@ namespace MagicAndMyths
                 }
 
                 return true;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAndApparelExtras")]
+        public class PawnRenderUtility_Patch
+        {
+            static void Prefix(Pawn pawn, Vector3 drawPos, Rot4 facing, PawnRenderFlags flags)
+            {          
+                if (pawn != null && pawn.equipment != null)
+                {
+                    Thing primary = pawn.equipment.Primary;
+
+                    if (primary != null && primary.def.HasModExtension<DrawOffsetExt>())
+                    {
+                        drawPos += primary.def.GetModExtension<DrawOffsetExt>().offset;
+                    }
+                }
             }
         }
 
