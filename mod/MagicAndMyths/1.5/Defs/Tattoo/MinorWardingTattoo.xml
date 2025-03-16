@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <MagicAndMyths.MagicTattooDef>
+    <defName>MinorWardingTattoo</defName>
+    <label>none</label>
+    <texPath>Tattoo/TattooSakunaBody</texPath>
+    <iconPath>Tattoo/TattooSakunaBody</iconPath>
+    <tattooType>Body</tattooType>
+    <category>Minimal</category>
+    <noGraphic>false</noGraphic>
+    <tattooScale>0.1</tattooScale>
+    <styleTags>
+      <li>MagicTattoo</li>
+    </styleTags>
+  </MagicAndMyths.MagicTattooDef>
+
+  <MagicAndMyths.ApplyTattooRecipeDef ParentName="TattooSurgeryBase">
+    <defName>MagicAndMyths_ApplyTattoo</defName>
+    <label>Apply Minor Warding (Tattoo)</label>
+    <description>ApplyTattoo.</description>
+    <workerClass>MagicAndMyths.Recipe_ApplyTattoo</workerClass>
+    <jobString>ApplyTattoo.</jobString>
+    <workAmount>2000</workAmount>
+    <surgerySuccessChanceFactor>1.2</surgerySuccessChanceFactor>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <targetsBodyPart>false</targetsBodyPart>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <tattooDef>MinorWardingTattoo</tattooDef>
+    <addsHediff>MagicAndMyths_MinorWarding</addsHediff>
+  </MagicAndMyths.ApplyTattooRecipeDef>
+
+  <HediffDef>
+    <defName>MagicAndMyths_MinorWarding</defName>
+    <label>Minor Warding</label>
+    <description>This pwwwwwne punch.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.2, 0.1, 0.75)</defaultLabelColor>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <duplicationAllowed>false</duplicationAllowed>
+    <stages>
+      <li>
+        <label>Minor Warding</label>
+        <minSeverity>0.001</minSeverity>
+        <statFactors>
+          <ArmorRating_Sharp>1.05</ArmorRating_Sharp>
+          <ArmorRating_Blunt>1.05</ArmorRating_Blunt>
+        </statFactors>
+      </li>
+    </stages>
+    <abilities>
+      <li>MagicAndMyths_TransformationBear</li>
+    </abilities>
+  </HediffDef>
+</Defs>

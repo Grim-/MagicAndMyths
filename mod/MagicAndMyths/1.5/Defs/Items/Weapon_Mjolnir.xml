@@ -11,28 +11,15 @@
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>1.1</drawSize>
     </graphicData>
-    <recipeMaker>
-      <recipeUsers>
-        <li>CraftingSpot</li>
-        <li>HandTailoringBench</li>
-        <li>ElectricTailoringBench</li>
-        <li>FabricationBench</li>
-      </recipeUsers>
-      <skillRequirements>
-        <Crafting>10</Crafting>
-      </skillRequirements>
-    </recipeMaker>
     <equipmentType>Primary</equipmentType>
     <costList>
-      <Steel>100</Steel>
+      <Steel>1000</Steel>
       <Plasteel>50</Plasteel>
-      <ComponentSpacer>2</ComponentSpacer>
     </costList>
+    <thingCategories>
+      <li>Weapons</li>
+    </thingCategories>
     <techLevel>Spacer</techLevel>
-    <weaponTags>
-      <li>CursedTool</li>
-      <li>LightningWeapon</li>
-    </weaponTags>
     <costStuffCount>120</costStuffCount>
     <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
     <statBases>
@@ -40,8 +27,22 @@
       <Mass>1.5</Mass>
     </statBases>
     <equippedAngleOffset>-130</equippedAngleOffset>
-    <stuffCategories>
-    </stuffCategories>
+    <recipeMaker>
+      <unfinishedThingDef>UnfinishedBelt</unfinishedThingDef>
+      <researchPrerequisite>ShieldBelt</researchPrerequisite>
+      <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Machining</soundWorking>
+      <recipeUsers>
+        <li>TableMachining</li>
+      </recipeUsers>
+      <useIngredientsForColor>false</useIngredientsForColor>
+      <skillRequirements>
+        <Crafting>6</Crafting>
+      </skillRequirements>
+      <displayPriority>300</displayPriority>
+    </recipeMaker>
     <tools>
       <li>
         <label>hammer head</label>
@@ -72,28 +73,26 @@
         <requiredTraits>
         </requiredTraits>
       </li>
-      <li MayRequire="emo.com.materia" Class="Materia.CompProperties_MateriaComp">
+      <li MayRequire="emo.com.materia" Class="Materia.CompProperties_Materia">
         <materiaSlots>
           <li>
-            <slotType>PurpleMateria</slotType>
-            <slotLevel>2</slotLevel>
-            <slotIsLocked>true</slotIsLocked>
-            <materiaToAutoSlot>AncientMateria_BindDead</materiaToAutoSlot>
-          </li>
-          <li>
-            <slotType>PurpleMateria</slotType>
-            <slotLevel>2</slotLevel>
-            <slotIsLocked>true</slotIsLocked>
-            <materiaToAutoSlot>AncientMateria_Asgardian</materiaToAutoSlot>
-          </li>
-          <li>
-            <slotType>RedMateria</slotType>
-            <slotLevel>1</slotLevel>
+            <slotType>PurpleMateriaSlot</slotType>
+            <slotLevel>4</slotLevel>
             <slotIsLocked>false</slotIsLocked>
           </li>
           <li>
-            <slotType>GreenMateria</slotType>
-            <slotLevel>1</slotLevel>
+            <slotType>PurpleMateriaSlot</slotType>
+            <slotLevel>3</slotLevel>
+            <slotIsLocked>false</slotIsLocked>
+          </li>
+          <li>
+            <slotType>RedMateriaSlot</slotType>
+            <slotLevel>2</slotLevel>
+            <slotIsLocked>false</slotIsLocked>
+          </li>
+          <li>
+            <slotType>GreenMateriaSlot</slotType>
+            <slotLevel>3</slotLevel>
             <slotIsLocked>false</slotIsLocked>
           </li>
         </materiaSlots>

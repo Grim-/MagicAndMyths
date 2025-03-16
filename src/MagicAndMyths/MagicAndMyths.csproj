@@ -96,6 +96,11 @@
     <Compile Include="AI\Squad\Orders\SquadOrder_RunToPointAndExplode.cs" />
     <Compile Include="AI\Squad\ThinkNode_ConditionalNearSquadLeader.cs" />
     <Compile Include="Buildings\Building_PhilosophersCircle.cs" />
+    <Compile Include="GrowableBuiding\Building_GrowableStructure.cs" />
+    <Compile Include="GrowableBuiding\Designator_AreaCapture.cs" />
+    <Compile Include="GrowableBuiding\Dialog_AreaCaptured.cs" />
+    <Compile Include="Util\Effect Behaviours\Meteor.cs" />
+    <Compile Include="Util\Effect Behaviours\OrbitalLaser.cs" />
     <Compile Include="Interfaces\IGraphicColorLerpable.cs" />
     <Compile Include="Comps\Ability\CompProperties_BindDeadAOE.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilityLaunchProjectileReloadable.cs" />
@@ -104,6 +109,7 @@
     <Compile Include="Interfaces\Squad.cs" />
     <Compile Include="Interfaces\SquadManager.cs" />
     <Compile Include="Interfaces\SquadManagerWindow.cs" />
+    <Compile Include="Util\MagicUtil.cs" />
     <Compile Include="Patch\DrawOffsetExt.cs" />
     <Compile Include="UI\SquadDisplayUtility.cs" />
     <Compile Include="Util\EventManager.cs" />

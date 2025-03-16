@@ -23,17 +23,11 @@ namespace MagicAndMyths
         new CompProperties_RaiseAs Props => (CompProperties_RaiseAs)props;
         Hediff_UndeadMaster master;
 
-        public override void Initialize(AbilityCompProperties props)
-        {
-            base.Initialize(props);
-            master = (Hediff_UndeadMaster)this.parent.pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
-        }
-
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);
             List<Thing> thingsInRadius = GenRadial.RadialDistinctThingsAround(target.Cell, this.parent.pawn.Map, Props.radius, true).ToList();
-
+            master = (Hediff_UndeadMaster)this.parent.pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
 
             int count = 0;
             foreach (var thing in thingsInRadius)

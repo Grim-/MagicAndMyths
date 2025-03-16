@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>PhilsophersArray</defName>
+    <label>Philsophers Alchemical Array</label>
+    <description>This Alchemical array, will draw power from any humans killed in its radius, once it has enough energy it will produce a philsophers stone, this stone greatly reduces ability costs when equipped, it will however break after some use.</description>
+    <thingClass>MagicAndMyths.Building_PhilosophersCircle</thingClass>
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>FloorCoverings</altitudeLayer>
+    <passability>Standable</passability>
+    <useHitPoints>false</useHitPoints>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>MagicCircles/MagicCircle8</texPath>
+      <graphicClass>MagicAndMyths.GraphicPhilsophersRune</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <color>(1,0,0)</color>
+      <drawSize>(7,7)</drawSize>
+    </graphicData>
+    <pathCost>4</pathCost>
+    <statBases>
+      <WorkToBuild>10000</WorkToBuild>
+      <MaxHitPoints>1000</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Beauty>12</Beauty>
+    </statBases>
+    <size>(7,7)</size>
+    <designationCategory>Misc</designationCategory>
+    <fillPercent>0</fillPercent>
+    <rotatable>false</rotatable>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <constructEffect>ConstructMetal</constructEffect>
+    <building>
+      <isEdifice>false</isEdifice>
+      <canPlaceOverWall>false</canPlaceOverWall>
+    </building>
+    <comps>
+    </comps>
+    <costList>
+      <Steel>25</Steel>
+      <Silver>15</Silver>
+    </costList>
+    <placeWorkers>
+      <li>PlaceWorker_NotUnderRoof</li>
+    </placeWorkers>
+  </ThingDef>
+</Defs>

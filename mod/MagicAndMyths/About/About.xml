@@ -5,11 +5,12 @@
   <supportedVersions>
     <li>1.5</li>
   </supportedVersions>
-	<packageId>com.emo.magicandmyths</packageId>
-        <description>Magic and Myths.</description>
+	<packageId>emo.com.magicandmyths</packageId>
+  <description>Magic and Myths.</description>
 	<loadAfter>
 		<li>brrainz.harmony</li>
 		<li>Ludeon.RimWorld.Biotech</li>
+    <li>emo.com.materia</li>
 	</loadAfter>
 	<modDependencies>
 	</modDependencies>

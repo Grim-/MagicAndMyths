@@ -48,15 +48,14 @@ namespace MagicAndMyths
                 int squadId = squadEntry.Key;
                 Squad squad = squadEntry.Value;
 
-                // Make sure we have a foldout state
                 if (!squadFoldouts.ContainsKey(squadId))
                 {
-                    squadFoldouts[squadId] = true; // Default open
+                    squadFoldouts[squadId] = true;
                 }
 
                 if (!settingsFoldouts.ContainsKey(squadId))
                 {
-                    settingsFoldouts[squadId] = false; // Default closed
+                    settingsFoldouts[squadId] = false;
                 }
 
                 bool expanded = squadFoldouts[squadId];
@@ -64,25 +63,21 @@ namespace MagicAndMyths
 
                 curY += DrawSquadHeader(viewRect.width, curY, squad, squadId, leader, ref expanded, ref settingsExpanded);
 
-                // Update the dictionaries with new states
                 squadFoldouts[squadId] = expanded;
                 settingsFoldouts[squadId] = settingsExpanded;
 
-                // Draw additional settings if expanded
                 if (settingsExpanded && expanded)
                 {
                     curY += DrawSquadSettings(viewRect.width, curY, squad);
                 }
 
-                // Only draw members if this squad is expanded
                 if (expanded)
                 {
-                    // Draw squad members
                     if (squad.Members != null)
                     {
                         foreach (Pawn member in squad.Members)
                         {
-                            if (member != squad.Leader) // Skip leader as we already displayed them
+                            if (member != squad.Leader)
                             {
                                 curY += DrawMemberRow(member, viewRect.width, curY, leader);
                             }
@@ -103,16 +98,15 @@ namespace MagicAndMyths
         /// </summary>
         private float DrawSquadSettings(float width, float yPos, Squad squad)
         {
-            // Increase the height to give more room for the controls
-            float height = 100f; // Increased from 70f to 100f
+  
+            float height = 100f;
             Rect settingsRect = new Rect(20f, yPos, width - 20f, height);
             Widgets.DrawLightHighlight(settingsRect);
 
-            // Use a layout manager with more vertical spacing between rows
             RowLayoutManager settingsLayout = new RowLayoutManager(settingsRect, 10f);
 
             // Follow Distance
-            Rect followDistanceRect = settingsLayout.NextRect(120f);
+            Rect followDistanceRect = settingsLayout.NextRect(150f);
             Rect labelRect = followDistanceRect.LeftPart(0.4f);
             Rect sliderRect = followDistanceRect.RightPart(0.55f);
 
@@ -139,7 +133,7 @@ namespace MagicAndMyths
             }
 
             // Aggression Distance - similar layout improvements
-            Rect aggressionDistanceRect = settingsLayout.NextRect(120f);
+            Rect aggressionDistanceRect = settingsLayout.NextRect(150f);
             labelRect = aggressionDistanceRect.LeftPart(0.4f);
             sliderRect = aggressionDistanceRect.RightPart(0.55f);
 
@@ -187,18 +181,15 @@ namespace MagicAndMyths
         public float DrawSquadHeader(float width, float yPos, Squad squad, int squadId, ISquadLeader leader,
                                     ref bool expanded, ref bool settingsExpanded)
         {
-            // Draw squad header
             float squadHeaderHeight = SquadRowHeight;
             Rect squadHeaderRect = new Rect(0f, yPos, width, squadHeaderHeight);
-
-            // Alternate row coloring
             if (squadId % 2 == 0)
             {
                 Widgets.DrawHighlight(squadHeaderRect);
             }
 
-            // Use RowLayoutManager for the header with adjusted spacing to ensure all elements fit
-            RowLayoutManager headerLayout = new RowLayoutManager(squadHeaderRect, 5f); // Reduced spacing from 10f to 5f
+
+            RowLayoutManager headerLayout = new RowLayoutManager(squadHeaderRect, 5f); 
 
             // Foldout button
             Rect foldoutRect = headerLayout.NextRect(24f, 0f);
@@ -207,8 +198,7 @@ namespace MagicAndMyths
                 expanded = !expanded;
             }
 
-            // Squad ID and name - reduced width to allow space for other elements
-            Rect nameRect = headerLayout.NextRect(120f, 5f); // Reduced from 150f to 120f
+            Rect nameRect = headerLayout.NextRect(120f, 5f);
 
             if (Widgets.ButtonText(nameRect, $"#{squadId}: {squad.squadName}", active: false))
             {
@@ -220,15 +210,12 @@ namespace MagicAndMyths
                 Widgets.DrawHighlightIfMouseover(nameRect);
             }
 
-            // Formation type - reduced width
-            Rect formationRect = headerLayout.NextRect(120f, 5f); // Reduced from 140f to 120f
+            Rect formationRect = headerLayout.NextRect(120f, 5f);
             DrawFormationSelector(formationRect, squad);
 
-            // Hostility response - reduced width
-            Rect hostilityRect = headerLayout.NextRect(120f, 5f); // Reduced from 140f to 120f
+            Rect hostilityRect = headerLayout.NextRect(120f, 5f);
             DrawHostilitySelector(hostilityRect, squad);
 
-            // Settings button - ensure it has enough space to be visible
             Rect settingsRect = headerLayout.NextRect(24f, 5f);
             if (Widgets.ButtonImage(settingsRect, settingsExpanded ? ContentFinder<Texture2D>.Get("UI/Buttons/Minus", true) : ContentFinder<Texture2D>.Get("UI/Buttons/Plus", true)))
             {

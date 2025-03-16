@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.SquadOrderDef>
+    <defName>DefendPointOrder</defName>
+    <uiIconPath>UI/Commands/SquadAttack</uiIconPath>
+    <workerClass>MagicAndMyths.SquadOrder_DefendPoint</workerClass>
+    <requiresTarget>true</requiresTarget>
+    <targetingParameters>
+      <canTargetLocations>true</canTargetLocations>
+    </targetingParameters>
+  </MagicAndMyths.SquadOrderDef>
+</Defs>

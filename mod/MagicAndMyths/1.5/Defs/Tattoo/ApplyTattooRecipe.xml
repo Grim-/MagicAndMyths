@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ApplyTattooRecipeDef ParentName="SurgeryFlesh" Name="TattooSurgeryBase" Abstract="true">
+    <defName>MagicAndMyths_ApplyTattoo</defName>
+    <label>ApplyTattoo</label>
+    <description>ApplyTattoo.</description>
+    <workerClass>MagicAndMyths.Recipe_ApplyTattoo</workerClass>
+    <jobString>ApplyTattoo.</jobString>
+    <workAmount>2000</workAmount>
+    <surgerySuccessChanceFactor>1.2</surgerySuccessChanceFactor>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <targetsBodyPart>false</targetsBodyPart>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+  </MagicAndMyths.ApplyTattooRecipeDef>
+</Defs>

@@ -6,4 +6,10 @@
       <li>MagicAndMyths.ITab_UndeadMaster</li>
     </value>
   </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="Human"]/recipes</xpath>
+    <value>
+      <li>MagicAndMyths_ApplyTattoo</li>
+    </value>
+  </Operation>
 </Patch>
