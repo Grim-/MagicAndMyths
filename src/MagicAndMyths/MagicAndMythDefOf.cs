@@ -15,8 +15,8 @@ namespace MagicAndMyths
 
         public static HediffDef TranquilizerEffect;
         public static HediffDef BoundWeapon;
-        public static JobDef Thor_FormationFollow;
-        public static JobDef Thor_BoidFormationFollow;
+        //public static JobDef Thor_FormationFollow;
+       // public static JobDef Thor_BoidFormationFollow;
         public static HediffDef DeathKnight_UndeadMaster;
         public static HediffDef DeathKnight_Undead;
 
@@ -28,7 +28,7 @@ namespace MagicAndMyths
         public static StatDef MagicAndMyths_Will;
 
 
-        public static JobDef MagicAndMyths_InterruptableWait;
+ 
 
         public static BackstoryDef MagicAndMyths_LesserUndead;
 

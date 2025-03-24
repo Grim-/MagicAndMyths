@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SquadBehaviour;
+using System.Collections.Generic;
 using Verse;
 using Verse.AI;
 

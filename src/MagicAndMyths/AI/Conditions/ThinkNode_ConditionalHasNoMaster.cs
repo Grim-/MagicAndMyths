@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using SquadBehaviour;
+using Verse;
 using Verse.AI;
 
 namespace MagicAndMyths

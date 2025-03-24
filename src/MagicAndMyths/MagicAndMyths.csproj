@@ -39,6 +39,10 @@
       <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SquadBehaviour">
+      <HintPath>D:\Games\RimWorld\Mods\SquadBehaviours\1.5\Assemblies\SquadBehaviour.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -74,27 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalShouldDoNothing.cs" />
-    <Compile Include="AI\JobGiver_SquadDefendPoint.cs" />
-    <Compile Include="AI\Squad\JobGiver_MoveToDefendPoint.cs" />
-    <Compile Include="AI\Squad\JobGiver_SquadMemberFollowInFormation.cs" />
-    <Compile Include="AI\Squad\JobGiver_SquadMemberFollowLoose.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalHasDefendPoint.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsAtDefendPoint.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsDefendingPoint.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsPartOfASquad.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsSquadAggresive.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsSquadDefensive.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalSquadHasTarget.cs" />
-    <Compile Include="AI\Squad\JobGiver_SquadMemberDefendSquadLeader.cs" />
-    <Compile Include="AI\Squad\JobGiver_StandAndStareShort.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalHasSquadLeader.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsColonistBehaviourAllowed.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsAtFormationPosition.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsSquadInFormation.cs" />
-    <Compile Include="AI\Squad\Orders\SquadOrderSettings.cs" />
-    <Compile Include="AI\Squad\Orders\SquadOrder_RunToPointAndExplode.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalNearSquadLeader.cs" />
     <Compile Include="Buildings\Building_PhilosophersCircle.cs" />
     <Compile Include="GrowableBuiding\Building_GrowableStructure.cs" />
     <Compile Include="GrowableBuiding\Designator_AreaCapture.cs" />
@@ -106,20 +89,14 @@
     <Compile Include="Comps\Ability\CompProperties_AbilityLaunchProjectileReloadable.cs" />
     <Compile Include="AI\JobDriver_GoToAndTalk.cs" />
     <Compile Include="Buildings\Building_Phylactery.cs" />
-    <Compile Include="Interfaces\Squad.cs" />
-    <Compile Include="Interfaces\SquadManager.cs" />
-    <Compile Include="Interfaces\SquadManagerWindow.cs" />
     <Compile Include="Util\MagicUtil.cs" />
     <Compile Include="Patch\DrawOffsetExt.cs" />
-    <Compile Include="UI\SquadDisplayUtility.cs" />
     <Compile Include="Util\EventManager.cs" />
     <Compile Include="Util\EventPatches.cs" />
     <Compile Include="Graphic\GraphicPhilsophersRune.cs" />
     <Compile Include="Transformation\CompProperties_RevertTransform.cs" />
     <Compile Include="Transformation\CompProperties_Transform.cs" />
     <Compile Include="Transformation\Hediff_Transformation.cs" />
-    <Compile Include="Comps\CompSquadLeader.cs" />
-    <Compile Include="Comps\CompSquadMember.cs" />
     <Compile Include="Hediff\Hediff_Phylactery.cs" />
     <Compile Include="Interfaces\IRotDrawOverrider.cs" />
     <Compile Include="Transformation\GameComp_Transformation.cs" />
@@ -136,23 +113,11 @@
     <Compile Include="Comps\High Tek Bow\BowModeWorker.cs" />
     <Compile Include="Comps\High Tek Bow\BowModeWorker_Beam.cs" />
     <Compile Include="Comps\High Tek Bow\BowModeWorker_Smoke.cs" />
-    <Compile Include="AI\Squad\JobGiver_StandAndStarePeriodic.cs" />
     <Compile Include="Comps\World\SummonCreatureManager.cs" />
-    <Compile Include="AI\Squad\Orders\SquadOrderDef.cs" />
-    <Compile Include="AI\Squad\Orders\SquadOrderWorker.cs" />
-    <Compile Include="AI\Squad\Orders\SquadOrder_Attack.cs" />
-    <Compile Include="AI\Squad\Orders\SquadOrder_ClearDefendPoint.cs" />
-    <Compile Include="AI\Squad\Orders\SquadOrder_DefendPoint.cs" />
     <Compile Include="Recipe\ApplyTattooRecipeDef.cs" />
     <Compile Include="Hediff\Hediff_Undead.cs" />
     <Compile Include="Magic Tatoo\MagicTattooDef.cs" />
     <Compile Include="Recipe\Recipe_ApplyTattooo.cs" />
-    <Compile Include="Interfaces\ISquadLeader.cs" />
-    <Compile Include="Interfaces\ISquadMember.cs" />
-    <Compile Include="AI\Squad\SquadHostility.cs" />
-    <Compile Include="AI\Squad\SquadMemberState.cs" />
-    <Compile Include="Patch\SquadUtil.cs" />
-    <Compile Include="UI\ITab_SquadLeader.cs" />
     <Compile Include="Util\Effect Behaviours\ChainLightningVisualEffect.cs" />
     <Compile Include="Comps\Ability\CompProperties_BoundPawn.cs" />
     <Compile Include="Comps\High Tek Bow\CompProperties_BowModeSwitcher.cs" />
@@ -180,12 +145,6 @@
     <Compile Include="Magic Tatoo\Hediff\HediffCompProperties_MagicTattooGrantAbility.cs" />
     <Compile Include="Hediff\Hediff_UndeadMaster.cs" />
     <Compile Include="UI\ITab_UndeadMaster.cs" />
-    <Compile Include="AI\Formation Boid test\JobDriver_BoidFormationFollow.cs" />
-    <Compile Include="AI\JobDriver_FormationFollow.cs" />
-    <Compile Include="AI\Formation Boid test\JobGiver_BoidFormationFollow.cs" />
-    <Compile Include="AI\JobGiver_SummonedCreatureFightEnemy.cs" />
-    <Compile Include="AI\JobGiver_SummonedCreatureFollowMaster.cs" />
-    <Compile Include="AI\JobGiver_SummonedCreatureFormationFollow.cs" />
     <Compile Include="Util\Effect Behaviours\LightningRingBehavior.cs" />
     <Compile Include="Util\Effect Behaviours\LightningRingConfig.cs" />
     <Compile Include="Util\Effect Behaviours\LightningStrike.cs" />
@@ -198,12 +157,7 @@
     <Compile Include="UI\RowLayoutManager.cs" />
     <Compile Include="Util\Effect Behaviours\StaggeredChainLightning.cs" />
     <Compile Include="Patch\SummonPatches.cs" />
-    <Compile Include="AI\Conditions\ThinkNode_ConditionalHasMaster.cs" />
-    <Compile Include="AI\Conditions\ThinkNode_ConditionalHasNoMaster.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalIsCalledToArms.cs" />
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsHuman.cs" />
-    <Compile Include="AI\Conditions\ThinkNode_ConditionalSelfOrMasterHasTarget.cs" />
-    <Compile Include="AI\Squad\ThinkNode_ConditionalShouldFollowFormation.cs" />
     <Compile Include="MagicAndMythDefOf.cs" />
     <Compile Include="Util\Ticker.cs" />
     <Compile Include="Util\TrackedMote.cs" />
@@ -215,6 +169,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AI\Formation Boid test\" />
     <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
