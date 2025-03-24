@@ -1,8 +1,11 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using RimWorld.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using UnityEngine;
 using Verse;
 
@@ -60,6 +63,7 @@ namespace MagicAndMyths
                 return true;
             }
         }
+
 
 
         [HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAndApparelExtras")]

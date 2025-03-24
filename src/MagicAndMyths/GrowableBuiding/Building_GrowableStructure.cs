@@ -9,8 +9,8 @@ namespace MagicAndMyths
 {
     public class StructureLayoutDef : Def
     {
-        // Structure size
-        public IntVec2 size;
+        //// Structure size
+        //public IntVec2 size;
 
         // List of all building stages
         public List<BuildingStage> stages = new List<BuildingStage>();
@@ -18,6 +18,8 @@ namespace MagicAndMyths
 
     public class BuildingStage
     {
+        // Structure size
+        public IntVec2 size;
         // All the things to place in this stage
         public List<TerrainPlacement> terrain = new List<TerrainPlacement>();
         public List<ThingPlacement> walls = new List<ThingPlacement>();
@@ -27,28 +29,30 @@ namespace MagicAndMyths
         public List<ThingPlacement> other = new List<ThingPlacement>();
     }
 
-    public class TerrainPlacement
+    public class TerrainPlacement : ThingPlacement
     {
         public TerrainDef terrain;
-        public IntVec2 position;
     }
 
     // Class for thing placement
-    public class ThingPlacement
+    public class ThingPlacement 
     {
         public ThingDef thing;
         public IntVec2 position;
         public Rot4 rotation = Rot4.North;
         public ThingDef stuff;
     }
+
     public class GrowableStructureDef : ThingDef
     {
         public StructureLayoutDef structureLayout;
+        public ThingDef rootDef;
         public int growthDays = 3;
 
         public int ticksBetweenPlacements = 50;
 
     }
+
     public class Building_GrowableStructure : Building
     {
         GrowableStructureDef Def => (GrowableStructureDef)def;
@@ -68,10 +72,22 @@ namespace MagicAndMyths
 
         private int ticksUntilNextPlacement = 0;
 
+        private bool includeNaturalTerrain = false;
+        private bool includeThingsOnGround = false;
+
+        private ThingDef overrideWallStuff;
+        private ThingDef overrideFloorStuff;
+
+        private ThingFilter ThingFilter;
         private List<Thing> placedThings = new List<Thing>();
         private bool showPreview = true;
-        private HashSet<IntVec3> previewCells = new HashSet<IntVec3>();
 
+        private int rootGrowthInterval = 250;
+        private int rootGrowthTick = 0;
+        private List<Thing> placedRoots = new List<Thing>();
+        private int maxRootDistance = 10;
+
+        private int currentStagePreviewIndex = 0;
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
@@ -81,128 +97,235 @@ namespace MagicAndMyths
                 GrowableStructureDef growableDef = def as GrowableStructureDef;
                 if (growableDef != null)
                 {
-                    // Calculate total growth time
                     totalGrowthTicks = growableDef.growthDays * GenDate.TicksPerDay;
-
-                    // Start with first stage
                     currentStage = 0;
                 }
             }
         }
 
-        // Regular update tick
         public override void Tick()
         {
             base.Tick();
 
-            if (Find.TickManager.TicksGame % 10 == 0) 
+            ticksUntilNextPlacement++;
+
+            if (ticksUntilNextPlacement >= Def.ticksBetweenPlacements)
             {
+                ticksUntilNextPlacement = 0;
                 GrowTick();
             }
-        }
-        private void GeneratePreviewCells()
-        {
-            previewCells.Clear();
 
-            GrowableStructureDef growableDef = def as GrowableStructureDef;
-            if (growableDef?.structureLayout == null)
-                return;
 
-            StructureLayoutDef layout = growableDef.structureLayout;
-
-            // Process all stages to collect every cell that will be used
-            foreach (BuildingStage stage in layout.stages)
+            rootGrowthTick++;
+            if (rootGrowthTick >= rootGrowthInterval)
             {
-                // Add terrain cells
-                foreach (TerrainPlacement terrain in stage.terrain)
+                rootGrowthTick = 0;
+                TryGrowRoot();
+            }
+
+        }
+        private void TryGrowRoot()
+        {
+            IntVec3 sourcePos = Position;
+
+            placedRoots.RemoveAll(r => r == null || r.Destroyed);
+
+            if (placedRoots.Count > 0)
+            {
+                sourcePos = placedRoots.Last().Position;
+            }
+
+            List<IntVec3> directions = GenAdj.CardinalDirections.ToList();
+            directions.Shuffle();
+
+            foreach (IntVec3 offset in directions)
+            {
+                IntVec3 targetPos = sourcePos + offset;
+
+                // Basic validity checks
+                if (!targetPos.InBounds(Map)) 
+                    continue;
+
+                if ((targetPos - Position).LengthHorizontalSquared > maxRootDistance * maxRootDistance) 
+                    continue;
+
+                bool rootExists = false;
+                TerrainDef terrain = Map.terrainGrid.TerrainAt(targetPos);
+
+                if (terrain.passability == Traversability.Impassable) 
+                    continue;
+
+                foreach (Thing thing in targetPos.GetThingList(Map))
                 {
-                    IntVec3 pos = CalculateCenteredPosition(terrain.position);
-                    if (pos.InBounds(Map) && !IsCellOccupiedByThisBuilding(pos))
+                    if (thing.def == Def.rootDef)
                     {
-                        previewCells.Add(pos);
+                        rootExists = true;
+                        break;
                     }
                 }
 
-                // Add building cells from all categories
-                AddThingPreviewCells(stage.walls);
-                AddThingPreviewCells(stage.doors);
-                AddThingPreviewCells(stage.power);
-                AddThingPreviewCells(stage.furniture);
-                AddThingPreviewCells(stage.other);
-            }
-        }
+                if (rootExists)
+                    continue;
 
-        // Helper method to add thing positions to preview
-        private void AddThingPreviewCells(List<ThingPlacement> things)
-        {
-            foreach (ThingPlacement thing in things)
-            {
-                IntVec3 pos = CalculateCenteredPosition(thing.position);
-                if (pos.InBounds(Map) && !IsCellOccupiedByThisBuilding(pos))
+                Thing root = ThingMaker.MakeThing(Def.rootDef);
+                Thing placedRoot = GenSpawn.Spawn(root, targetPos, Map);
+
+                if (placedRoot != null)
                 {
-                    previewCells.Add(pos);
+                    placedRoots.Add(placedRoot);
+                    FleckMaker.ThrowDustPuff(targetPos, Map, 0.5f);
+                    return;
                 }
             }
-        }
-        public override void Notify_ThingSelected()
-        {
-            base.Notify_ThingSelected();
         }
 
         public override void DrawExtraSelectionOverlays()
         {
             base.DrawExtraSelectionOverlays();
 
-            GeneratePreviewCells();
+            if (!showPreview)
+                return;
 
-            if (showPreview && previewCells.Count > 0)
+            GrowableStructureDef growableDef = def as GrowableStructureDef;
+            if (growableDef?.structureLayout == null || currentStage < 0)
+                return;
+
+            StructureLayoutDef layout = growableDef.structureLayout;
+            List<IntVec3> allPreviewCells = new List<IntVec3>();
+
+            // Calculate and draw the tree's center
+            IntVec2 treeSize = def.size;
+            IntVec3 treeCenter = new IntVec3(
+                Position.x + treeSize.x / 2,
+                Position.y,
+                Position.z + treeSize.z / 2
+            );
+
+            // Draw the tree's exact position in yellow
+            GenDraw.DrawFieldEdges(new List<IntVec3> { Position }, Color.yellow);
+
+            // Draw the tree's center in green
+            GenDraw.DrawFieldEdges(new List<IntVec3> { treeCenter }, Color.green);
+;
+            IntVec3 layoutCenter = new IntVec3(
+                Position.x + treeSize.x / 2,
+                Position.y,
+                Position.z + treeSize.z / 2
+            );
+            GenDraw.DrawFieldEdges(new List<IntVec3> { layoutCenter }, Color.magenta);
+
+            DrawStagePreview(layout, allPreviewCells);
+
+            if (allPreviewCells.Count > 0)
             {
-                // Draw outline for all cells that will be occupied
-                GenDraw.DrawFieldEdges(previewCells.ToList(), Color.cyan);
-
-                // Draw the center point (this building) in a different color
-                GenDraw.DrawFieldEdges(new List<IntVec3> { Position }, Color.yellow);
+                GenDraw.DrawFieldEdges(allPreviewCells, Color.cyan);
             }
         }
+
+
+        private void DrawStagePreview(StructureLayoutDef layout, List<IntVec3> allPreviewCells)
+        {
+            int previewStage = Mathf.Clamp(currentStagePreviewIndex, 0, layout.stages.Count - 1);
+            BuildingStage currentBStage = layout.stages[previewStage];
+            DrawThingPreviews(currentBStage.walls, nextWallIndex, allPreviewCells);
+            DrawThingPreviews(currentBStage.doors, nextDoorIndex, allPreviewCells);
+            DrawThingPreviews(currentBStage.power, nextPowerIndex , allPreviewCells);
+            DrawThingPreviews(currentBStage.furniture, nextFurnitureIndex, allPreviewCells);
+            DrawThingPreviews(currentBStage.other,  nextOtherIndex, allPreviewCells);
+        }
+
+        private void DrawThingPreviews(List<ThingPlacement> things, int startIndex, List<IntVec3> allPreviewCells)
+        {
+            for (int i = startIndex; i < things.Count; i++)
+            {
+
+                if (!CanBuild(things[i]))
+                {
+                    continue;
+                }
+
+                ThingPlacement placement = things[i];
+                IntVec3 pos = CalculateCenteredPosition(placement.position);
+
+                if (pos.InBounds(Map) && !IsCellOccupiedByThisBuilding(pos))
+                {
+                    allPreviewCells.Add(pos);
+
+                    // Draw ghost preview
+                    Vector3 drawPos = pos.ToVector3Shifted();
+                    drawPos.y = AltitudeLayer.Blueprint.AltitudeFor();
+
+                    // Get ghost graphic
+                    Graphic ghostGraphic = GhostUtility.GhostGraphicFor(placement.thing.graphic, placement.thing, Color.cyan, placement.stuff);
+                    if (ghostGraphic != null)
+                    {
+                        Mesh mesh = ghostGraphic.MeshAt(placement.rotation);
+                        Material mat = ghostGraphic.MatAt(placement.rotation, null);
+                        Quaternion quat = placement.rotation.AsQuat;
+                        drawPos += ghostGraphic.DrawOffset(placement.rotation);
+                        Graphics.DrawMesh(mesh, drawPos, quat, mat, 0);
+                    }
+                }
+            }
+        }
+
+
+        private bool CanBuild(ThingPlacement thingPlacement)
+        {
+            return thingPlacement.thing != null && thingPlacement.thing.BuildableByPlayer;
+        }
+
         private void GrowTick()
         {
             GrowableStructureDef growableDef = def as GrowableStructureDef;
             if (growableDef?.structureLayout == null)
                 return;
-            currentGrowthTick += 10;
             StructureLayoutDef layout = growableDef.structureLayout;
 
             int stageCount = layout.stages.Count;
             if (stageCount <= 0)
                 return;
 
-            int targetStage = Mathf.FloorToInt((float)currentGrowthTick / totalGrowthTicks * stageCount);
-            targetStage = Mathf.Clamp(targetStage, 0, stageCount - 1);
-            if (targetStage > currentStage)
-            {
-                currentStage = targetStage;
-                ResetPlacementIndices();
-            }
 
-            if (ticksUntilNextPlacement > 0)
+            if (AreAllItemsPlaced())
             {
-                ticksUntilNextPlacement -= 10;
-            }
-
-            if (ticksUntilNextPlacement <= 0)
-            {
-                if (PlaceNextItem())
+                int targetStage = currentStage + 1;
+                targetStage = Mathf.Clamp(targetStage, 0, stageCount - 1);
+                if (targetStage > currentStage)
                 {
-                    ticksUntilNextPlacement = Def.ticksBetweenPlacements;
+                    SetStage(targetStage);
+                    ResetPlacementIndices();
                 }
             }
-
-            // If we've finished growing
-            if (currentGrowthTick >= totalGrowthTicks && AreAllItemsPlaced())
+            else
+            {
+                PlaceNextItem();
+            }
+ 
+            if (IsGrown())
             {
                 FinishGrowth();
             }
         }
+
+
+
+        private bool IsGrown()
+        {
+            return currentGrowthTick >= totalGrowthTicks && AreAllItemsPlaced();
+        }
+
+
+        private void SetStage(int newIndex)
+        {
+            currentStage = newIndex;
+            SetPreviewIndex(currentStage);
+        }
+        private void SetPreviewIndex(int newIndex)
+        {
+            currentStagePreviewIndex = newIndex;
+        }
+
         private void ResetPlacementIndices()
         {
             nextTerrainIndex = 0;
@@ -230,7 +353,6 @@ namespace MagicAndMyths
                 nextOtherIndex >= stage.other.Count;
         }
 
-   
         private bool PlaceNextItem()
         {
             GrowableStructureDef growableDef = def as GrowableStructureDef;
@@ -240,8 +362,6 @@ namespace MagicAndMyths
             BuildingStage stage = growableDef.structureLayout.stages[currentStage];
 
             // Build in a specific order: terrain -> walls -> doors -> power -> furniture -> other
-
-            // Try to place terrain first
             if (nextTerrainIndex < stage.terrain.Count)
             {
                 BuildTerrain(stage.terrain[nextTerrainIndex]);
@@ -249,7 +369,6 @@ namespace MagicAndMyths
                 return true;
             }
 
-            // Then walls
             if (nextWallIndex < stage.walls.Count)
             {
                 BuildThing(stage.walls[nextWallIndex]);
@@ -257,7 +376,7 @@ namespace MagicAndMyths
                 return true;
             }
 
-            // Then doors
+
             if (nextDoorIndex < stage.doors.Count)
             {
                 BuildThing(stage.doors[nextDoorIndex]);
@@ -265,7 +384,7 @@ namespace MagicAndMyths
                 return true;
             }
 
-            // Then power
+
             if (nextPowerIndex < stage.power.Count)
             {
                 BuildThing(stage.power[nextPowerIndex]);
@@ -273,7 +392,7 @@ namespace MagicAndMyths
                 return true;
             }
 
-            // Then furniture
+
             if (nextFurnitureIndex < stage.furniture.Count)
             {
                 BuildThing(stage.furniture[nextFurnitureIndex]);
@@ -281,7 +400,6 @@ namespace MagicAndMyths
                 return true;
             }
 
-            // Finally other items
             if (nextOtherIndex < stage.other.Count)
             {
                 BuildThing(stage.other[nextOtherIndex]);
@@ -289,34 +407,32 @@ namespace MagicAndMyths
                 return true;
             }
 
-            // Nothing left to place
             return false;
         }
-
 
         private void BuildTerrain(TerrainPlacement terrain)
         {
             if (terrain.terrain == null)
                 return;
 
-            // Calculate world position, centered around this building
+            if (!CanBuild(terrain))
+            {
+                return;
+            }
             IntVec3 pos = CalculateCenteredPosition(terrain.position);
 
             // Ensure it's within bounds
             if (!pos.InBounds(Map))
                 return;
 
-            // Skip if this would modify the terrain under the origin building
             if (IsCellOccupiedByThisBuilding(pos))
                 return;
 
-            // Set the terrain
             Map.terrainGrid.SetTerrain(pos, terrain.terrain);
 
             // Visual effect
             FleckMaker.ThrowDustPuff(pos, Map, 0.5f);
         }
-
 
         private void BuildThing(ThingPlacement placement)
         {
@@ -330,8 +446,7 @@ namespace MagicAndMyths
             if (!pos.InBounds(Map))
                 return;
 
-            // Skip if this would place something in the same cell as the origin building
-            if (IsCellOccupiedByThisBuilding(pos))
+            if (IsCellOccupiedByThisBuilding(pos) || !CanBuild(placement))
                 return;
 
             // Check if something blocking is already there
@@ -373,25 +488,21 @@ namespace MagicAndMyths
         {
             GrowableStructureDef growableDef = def as GrowableStructureDef;
             if (growableDef?.structureLayout == null)
-                return Position + new IntVec3(relativePos.x, 0, relativePos.z);
+                return Position;
 
-            // Get the center point based on the structure's size
-            IntVec2 halfSize = new IntVec2(
-                Mathf.FloorToInt(growableDef.structureLayout.size.x / 2f),
-                Mathf.FloorToInt(growableDef.structureLayout.size.z / 2f)
+            int treeCenterX = Position.x;
+            int treeCenterZ = Position.z;
+
+            return new IntVec3(
+                treeCenterX + (relativePos.x),
+                Position.y,
+                treeCenterZ + (relativePos.z)
             );
-
-            // Offset the relative position by half the structure size to center it
-            return Position + new IntVec3(relativePos.x - halfSize.x, 0, relativePos.z - halfSize.z);
         }
-
         private bool IsCellOccupiedByThisBuilding(IntVec3 worldPos)
         {
-            // Get the occupied cells of this building
             List<IntVec3> occupiedCells = new List<IntVec3>();
             this.OccupiedRect().Cells.ToList().ForEach(c => occupiedCells.Add(c));
-
-            // Check if the target position is within our occupied cells
             return occupiedCells.Contains(worldPos);
         }
 
@@ -399,7 +510,6 @@ namespace MagicAndMyths
         {
             FleckMaker.ThrowLightningGlow(Position.ToVector3Shifted(), Map, 2f);
             MoteMaker.ThrowText(Position.ToVector3Shifted(), Map, "Growth complete", 3.65f);
-
             //this.Destroy();
         }
 
@@ -407,16 +517,75 @@ namespace MagicAndMyths
         {
             if (mode == DestroyMode.KillFinalize)
             {
-                foreach (Thing thing in placedThings)
-                {
-                    if (thing != null && !thing.Destroyed)
-                    {
-                        thing.Destroy();
-                    }
-                }
+                DestroyPlacedThings();
+
+                DestroyRoots();
             }
 
             base.Destroy(mode);
+        }
+
+        private void DestroyPlacedThings()
+        {
+            foreach (Thing thing in placedThings)
+            {
+                if (thing != null && !thing.Destroyed)
+                {
+                    thing.Destroy();
+                }
+            }
+
+            placedThings.Clear();
+        }
+        private void DestroyRoots()
+        {
+            foreach (Thing root in placedRoots)
+            {
+                if (root != null && !root.Destroyed)
+                {
+                    root.Destroy();
+                }
+            }
+
+            placedRoots.Clear();
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (var item in base.GetGizmos())
+            {
+                yield return item;
+            }
+
+            if (Prefs.DevMode)
+            {
+
+                yield return new Command_Action()
+                {
+                    defaultLabel = "Change stage preview",
+                    action = () =>
+                    {
+
+                        List<FloatMenuOption> options = new List<FloatMenuOption>();
+
+                        for (int i = 0; i < Def.structureLayout.stages.Count; i++)
+                        {
+
+                            if (i != currentStagePreviewIndex)
+                            {           
+                                options.Add(new FloatMenuOption($"Stage {i}", () =>
+                                {
+                                    SetPreviewIndex(i);
+                                }));
+                            }
+                        }
+
+                        Find.WindowStack.Add(new FloatMenu(options));
+                    }
+                };
+
+            
+            }
         }
 
         public override string GetInspectString()
@@ -469,8 +638,10 @@ namespace MagicAndMyths
             Scribe_Values.Look(ref nextFurnitureIndex, "nextFurnitureIndex", 0);
             Scribe_Values.Look(ref nextOtherIndex, "nextOtherIndex", 0);
             Scribe_Values.Look(ref ticksUntilNextPlacement, "ticksUntilNextPlacement", 0);
-
             Scribe_Collections.Look(ref placedThings, "placedThings", LookMode.Reference);
+
+            Scribe_Values.Look(ref rootGrowthTick, "rootGrowthTick", 0);
+            Scribe_Collections.Look(ref placedRoots, "placedRoots", LookMode.Reference);
         }
     }
 }
