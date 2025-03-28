@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Death Knight.md",
-                "mode": "preview",
+                "file": "Items.md",
+                "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Death Knight"
+              "title": "Items"
             }
           }
         ],
@@ -185,8 +185,8 @@
   },
   "active": "98679b484e11c059",
   "lastOpenFiles": [
-    "Tatoos.md",
     "Death Knight.md",
+    "Tatoos.md",
     "Items.md",
     "Untitled",
     "Equipment.md",

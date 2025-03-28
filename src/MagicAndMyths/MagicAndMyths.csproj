@@ -79,9 +79,22 @@
   <ItemGroup>
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
     <Compile Include="Buildings\Building_PhilosophersCircle.cs" />
-    <Compile Include="GrowableBuiding\Building_GrowableStructure.cs" />
-    <Compile Include="GrowableBuiding\Designator_AreaCapture.cs" />
-    <Compile Include="GrowableBuiding\Dialog_AreaCaptured.cs" />
+    <Compile Include="Buildings\CompProperties_RootGrower.cs" />
+    <Compile Include="Buildings\GrowableStructureDef.cs" />
+    <Compile Include="Buildings\PlaceWorker_GrowableStructure.cs" />
+    <Compile Include="Buildings\StructureLayoutDef.cs" />
+    <Compile Include="Buildings\StructurePreviewUtility.cs" />
+    <Compile Include="Comps\Ability\DelegateFlyer.cs" />
+    <Compile Include="Designators\Dialog_AreaCaptureSettings.cs" />
+    <Compile Include="Designators\XMLUtil.cs" />
+    <Compile Include="Graphic\AssetBundleShaderManager.cs" />
+    <Compile Include="Buildings\Building_GrowableStructure.cs" />
+    <Compile Include="Designators\Designator_AreaCapture.cs" />
+    <Compile Include="Designators\Dialog_AreaCaptured.cs" />
+    <Compile Include="PawnRender\MaskNodeProperties.cs" />
+    <Compile Include="Util\CompProperties_BaseStance.cs" />
+    <Compile Include="Util\DashBehaviour.cs" />
+    <Compile Include="Util\DashState.cs" />
     <Compile Include="Util\Effect Behaviours\Meteor.cs" />
     <Compile Include="Util\Effect Behaviours\OrbitalLaser.cs" />
     <Compile Include="Interfaces\IGraphicColorLerpable.cs" />
@@ -169,7 +182,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AI\Formation Boid test\" />
     <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

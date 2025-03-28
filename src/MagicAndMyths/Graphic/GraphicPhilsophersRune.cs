@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -17,17 +20,4 @@ namespace MagicAndMyths
             return mat;
         }
     }
-
-    //public class GraphicEquipment : Graphic_WithPropertyBlock
-    //{
-    //    public override void DrawWorker(Vector3 loc, Rot4 rot, ThingDef thingDef, Thing thing, float extraRotation)
-    //    {
-    //        base.DrawWorker(loc, rot, thingDef, thing, extraRotation);
-    //    }
-    //}
-
-    //public class GraphicDataEquipment : GraphicData
-    //{
-    //    public Vector3 offset;
-    //}
 }

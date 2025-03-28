@@ -69,7 +69,7 @@ namespace MagicAndMyths
         {
             public static bool Prefix(Pawn ___pawn, ref bool __result)
             {
-                if (___pawn.Faction == Faction.OfPlayer && (Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(___pawn, out Pawn original) ||  ___pawn.IsControlledSummon()))
+                if (___pawn.Faction == Faction.OfPlayer && Current.Game.GetComponent<GameComp_Transformation>().IsTransformationPawn(___pawn, out Pawn original))
                 {
                     __result = false;
                     return false;

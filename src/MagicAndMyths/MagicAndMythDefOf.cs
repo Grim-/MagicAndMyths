@@ -8,8 +8,8 @@ namespace MagicAndMyths
     {
         public static ThingDef Thor_PawnFlyer;
         public static ThingDef Thor_MjolnirProjectile;
-
-
+        public static ThingDef MagicAndMyths_DelegateFlyer;
+        public static ThingDef MagicAndMyths_MultiJumpFlyer;
         public static AbilityDef MagicAndMyths_RevertTransformation;
 
 

@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using SquadBehaviour;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -13,7 +14,7 @@ namespace MagicAndMyths
         private Pawn referencedPawn;
         public Pawn Master => referencedPawn;
         public override string Label => base.Label;
-        public override string Description => base.Description + $"\nBound to {Master.Label}. Leader: {SquadLeader.SquadLeaderPawn.Name}";
+        public override string Description => base.Description + $"\nSquad Leader: {SquadLeader.SquadLeaderPawn.Name}";
 
         public ISquadLeader SquadLeader
         {
@@ -47,7 +48,25 @@ namespace MagicAndMyths
         private RotDrawMode _OverridenRotDrawMode = RotDrawMode.Dessicated;
         public RotDrawMode OverridenRotDrawMode => _OverridenRotDrawMode;
 
+        public SquadDutyDef _CurrentStance = null;
+        SquadDutyDef ISquadMember.CurrentStance { get => _CurrentStance; set => _CurrentStance = value; }
 
+        private Zone_PatrolPath _AssignedPatrol = null;
+        Zone_PatrolPath ISquadMember.AssignedPatrol { get => _AssignedPatrol; set => _AssignedPatrol = value; }
+
+        private PatrolTracker _PatrolTracker = null;
+        public PatrolTracker PatrolTracker
+        {
+            get
+            {
+                if (_PatrolTracker == null)
+                {
+                    _PatrolTracker = new PatrolTracker(this);
+                }
+
+                return _PatrolTracker;
+            }
+        }
         private Squad _AssignedSquad = null;
         public Squad AssignedSquad
         {
@@ -72,18 +91,25 @@ namespace MagicAndMyths
                 }
             }
         }
+        public void IssueOrder(SquadOrderDef orderDef, LocalTargetInfo target)
+        {
+            SquadOrderWorker squadOrderWorker = orderDef.CreateWorker(SquadLeader, this);
 
+            if (squadOrderWorker.CanExecuteOrder(target))
+            {
+                squadOrderWorker.ExecuteOrder(target);
+            }
+        }
         public void SetDefendPoint(IntVec3 targetPoint)
         {
             this.DefendPoint = targetPoint;
-            preDefendState = CurrentState;
-            SetCurrentMemberState(SquadMemberState.DefendPoint);
+            //SetCurrentMemberState(SquadMemberState.DefendPoint);
         }
 
         public void ClearDefendPoint()
         {
             this.DefendPoint = IntVec3.Invalid;
-            SetCurrentMemberState(preDefendState);
+           // SetCurrentMemberState(preDefendState);
 
         }
 
@@ -104,6 +130,9 @@ namespace MagicAndMyths
                 yield return gizmo;
             }
 
+
+            yield return new Gizmo_SquadMemberInfo(this);
+
             yield return new Command_Action()
             {
                 defaultLabel = $"Current State {this.CurrentState}",
@@ -123,23 +152,6 @@ namespace MagicAndMyths
                     gridOptions.Add(new FloatMenuOption("Do Nothing", () =>
                     {
                         this.SetCurrentMemberState(SquadMemberState.DoNothing);
-                    }));
-
-
-                    gridOptions.Add(new FloatMenuOption("Fresh", () =>
-                    {
-                        this._OverridenRotDrawMode = RotDrawMode.Fresh;
-                    }));
-
-
-                    gridOptions.Add(new FloatMenuOption("Dessicated", () =>
-                    {
-                        this._OverridenRotDrawMode = RotDrawMode.Dessicated;
-                    }));
-
-                    gridOptions.Add(new FloatMenuOption("Rotting", () =>
-                    {
-                        this._OverridenRotDrawMode = RotDrawMode.Rotting;
                     }));
 
                     Find.WindowStack.Add(new FloatMenu(gridOptions));
@@ -207,6 +219,22 @@ namespace MagicAndMyths
                     suppression.CurLevel = suppression.MaxLevel;
                 }
             }
+        }
+        public string GetStatusReport()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (SquadLeader != null && SquadLeader.SquadLeaderPawn != null)
+            {
+                sb.Append($"Squad Leader - {SquadLeader.SquadLeaderPawn.NameShortColored}");
+            }
+
+            if (this._CurrentStance != null)
+            {
+                sb.AppendLine($"Duty - {this._CurrentStance.label}");
+            }
+
+            return sb.ToString();
         }
 
         public override void ExposeData()

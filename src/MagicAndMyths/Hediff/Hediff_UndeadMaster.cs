@@ -32,8 +32,8 @@ namespace MagicAndMyths
 
         public bool ShowExtraOrders = true;
 
-        private FormationUtils.FormationType _FormationType = FormationUtils.FormationType.Column;
-        public FormationUtils.FormationType FormationType => _FormationType;
+        private FormationDef _FormationType = SquadDefOf.ColumnFormation;
+        public FormationDef FormationType => _FormationType;
 
         public override string Description => base.Description + $"\r\nThis pawn has absorbed {storedCreature.Count} spirits.";
 
@@ -100,12 +100,6 @@ namespace MagicAndMyths
 
         public Pawn SquadLeaderPawn => this.pawn;
 
-       // bool ISquadLeader.InFormation => this.InFormation;
-
-
-        //public SquadHostility SquadHostilityResponse = SquadHostility.Aggressive;
-        //public SquadHostility HostilityResponse => SquadHostilityResponse;
-
         public List<ISquadMember> _SquadMembers = new List<ISquadMember>();
         public List<ISquadMember> SquadMembers => _SquadMembers;
 
@@ -148,7 +142,21 @@ namespace MagicAndMyths
                 CheckWillLimit();
             }
         }
+        public void IssueGlobalOrder(SquadOrderDef orderDef, LocalTargetInfo target)
+        {
+            foreach (var squad in ActiveSquads)
+            {
+                squad.Value.IssueSquadOrder(orderDef, target);
+            }
+        }
 
+        public void IssueSquadOrder(Squad squad, SquadOrderDef orderDef, LocalTargetInfo target)
+        {
+            if (squad != null)
+            {
+                squad.IssueSquadOrder(orderDef, target);
+            }
+        }
         private void CheckWillLimit()
         {
             if (WillRequiredForUndead > this.WillStat)
@@ -233,7 +241,7 @@ namespace MagicAndMyths
         #endregion
 
         #region Formation Management
-        public void SetFormation(FormationUtils.FormationType formationType)
+        public void SetFormation(FormationDef formationType)
         {
             foreach (var item in _ActiveSquads)
             {
@@ -533,7 +541,7 @@ namespace MagicAndMyths
 
             Scribe_Deep.Look<ThingOwner>(ref storedCreature, "storedCursedSpirits", new object[] { this });
             Scribe_Collections.Look(ref _ActiveSquads, "activeSquads", LookMode.Value, LookMode.Deep);
-            Scribe_Values.Look(ref _FormationType, "formationType", FormationUtils.FormationType.Column);
+            Scribe_Defs.Look(ref _FormationType, "formationType");
             Scribe_Values.Look(ref _FollowDistance, "followDistance", 5f);
             Scribe_Values.Look(ref InFormation, "inFormation", true);
         }
