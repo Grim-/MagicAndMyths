@@ -83,23 +83,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
-    <Compile Include="Buildings\BuildingPartType.cs" />
+    <Compile Include="Growable Structures\BuildingPartType.cs" />
     <Compile Include="Buildings\Building_PhilosophersCircle.cs" />
     <Compile Include="Buildings\CompProperties_RootGrower.cs" />
-    <Compile Include="Buildings\GrowableStructureDef.cs" />
-    <Compile Include="Buildings\GrowingSkipFlags.cs" />
-    <Compile Include="Buildings\PlaceWorker_GrowableStructure.cs" />
-    <Compile Include="Buildings\StructureLayoutDef.cs" />
-    <Compile Include="Buildings\StructurePreviewUtility.cs" />
+    <Compile Include="Growable Structures\GrowableStructureDef.cs" />
+    <Compile Include="Growable Structures\GrowingSkipFlags.cs" />
+    <Compile Include="Growable Structures\PlaceWorker_GrowableStructure.cs" />
+    <Compile Include="Growable Structures\StructureLayoutDef.cs" />
+    <Compile Include="Growable Structures\StructurePreviewUtility.cs" />
     <Compile Include="Comps\Ability\DelegateFlyer.cs" />
-    <Compile Include="Designators\Designator_ZoneExpand_AreaCapture.cs" />
-    <Compile Include="Util\Dialog_StructureEditor.cs" />
-    <Compile Include="Util\StructureBuilder.cs" />
+    <Compile Include="Growable Structures\Designator_ZoneExpand_AreaCapture.cs" />
+    <Compile Include="Growable Structures\Dialog_StructureEditor.cs" />
+    <Compile Include="Growable Structures\StructureBuilder.cs" />
     <Compile Include="Util\XMLUtil.cs" />
-    <Compile Include="Designators\Zone_AreaCapture.cs" />
+    <Compile Include="Growable Structures\Zone_AreaCapture.cs" />
     <Compile Include="Graphic\AssetBundleShaderManager.cs" />
     <Compile Include="Buildings\Building_GrowableStructure.cs" />
-    <Compile Include="Designators\Designator_AreaCapture.cs" />
+    <Compile Include="Growable Structures\Designator_AreaCapture.cs" />
     <Compile Include="PawnRender\MaskNodeProperties.cs" />
     <Compile Include="Util\CompProperties_BaseStance.cs" />
     <Compile Include="Util\DashBehaviour.cs" />
@@ -192,6 +192,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Designators\" />
     <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

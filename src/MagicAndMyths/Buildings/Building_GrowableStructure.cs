@@ -36,7 +36,7 @@ namespace MagicAndMyths
         private List<Thing> placedThings = new List<Thing>();
         private List<Thing> lastStageThings = new List<Thing>();
         private bool showPreview = true;
-        private bool removeLastStageOnProgress = true;
+        private bool removeLastStageOnProgress = false;
 
         private Color previewColor = Color.green;
 

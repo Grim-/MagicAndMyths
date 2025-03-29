@@ -20,6 +20,7 @@ namespace MagicAndMyths
         public Zone_AreaCapture(ZoneManager zoneManager, IntVec2 originBuildingSize) : base("AreaCapture".Translate(), zoneManager)
         {
             this.OriginSize = originBuildingSize;
+            this.color = new Color(0, 1, 0, 0.3f);
         }
 
         public static Zone_AreaCapture GetOrCreateForMap(Map map, IntVec2 originSize)

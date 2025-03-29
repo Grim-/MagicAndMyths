@@ -360,7 +360,7 @@ namespace MagicAndMyths
                 }
             }
 
-            Rect captureButtonRect = toolbarButtonRow.NextRect(buttonWidth + 50, 10);
+            Rect captureButtonRect = toolbarButtonRow.NextRect(buttonWidth + 30, 10);
 
             TooltipHandler.TipRegion(captureButtonRect, $"Captures all valid things in area to current stage data.");
 
@@ -391,8 +391,10 @@ namespace MagicAndMyths
                 });
             }
 
+            Rect buildButton = toolbarButtonRow.NextRect(buttonWidth, 5);
 
-            if (Widgets.ButtonText(toolbarButtonRow.NextRect(buttonWidth), "Build From Stage"))
+            TooltipHandler.TipRegion(buildButton, $"Build's a stage from a selected StructureLayoutDef into the zone.");
+            if (Widgets.ButtonText(buildButton, "Build Stage"))
             {
                 List<FloatMenuOption> defOptions = new List<FloatMenuOption>();
                 foreach (var item in layoutDefs)
@@ -416,7 +418,7 @@ namespace MagicAndMyths
             }
 
 
-            if (Widgets.ButtonText(toolbarButtonRow.NextRect(buttonWidth), "Copy XML"))
+            if (Widgets.ButtonText(toolbarButtonRow.NextRect(buttonWidth, 5), "Copy XML"))
             {
                 GUIUtility.systemCopyBuffer = StructureBuilder.Instance.ToXmlString();
                 copySuccessful = true;
