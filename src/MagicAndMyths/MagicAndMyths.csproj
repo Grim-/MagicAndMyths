@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony">
+      <Version>2.3.5</Version>
+      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <Publicize Include="Assembly-CSharp" MemberPattern="^Verse\.ZoneManager\.AddZoneGridCell$" />
+    <PackageReference Include="Krafs.Publicizer" Version="2.*" />
+  </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -31,10 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.3.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Lib.Harmony.2.3.5\lib\net48\0Harmony.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -78,19 +83,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
+    <Compile Include="Buildings\BuildingPartType.cs" />
     <Compile Include="Buildings\Building_PhilosophersCircle.cs" />
     <Compile Include="Buildings\CompProperties_RootGrower.cs" />
     <Compile Include="Buildings\GrowableStructureDef.cs" />
+    <Compile Include="Buildings\GrowingSkipFlags.cs" />
     <Compile Include="Buildings\PlaceWorker_GrowableStructure.cs" />
     <Compile Include="Buildings\StructureLayoutDef.cs" />
     <Compile Include="Buildings\StructurePreviewUtility.cs" />
     <Compile Include="Comps\Ability\DelegateFlyer.cs" />
-    <Compile Include="Designators\Dialog_AreaCaptureSettings.cs" />
-    <Compile Include="Designators\XMLUtil.cs" />
+    <Compile Include="Designators\Designator_ZoneExpand_AreaCapture.cs" />
+    <Compile Include="Util\Dialog_StructureEditor.cs" />
+    <Compile Include="Util\StructureBuilder.cs" />
+    <Compile Include="Util\XMLUtil.cs" />
+    <Compile Include="Designators\Zone_AreaCapture.cs" />
     <Compile Include="Graphic\AssetBundleShaderManager.cs" />
     <Compile Include="Buildings\Building_GrowableStructure.cs" />
     <Compile Include="Designators\Designator_AreaCapture.cs" />
-    <Compile Include="Designators\Dialog_AreaCaptured.cs" />
     <Compile Include="PawnRender\MaskNodeProperties.cs" />
     <Compile Include="Util\CompProperties_BaseStance.cs" />
     <Compile Include="Util\DashBehaviour.cs" />
@@ -102,6 +111,7 @@
     <Compile Include="Comps\Ability\CompProperties_AbilityLaunchProjectileReloadable.cs" />
     <Compile Include="AI\JobDriver_GoToAndTalk.cs" />
     <Compile Include="Buildings\Building_Phylactery.cs" />
+    <Compile Include="Util\GrowableStructurePatches.cs" />
     <Compile Include="Util\MagicUtil.cs" />
     <Compile Include="Patch\DrawOffsetExt.cs" />
     <Compile Include="Util\EventManager.cs" />

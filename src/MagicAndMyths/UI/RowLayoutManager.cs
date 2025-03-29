@@ -25,9 +25,9 @@ namespace MagicAndMyths
         {
             if (currentX + width > rowWidth - horizontalPadding)
             {
-                //prevent overflow
                 width = rowWidth - horizontalPadding - currentX;
             }
+
             Rect rect = new Rect(currentX, rowY, width, rowHeight);
             currentX += width + (spacing ?? 0);
             return rect;

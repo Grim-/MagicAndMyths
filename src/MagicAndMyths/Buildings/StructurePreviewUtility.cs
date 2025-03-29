@@ -20,7 +20,6 @@ namespace MagicAndMyths
 
             if (currentStagePreviewIndex == -1)
             {
-                // Draw all stages with different colors
                 for (int i = 0; i < layout.stages.Count; i++)
                 {
                     int colorIndex = i % previewColors.Count;
@@ -32,10 +31,8 @@ namespace MagicAndMyths
             }
             else
             {
-                // Draw specific stage
                 int previewStage = Mathf.Clamp(currentStagePreviewIndex, 0, layout.stages.Count - 1);
                 BuildingStage currentBStage = layout.stages[previewStage];
-
                 DrawThingPreviewsForStage(currentBStage, center, rot, map, defaultPreviewColor, allPreviewCells);
             }
         }
@@ -51,9 +48,6 @@ namespace MagicAndMyths
             DrawThingPreviews(stage.power, center, rot, map, previewColor, allPreviewCells);
             DrawThingPreviews(stage.furniture, center, rot, map, previewColor, allPreviewCells);
             DrawThingPreviews(stage.other, center, rot, map, previewColor, allPreviewCells);
-
-            // Draw terrain previews if needed
-            DrawTerrainPreviews(stage.terrain, center, rot, map, previewColor, allPreviewCells);
         }
 
         /// <summary>

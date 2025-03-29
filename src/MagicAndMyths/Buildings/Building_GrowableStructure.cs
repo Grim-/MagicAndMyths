@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,110 +7,9 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
-    [Flags]
-    public enum GrowingSkipFlags
-    {
-        none,
-        Walls = 2,
-        Doors = 4,
-        Floors = 8,
-        Power = 16,
-        Furniture = 32,
-        Other = 64,
-        All = 128
-    }
-
-
-
-    //public class Graphic_DigHole : Graphic_Single
-    //{
-
-    //    //lazy init pattern, loads once when needed then uses cache
-    //    private Texture2D _DigA;
-    //    private Texture2D DigA
-    //    {
-    //        get
-    //        {
-    //            if (_DigA == null)
-    //            {
-    //                _DigA = ContentFinder<Texture2D>.Get("Building/EM_DiggingSpot_a");
-    //            }
-
-    //            return _DigA;
-    //        }
-    //    }
-
-    //    //lazy init pattern
-    //    private Texture2D _DigC;
-    //    private Texture2D DigC
-    //    {
-    //        get
-    //        {
-    //            if (_DigC == null)
-    //            {
-    //                _DigC = ContentFinder<Texture2D>.Get("Building/EM_DiggingSpot_c");
-    //            }
-
-    //            return _DigC;
-    //        }
-    //    }
-
-
-    //    //lazy init pattern
-    //    private Texture2D _DigB;
-    //    private Texture2D DigB
-    //    {
-    //        get
-    //        {
-    //            if (_DigB == null)
-    //            {
-    //                _DigB = ContentFinder<Texture2D>.Get("Building/EM_DiggingSpot_b");
-    //            }
-
-    //            return _DigB;
-    //        }
-    //    }
-
-    //    //besure to change this to your actual buildingType
-    //    private Building yourBuilding = null;
-
-    //    public override Material MatSingleFor(Thing thing)
-    //    {
-    //        Material mat =  base.MatSingleFor(thing);
-
-    //        if (thing is Building yourBuilding)
-    //        {
-    //            Texture2D texture = null;
-    //            switch (State)
-    //            {
-    //                case DiggingSpotState.Deep:
-    //                    texture = DigA;
-    //                    break;
-    //                case DiggingSpotState.Mid:
-    //                    texture = DigB;
-    //                    break;
-    //                case DiggingSpotState.Top:
-    //                    texture = DigC;
-    //                    break;
-    //            }
-
-    //            if (texture != null)
-    //            {
-    //                mat.SetTexture("_MainTex", texture);
-    //            }
-    //        }
-    //        return mat;
-    //    }
-    //}
-
-
     public class Building_GrowableStructure : Building
     {
         #region Properties and Fields
-
-        GrowableStructureDef Def => (GrowableStructureDef)def;
-
         // Growth tracking
         private int currentGrowthTick = 0;
         private int totalGrowthTicks = 0;
@@ -127,8 +25,8 @@ namespace MagicAndMyths
 
         private int ticksUntilNextPlacement = 0;
 
-        private bool includeNaturalTerrain = false;
 
+        private bool includeNaturalTerrain = false;
         private ThingDef overrideWallStuff;
         private TerrainDef overrideFloorStuff;
         private ThingDef overrideDoorStuff;
@@ -136,7 +34,9 @@ namespace MagicAndMyths
 
         private ThingFilter ThingFilter;
         private List<Thing> placedThings = new List<Thing>();
+        private List<Thing> lastStageThings = new List<Thing>();
         private bool showPreview = true;
+        private bool removeLastStageOnProgress = true;
 
         private Color previewColor = Color.green;
 
@@ -169,43 +69,56 @@ namespace MagicAndMyths
                 Position.z + def.size.z / 2);
             }
         }
-
         public IntVec3 LayoutCenter => new IntVec3(
                 Position.x + def.size.x / 2,
                 Position.y,
                 Position.z + def.size.z / 2
             );
 
+
+        public GrowableStructureDef Def => (GrowableStructureDef)def;
+        public StructureLayoutDef LayoutDef => this.Def.structureLayout;
+
+
+
+        //TREE LIFE CYCLE
+        //SPROUT = first 'planted'
+        //BLOOM -> WITHERING
+        //WITHERING -> WITHERING
+        //DEAD = no growth anymore
+
         #endregion
 
         #region Lifecycle Methods
-
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
             if (!respawningAfterLoad)
             {
-                GrowableStructureDef growableDef = def as GrowableStructureDef;
-                if (growableDef != null)
-                {
-                    totalGrowthTicks = growableDef.growthDays * GenDate.TicksPerDay;
-                    currentStage = 0;
-
-                    overrideWallStuff = growableDef.defaultWallStuff;
-                    overrideFloorStuff = growableDef.defaultFloorStuff;
-                    overrideDoorStuff = growableDef.defaultDoorStuff;
-                    overrideFurnitureStuff = growableDef.defaultFurnitureStuff;
-                }
-
-                ThingFilter = new ThingFilter();
-                if (Def != null && Def.disallowedThingFilter != null)
-                {
-                    ThingFilter.CopyAllowancesFrom(Def.disallowedThingFilter);
-                }
-
-               
+                Init(Def);
             }
+        }
+
+
+        private void Init(GrowableStructureDef growableDef)
+        {
+            totalGrowthTicks = growableDef.growthDays * GenDate.TicksPerDay;
+            currentStage = 0;
+            overrideWallStuff = growableDef.defaultWallStuff;
+            overrideFloorStuff = growableDef.defaultFloorStuff;
+            overrideDoorStuff = growableDef.defaultDoorStuff;
+            overrideFurnitureStuff = growableDef.defaultFurnitureStuff;
+        }
+
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (mode == DestroyMode.KillFinalize)
+            {
+                DestroyPlacedThings();
+            }
+
+            base.Destroy(mode);
         }
 
         public override void Tick()
@@ -220,117 +133,131 @@ namespace MagicAndMyths
                 GrowTick();
             }
         }
-
-        public override void DrawExtraSelectionOverlays()
-        {
-            base.DrawExtraSelectionOverlays();
-
-            if (!showPreview)
-                return;
-
-            GrowableStructureDef growableDef = def as GrowableStructureDef;
-            if (growableDef?.structureLayout == null || currentStage < 0)
-                return;
-
-            StructureLayoutDef layout = growableDef.structureLayout;
-            List<IntVec3> allPreviewCells = new List<IntVec3>();
-
-            GenDraw.DrawFieldEdges(new List<IntVec3> { Position }, Color.yellow);
-            GenDraw.DrawFieldEdges(new List<IntVec3> { TreeCenter }, Color.green);
-            GenDraw.DrawFieldEdges(new List<IntVec3> { LayoutCenter }, Color.magenta);
-
-            DrawStructurePreview(layout, allPreviewCells);
-
-            if (allPreviewCells.Count > 0)
-            {
-                GenDraw.DrawFieldEdges(allPreviewCells, Color.cyan);
-            }
-        }
-
-        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-        {
-            if (mode == DestroyMode.KillFinalize)
-            {
-                DestroyPlacedThings();
-            }
-
-            base.Destroy(mode);
-        }
-
-        private bool PassesThingFilter(ThingDef thingDef)
-        {
-            return true;
-
-            if (thingDef == null)
-                return false;
-
-            GrowableStructureDef growableDef = def as GrowableStructureDef;
-            if (growableDef == null)
-                return true;
-
-            if (ThingFilter != null && !ThingFilter.Allows(thingDef))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         #endregion
 
-        #region Growth and Placement
+        #region Growth
 
         private void GrowTick()
         {
-            GrowableStructureDef growableDef = def as GrowableStructureDef;
-            if (growableDef?.structureLayout == null)
+            if (LayoutDef == null)
                 return;
 
-            StructureLayoutDef layout = growableDef.structureLayout;
-
-            int stageCount = layout.stages.Count;
-            if (stageCount <= 0)
+            int stageCount = LayoutDef.stages.Count;
+            if (stageCount <= 0 || currentStage >= stageCount)
                 return;
 
             currentGrowthTick++;
 
-            if (AreAllItemsPlaced())
+            if (IsStageFullyBuilt())
             {
+                OnStageBuildComplete(currentStage);
                 int targetStage = currentStage + 1;
-                targetStage = Mathf.Clamp(targetStage, 0, stageCount - 1);
-                if (targetStage > currentStage)
+
+                if (targetStage >= LayoutDef.stages.Count)
                 {
-                    SetStage(targetStage);
-                    ResetPlacementIndices();
+                    //finished
+                    return;
+                }
+                else
+                {
+                    if (removeLastStageOnProgress && lastStageThings.Count > 0)
+                    {
+                        DestroyLastStageThings();
+                    }
+                    else
+                    {
+                        // Clear the list without destroying things
+                        lastStageThings.Clear();
+                    }
+
+                    SetTargetStage(targetStage);
+                    OnStageStarted(currentStage);
                 }
             }
             else
             {
-                PlaceNextItem();
+                BuildNext();
             }
 
             if (IsGrowthComplete())
             {
-                FinishGrowth();
+                OnFinishedGrowing();
+            }
+        }
+        private void OnFinishedGrowing()
+        {
+            FleckMaker.ThrowLightningGlow(Position.ToVector3Shifted(), Map, 2f);
+            MoteMaker.ThrowText(Position.ToVector3Shifted(), Map, "Growth complete", 3.65f);
+        }
+        private bool IsGrowthComplete()
+        {
+            return IsStageFullyBuilt();
+        }
+
+        public void DoRegenTick()
+        {
+            List<Thing> damagedBuiltThings = placedThings.Where(x => x.def.useHitPoints && x.HitPoints < x.MaxHitPoints).ToList();
+            Thing nextThingToRepair = damagedBuiltThings.Last();
+            if (nextThingToRepair != null)
+            {
+                nextThingToRepair.HitPoints += 1;
+            }
+        }
+        public void DoDegenTick()
+        {
+            if (placedThings != null && placedThings.Count > 0)
+            {
+                Thing nextThingToDamage = placedThings.Last();
+                if (nextThingToDamage != null)
+                {
+                    nextThingToDamage.HitPoints -= 1;
+
+                    if (nextThingToDamage.DestroyedOrNull())
+                    {
+                        placedThings.RemoveWhere(x => x == null);
+                    }
+                }
             }
         }
 
-        private bool IsGrowthComplete()
-        {
-            return currentGrowthTick >= totalGrowthTicks && AreAllItemsPlaced();
-        }
+        #endregion
+
+        #region Stage
 
         private void SetStage(int newIndex)
         {
-            currentStage = newIndex;
+            currentStage = Mathf.Clamp(newIndex, 0, LayoutDef.stages.Count - 1);
             SetPreviewIndex(currentStage);
         }
-
-        private void SetPreviewIndex(int newIndex)
+        private void OnStageStarted(int stageIndex)
         {
-            currentStagePreviewIndex = newIndex;
+            Messages.Message($"{this.Label} has started building stage {stageIndex}", MessageTypeDefOf.PositiveEvent);
+            ResetPlacementIndices();
+        }
+        private void OnStageBuildComplete(int stageIndex)
+        {
+            Messages.Message($"{this.Label} has finished building stage {stageIndex}", MessageTypeDefOf.PositiveEvent);
+        }
+        private void SetTargetStage(int targetStage)
+        {
+            targetStage = Mathf.Clamp(targetStage, 0, LayoutDef.stages.Count - 1);
+            if (targetStage > currentStage)
+            {
+                SetStage(targetStage);
+            }
         }
 
+        #endregion
+
+        #region Building
+        public void SetSkipFlags(GrowingSkipFlags flags)
+        {
+            skipFlags = flags;
+        }
+        public void ToggleSkipFlag(GrowingSkipFlags flag)
+        {
+            skipFlags ^= flag;
+        }
         private void ResetPlacementIndices()
         {
             nextTerrainIndex = 0;
@@ -340,11 +267,10 @@ namespace MagicAndMyths
             nextFurnitureIndex = 0;
             nextOtherIndex = 0;
         }
-
-        private bool AreAllItemsPlaced()
+        private bool IsStageFullyBuilt()
         {
             GrowableStructureDef growableDef = def as GrowableStructureDef;
-            if (growableDef?.structureLayout == null || currentStage < 0)
+            if (LayoutDef == null || currentStage < 0)
                 return true;
 
             BuildingStage stage = growableDef.structureLayout.stages[currentStage];
@@ -357,8 +283,7 @@ namespace MagicAndMyths
                 nextFurnitureIndex >= stage.furniture.Count &&
                 nextOtherIndex >= stage.other.Count;
         }
-
-        private bool PlaceNextItem()
+        private bool BuildNext()
         {
             GrowableStructureDef growableDef = def as GrowableStructureDef;
             if (growableDef?.structureLayout == null || currentStage < 0)
@@ -374,7 +299,10 @@ namespace MagicAndMyths
             // Build in a specific order: terrain -> walls -> doors -> power -> furniture -> other
             if (HasTerrainToBuild(stage))
             {
-                BuildTerrain(stage.terrain[nextTerrainIndex]);
+                if (!skipFlags.HasFlag(GrowingSkipFlags.Floors))
+                {
+                    BuildTerrain(stage.terrain[nextTerrainIndex]);
+                }
                 nextTerrainIndex++;
                 return true;
             }
@@ -382,7 +310,7 @@ namespace MagicAndMyths
             if (HasWallToBuild(stage))
             {
                 ThingPlacement placement = stage.walls[nextWallIndex];
-                if (PassesThingFilter(placement.thing))
+                if (!skipFlags.HasFlag(GrowingSkipFlags.Walls))
                 {
                     BuildThing(placement, GetMaterialOverride(placement, BuildingPartType.Wall));
                 }
@@ -393,7 +321,7 @@ namespace MagicAndMyths
             if (HasDoorToBuild(stage))
             {
                 ThingPlacement placement = stage.doors[nextDoorIndex];
-                if (PassesThingFilter(placement.thing))
+                if (!skipFlags.HasFlag(GrowingSkipFlags.Doors))
                 {
                     BuildThing(placement, GetMaterialOverride(placement, BuildingPartType.Door));
                 }
@@ -404,7 +332,7 @@ namespace MagicAndMyths
             if (HasPowerToBuild(stage))
             {
                 ThingPlacement placement = stage.power[nextPowerIndex];
-                if (PassesThingFilter(placement.thing))
+                if (!skipFlags.HasFlag(GrowingSkipFlags.Power))
                 {
                     BuildThing(placement, GetMaterialOverride(placement, BuildingPartType.Other));
                 }
@@ -415,7 +343,7 @@ namespace MagicAndMyths
             if (HasFurnitureToBuild(stage))
             {
                 ThingPlacement placement = stage.furniture[nextFurnitureIndex];
-                if (PassesThingFilter(placement.thing))
+                if (!skipFlags.HasFlag(GrowingSkipFlags.Furniture))
                 {
                     BuildThing(placement, GetMaterialOverride(placement, BuildingPartType.Furniture));
                 }
@@ -426,7 +354,7 @@ namespace MagicAndMyths
             if (HasOtherToBuild(stage))
             {
                 ThingPlacement placement = stage.other[nextOtherIndex];
-                if (PassesThingFilter(placement.thing))
+                if (!skipFlags.HasFlag(GrowingSkipFlags.Other))
                 {
                     BuildThing(placement, GetMaterialOverride(placement, BuildingPartType.Other));
                 }
@@ -436,6 +364,32 @@ namespace MagicAndMyths
 
             return false;
         }
+        public void DestroyLastPlaced()
+        {
+            if (placedThings != null && placedThings.Count > 0)
+            {
+                placedThings.Last().Destroy(DestroyMode.Vanish);
+                placedThings.RemoveLast();
+            }
+        }
+
+        public void DestroyLastStageThings()
+        {
+            foreach (Thing thing in lastStageThings)
+            {
+                if (thing != null && !thing.Destroyed)
+                {
+                    placedThings.Remove(thing);
+                    thing.Destroy(DestroyMode.Vanish);
+                }
+            }
+            lastStageThings.Clear();
+        }
+
+        public void SetRemoveLastStageOnProgress(bool remove)
+        {
+            removeLastStageOnProgress = remove;
+        }
 
         public void SetIncludeNaturalTerrain(bool include)
         {
@@ -444,32 +398,27 @@ namespace MagicAndMyths
 
         protected virtual bool HasTerrainToBuild(BuildingStage stage)
         {
-            return !skipFlags.HasFlag(GrowingSkipFlags.Floors) && nextTerrainIndex < stage.terrain.Count;
+            return nextTerrainIndex < stage.terrain.Count;
         }
-
         protected virtual bool HasWallToBuild(BuildingStage stage)
         {
-            return !skipFlags.HasFlag(GrowingSkipFlags.Walls) && nextWallIndex < stage.walls.Count;
+            return nextWallIndex < stage.walls.Count;
         }
-
         protected virtual bool HasDoorToBuild(BuildingStage stage)
         {
-            return !skipFlags.HasFlag(GrowingSkipFlags.Doors) && nextDoorIndex < stage.doors.Count;
+            return nextDoorIndex < stage.doors.Count;
         }
-
         protected virtual bool HasPowerToBuild(BuildingStage stage)
         {
-            return !skipFlags.HasFlag(GrowingSkipFlags.Power) && nextPowerIndex < stage.power.Count;
+            return nextPowerIndex < stage.power.Count;
         }
-
         protected virtual bool HasFurnitureToBuild(BuildingStage stage)
         {
-            return !skipFlags.HasFlag(GrowingSkipFlags.Furniture) && nextFurnitureIndex < stage.furniture.Count;
+            return nextFurnitureIndex < stage.furniture.Count;
         }
-
         protected virtual bool HasOtherToBuild(BuildingStage stage)
         {
-            return !skipFlags.HasFlag(GrowingSkipFlags.Other) && nextOtherIndex < stage.other.Count;
+            return nextOtherIndex < stage.other.Count;
         }
 
         private void BuildTerrain(TerrainPlacement terrain)
@@ -483,8 +432,6 @@ namespace MagicAndMyths
             }
 
             IntVec3 pos = CalculateCenteredPosition(terrain.position);
-
-            // Ensure it's within bounds
             if (!pos.InBounds(Map))
                 return;
 
@@ -492,13 +439,9 @@ namespace MagicAndMyths
                 return;
 
             TerrainDef terrainToUse = overrideFloorStuff ?? terrain.terrain;
-
             Map.terrainGrid.SetTerrain(pos, terrainToUse);
-
-            // Visual effect
             FleckMaker.ThrowDustPuff(pos, Map, 0.5f);
         }
-
         private void BuildThing(ThingPlacement placement, ThingDef stuffOverride = null)
         {
             if (placement.thing == null)
@@ -540,10 +483,10 @@ namespace MagicAndMyths
             if (placedThing != null)
             {
                 placedThings.Add(placedThing);
+                lastStageThings.Add(placedThing);
                 FleckMaker.ThrowMetaPuffs(new TargetInfo(pos, Map));
             }
         }
-
         private IntVec3 CalculateCenteredPosition(IntVec2 relativePos)
         {
             return new IntVec3(
@@ -552,20 +495,12 @@ namespace MagicAndMyths
                 Position.z + relativePos.z
             );
         }
-
         private bool IsCellOccupiedByThisBuilding(IntVec3 worldPos)
         {
             List<IntVec3> occupiedCells = new List<IntVec3>();
             this.OccupiedRect().Cells.ToList().ForEach(c => occupiedCells.Add(c));
             return occupiedCells.Contains(worldPos);
         }
-
-        private void FinishGrowth()
-        {
-            FleckMaker.ThrowLightningGlow(Position.ToVector3Shifted(), Map, 2f);
-            MoteMaker.ThrowText(Position.ToVector3Shifted(), Map, "Growth complete", 3.65f);
-        }
-
         private void DestroyPlacedThings()
         {
             foreach (Thing thing in placedThings)
@@ -577,8 +512,8 @@ namespace MagicAndMyths
             }
 
             placedThings.Clear();
+            lastStageThings.Clear();
         }
-
         private bool CanBuildTerrain(TerrainPlacement placement)
         {
             if (placement.terrain == null)
@@ -589,14 +524,11 @@ namespace MagicAndMyths
 
             return true;
         }
-
         private bool CanBuildThing(ThingPlacement placement, IntVec3 pos, Map map)
         {
-            // Check if placement thing is valid
             if (placement.thing == null || !placement.thing.BuildableByPlayer)
                 return false;
 
-            // Check for any building at this position
             Building existingBuilding = pos.GetFirstBuilding(map);
             if (existingBuilding != null)
             {
@@ -613,7 +545,6 @@ namespace MagicAndMyths
 
             return true;
         }
-
         private ThingDef GetMaterialOverride(ThingPlacement placement, BuildingPartType partType)
         {
             if (!placement.thing.MadeFromStuff)
@@ -635,7 +566,33 @@ namespace MagicAndMyths
         #endregion
 
         #region Drawing and Visualization
+        public override void DrawExtraSelectionOverlays()
+        {
+            base.DrawExtraSelectionOverlays();
 
+            if (!showPreview)
+                return;
+
+            if (LayoutDef == null || currentStage < 0)
+                return;
+
+            List<IntVec3> allPreviewCells = new List<IntVec3>();
+
+            GenDraw.DrawFieldEdges(new List<IntVec3> { Position }, Color.yellow);
+            GenDraw.DrawFieldEdges(new List<IntVec3> { TreeCenter }, Color.green);
+            GenDraw.DrawFieldEdges(new List<IntVec3> { LayoutCenter }, Color.magenta);
+
+            DrawStructurePreview(LayoutDef, allPreviewCells);
+
+            if (allPreviewCells.Count > 0)
+            {
+                GenDraw.DrawFieldEdges(allPreviewCells, Color.cyan);
+            }
+        }
+        private void SetPreviewIndex(int newIndex)
+        {
+            currentStagePreviewIndex = newIndex;
+        }
         private void DrawStructurePreview(StructureLayoutDef layout, List<IntVec3> allPreviewCells)
         {
             //draw them all
@@ -647,11 +604,17 @@ namespace MagicAndMyths
                     Color startColor = previewColors[colorIndex];
                     BuildingStage currentBStage = layout.stages[i];
 
-                    StructurePreviewUtility.DrawThingPreviews(currentBStage.walls, Position, Rotation, Map, startColor, allPreviewCells);
-                    StructurePreviewUtility.DrawThingPreviews(currentBStage.doors, Position, Rotation, Map, startColor, allPreviewCells);
-                    StructurePreviewUtility.DrawThingPreviews(currentBStage.power, Position, Rotation, Map, startColor, allPreviewCells);
-                    StructurePreviewUtility.DrawThingPreviews(currentBStage.furniture, Position, Rotation, Map, startColor, allPreviewCells);
-                    StructurePreviewUtility.DrawThingPreviews(currentBStage.other, Position, Rotation, Map, startColor, allPreviewCells);
+                    List<ThingPlacement> unbuiltWalls = FilterUnbuiltPlacements(currentBStage.walls);
+                    List<ThingPlacement> unbuiltDoors = FilterUnbuiltPlacements(currentBStage.doors);
+                    List<ThingPlacement> unbuiltPower = FilterUnbuiltPlacements(currentBStage.power);
+                    List<ThingPlacement> unbuiltFurniture = FilterUnbuiltPlacements(currentBStage.furniture);
+                    List<ThingPlacement> unbuiltOther = FilterUnbuiltPlacements(currentBStage.other);
+
+                    StructurePreviewUtility.DrawThingPreviews(unbuiltWalls, Position, Rotation, Map, startColor, allPreviewCells);
+                    StructurePreviewUtility.DrawThingPreviews(unbuiltDoors, Position, Rotation, Map, startColor, allPreviewCells);
+                    StructurePreviewUtility.DrawThingPreviews(unbuiltPower, Position, Rotation, Map, startColor, allPreviewCells);
+                    StructurePreviewUtility.DrawThingPreviews(unbuiltFurniture, Position, Rotation, Map, startColor, allPreviewCells);
+                    StructurePreviewUtility.DrawThingPreviews(unbuiltOther, Position, Rotation, Map, startColor, allPreviewCells);
                 }
             }
             else
@@ -659,26 +622,50 @@ namespace MagicAndMyths
                 int previewStage = Mathf.Clamp(currentStagePreviewIndex, 0, layout.stages.Count - 1);
                 BuildingStage currentBStage = layout.stages[previewStage];
 
-                StructurePreviewUtility.DrawThingPreviews(currentBStage.walls, Position, Rotation, Map, previewColor, allPreviewCells);
-                StructurePreviewUtility.DrawThingPreviews(currentBStage.doors, Position, Rotation, Map, previewColor, allPreviewCells);
-                StructurePreviewUtility.DrawThingPreviews(currentBStage.power, Position, Rotation, Map, previewColor, allPreviewCells);
-                StructurePreviewUtility.DrawThingPreviews(currentBStage.furniture, Position, Rotation, Map, previewColor, allPreviewCells);
-                StructurePreviewUtility.DrawThingPreviews(currentBStage.other, Position, Rotation, Map, previewColor, allPreviewCells);
+                List<ThingPlacement> unbuiltWalls = FilterUnbuiltPlacements(currentBStage.walls);
+                List<ThingPlacement> unbuiltDoors = FilterUnbuiltPlacements(currentBStage.doors);
+                List<ThingPlacement> unbuiltPower = FilterUnbuiltPlacements(currentBStage.power);
+                List<ThingPlacement> unbuiltFurniture = FilterUnbuiltPlacements(currentBStage.furniture);
+                List<ThingPlacement> unbuiltOther = FilterUnbuiltPlacements(currentBStage.other);
+
+                StructurePreviewUtility.DrawThingPreviews(unbuiltWalls, Position, Rotation, Map, previewColor, allPreviewCells);
+                StructurePreviewUtility.DrawThingPreviews(unbuiltDoors, Position, Rotation, Map, previewColor, allPreviewCells);
+                StructurePreviewUtility.DrawThingPreviews(unbuiltPower, Position, Rotation, Map, previewColor, allPreviewCells);
+                StructurePreviewUtility.DrawThingPreviews(unbuiltFurniture, Position, Rotation, Map, previewColor, allPreviewCells);
+                StructurePreviewUtility.DrawThingPreviews(unbuiltOther, Position, Rotation, Map, previewColor, allPreviewCells);
             }
         }
+        private List<ThingPlacement> FilterUnbuiltPlacements(List<ThingPlacement> placements)
+        {
+            List<ThingPlacement> unbuiltPlacements = new List<ThingPlacement>();
 
+            foreach (ThingPlacement placement in placements)
+            {
+                IntVec3 pos = CalculateCenteredPosition(placement.position);
+
+                if (!pos.InBounds(Map))
+                    continue;
+                bool isBuilt = false;
+                List<Thing> thingsAt = pos.GetThingList(Map);
+                foreach (Thing thing in thingsAt)
+                {
+                    if (thing != this && (thing.def == placement.thing ||
+                        (thing.def.entityDefToBuild != null && thing.def.entityDefToBuild == placement.thing)))
+                    {
+                        isBuilt = true;
+                        break;
+                    }
+                }
+
+                if (!isBuilt)
+                {
+                    unbuiltPlacements.Add(placement);
+                }
+            }
+
+            return unbuiltPlacements;
+        }
         #endregion
-
-
-        public void SetSkipFlags(GrowingSkipFlags flags)
-        {
-            skipFlags = flags;
-        }
-
-        public void ToggleSkipFlag(GrowingSkipFlags flag)
-        {
-            skipFlags ^= flag;
-        }
 
         #region Gizmos and Inspection
 
@@ -689,7 +676,6 @@ namespace MagicAndMyths
                 yield return gizmo;
             }
 
-            // Stage preview controls (already implemented)
             yield return new Command_Action()
             {
                 defaultLabel = "Change stage preview",
@@ -725,8 +711,27 @@ namespace MagicAndMyths
                     Find.WindowStack.Add(new FloatMenu(options));
                 }
             };
-        }
 
+            // Add gizmo to toggle removing last stage on progress
+            yield return new Command_Toggle
+            {
+                defaultLabel = "Remove previous stage",
+                defaultDesc = "If enabled, items from the previous stage will be removed when progressing to the next stage.",
+                isActive = () => removeLastStageOnProgress,
+                toggleAction = () => removeLastStageOnProgress = !removeLastStageOnProgress
+            };
+
+            // Add gizmo to manually remove the last stage
+            if (lastStageThings.Count > 0)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "Remove last stage items",
+                    defaultDesc = "Remove all items that were built in the last stage.",
+                    action = () => DestroyLastStageThings()
+                };
+            }
+        }
         public override string GetInspectString()
         {
             StringBuilder sb = new StringBuilder();
@@ -757,6 +762,16 @@ namespace MagicAndMyths
 
                     sb.AppendLine("Items placed: " + itemsPlaced + "/" + itemsTotal);
                     sb.AppendLine("Time remaining: " + ((totalGrowthTicks - currentGrowthTick) / GenTicks.TicksPerRealSecond).ToStringTicksToPeriod());
+
+                    if (removeLastStageOnProgress)
+                    {
+                        sb.AppendLine("Previous stage removal: Enabled");
+                    }
+
+                    if (lastStageThings.Count > 0)
+                    {
+                        sb.AppendLine("Last stage items: " + lastStageThings.Count);
+                    }
                 }
             }
 
@@ -782,6 +797,7 @@ namespace MagicAndMyths
 
             Scribe_Values.Look(ref showPreview, "showPreview", true);
             Scribe_Values.Look(ref currentStagePreviewIndex, "currentStagePreviewIndex", 0);
+            Scribe_Values.Look(ref removeLastStageOnProgress, "removeLastStageOnProgress", false);
 
             Scribe_Values.Look(ref skipFlags, "skipFlags", GrowingSkipFlags.none);
             Scribe_Values.Look(ref includeNaturalTerrain, "includeNaturalTerrain", false);
@@ -794,17 +810,7 @@ namespace MagicAndMyths
             Scribe_Deep.Look(ref ThingFilter, "thingFilter");
 
             Scribe_Collections.Look(ref placedThings, "placedThings", LookMode.Reference);
+            Scribe_Collections.Look(ref lastStageThings, "lastStageThings", LookMode.Reference);
         }
     }
-
-
-    public enum BuildingPartType
-    {
-        Wall,
-        Door,
-        Furniture,
-        Floor,
-        Other
-    }
-
 }

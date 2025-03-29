@@ -45,6 +45,9 @@ A map that when used triggers a world quest
     - Allows placement of zones of light
     - Can be used three times before requiring a cooldown
     - [Light intensity/area/effects not detailed]
+- **Dagger Dagger Dagger**
+	- Bracers
+	- Gives throw conjured dagger ability, 3 charges.
 
 
 Iron bough seed
