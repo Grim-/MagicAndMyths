@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 namespace MagicAndMyths
@@ -10,17 +11,36 @@ namespace MagicAndMyths
         public bool CaptureFloors = true;
         public bool CaptureTerrain = true;
         public bool CaptureThings = true;
+        public override bool IsMultiselectable => true;
+        protected override Color NextZoneColor => new Color(0.2f, 0.6f, 0.3f);
+
 
         private static Dictionary<Map, Zone_AreaCapture> instances = new Dictionary<Map, Zone_AreaCapture>();
 
         public Zone_AreaCapture()
         {
+
         }
 
         public Zone_AreaCapture(ZoneManager zoneManager, IntVec2 originBuildingSize) : base("AreaCapture".Translate(), zoneManager)
         {
             this.OriginSize = originBuildingSize;
             this.color = new Color(0, 1, 0, 0.3f);
+        }
+
+        public override void PostRegister()
+        {
+            base.PostRegister();
+            instances[Map] = this;
+        }
+
+        public override void PostDeregister()
+        {
+            base.PostDeregister();
+            if (instances.ContainsKey(Map) && instances[Map] == this)
+            {
+                instances.Remove(Map);
+            }
         }
 
         public static Zone_AreaCapture GetOrCreateForMap(Map map, IntVec2 originSize)
@@ -34,6 +54,14 @@ namespace MagicAndMyths
             map.zoneManager.RegisterZone(newZone);
             instances[map] = newZone;
             return newZone;
+        }
+
+        public override IEnumerable<InspectTabBase> GetInspectTabs()
+        {
+            IntVec3 center = CellRect.FromCellList(this.cells).CenterCell;
+            CellRect rect = CellRect.CenteredOn(center, 1);
+            GenDraw.DrawFieldEdges(rect.Cells.ToList(), Color.red);
+            return base.GetInspectTabs();
         }
 
         //base implementation but allows placing over existing stuff.
@@ -65,27 +93,12 @@ namespace MagicAndMyths
             base.Delete();
         }
 
-        public override bool IsMultiselectable => true;
 
-        protected override Color NextZoneColor => new Color(0.2f, 0.6f, 0.3f);
 
         public override IEnumerable<Gizmo> GetZoneAddGizmos()
         {
             yield return DesignatorUtility.FindAllowedDesignator<Designator_ZoneExpand_AreaCapture>();
             yield break;
-        }
-
-        private bool ValidateCanCaptureThingType(Thing thing)
-        {
-            if (thing.def.building != null)
-            {
-                if (thing.def.building.neverBuildable)
-                {
-                    return false;
-                }
-                return true;
-            }
-            return !(thing is Pawn || thing is Filth || thing is Mote || thing is Corpse || thing is Plant);
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -119,19 +132,5 @@ namespace MagicAndMyths
             }
         }
 
-        public override void PostRegister()
-        {
-            base.PostRegister();
-            instances[Map] = this;
-        }
-
-        public override void PostDeregister()
-        {
-            base.PostDeregister();
-            if (instances.ContainsKey(Map) && instances[Map] == this)
-            {
-                instances.Remove(Map);
-            }
-        }
     }
 }

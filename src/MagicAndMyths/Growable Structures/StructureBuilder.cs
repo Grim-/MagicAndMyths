@@ -32,7 +32,11 @@ namespace MagicAndMyths
             Reset();
         }
 
-    
+        public void SetStructure(StructureLayoutDef def)
+        {
+            this.structureDef = def;
+        }
+
         public void Reset()
         {
             structureDef = new StructureLayoutDef();
@@ -394,7 +398,7 @@ namespace MagicAndMyths
                 if (position.InBounds(map))
                 {
                     Thing thing = ThingMaker.MakeThing(placement.thing, placement.stuff);
-                    if (faction != null)
+                    if (thing.Faction != null && faction != null)
                     {
                         thing.SetFaction(faction);
                     }

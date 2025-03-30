@@ -93,7 +93,7 @@ namespace MagicAndMyths
 
         public Dialog_StructureEditor(Zone_AreaCapture Zone, StructureLayoutDef def)
         {
-            structureDef = def;
+            LoadStructureLayoutDef(def);
             doCloseX = true;
             doCloseButton = false;
             closeOnClickedOutside = false;
@@ -113,6 +113,8 @@ namespace MagicAndMyths
             captureThings = zone.CaptureThings;
         }
 
+
+
         private void InitializeExpandedSections(StructureLayoutDef def)
         {
             for (int i = 0; i < def.stages.Count; i++)
@@ -126,6 +128,16 @@ namespace MagicAndMyths
                 }
             }
         }
+
+        private void LoadStructureLayoutDef(StructureLayoutDef sourceDef)
+        {
+            StructureLayoutDef copiedDef = sourceDef.DeepCopy();
+            structureDef = copiedDef;
+            StructureBuilder.Instance.SetStructure(copiedDef);
+            InitializeExpandedSections(copiedDef);
+        }
+
+
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -327,7 +339,7 @@ namespace MagicAndMyths
         private void DrawButtons(Rect rect)
         {
             float availableWidth = rect.width - (STANDARD_MARGIN * 2);
-            int buttonCount = 5;
+            int buttonCount = 6;
             float buttonWidth = Mathf.Min(
                 BUTTON_WIDTH,
                 (availableWidth - (STANDARD_SPACING * (buttonCount - 1))) / buttonCount
@@ -340,14 +352,21 @@ namespace MagicAndMyths
                 STANDARD_SPACING
             );
 
-            if (Widgets.ButtonText(toolbarButtonRow.NextRect(buttonWidth, 10), "New Structure"))
+
+            Rect newStructure = toolbarButtonRow.NextRect(buttonWidth, 10);
+            TooltipHandler.TipRegion(newStructure, $"Start a new StructureDef for export.");
+            if (Widgets.ButtonText(newStructure, "New Structure"))
             {
                 StructureBuilder.Instance.Reset();
                 this.structureDef = StructureBuilder.Instance.GetStructure();
                 return;
             }
 
-            if (Widgets.ButtonText(toolbarButtonRow.NextRect(buttonWidth, 10), "New Stage"))
+
+
+            Rect newStage = toolbarButtonRow.NextRect(buttonWidth, 10);
+            TooltipHandler.TipRegion(newStage, $"Add a new BuildStage.");
+            if (Widgets.ButtonText(newStage, "New Stage"))
             {
                 StructureBuilder.Instance.AddStage();
                 int newStageIndex = structureDef.stages.Count - 1;
@@ -418,7 +437,25 @@ namespace MagicAndMyths
             }
 
 
-            if (Widgets.ButtonText(toolbarButtonRow.NextRect(buttonWidth, 5), "Copy XML"))
+            Rect loadDefButton = toolbarButtonRow.NextRect(buttonWidth, 5);
+            TooltipHandler.TipRegion(loadDefButton, $"Load an existing StructureLayoutDef into the editor.");
+            if (Widgets.ButtonText(loadDefButton, "Load Def"))
+            {
+                List<FloatMenuOption> defOptions = new List<FloatMenuOption>();
+                foreach (var def in layoutDefs)
+                {
+                    StructureLayoutDef capturedDef = def;
+                    defOptions.Add(new FloatMenuOption(def.defName, () =>
+                    {
+                        LoadStructureLayoutDef(capturedDef);
+                    }));
+                }
+                Find.WindowStack.Add(new FloatMenu(defOptions));
+            }
+
+            Rect copyButton = toolbarButtonRow.NextRect(buttonWidth, 5);
+            TooltipHandler.TipRegion(copyButton, $"Copy StructureLayoutDef XML to clipboard.");
+            if (Widgets.ButtonText(copyButton, "Copy XML"))
             {
                 GUIUtility.systemCopyBuffer = StructureBuilder.Instance.ToXmlString();
                 copySuccessful = true;
@@ -806,9 +843,9 @@ namespace MagicAndMyths
             float detailsWidth = listItemRect.width * detailsRatio - STANDARD_PADDING;
             GUI.color = new Color(0.85f, 0.85f, 0.85f);
 
-            string stuffInfo = thing.stuff != null ? $"Stuff - {thing.stuff.LabelCap}" : "";
+            string stuffInfo = thing.stuff != null ? $"Stuff (<color=yellow>{thing.stuff.LabelCap})</color>" : "";
             string rotInfo = thing.rotation != Rot4.North ? $"[{thing.rotation}]" : "";
-            string desc = $"{stuffInfo} Pos - ({thing.position.x}, {thing.position.z})".Trim();
+            string desc = $"{stuffInfo} Pos <color=cyan>({thing.position.x}, {thing.position.z})</color>".Trim();
 
             Widgets.Label(
                 new Rect(currentX, listItemRect.y, detailsWidth, listItemRect.height),

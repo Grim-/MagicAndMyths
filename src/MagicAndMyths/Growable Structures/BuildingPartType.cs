@@ -6,7 +6,8 @@
         Door,
         Furniture,
         Floor,
-        Other
+        Other,
+        Power
     }
 
 }

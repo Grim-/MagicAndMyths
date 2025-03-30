@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -27,24 +28,16 @@ namespace MagicAndMyths
 
         protected override Zone MakeNewZone()
         {
-            return Zone_AreaCapture.GetOrCreateForMap(Find.CurrentMap, new IntVec2(3, 3));
+            zone = Zone_AreaCapture.GetOrCreateForMap(Find.CurrentMap, new IntVec2(3, 3));
+            return zone;
         }
 
         public override void SelectedUpdate()
         {
             base.SelectedUpdate();
 
-
-           
-            if (Find.Selector.SelectedZone != null && Find.Selector.SelectedZone is Zone_AreaCapture areaCapture)
-            {
-                IntVec3 center = CellRect.FromCellList(areaCapture.cells).CenterCell;
-                CellRect rect = CellRect.CenteredOn(center, 1);
-                GenDraw.DrawFieldEdges(rect.Cells.ToList());
-            }
-
-
         }
+
 
         public override AcceptanceReport CanDesignateCell(IntVec3 c)
         {

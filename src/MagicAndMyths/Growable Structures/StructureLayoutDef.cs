@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
@@ -14,6 +15,76 @@ namespace MagicAndMyths
             }
 
             return stages[index];
+        }
+
+        //Used by the editor, purely for data modelling, user is expected to export Def to xml.
+        public StructureLayoutDef DeepCopy()
+        {
+            StructureLayoutDef copiedDef = new StructureLayoutDef();
+            copiedDef.defName = this.defName;
+            copiedDef.stages = new List<BuildingStage>();
+
+            foreach (var stage in this.stages)
+            {
+                var newStage = new BuildingStage
+                {
+                    size = stage.size,
+                    terrain = new List<TerrainPlacement>(
+                        stage.terrain.Select(t => new TerrainPlacement
+                        {
+                            terrain = t.terrain,
+                            position = t.position
+                        })
+                    ),
+                    walls = new List<ThingPlacement>(
+                        stage.walls.Select(t => new ThingPlacement
+                        {
+                            thing = t.thing,
+                            stuff = t.stuff,
+                            position = t.position,
+                            rotation = t.rotation
+                        })
+                    ),
+                    doors = new List<ThingPlacement>(
+                        stage.doors.Select(t => new ThingPlacement
+                        {
+                            thing = t.thing,
+                            stuff = t.stuff,
+                            position = t.position,
+                            rotation = t.rotation
+                        })
+                    ),
+                    power = new List<ThingPlacement>(
+                        stage.power.Select(t => new ThingPlacement
+                        {
+                            thing = t.thing,
+                            stuff = t.stuff,
+                            position = t.position,
+                            rotation = t.rotation
+                        })
+                    ),
+                    furniture = new List<ThingPlacement>(
+                        stage.furniture.Select(t => new ThingPlacement
+                        {
+                            thing = t.thing,
+                            stuff = t.stuff,
+                            position = t.position,
+                            rotation = t.rotation
+                        })
+                    ),
+                    other = new List<ThingPlacement>(
+                        stage.other.Select(t => new ThingPlacement
+                        {
+                            thing = t.thing,
+                            stuff = t.stuff,
+                            position = t.position,
+                            rotation = t.rotation
+                        })
+                    )
+                };
+                copiedDef.stages.Add(newStage);
+            }
+            return copiedDef;
         }
     }
 
@@ -92,13 +163,29 @@ namespace MagicAndMyths
     public class TerrainPlacement : ThingPlacement
     {
         public TerrainDef terrain;
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            Scribe_Defs.Look(ref terrain, "terrain");
+        }
     }
 
-    public class ThingPlacement
+    public class ThingPlacement : IExposable
     {
         public ThingDef thing;
         public IntVec2 position;
         public Rot4 rotation = Rot4.North;
         public ThingDef stuff;
+
+        public virtual void ExposeData()
+        {
+            Scribe_Defs.Look(ref thing, "thing");
+            Scribe_Values.Look(ref position, "position");
+            Scribe_Values.Look(ref rotation, "rotation");
+            Scribe_Defs.Look(ref stuff, "stuff");
+        }
+       
     }
 }

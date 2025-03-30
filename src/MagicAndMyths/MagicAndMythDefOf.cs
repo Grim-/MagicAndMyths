@@ -46,5 +46,23 @@ namespace MagicAndMyths
         public static ThingDef MagicAndMyths_PhilsophersStone;
 
         public static HediffDef MagicAndMyths_Phylactery;
+
+
+
+
+
+
+        //portal
+        public static WorldObjectDef CustomMapParent;
+        public static ThingDef Portal_Oneway;
+        public static ThingDef Portal_GateLarge;
+        public static EffecterDef Portal_Effect;
+
+        public static JobDef Portals_UsePortalJob;
+
+        public static StatDef Portal_BioEnergyMax;
+        public static StatDef Portal_BioEnergyRegen;
+
+        public static MapGeneratorDef Portal_EmptyMap;
     }
 }
