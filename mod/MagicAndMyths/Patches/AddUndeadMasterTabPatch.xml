@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
   <Operation Class="PatchOperationAdd">
-    <xpath>/Defs/ThingDef[@Name="BasePawn"]/inspectorTabs</xpath>
-    <value>
-      <li>MagicAndMyths.ITab_UndeadMaster</li>
-    </value>
-  </Operation>
-  <Operation Class="PatchOperationAdd">
     <xpath>/Defs/ThingDef[defName="Human"]/recipes</xpath>
     <value>
       <li>MagicAndMyths_ApplyTattoo</li>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <StatDef>
+    <defName>Portal_BioEnergyMax</defName>
+    <label>Bio Energy</label>
+    <category>PawnMisc</category>
+    <description>Bio Energy Reserves</description>
+    <defaultBaseValue>100</defaultBaseValue>
+    <minValue>0</minValue>
+    <maxValue>1000</maxValue>
+    <toStringStyle>Integer</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+
+  <StatDef>
+    <defName>Portal_BioEnergyRegen</defName>
+    <label>Bio Energy Regen per hour</label>
+    <category>PawnMisc</category>
+    <description>Bio Energy Regen per hour</description>
+    <defaultBaseValue>10</defaultBaseValue>
+    <minValue>0</minValue>
+    <maxValue>1000</maxValue>
+    <toStringStyle>Integer</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+</Defs>

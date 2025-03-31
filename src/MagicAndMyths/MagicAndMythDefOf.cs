@@ -59,10 +59,15 @@ namespace MagicAndMyths
         public static EffecterDef Portal_Effect;
 
         public static JobDef Portals_UsePortalJob;
-
         public static StatDef Portal_BioEnergyMax;
         public static StatDef Portal_BioEnergyRegen;
 
-        public static MapGeneratorDef Portal_EmptyMap;
+
+        public static MapGeneratorDef MapGenEmpty;
+
+        //public static MapGeneratorDef Portal_EmptyMap;
+
+        public static ThingDef DungeonWall;
+        public static ThingDef MagicAndMythsReturnRune;
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <MapGeneratorDef>
+      <defName>MapGenEmpty</defName>
+      <genSteps>
+        <li>ElevationFertility</li>
+        <li>Caves</li>
+        <li>Terrain</li>
+        <li>CavesTerrain</li>
+        <li>RockChunks</li>
+        <li>RocksFromGrid</li>
+      </genSteps>
+      <pocketMapProperties>
+          <biome>TropicalRainforest</biome>
+          <temperature>21</temperature>
+      </pocketMapProperties>
+    </MapGeneratorDef>
+
+    <MapGeneratorDef>
+      <defName>MapGenHiddenForest</defName>
+      <genSteps>
+        <li>ElevationFertility</li>
+        <li>Terrain</li>
+        <li>Plants</li>
+        <li>EncloseWalls</li>
+      </genSteps>
+      <pocketMapProperties>
+          <biome>TropicalRainforest</biome>
+          <temperature>21</temperature>
+      </pocketMapProperties>
+    </MapGeneratorDef>
+
+    <GenStepDef>
+      <defName>EncloseWalls</defName>
+      <order>10</order>
+      <genStep Class="MagicAndMyths.GenStep_EncloseMapWalls"/>
+    </GenStepDef>
+</Defs>

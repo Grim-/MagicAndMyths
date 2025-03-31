@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+     <defName>Masked</defName>
+     <label>anbu mask</label>
+     <description>An ANBU mask has been equipped. These specialized masks are worn by elite shinobi operatives.</description>
+     <defaultLabelColor>(0.8, 0.8, 0.9)</defaultLabelColor>
+     <initialSeverity>1.0</initialSeverity>
+     <maxSeverity>1.0</maxSeverity>
+     <isBad>false</isBad>
+     <renderNodeProperties>
+       <li Class="MagicAndMyths.MaskNodeProperties">
+         <debugLabel>AnbuMask</debugLabel>
+         <nodeClass>MagicAndMyths.MaskRenderNode</nodeClass>
+         <workerClass>MagicAndMyths.MaskNodeWorker</workerClass>
+         <texPath>Mask/AnbuMaskSwirl/AnbuMaskSwirl</texPath>
+         <drawSize>(1.0, 1.0)</drawSize>
+         <offset>(0, 0, 0.4)</offset>
+         <baseLayer>70</baseLayer>
+         <overlayLayer>Head</overlayLayer>
+         <color>(1.0, 1.0, 1.0)</color>
+         <pawnType>HumanlikeOnly</pawnType>
+       </li>
+     </renderNodeProperties>
+   </HediffDef>
+
+</Defs>

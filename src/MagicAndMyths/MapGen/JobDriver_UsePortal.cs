@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Verse;
 using Verse.AI;
 
 namespace MagicAndMyths
@@ -15,21 +16,28 @@ namespace MagicAndMyths
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            Building_PortalGate portal = (Building_PortalGate)job.targetA.Thing;
+            // Fail if target isn't a portal provider or if it's inactive
+            this.FailOn(() =>
+            {
+                Thing portalThing = job.GetTarget(PortalInd).Thing;
+                IPortalProvider portalProvider = GetPortalProvider(portalThing);
+                return portalProvider == null || !portalProvider.IsPortalActive;
+            });
 
             yield return Toils_Goto.GotoThing(PortalInd, PathEndMode.InteractionCell)
                 .FailOnDespawnedOrNull(PortalInd);
-
 
             Toil waitAtPortal = Toils_General.Wait(WaitTicks)
                 .FailOnDespawnedOrNull(PortalInd)
                 .FailOnCannotTouch(PortalInd, PathEndMode.InteractionCell)
                 .WithProgressBarToilDelay(PortalInd);
 
-
             waitAtPortal.tickAction = delegate
             {
-
+                //if (pawn.IsHashIntervalTick(15))
+                //{
+                //    MoteMaker.ThrowMetaIcon(pawn.Position, pawn.Map, ThingDefOf.Mote_MetaPoof);
+                //}
             };
 
             yield return waitAtPortal;
@@ -37,15 +45,39 @@ namespace MagicAndMyths
             Toil teleport = new Toil();
             teleport.initAction = delegate
             {
-                Building_PortalGate targetPortal = (Building_PortalGate)job.targetA.Thing;
-                if (targetPortal == null || !targetPortal.Spawned)
+                Thing portalThing = job.GetTarget(PortalInd).Thing;
+                if (portalThing == null || !portalThing.Spawned)
                 {
                     return;
                 }
-                targetPortal.TeleportPawn(pawn);
+
+                IPortalProvider portalProvider = GetPortalProvider(portalThing);
+                if (portalProvider != null)
+                {
+                    portalProvider.TeleportPawn(pawn);
+                }
             };
+
             teleport.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return teleport;
+        }
+
+        private IPortalProvider GetPortalProvider(Thing thing)
+        {
+            // Check if the thing itself is a portal provider
+            if (thing is IPortalProvider thingPortal)
+            {
+                return thingPortal;
+            }
+
+            // Check if it has a comp that's a portal provider
+            CompPortalGenerator portalComp = thing.TryGetComp<CompPortalGenerator>();
+            if (portalComp != null)
+            {
+                return portalComp;
+            }
+
+            return null;
         }
     }
 }

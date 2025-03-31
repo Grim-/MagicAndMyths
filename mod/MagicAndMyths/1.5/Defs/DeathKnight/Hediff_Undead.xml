@@ -50,6 +50,7 @@
           <PainShockThreshold>10</PainShockThreshold>
           <MentalBreakThreshold>-10</MentalBreakThreshold>
           <Flammability>0.6</Flammability>
+          <StaggerDurationFactor>-1</StaggerDurationFactor>
         </statOffsets>
         <statFactors>
           <ArmorRating_Heat>0.4</ArmorRating_Heat>
