@@ -33,7 +33,7 @@ namespace MagicAndMyths
 
         // The actual mote effect that represents the laser beam
         private MoteDualAttached laserMote;
-        private static readonly ThingDef LaserMoteDef = DefDatabase<ThingDef>.GetNamed("Mote_GraserBeamBase");
+        private static readonly ThingDef LaserMoteDef = DefDatabase<ThingDef>.GetNamed("mote_LightningStrike");
 
         // Visual elements
         private Vector2 startSize = new Vector2(0.5f, 0.5f);

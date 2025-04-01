@@ -13,6 +13,8 @@ namespace MagicAndMyths
         private Map homeMap;
         protected Map ReturnMap => homeMap != null ? homeMap : WorldCustomSiteManager.StartingColonyMap;
 
+        private Thing PortalThingOrigin = null;
+
         public bool IsPortalActive => true;
 
         private Effecter portalEffect;
@@ -36,6 +38,11 @@ namespace MagicAndMyths
         public void SetHomeMap(Map map)
         {
             homeMap = map;
+        }
+
+        public void SetPortalThingOrigin(Thing thing)
+        {
+            PortalThingOrigin = thing;
         }
 
         public override void Tick()
@@ -72,7 +79,7 @@ namespace MagicAndMyths
             if (ReturnMap == null || pawn == null)
                 return false;
 
-           return pawn.TransferToMap(ReturnMap.AllCells.RandomElement(), homeMap);
+           return pawn.TransferToMap(CellFinderLoose.TryFindCentralCell(ReturnMap, 10, 1), ReturnMap);
         }
 
         private void TeleportGroup(Pawn initiator)

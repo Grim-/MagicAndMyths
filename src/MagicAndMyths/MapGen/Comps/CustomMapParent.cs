@@ -41,22 +41,8 @@ namespace MagicAndMyths
 
         public override bool ShouldRemoveMapNow(out bool alsoRemoveWorldObject)
         {
-            bool CanRemove = ShouldDestroy && !this.Map.mapPawns.AnyPawnBlockingMapRemoval;
-
-            if (CanRemove)
-            {
-                Log.Message("Returning all pawns to a player map");
-                foreach (var item in this.Map.mapPawns.AllPawns)
-                {
-                    if (item.Faction == RimWorld.Faction.OfPlayer)
-                    {
-                        item.TransferToMap(Find.AnyPlayerHomeMap.Center, WorldCustomSiteManager.StartingColonyMap);
-                    }
-                }
-            }
-
-            alsoRemoveWorldObject = false;
-            return CanRemove;
+            alsoRemoveWorldObject = true;
+            return ShouldDestroy && !this.Map.mapPawns.AnyPawnBlockingMapRemoval;
         }
     }
 }

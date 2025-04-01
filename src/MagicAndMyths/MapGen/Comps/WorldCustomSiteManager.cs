@@ -14,9 +14,7 @@ namespace MagicAndMyths
 
 
 
-        public static Map StartingColonyMap = Find.GameInfo.startingTile >= 0 
-            ? Find.Maps.FirstOrDefault(m => m.Tile == Find.GameInfo.startingTile) 
-            : null;
+        public static Map StartingColonyMap => Find.Maps.First(x => x.IsPlayerHome);
 
 
         public List<SitePartDef> AvailableSiteParts = new List<SitePartDef>()
@@ -246,12 +244,28 @@ namespace MagicAndMyths
                 {
                     if (portalData.mapParent.HasMap)
                     {
+                        EjectColonistAndItemsFromMap(portalData.mapParent.Map);
+
+
                         Current.Game.DeinitAndRemoveMap(portalData.mapParent.Map, true);
                     }
                     Find.WorldObjects.Remove(portalData.mapParent);
                 }
 
                 componentPortals.Remove(portalData);
+            }
+        }
+
+
+        public void EjectColonistAndItemsFromMap(Map map)
+        {
+            Log.Message("Returning all pawns to a player map");
+            foreach (var item in map.mapPawns.AllPawns.ToList())
+            {
+                if (item.Faction == RimWorld.Faction.OfPlayer)
+                {
+                    item.TransferToMap(WorldCustomSiteManager.StartingColonyMap.Center, WorldCustomSiteManager.StartingColonyMap);
+                }
             }
         }
 

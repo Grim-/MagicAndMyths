@@ -67,7 +67,13 @@ namespace MagicAndMyths
 
         //public static MapGeneratorDef Portal_EmptyMap;
 
+        public static ThingDef Plant_GoldenTree;
         public static ThingDef DungeonWall;
         public static ThingDef MagicAndMythsReturnRune;
+
+
+        public static RoomTypeDef StartRoom;
+
+        public static RoomTypeDef EndRoom;
     }
 }

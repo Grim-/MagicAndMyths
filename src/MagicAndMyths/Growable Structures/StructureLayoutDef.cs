@@ -7,6 +7,9 @@ namespace MagicAndMyths
     public class StructureLayoutDef : Def
     {
         public List<BuildingStage> stages = new List<BuildingStage>();
+        public int LastStageIndex => stages.Count - 1;
+        public IntVec2 MaxBuildSize => stages.Max(x => x.size);
+
         public BuildingStage GetStage(int index)
         {
             if (index < 0 || index > stages.Count)

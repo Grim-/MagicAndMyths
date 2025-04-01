@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using System.Collections.Generic;
+using Verse;
 
 namespace MagicAndMyths
 {
@@ -6,8 +7,7 @@ namespace MagicAndMyths
     {
         public override int SeedPart => 1234567;
 
-        // Variable to control wall thickness
-        public int WallThickness = 1;
+        public int WallThickness = 4;
 
         public override void Generate(Map map, GenStepParams parms)
         {
