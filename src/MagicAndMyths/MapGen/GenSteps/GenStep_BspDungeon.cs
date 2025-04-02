@@ -26,6 +26,11 @@ namespace MagicAndMyths
         public bool addRandomCorridoors = true;
     }
 
+    public class DungeonRoom
+    {
+        public RoomType type = RoomType.Normal;
+        public float distanceFromStart = 0f;
+    }
     public class GenStep_BspDungeon : GenStep
     {
 
@@ -34,11 +39,6 @@ namespace MagicAndMyths
 
         public int randomCorridoorAmount = 1;
 
-        private class DungeonRoom
-        {
-            public RoomType type = RoomType.Normal;
-            public float distanceFromStart = 0f;
-        }
 
         public override void Generate(Map map, GenStepParams parms)
         {
@@ -113,6 +113,39 @@ namespace MagicAndMyths
 
             DesignateRoomTypes(map, leafNodes);
             SpawnDoors(map, leafNodes);
+            ObstacleGenerator.GenerateObstacles(map, rootNode, leafNodes);
+
+            CellularAutomataManager.ApplyRules(map, dungeonGrid, new List<CellularAutomataWorker>()
+            {
+                new CAWorker_NaturalWalls()
+            });
+
+            foreach (IntVec3 cell in map.AllCells)
+            {
+                if (dungeonGrid[cell])
+                {
+                    // This is a floor cell - remove any walls
+                    map.thingGrid.ThingsAt(cell)
+                        .ToList()
+                        .ForEach(t => t.Destroy());
+
+                    map.terrainGrid.SetTerrain(cell, TerrainDefOf.MetalTile);
+                }
+                else
+                {
+                    // This is a wall cell - ensure a wall exists
+                    Thing existingThing = cell.GetFirstBuilding(map);
+                    if (existingThing == null || existingThing.def != MagicAndMythDefOf.DungeonWall)
+                    {
+                        // Clean up any existing thing
+                        if (existingThing != null)
+                            existingThing.Destroy();
+
+                        // Spawn a wall
+                        GenSpawn.Spawn(MagicAndMythDefOf.DungeonWall, cell, map);
+                    }
+                }
+            }
         }
 
         private string GetConnectionId(BspUtility.BspNode node1, BspUtility.BspNode node2)
@@ -227,5 +260,4 @@ namespace MagicAndMyths
             return building != null && building.def == MagicAndMythDefOf.DungeonWall;
         }
     }
-
 }

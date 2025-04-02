@@ -27,8 +27,7 @@ namespace MagicAndMyths
 
         public static StatDef MagicAndMyths_Will;
 
-
- 
+        public static JobDef MagicAndMyths_WorkSolution;
 
         public static BackstoryDef MagicAndMyths_LesserUndead;
 

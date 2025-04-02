@@ -16,27 +16,28 @@ namespace MagicAndMyths
             public CellRect room;
             public CellRect roomWalls;
             public object tag;
+            public List<string> tags = new List<string>();
             public List<BspNode> connectedNodes = new List<BspNode>();
 
 
             //TODO 
-            //public void AddTag(string tag)
-            //{
-            //    if (tags == null)
-            //    {
-            //        tags = new List<string>();
-            //    }
+            public void AddTag(string tag)
+            {
+                if (tags == null)
+                {
+                    tags = new List<string>();
+                }
 
-            //    if (!tags.Contains(tag))
-            //    {
-            //        tags.Add(tag);
-            //    }
-            //}
+                if (!tags.Contains(tag))
+                {
+                    tags.Add(tag);
+                }
+            }
 
-            //public bool HasTag(string tag)
-            //{
-            //    return tags != null && tags.Contains(tag);
-            //}
+            public bool HasTag(string tag)
+            {
+                return tags != null && tags.Contains(tag);
+            }
         }
 
         public static BspNode GenerateBspTree(CellRect rootRect, int maxDepth, int minRoomSize = 8)
@@ -57,7 +58,6 @@ namespace MagicAndMyths
             List<BspNode> leafNodes = new List<BspNode>();
             GetLeafNodes(rootNode, leafNodes);
 
-            // For debugging
             Log.Message($"BSP generated {leafNodes.Count} potential rooms, target: {minRooms}-{maxRooms}");
 
             int attempts = 0;
@@ -81,11 +81,9 @@ namespace MagicAndMyths
 
                 if (largestNode != null)
                 {
-                    // Split this node
                     SplitNode(largestNode, 0, 1, minRoomSize,
                              minSizeMultiplier, aspectRatioThreshold, edgeMarginDivisor);
 
-                    // Refresh leaf nodes list
                     leafNodes.Clear();
                     GetLeafNodes(rootNode, leafNodes);
                     Log.Message($"After split attempt {attempts + 1}: now {leafNodes.Count} rooms");
@@ -101,9 +99,6 @@ namespace MagicAndMyths
             if (leafNodes.Count > maxRooms)
             {
                 Log.Message($"Too many rooms ({leafNodes.Count}), pruning to {maxRooms}");
-
-                // IMPORTANT CHANGE: We need to actually modify the tree structure!
-                // Shuffle and identify nodes to keep vs remove
                 leafNodes.Shuffle();
                 var nodesToKeep = leafNodes.Take(maxRooms).ToList();
                 var nodesToRemove = leafNodes.Skip(maxRooms).ToList();
@@ -111,13 +106,12 @@ namespace MagicAndMyths
                 // Add a marker to the nodes we want to keep
                 foreach (var node in nodesToKeep)
                 {
-                    node.tag = "keep";
+                    node.AddTag("keep");
                 }
 
-                // Now prune the BSP tree - this is the key addition
+                //prune the BSP tree
                 PruneNonMarkedLeafNodes(rootNode);
 
-                // Clear and get the new leaf nodes
                 leafNodes.Clear();
                 GetLeafNodes(rootNode, leafNodes);
                 Log.Message($"After pruning: {leafNodes.Count} rooms");
@@ -133,25 +127,23 @@ namespace MagicAndMyths
 
             if (node.left == null && node.right == null)
             {
-                return node.tag as string == "keep";
+                return node.HasTag("keep");
             }
 
 
             bool keepLeft = PruneNonMarkedLeafNodes(node.left);
             bool keepRight = PruneNonMarkedLeafNodes(node.right);
 
-            // If we don't keep a child, set it to null (prune it)
+     
             if (!keepLeft) node.left = null;
             if (!keepRight) node.right = null;
 
             // If both children pruned, this becomes a leaf
             if (node.left == null && node.right == null)
             {
-                // But we mark it to be removed too
+                //mark it to be removed too
                 return false;
             }
-
-            // Otherwise keep this branch
             return true;
         }
         public static void SplitNode(BspNode node, int depth, int maxDepth, int minRoomSize, float minSizeMultiplier = 1.0f, float aspectRatioThreshold = 1.5f, float edgeMarginDivisor = 2f)
