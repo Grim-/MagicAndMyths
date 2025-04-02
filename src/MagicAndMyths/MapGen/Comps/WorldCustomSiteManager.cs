@@ -54,9 +54,6 @@ namespace MagicAndMyths
                         }
 
                         Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tileId, Find.World.info.initialMapSize, null);
-                        var dungeonManager = new DungeonGenManager(map);
-                        dungeonManager.AddGenerator(new DungeonGen_GenerateEnemies(map));
-                        dungeonManager.Generate();
 
                         storedData.mapParent.AddModifier(new MapModifier_RandomFires(map));
                         return map;
@@ -143,10 +140,6 @@ namespace MagicAndMyths
                 mapParent.AddModifier(new MapModifier_RandomFires(newMap));
                 mapParent.AddModifier(new MapModifier_RandomLightningStrikes(newMap));
                 mapParent.AddModifier(new MapModifier_StoneCreep(newMap));
-                var dungeonManager = new DungeonGenManager(newMap);
-
-                dungeonManager.AddGenerator(new DungeonGen_GenerateEnemies(newMap, Faction.OfAncientsHostile));
-                dungeonManager.Generate();
 
                 newMap.info.parent = mapParent;
                 storedSites.Add(new StoredSiteData(tileId, newSite, mapParent));

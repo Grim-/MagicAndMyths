@@ -110,16 +110,13 @@ namespace MagicAndMyths
 
         private IntVec3 FindDoorLocation(Map map, BspUtility.BspNode room1, BspUtility.BspNode room2)
         {
-            // Look for potential door spots using the roomWalls EdgeCells
             List<IntVec3> potentialDoorSpots = new List<IntVec3>();
 
             foreach (IntVec3 cell in room1.roomWalls.EdgeCells)
             {
-                // Check if this wall cell is adjacent to the other room
                 if (cell.InBounds(map) && IsAdjacentToRoom(cell, room2.room))
                 {
-                    // If there's no building here, it's likely already a door or corridor
-                    if (cell.GetEdifice(map) != null)
+                    if (cell.GetEdifice(map) == null)
                     {
                         potentialDoorSpots.Add(cell);
                     }

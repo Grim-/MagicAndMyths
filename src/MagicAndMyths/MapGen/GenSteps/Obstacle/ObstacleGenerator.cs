@@ -16,7 +16,6 @@ namespace MagicAndMyths
             if (leafNodes.Count <= 1)
                 return;
 
-            // Get all available obstacle defs
             List<ObstacleDef> availableObstacles = DefDatabase<ObstacleDef>.AllDefs.ToList();
             if (availableObstacles.Count == 0)
             {
@@ -24,26 +23,34 @@ namespace MagicAndMyths
                 return;
             }
 
-            // Determine number of obstacles to place based on dungeon size
             int obstacleCount = DetermineObstacleCount(leafNodes);
             Log.Message($"Attempting to place {obstacleCount} obstacles in dungeon with {leafNodes.Count} rooms");
 
-            // Keep track of placed obstacles
-            HashSet<ObstacleDef> placedObstacles = new HashSet<ObstacleDef>();
+            Dictionary<ObstacleDef, int> placedObstacles = new Dictionary<ObstacleDef, int>();
 
-            // First pass: try to place one of each type if possible
+
             foreach (ObstacleDef obstacleDef in availableObstacles)
             {
                 if (placedObstacles.Count >= obstacleCount)
                     break;
 
+                if (!placedObstacles.ContainsKey(obstacleDef))
+                {
+                    placedObstacles.Add(obstacleDef, 0);
+                }
+
+                //reached count limit for this obstacle
+                if (placedObstacles[obstacleDef] >= obstacleDef.maxCount)
+                {
+                    continue;
+                }
+
                 if (TryPlaceObstacle(map, rootNode, leafNodes, obstacleDef))
                 {
-                    placedObstacles.Add(obstacleDef);
+                    placedObstacles[obstacleDef]++;
                 }
             }
 
-            // Second pass: fill remaining slots with weighted random selection
             int remainingSlots = obstacleCount - placedObstacles.Count;
             for (int i = 0; i < remainingSlots; i++)
             {
@@ -62,14 +69,11 @@ namespace MagicAndMyths
         /// </summary>
         private static int DetermineObstacleCount(List<BspUtility.BspNode> leafNodes)
         {
-            // Base count on number of rooms
             int baseCount = Mathf.Max(1, leafNodes.Count / 3);
 
-            // Add some randomness
             int variance = Mathf.Max(1, baseCount / 2);
             int finalCount = baseCount + Rand.RangeInclusive(-variance, variance);
 
-            // Never use more obstacles than rooms-1 (to ensure at least one free room)
             return Mathf.Min(finalCount, leafNodes.Count - 1);
         }
 
@@ -97,13 +101,10 @@ namespace MagicAndMyths
             if (availableObstacles.Count == 0)
                 return null;
 
-            // Calculate total commonality
             float totalCommonality = availableObstacles.Sum(def => def.commonality);
 
-            // Select a random point in the probability space
             float selection = Rand.Range(0, totalCommonality);
 
-            // Find which obstacle this corresponds to
             float runningTotal = 0;
             foreach (ObstacleDef def in availableObstacles)
             {
@@ -112,7 +113,6 @@ namespace MagicAndMyths
                     return def;
             }
 
-            // Fallback in case of rounding errors
             return availableObstacles.RandomElement();
         }
     }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <GenStepDef>
+      <defName>EncloseWalls</defName>
+      <order>100</order>
+      <genStep Class="MagicAndMyths.GenStep_EncloseMapWalls"/>
+    </GenStepDef>
+</Defs>

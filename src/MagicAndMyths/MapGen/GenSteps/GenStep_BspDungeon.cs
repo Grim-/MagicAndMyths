@@ -10,35 +10,36 @@ namespace MagicAndMyths
 
     public class GenStepDef_BspDungeon : GenStepDef
     {
-        public int randomCorridoorAmount = 1;
+        public int randomCorridoorAmount = 2;
         public int maxDepth = 8;
         public int minRoomSize = 8;
         public int minRoomPadding = 3;
-        public float roomSizeFactor = 1f;
 
-        public int minRooms = 3;
-        public int maxRooms = 3;
+        // Lower room size factor to avoid rooms filling their entire BSP partition
+        public float roomSizeFactor = 0.65f;
 
-        public float minSizeMultiplier = 1.0f;
-        public float aspectRatioThreshold = 1.1f;
-        public float edgeMarginDivisor = 2f;
+        public int minRooms = 5;
+        public int maxRooms = 8;
+
+        //size multiplier for more balanced divisions
+        public float minSizeMultiplier = 1.2f;
+
+        public float aspectRatioThreshold = 1.3f;
+        //higher edge margin divisor for better spacing
+        public float edgeMarginDivisor = 1.5f;
 
         public bool addRandomCorridoors = true;
+
+        public List<RoomTypeDef> availableRoomTypes;
+
+        public List<CelluarAutomataDef> earlyAutomata;
+        public List<CelluarAutomataDef> postGenAutomata;
     }
 
-    public class DungeonRoom
-    {
-        public RoomType type = RoomType.Normal;
-        public float distanceFromStart = 0f;
-    }
     public class GenStep_BspDungeon : GenStep
     {
-
         GenStepDef_BspDungeon Def => (GenStepDef_BspDungeon)def;
         public override int SeedPart => 654321;
-
-        public int randomCorridoorAmount = 1;
-
 
         public override void Generate(Map map, GenStepParams parms)
         {
@@ -63,41 +64,76 @@ namespace MagicAndMyths
             List<BspUtility.BspNode> leafNodes = new List<BspUtility.BspNode>();
             BspUtility.GetLeafNodes(rootNode, leafNodes);
 
+            if (Def.earlyAutomata != null)
+            {
+                Log.Message($"Applyng Early Celluar Automata iterations");
+                CellularAutomataManager.ApplyRules(map, dungeonGrid, Def.earlyAutomata);
+            }
+
             BspUtility.GenerateRooms(leafNodes, minPadding: Def.minRoomPadding, roomSizeFactor: Def.roomSizeFactor);
+
+            var endpoints = BspUtility.FindFurthestPair(leafNodes);
+            BspUtility.BspNode startNode = endpoints.Item1;
+            BspUtility.BspNode endNode = endpoints.Item2;
+
+            startNode.AddTag("start");
+            endNode.AddTag("end");
+
+            List<BspUtility.BspNode> waypoints = SelectWaypoints(leafNodes, startNode, endNode, 2);
+            foreach (var waypoint in waypoints)
+            {
+                waypoint.AddTag("waypoint");
+            }
+
+            startNode.IsOnCriticalPath = true;
+            startNode.CriticalPathIndex = 0;
+
+            endNode.IsOnCriticalPath = true;
+            endNode.CriticalPathIndex = waypoints.Count + 1;
+
+            for (int i = 0; i < waypoints.Count; i++)
+            {
+                waypoints[i].IsOnCriticalPath = true;
+                waypoints[i].CriticalPathIndex = i + 1;
+                waypoints[i].IsWaypoint = true;
+            }
 
             foreach (var node in leafNodes)
             {
                 node.tag = new DungeonRoom();
             }
 
-            BspUtility.CreateMinimumSpanningTree(leafNodes);
+            List<BspUtility.BspNode> criticalPathNodes = new List<BspUtility.BspNode> { startNode };
+            criticalPathNodes.AddRange(waypoints);
+            criticalPathNodes.Add(endNode);
 
-            if (Def.addRandomCorridoors)
+            for (int i = 0; i < criticalPathNodes.Count - 1; i++)
             {
-                int extraConnections = Rand.Range(1, Math.Max(Def.randomCorridoorAmount, leafNodes.Count / 5));
-                BspUtility.AddRandomConnections(leafNodes, extraConnections);
+                criticalPathNodes[i].connectedNodes.Add(criticalPathNodes[i + 1]);
+                criticalPathNodes[i + 1].connectedNodes.Add(criticalPathNodes[i]);
             }
 
+
+            MspUtility.CreateMinimumSpanningTree(leafNodes);
+
             ApplyRooms(map, leafNodes, dungeonGrid);
-            List<Corridoor> corridorSegments = new List<Corridoor>();
 
-            HashSet<string> processedConnections = new HashSet<string>();
-            foreach (var node in leafNodes)
+            List<RoomConnection> connections = BspUtility.GenerateRoomConnections(leafNodes);
+
+
+            foreach (var connection in connections)
             {
-                foreach (var connectedNode in node.connectedNodes)
+                foreach (var corridor in connection.corridors)
                 {
-                    string connectionId = GetConnectionId(node, connectedNode);
-
-                    if (!processedConnections.Contains(connectionId) &&
-                        node.room != null && connectedNode.room != null)
+                    foreach (IntVec3 cell in corridor.path)
                     {
-                        corridorSegments.AddRange(BspUtility.GenerateCorridorPoints(node, connectedNode));
-                        processedConnections.Add(connectionId);
+                        if (cell.InBounds(map))
+                        {
+                            dungeonGrid[cell] = true;
+                        }
                     }
                 }
             }
-
-            BspUtility.ApplyCorridorsToGrid(corridorSegments, map, dungeonGrid);
 
             foreach (IntVec3 cell in map.AllCells)
             {
@@ -109,53 +145,42 @@ namespace MagicAndMyths
 
                     map.terrainGrid.SetTerrain(cell, TerrainDefOf.MetalTile);
                 }
+            }
+
+
+
+            if (Def.postGenAutomata != null)
+            {
+                Log.Message($"Applyng PostGenerationg Celluar Automata iterations");
+                CellularAutomataManager.ApplyRules(map, dungeonGrid, Def.postGenAutomata);
             }
 
             DesignateRoomTypes(map, leafNodes);
-            SpawnDoors(map, leafNodes);
             ObstacleGenerator.GenerateObstacles(map, rootNode, leafNodes);
+            DungeonUtil.SpawnDoorsForRoom(map, leafNodes);
+           // map.fogGrid.Refog(CellRect.FromCellList(map.AllCells));      
+        }
 
-            CellularAutomataManager.ApplyRules(map, dungeonGrid, new List<CellularAutomataWorker>()
-            {
-                new CAWorker_NaturalWalls()
+        private static List<BspUtility.BspNode> SelectWaypoints(List<BspUtility.BspNode> nodes, BspUtility.BspNode start, BspUtility.BspNode end, int count)
+        {
+            var possibleWaypoints = nodes.Where(n => n != start && n != end).ToList();
+
+            var straightLineDir = (end.room.CenterCell.ToVector3() - start.room.CenterCell.ToVector3()).normalized;
+            var startPos = start.room.CenterCell.ToVector3();
+
+            possibleWaypoints.Sort((a, b) => {
+                var aPos = a.room.CenterCell.ToVector3();
+                var bPos = b.room.CenterCell.ToVector3();
+
+                var aProj = Vector3.Dot((aPos - startPos), straightLineDir);
+                var bProj = Vector3.Dot((bPos - startPos), straightLineDir);
+
+                return -((aPos - (startPos + straightLineDir * aProj)).magnitude
+                       .CompareTo((bPos - (startPos + straightLineDir * bProj)).magnitude));
             });
 
-            foreach (IntVec3 cell in map.AllCells)
-            {
-                if (dungeonGrid[cell])
-                {
-                    // This is a floor cell - remove any walls
-                    map.thingGrid.ThingsAt(cell)
-                        .ToList()
-                        .ForEach(t => t.Destroy());
-
-                    map.terrainGrid.SetTerrain(cell, TerrainDefOf.MetalTile);
-                }
-                else
-                {
-                    // This is a wall cell - ensure a wall exists
-                    Thing existingThing = cell.GetFirstBuilding(map);
-                    if (existingThing == null || existingThing.def != MagicAndMythDefOf.DungeonWall)
-                    {
-                        // Clean up any existing thing
-                        if (existingThing != null)
-                            existingThing.Destroy();
-
-                        // Spawn a wall
-                        GenSpawn.Spawn(MagicAndMythDefOf.DungeonWall, cell, map);
-                    }
-                }
-            }
+            return possibleWaypoints.Take(count).ToList();
         }
-
-        private string GetConnectionId(BspUtility.BspNode node1, BspUtility.BspNode node2)
-        {
-            // Order nodes by their memory addresses to ensure consistent IDs
-            ulong id1 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(node1);
-            ulong id2 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(node2);
-            return id1 < id2 ? $"{id1}-{id2}" : $"{id2}-{id1}";
-        }
-
 
         private void ApplyRooms(Map map, List<BspUtility.BspNode> leafNodes, BoolGrid dungeonGrid)
         {
@@ -170,7 +195,8 @@ namespace MagicAndMyths
                 }
             }
         }
- 
+
+
         private void DesignateRoomTypes(Map map, List<BspUtility.BspNode> rooms)
         {
             if (rooms.Count < 4)
@@ -198,66 +224,26 @@ namespace MagicAndMyths
                         float distance = Vector3.Distance(
                             node.room.CenterCell.ToVector3(),
                             startNode.room.CenterCell.ToVector3());
-                        ((DungeonRoom)node.tag).distanceFromStart = distance;
+                        node.tag.distanceFromStart = distance;
                     }
                 }
 
                 List<BspUtility.BspNode> sortedRooms = rooms
                     .Where(r => r != startNode && r != endNode)
-                    .OrderBy(r => ((DungeonRoom)r.tag).distanceFromStart)
+                    .OrderBy(r => r.tag.distanceFromStart)
                     .ToList();
 
-                List<RoomTypeDef> randomRooms = DefDatabase<RoomTypeDef>.AllDefs
+                List<RoomTypeDef> randomRooms = Def.availableRoomTypes
                     .Where(x => x.roomType == RoomType.Normal)
                     .ToList();
 
                 foreach (var item in sortedRooms)
                 {
-                    randomRooms.RandomElement().DoWorker(map, item.room);
+                    RoomTypeDef roomTypeWorker = randomRooms.RandomElement();
+                    roomTypeWorker.DoWorker(map, item.room);
+                    item.def = roomTypeWorker;
                 }
             }
-        }
-
-        private void SpawnDoors(Map map, List<BspUtility.BspNode> rooms)
-        {
-            foreach (var room in rooms)
-            {
-                foreach (var item in room.roomWalls.EdgeCells)
-                {
-                    if (item.GetFirstBuilding(map) == null)
-                    {
-                        bool hasOppositeWalls = false;
-                        IntVec3 left = new IntVec3(item.x - 1, item.y, item.z);
-                        IntVec3 right = new IntVec3(item.x + 1, item.y, item.z);
-                        if (IsWall(map, left) && IsWall(map, right))
-                        {
-                            hasOppositeWalls = true;
-                        }
-
-                        if (!hasOppositeWalls)
-                        {
-                            IntVec3 top = new IntVec3(item.x, item.y, item.z - 1);
-                            IntVec3 bottom = new IntVec3(item.x, item.y, item.z + 1);
-                            if (IsWall(map, top) && IsWall(map, bottom))
-                            {
-                                hasOppositeWalls = true;
-                            }
-                        }
-
-                        if (hasOppositeWalls)
-                        {
-                            GenSpawn.Spawn(ThingDefOf.Door, item, map);
-                        }
-                    }
-                }
-            }
-        }
-
-        private bool IsWall(Map map, IntVec3 cell)
-        {
-            if (!cell.InBounds(map)) return false;
-            Building building = cell.GetFirstBuilding(map);
-            return building != null && building.def == MagicAndMythDefOf.DungeonWall;
         }
     }
 }

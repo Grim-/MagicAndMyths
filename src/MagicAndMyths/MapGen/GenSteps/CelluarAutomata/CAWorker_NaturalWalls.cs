@@ -4,15 +4,14 @@ namespace MagicAndMyths
 {
     public class CAWorker_NaturalWalls : CellularAutomataWorker
     {
-        private int birthThreshold;
-        private int deathThreshold;
-        private float randomChance;
+        private int birthThreshold = 6;
+        private int deathThreshold = 2;
+        private float randomChance = 0.3f;
 
-        public CAWorker_NaturalWalls(int birthThreshold = 6, int deathThreshold = 2, float randomChance = 0.3f)
+
+        public CAWorker_NaturalWalls()
         {
-            this.birthThreshold = birthThreshold;
-            this.deathThreshold = deathThreshold;
-            this.randomChance = randomChance;
+
         }
 
         public override void Apply(Map map, BoolGrid dungeonGrid, BoolGrid currentState)
@@ -77,7 +76,7 @@ namespace MagicAndMyths
 
         private bool IsAdjacentToPath(IntVec3 cell, Map map, BoolGrid grid)
         {
-            foreach (IntVec3 dir in GenAdjFast.AdjacentCells8Way(cell))
+            foreach (IntVec3 dir in GenAdjFast.AdjacentCells8Way(cell).ToArray())
             {
                 if (dir.InBounds(map) && grid[dir] && IsPathCell(dir, map, grid))
                 {
@@ -90,7 +89,7 @@ namespace MagicAndMyths
         private int CountFloorNeighbors(IntVec3 cell, Map map, BoolGrid grid)
         {
             int count = 0;
-            foreach (IntVec3 neighbor in GenAdjFast.AdjacentCells8Way(cell))
+            foreach (IntVec3 neighbor in GenAdjFast.AdjacentCells8Way(cell).ToArray())
             {
                 if (neighbor.InBounds(map) && grid[neighbor])
                 {

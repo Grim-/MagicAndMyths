@@ -71,10 +71,8 @@ namespace MagicAndMyths
             if (validCells.Count == 0)
                 return IntVec3.Invalid;
 
-            // If we want to bias placement toward the center
             if (centerBias != default && centerBiasStrength > 0)
             {
-                // Use center of room if center bias is default
                 if (centerBias == default)
                     centerBias = roomRect.CenterCell;
 

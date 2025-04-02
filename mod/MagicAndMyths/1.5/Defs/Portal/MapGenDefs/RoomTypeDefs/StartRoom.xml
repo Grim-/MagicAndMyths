@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<MagicAndMyths.RoomTypeDef>
+  <defName>StartRoom</defName>
+  <roomType>Start</roomType>
+  <roomTypeWorker>MagicAndMyths.StartRoom</roomTypeWorker>
+</MagicAndMyths.RoomTypeDef>
+
+<MagicAndMyths.RoomTypeDef>
+  <defName>EndRoom</defName>
+  <roomType>End</roomType>
+  <roomTypeWorker>MagicAndMyths.EndRoom</roomTypeWorker>
+</MagicAndMyths.RoomTypeDef>
+
+
+<MagicAndMyths.RoomTypeDef>
+  <defName>TreasureRoom</defName>
+  <roomType>Normal</roomType>
+  <roomTypeWorker>MagicAndMyths.TreasureRoom</roomTypeWorker>
+</MagicAndMyths.RoomTypeDef>
+</Defs>

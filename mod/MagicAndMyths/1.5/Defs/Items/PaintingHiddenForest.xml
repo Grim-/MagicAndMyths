@@ -18,8 +18,8 @@
 		</statBases>
     <comps>
      <li Class="MagicAndMyths.CompProperties_PortalGenerator">
-       <mapGeneratorDef>MapGenHiddenForest</mapGeneratorDef>
-       <mapSize>(50,1,50)</mapSize>
+       <mapGeneratorDef>MapGenEasyDungeon</mapGeneratorDef>
+       <mapSize>(80,1,80)</mapSize>
        <cooldownTicks>600</cooldownTicks>
      </li>
    </comps>

@@ -5,4 +5,10 @@
     <driverClass>MagicAndMyths.JobDriver_UsePortal</driverClass>
     <reportString>using portal.</reportString>
   </JobDef>
+
+  <JobDef>
+    <defName>MagicAndMyths_WorkSolution</defName>
+    <driverClass>MagicAndMyths.JobDriver_AttemptSolveDungeonObstacle</driverClass>
+    <reportString>attempting to solve..</reportString>
+  </JobDef>
 </Defs>

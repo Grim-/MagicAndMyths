@@ -78,7 +78,6 @@ namespace MagicAndMyths
 
             IsSolved = true;
 
-            // Notify all mechanisms
             foreach (var mechanism in mechanismComps)
             {
                 mechanism.OnSolutionComplete();
@@ -93,7 +92,6 @@ namespace MagicAndMyths
             if (IsSolved)
                 return;
 
-            // Notify applicable mechanisms about progress
             foreach (var mechanism in mechanismComps)
             {
                 mechanism.OnProgress(progressPercent);
@@ -121,7 +119,6 @@ namespace MagicAndMyths
         {
             IsSolved = false;
 
-            // Reset all solutions
             foreach (var solution in solutionComps)
             {
                 solution.Reset();

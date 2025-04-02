@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Verse;
 
 namespace MagicAndMyths
@@ -7,6 +8,10 @@ namespace MagicAndMyths
     {
         public RoomType roomType = RoomType.End;
         public Type roomTypeWorker;
+        public List<ObstacleDef> roomObstacles;
+        public IntRange roomSize;
+        public bool roomHasDoors = true;
+        public bool roomIsFogged = false;
 
 
         public RoomTypeWorker DoWorker(Map map, CellRect RoomCellRect)
@@ -16,5 +21,4 @@ namespace MagicAndMyths
             return RoomTypeWorker;
         }
     }
-
 }

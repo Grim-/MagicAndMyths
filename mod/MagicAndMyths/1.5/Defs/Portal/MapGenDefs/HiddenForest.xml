@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
     <MapGeneratorDef>
-      <defName>MapGenEmpty</defName>
+      <defName>MapGenHiddenForest</defName>
       <genSteps>
         <li>ElevationFertility</li>
-        <li>Caves</li>
         <li>Terrain</li>
-        <li>CavesTerrain</li>
-        <li>RockChunks</li>
-        <li>RocksFromGrid</li>
+        <li>Plants</li>
       </genSteps>
       <pocketMapProperties>
-          <biome>TropicalRainforest</biome>
+          <biome>HiddenForest</biome>
           <temperature>21</temperature>
       </pocketMapProperties>
     </MapGeneratorDef>

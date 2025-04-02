@@ -5,42 +5,34 @@ namespace MagicAndMyths
 {
     public static class CellularAutomataManager
     {
-        public static void ApplyRules(Map map, BoolGrid dungeonGrid, List<CellularAutomataWorker> workers, int iterations = 3)
+        public static void ApplyRules(Map map, BoolGrid dungeonGrid, List<CelluarAutomataDef> workers, int iterations = 3)
         {
-            // Store the truly original grid once, for path integrity checking at the end
             BoolGrid originalGrid = new BoolGrid(map);
             foreach (IntVec3 cell in map.AllCells)
             {
                 originalGrid[cell] = dungeonGrid[cell];
             }
 
-            // Run the specified number of iterations
             for (int i = 0; i < iterations; i++)
             {
-                // In each iteration, apply each worker
                 foreach (var worker in workers)
                 {
-                    // Each worker needs a snapshot of the current state to read from
                     BoolGrid currentState = new BoolGrid(map);
                     foreach (IntVec3 cell in map.AllCells)
                     {
                         currentState[cell] = dungeonGrid[cell];
                     }
-
-                    // The worker reads from currentState and writes to dungeonGrid
                     worker.Apply(map, dungeonGrid, currentState);
                 }
             }
 
-            // After all iterations, ensure critical paths remain intact
-            EnsurePathsIntact(map, dungeonGrid, originalGrid);
+            //EnsurePathsIntact(map, dungeonGrid, originalGrid);
 
-            // Apply the final grid to the map
+            //just return the boolgrid let generator do this
             foreach (IntVec3 cell in map.AllCells)
             {
                 if (dungeonGrid[cell])
                 {
-                    // This is a floor cell - ensure any walls are removed
                     Thing wall = cell.GetFirstBuilding(map);
                     if (wall != null && wall.def == MagicAndMythDefOf.DungeonWall)
                     {
@@ -49,7 +41,6 @@ namespace MagicAndMyths
                 }
                 else
                 {
-                    // This is a wall cell - ensure a wall exists
                     if (cell.GetFirstBuilding(map) == null)
                     {
                         GenSpawn.Spawn(MagicAndMythDefOf.DungeonWall, cell, map);

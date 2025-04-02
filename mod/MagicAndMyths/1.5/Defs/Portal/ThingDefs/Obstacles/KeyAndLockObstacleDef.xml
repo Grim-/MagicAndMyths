@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ObstacleDef_KeyAndDoor>
+       <defName>KeyAndLockObstacle</defName>
+       <label>Locked Door Obstacle</label>
+       <description>A door that requires a key from elsewhere in the dungeon.</description>
+       <commonality>1.0</commonality>
+       <minDistanceFromStart>2</minDistanceFromStart>
+       <requiresSeparateRooms>true</requiresSeparateRooms>
+       <obstacleDef>MagicAndMythCraftingObstacle</obstacleDef>
+       <keyDef>MedicineIndustrial</keyDef>
+       <doorDef>Door</doorDef>
+       <doorStuffing>Steel</doorStuffing>
+   </MagicAndMyths.ObstacleDef_KeyAndDoor>
+</Defs>

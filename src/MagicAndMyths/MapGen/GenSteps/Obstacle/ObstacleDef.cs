@@ -9,6 +9,7 @@ namespace MagicAndMyths
         public Type workerClass;
         public ThingDef obstacleDef;
         public float commonality = 1f;
+        public int maxCount = 3;
         public int minDistanceFromStart = 0;
         public bool requiresSeparateRooms = false;
 

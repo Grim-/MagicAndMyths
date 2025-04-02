@@ -5,7 +5,6 @@ namespace MagicAndMyths
 {
     public abstract class CompMechanism : ThingComp
     {
-        // Reference to parent obstacle
         protected Obstacle parentObstacle;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
