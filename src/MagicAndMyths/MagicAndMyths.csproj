@@ -128,7 +128,8 @@
     <Compile Include="MapGen\GenSteps\CorridoorUtility.cs" />
     <Compile Include="MapGen\GenSteps\DungeonGenerator.cs" />
     <Compile Include="MapGen\GenSteps\DungeonRoom.cs" />
-    <Compile Include="MapGen\GenSteps\DungeonUtil.cs" />
+    <Compile Include="MapGen\GenSteps\RoomType\EncounterRoom.cs" />
+    <Compile Include="Util\DungeonUtil.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_StampStructure.cs" />
     <Compile Include="MapGen\GenSteps\MspUtility.cs" />
     <Compile Include="MapGen\GenSteps\Obstacle\CompMechanism.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="MapGen\GenSteps\Obstacle\CompTrap.cs" />
     <Compile Include="MapGen\GenSteps\Obstacle\ObstacleGenerator.cs" />
     <Compile Include="MapGen\GenSteps\Obstacle\ObstacleWorker_KeyAndDoor.cs" />
+    <Compile Include="MapGen\Building\Building_HiddenDoor.cs" />
     <Compile Include="MapGen\GenSteps\RoomType\RoomConnectionRule.cs" />
     <Compile Include="MapGen\GenSteps\RoomType\RoomConnectionRuleManager.cs" />
     <Compile Include="MapGen\GenSteps\RoomType\EndRoom.cs" />
@@ -151,7 +153,7 @@
     <Compile Include="MapGen\GateAddress.cs" />
     <Compile Include="MapGen\GateSymbolDef.cs" />
     <Compile Include="MapGen\Comps\GateWorldManager.cs" />
-    <Compile Include="MapGen\GenSteps\JobDriver_AttemptSolveDungeonObstacle.cs" />
+    <Compile Include="AI\JobDriver_AttemptSolveDungeonObstacle.cs" />
     <Compile Include="MapGen\GenSteps\Obstacle\ObstacleDef.cs" />
     <Compile Include="MapGen\GenSteps\Obstacle\ObstacleWorker.cs" />
     <Compile Include="MapGen\GenSteps\RoomType\RoomType.cs" />
@@ -169,7 +171,7 @@
     <Compile Include="MapGen\IEnergyProvider.cs" />
     <Compile Include="MapGen\IPortalDevice.cs" />
     <Compile Include="MapGen\IPortalProvider.cs" />
-    <Compile Include="MapGen\JobDriver_UsePortal.cs" />
+    <Compile Include="AI\JobDriver_UsePortal.cs" />
     <Compile Include="MapGen\MapComponent_DungeonEnemies.cs" />
     <Compile Include="MapGen\Modifiers\MapModifier.cs" />
     <Compile Include="MapGen\Modifiers\MapModifierDef.cs" />
@@ -180,7 +182,7 @@
     <Compile Include="MapGen\Modifiers\MapModifier_StoneCreep.cs" />
     <Compile Include="MapGen\PortalMode.cs" />
     <Compile Include="MapGen\PortalPatches.cs" />
-    <Compile Include="MapGen\PortalUtils.cs" />
+    <Compile Include="Util\PortalUtils.cs" />
     <Compile Include="MapGen\StoredSiteData.cs" />
     <Compile Include="MapGen\Window_PortalUI.cs" />
     <Compile Include="MapGen\Comps\WorldCustomSiteManager.cs" />

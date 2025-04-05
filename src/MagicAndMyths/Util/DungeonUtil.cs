@@ -8,7 +8,17 @@ namespace MagicAndMyths
 {
     public static class DungeonUtil
     {
-
+        public static void SpawnTerrainForRoom(Map map, CellRect roomRect, TerrainDef Terrain)
+        {
+            foreach (var cell in roomRect.Cells)
+            {
+                if (cell.InBounds(map))
+                {
+                    map.terrainGrid.SetTerrain(cell, Terrain);
+                    map.terrainGrid.SetUnderTerrain(cell, Terrain);
+                }
+            }
+        }
 
         public static void SpawnTerrain(Map map, IntVec3 cell, TerrainDef Terrain)
         {

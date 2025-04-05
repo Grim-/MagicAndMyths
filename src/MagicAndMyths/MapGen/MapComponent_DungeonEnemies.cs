@@ -6,65 +6,41 @@ namespace MagicAndMyths
 {
     public class MapComponent_DungeonEnemies : MapComponent
     {
-        private Dictionary<int, List<Lord>> enemyLords;
-        private List<int> tempKeys;
-        private List<List<Lord>> tempValues;
+        private Dictionary<int, Lord> dungeonLords = new Dictionary<int, Lord>();
 
         public MapComponent_DungeonEnemies(Map map) : base(map)
         {
-            enemyLords = new Dictionary<int, List<Lord>>();
         }
 
-        public void AddLord(int mapId, Lord lord)
+        public void AddLord(int roomID, Lord lord)
         {
-            if (!enemyLords.ContainsKey(mapId))
+            if (dungeonLords.ContainsKey(roomID))
             {
-                enemyLords[mapId] = new List<Lord>();
+                dungeonLords[roomID] = lord;
             }
-            enemyLords[mapId].Add(lord);
-        }
-
-        public List<Lord> GetLords(int mapId)
-        {
-            return enemyLords.TryGetValue(mapId, out var lords) ? lords : new List<Lord>();
-        }
-
-        public void RemoveLord(int mapId, Lord lord)
-        {
-            if (enemyLords.ContainsKey(mapId))
+            else
             {
-                enemyLords[mapId].Remove(lord);
-                if (enemyLords[mapId].Count == 0)
+                dungeonLords.Add(roomID, lord);
+            }
+        }
+
+        // Call this to allow a specific room's pawns to leave
+        public void SetRoomPawnsCanLeave(int roomID, bool canLeave)
+        {
+            if (dungeonLords.TryGetValue(roomID, out Lord lord))
+            {
+                LordJob_DungeonEncounter lordJob = lord.LordJob as LordJob_DungeonEncounter;
+                if (lordJob != null)
                 {
-                    enemyLords.Remove(mapId);
+                    lordJob.SetAllowLeaveRoom(canLeave);
                 }
-            }
-        }
-
-        public void ClearLords(int mapId)
-        {
-            if (enemyLords.ContainsKey(mapId))
-            {
-                enemyLords.Remove(mapId);
             }
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look(
-                ref enemyLords,
-                "enemyLords",
-                LookMode.Value,
-                LookMode.Reference,
-                ref tempKeys,
-                ref tempValues
-            );
-
-            if (enemyLords == null)
-            {
-                enemyLords = new Dictionary<int, List<Lord>>();
-            }
+            Scribe_Collections.Look(ref dungeonLords, "dungeonLords", LookMode.Value, LookMode.Reference);
         }
     }
 }

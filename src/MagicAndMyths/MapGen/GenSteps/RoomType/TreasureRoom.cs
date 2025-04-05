@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System.Collections.Generic;
 using Verse;
 
 namespace MagicAndMyths
@@ -10,11 +9,7 @@ namespace MagicAndMyths
         {
             TerrainDef terrainDef = DefDatabase<TerrainDef>.GetNamed("GoldTile");
 
-            foreach (var item in RoomCellRect.Cells)
-            {
-                DungeonUtil.SpawnTerrain(map, item, terrainDef);
-            }
-
+            DungeonUtil.SpawnTerrainForRoom(map, RoomCellRect, terrainDef);
             GenSpawn.Spawn(ThingDefOf.ArchiteCapsule, RoomCellRect.CenterCell, map);
         }
     }
