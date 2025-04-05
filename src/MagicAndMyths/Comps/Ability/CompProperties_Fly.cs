@@ -1,4 +1,7 @@
 ﻿using RimWorld;
+using SquadBehaviour;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -19,11 +22,12 @@ namespace MagicAndMyths
             base.Apply(target, dest);
             if (parent.pawn?.Map == null)
                 return;
+			Map map = parent.pawn.Map;
 
-
-            Map map = parent.pawn.Map;
-            PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.Thor_PawnFlyer, parent.pawn, target.Cell, null, null);
+			PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_SimpleFlyer, parent.pawn, target.Cell, null, null);
             GenSpawn.Spawn(pawnFlyer, parent.pawn.Position, map);
         }
     }
+
+
 }

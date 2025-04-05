@@ -6,8 +6,8 @@ namespace MagicAndMyths
     [DefOf]
     public static class MagicAndMythDefOf
     {
-        public static ThingDef Thor_PawnFlyer;
-        public static ThingDef Thor_MjolnirProjectile;
+        public static ThingDef MagicAndMyths_SimpleFlyer;
+        public static ThingDef MagicAndMyths_MjolnirProjectile;
         public static ThingDef MagicAndMyths_DelegateFlyer;
         public static ThingDef MagicAndMyths_MultiJumpFlyer;
         public static AbilityDef MagicAndMyths_RevertTransformation;
@@ -61,6 +61,8 @@ namespace MagicAndMyths
         public static StatDef Portal_BioEnergyMax;
         public static StatDef Portal_BioEnergyRegen;
 
+
+        public static ThingDef DungeonHiddenWallDoor;
 
         public static MapGeneratorDef MapGenEmpty;
 

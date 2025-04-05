@@ -151,7 +151,7 @@ namespace MagicAndMyths
 
         private void LaunchRecallProjectile()
         {
-            var projectile = (Projectile_Delegate)ThingMaker.MakeThing(MagicAndMythDefOf.Thor_MjolnirProjectile);
+            var projectile = (Projectile_Delegate)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_MjolnirProjectile);
             GenSpawn.Spawn(projectile, BoundRef.Position, Pawn.Map);
             projectile.Launch(Pawn, Pawn, Pawn, ProjectileHitFlags.IntendedTarget);
             BoundRef.DeSpawn();

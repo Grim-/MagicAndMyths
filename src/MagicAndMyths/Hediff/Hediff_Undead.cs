@@ -7,16 +7,15 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class Hediff_Undead : HediffWithComps, ISquadMember, IRotDrawOverrider
+    public class Hediff_Undead : Hediff_SquadMember, ISquadMember, IRotDrawOverrider
     {
         UndeadHediffDef Def => (UndeadHediffDef)def;
 
-        private Pawn referencedPawn;
         public Pawn Master => referencedPawn;
         public override string Label => base.Label;
         public override string Description => base.Description + $"\nSquad Leader: {SquadLeader.SquadLeaderPawn.Name}";
 
-        public ISquadLeader SquadLeader
+        public override ISquadLeader SquadLeader
         {
             get
             {
@@ -29,18 +28,6 @@ namespace MagicAndMyths
                 return null;
             }
         }
-        private SquadMemberState preDefendState = SquadMemberState.CalledToArms;
-        private SquadMemberState squadMemberState = SquadMemberState.CalledToArms;
-        public SquadMemberState CurrentState => squadMemberState;
-
-
-        public IntVec3 DefendPoint = IntVec3.Invalid;
-        IntVec3 ISquadMember.DefendPoint => DefendPoint;
-
-        public bool HasDefendPoint => DefendPoint != IntVec3.Invalid;
-
-        public Pawn Pawn => this.pawn;
-
 
         private bool ShouldOverrideRotDraw = false;
         public bool ShouldOverride => ShouldOverrideRotDraw;
@@ -48,116 +35,14 @@ namespace MagicAndMyths
         private RotDrawMode _OverridenRotDrawMode = RotDrawMode.Dessicated;
         public RotDrawMode OverridenRotDrawMode => _OverridenRotDrawMode;
 
-        public SquadDutyDef _CurrentStance = null;
-        SquadDutyDef ISquadMember.CurrentStance { get => _CurrentStance; set => _CurrentStance = value; }
 
-        private Zone_PatrolPath _AssignedPatrol = null;
-        Zone_PatrolPath ISquadMember.AssignedPatrol { get => _AssignedPatrol; set => _AssignedPatrol = value; }
-
-        private PatrolTracker _PatrolTracker = null;
-        public PatrolTracker PatrolTracker
+        public override void PostAdd(DamageInfo? dinfo)
         {
-            get
-            {
-                if (_PatrolTracker == null)
-                {
-                    _PatrolTracker = new PatrolTracker(this);
-                }
+            base.PostAdd(dinfo);
 
-                return _PatrolTracker;
-            }
-        }
-        private Squad _AssignedSquad = null;
-        public Squad AssignedSquad
-        {
-            get => _AssignedSquad;
-            set => _AssignedSquad = value;
-        }
-
-        public void SetSquadLeader(Pawn master)
-        { 
-            referencedPawn = master;
             ApplyVisual();
         }
-        public void SetCurrentMemberState(SquadMemberState newState)
-        {
-            this.squadMemberState = newState;
 
-            if (this.pawn.CurJob != null)
-            {
-                if (this.pawn.CurJob != null)
-                {
-                    this.pawn.jobs.EndCurrentJob(Verse.AI.JobCondition.InterruptForced);
-                }
-            }
-        }
-        public void IssueOrder(SquadOrderDef orderDef, LocalTargetInfo target)
-        {
-            SquadOrderWorker squadOrderWorker = orderDef.CreateWorker(SquadLeader, this);
-
-            if (squadOrderWorker.CanExecuteOrder(target))
-            {
-                squadOrderWorker.ExecuteOrder(target);
-            }
-        }
-        public void SetDefendPoint(IntVec3 targetPoint)
-        {
-            this.DefendPoint = targetPoint;
-            //SetCurrentMemberState(SquadMemberState.DefendPoint);
-        }
-
-        public void ClearDefendPoint()
-        {
-            this.DefendPoint = IntVec3.Invalid;
-           // SetCurrentMemberState(preDefendState);
-
-        }
-
-        public void Notify_SquadMemberAttacked()
-        {
-
-        }
-
-        public void Notify_SquadChanged()
-        {
-
-        }
-
-        public override IEnumerable<Gizmo> GetGizmos()
-        {
-            foreach (Gizmo gizmo in base.GetGizmos())
-            {
-                yield return gizmo;
-            }
-
-
-            yield return new Gizmo_SquadMemberInfo(this);
-
-            yield return new Command_Action()
-            {
-                defaultLabel = $"Current State {this.CurrentState}",
-                action = () =>
-                {
-                    List<FloatMenuOption> gridOptions = new List<FloatMenuOption>();
-                    gridOptions.Add(new FloatMenuOption("Call To Arms", () =>
-                    {
-                        this.SetCurrentMemberState(SquadMemberState.CalledToArms);
-                    }));
-
-                    gridOptions.Add(new FloatMenuOption("At Ease", () =>
-                    {
-                        this.SetCurrentMemberState(SquadMemberState.AtEase);
-                    }));
-
-                    gridOptions.Add(new FloatMenuOption("Do Nothing", () =>
-                    {
-                        this.SetCurrentMemberState(SquadMemberState.DoNothing);
-                    }));
-
-                    Find.WindowStack.Add(new FloatMenu(gridOptions));
-                }
-            };
-        }
 
         private void ApplyVisual()
         {
@@ -220,32 +105,12 @@ namespace MagicAndMyths
                 }
             }
         }
-        public string GetStatusReport()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            if (SquadLeader != null && SquadLeader.SquadLeaderPawn != null)
-            {
-                sb.Append($"Squad Leader - {SquadLeader.SquadLeaderPawn.NameShortColored}");
-            }
-
-            if (this._CurrentStance != null)
-            {
-                sb.AppendLine($"Duty - {this._CurrentStance.label}");
-            }
-
-            return sb.ToString();
-        }
 
         public override void ExposeData()
         {
             base.ExposeData();
-
-            Scribe_References.Look(ref _AssignedSquad, "assignedSquad");
             Scribe_References.Look(ref referencedPawn, "referencedPawn");
             Scribe_Values.Look(ref squadMemberState, "squadMemberState");
-            Scribe_Values.Look(ref preDefendState, "preDefendState");
-            Scribe_Values.Look(ref DefendPoint, "defendPoint");
         }
     }
 }

@@ -1,11 +1,24 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
     public static class DungeonUtil
     {
+
+
+        public static void SpawnTerrain(Map map, IntVec3 cell, TerrainDef Terrain)
+        {
+            if (cell.InBounds(map))
+            {
+                map.terrainGrid.SetTerrain(cell, Terrain);
+                map.terrainGrid.SetUnderTerrain(cell, Terrain);
+            }
+        }
+
         public static void SpawnDoorsForRoom(Map map, List<BspUtility.BspNode> rooms)
         {
             foreach (var room in rooms)
@@ -45,7 +58,7 @@ namespace MagicAndMyths
 
                             if (hasValidOpening)
                             {
-                                Thing thing = ThingMaker.MakeThing(ThingDefOf.Door, ThingDefOf.Steel);
+                                Thing thing = ThingMaker.MakeThing(MagicAndMythDefOf.DungeonHiddenWallDoor, ThingDefOf.Steel);
                                 thing = GenSpawn.Spawn(thing, item, map);
                                 thing.SetFaction(Faction.OfAncientsHostile);
                             }
@@ -78,6 +91,29 @@ namespace MagicAndMyths
 
             Building building = cell.GetFirstBuilding(map);
             return building != null && building.def == MagicAndMythDefOf.DungeonWall;
+        }
+
+        public static int CountAdjacentOpenSpace(Map map, IntVec3 cell)
+        {
+            int count = 0;
+            foreach (IntVec3 adj in GenAdjFast.AdjacentCellsCardinal(cell))
+            {
+                if (adj.InBounds(map) && IsPassable(map, adj))
+                    count++;
+            }
+            return count;
+        }
+
+        public static bool IsTooCloseToExistingDoors(IntVec3 candidate, List<IntVec3> existingDoors, int minSpacing = 3)
+        {
+            foreach (IntVec3 existingDoor in existingDoors)
+            {
+                float distance = (candidate - existingDoor).LengthHorizontal;
+                if (distance < minSpacing)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

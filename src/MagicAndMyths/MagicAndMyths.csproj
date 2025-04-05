@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
+    <Compile Include="Comps\Ability\CompProperties_EquippableAbility.cs" />
+    <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
+    <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
     <Compile Include="MapGen\Building\Building_OneWayPortal.cs" />
     <Compile Include="MapGen\BiomeWorker_NeverSpawn.cs" />
     <Compile Include="Buildings\BuildPlacement.cs" />
@@ -123,6 +126,7 @@
     <Compile Include="MapGen\GenSteps\CelluarAutomata\CellularAutomataWorker.cs" />
     <Compile Include="MapGen\GenSteps\Corridoor.cs" />
     <Compile Include="MapGen\GenSteps\CorridoorUtility.cs" />
+    <Compile Include="MapGen\GenSteps\DungeonGenerator.cs" />
     <Compile Include="MapGen\GenSteps\DungeonRoom.cs" />
     <Compile Include="MapGen\GenSteps\DungeonUtil.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_StampStructure.cs" />
@@ -135,6 +139,8 @@
     <Compile Include="MapGen\GenSteps\Obstacle\CompTrap.cs" />
     <Compile Include="MapGen\GenSteps\Obstacle\ObstacleGenerator.cs" />
     <Compile Include="MapGen\GenSteps\Obstacle\ObstacleWorker_KeyAndDoor.cs" />
+    <Compile Include="MapGen\GenSteps\RoomType\RoomConnectionRule.cs" />
+    <Compile Include="MapGen\GenSteps\RoomType\RoomConnectionRuleManager.cs" />
     <Compile Include="MapGen\GenSteps\RoomType\EndRoom.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_BspDungeon.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_Dungeon.cs" />
@@ -276,7 +282,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Designators\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

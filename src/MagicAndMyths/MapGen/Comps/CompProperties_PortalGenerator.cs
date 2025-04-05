@@ -10,11 +10,13 @@ namespace MagicAndMyths
     public class CompProperties_PortalGenerator : CompProperties
     {
         public MapGeneratorDef mapGeneratorDef;
-        public IntVec3 mapSize = new IntVec3(75, 1, 75); // Default map size
+        public IntVec3 mapSize = new IntVec3(75, 1, 75);
         public bool oneTimeUse = false;
-        public int cooldownTicks = -1; // -1 for no cooldown
-        public List<ThingDef> requiredFuel = null; // Optional fuel requirements
+        public int cooldownTicks = -1;
+        public List<ThingDef> requiredFuel = null;
         public int fuelAmountRequired = 0;
+
+        public string displayString = "Enter Portal";
 
         public CompProperties_PortalGenerator()
         {
@@ -249,7 +251,7 @@ namespace MagicAndMyths
         {
             if (IsPortalActive)
             {
-                yield return new FloatMenuOption("Enter Portal", () =>
+                yield return new FloatMenuOption(Props.displayString, () =>
                 {
                     Job job = JobMaker.MakeJob(MagicAndMythDefOf.Portals_UsePortalJob, this.parent);
                     selPawn.jobs.StartJob(job, JobCondition.InterruptForced);

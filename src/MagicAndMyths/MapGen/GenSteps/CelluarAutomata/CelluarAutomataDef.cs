@@ -27,6 +27,8 @@ namespace MagicAndMyths
             {
                 return;
             }
+
+            Log.Message($"Applying Cellular Automata {this.defName}");
             Worker.Apply(map, dungeonGrid, currentState);
         }
     }

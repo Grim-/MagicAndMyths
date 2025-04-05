@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="ResourceBase">
+      <defName>MagicAndMythsPaintingTestDungeon</defName>
+      <label>Painting :The Dark Cave</label>
+      <description>A life-like painting of a dark scene with the something looking out..</description>
+      <graphicData>
+        <texPath>Scrolls/IconScroll</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <statBases>
+        <MaxHitPoints>10</MaxHitPoints>
+        <Mass>0.01</Mass>
+        <Beauty>0</Beauty>
+        <MarketValue>3000</MarketValue>
+        <DeteriorationRate>5</DeteriorationRate>
+        <Flammability>1.0</Flammability>
+      </statBases>
+      <comps>
+       <li Class="MagicAndMyths.CompProperties_PortalGenerator">
+         <mapGeneratorDef>MapGenEasyDungeon</mapGeneratorDef>
+         <mapSize>(80,1,80)</mapSize>
+         <cooldownTicks>600</cooldownTicks>
+         <displayString>Touch Painting</displayString>
+       </li>
+     </comps>
+    </ThingDef>
+
+</Defs>

@@ -230,17 +230,14 @@ namespace MagicAndMyths
             {
                 foreach (var item in DefDatabase<TrainableDef>.AllDefsListForReading)
                 {
-                    if (PawnToTrain.training.CanAssignToTrain(item).Accepted)
-                    {
-                        PawnToTrain.training.SetWantedRecursive(item, true);
-                        PawnToTrain.training.Train(item, Trainer, true);
+                    PawnToTrain.training.SetWantedRecursive(item, true);
+                    PawnToTrain.training.Train(item, Trainer, true);       
+                }
 
-                        if (PawnToTrain.playerSettings != null)
-                        {
-                            PawnToTrain.playerSettings.followDrafted = true;
-                        }
-                    }
 
+                if (PawnToTrain.playerSettings != null)
+                {
+                    PawnToTrain.playerSettings.followDrafted = true;
                 }
             }
         }
@@ -260,37 +257,37 @@ namespace MagicAndMyths
 
 
 
-        public static Pawn GetMaster(this Pawn pawn)
-        {
-            Hediff_Undead shikigami = (Hediff_Undead)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_Undead);
-            if (shikigami != null)
-            {
-                return shikigami.Master;
-            }
+        //public static Pawn GetMaster(this Pawn pawn)
+        //{
+        //    Hediff_Undead shikigami = (Hediff_Undead)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_Undead);
+        //    if (shikigami != null)
+        //    {
+        //        return shikigami.Master;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
         public static Hediff_UndeadMaster GetUndeadMaster(this Pawn pawn)
         {
             Hediff_UndeadMaster undeadMaster = (Hediff_UndeadMaster)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster);
             return undeadMaster;
         }
-        public static bool IsMasterOf(this Pawn master, Pawn pawn)
-        {
-            Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
-            if (master != null && undeadSummon != null)
-            {
-                if (undeadSummon.Master != null)
-                {
-                    //has a master
-                    return undeadSummon.Master == master;
-                }
+        //public static bool IsMasterOf(this Pawn master, Pawn pawn)
+        //{
+        //    Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
+        //    if (master != null && undeadSummon != null)
+        //    {
+        //        if (undeadSummon.Master != null)
+        //        {
+        //            //has a master
+        //            return undeadSummon.Master == master;
+        //        }
 
-                return true;
-            }
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         public static void QuickHeal(this Pawn pawn, float healAmount)
         {
@@ -310,17 +307,17 @@ namespace MagicAndMyths
         }
 
 
-        public static bool IsControlledSummon(this Pawn pawn, out Hediff_Undead undead)
-        {
-            undead = null;
+        //public static bool IsControlledSummon(this Pawn pawn, out Hediff_Undead undead)
+        //{
+        //    undead = null;
 
-            if (pawn.health.hediffSet.HasHediff<Hediff_Undead>())
-            {
-                undead = pawn.health.hediffSet.GetFirstHediff<Hediff_Undead>();
-                return true;
-            }
+        //    if (pawn.health.hediffSet.HasHediff<Hediff_Undead>())
+        //    {
+        //        undead = pawn.health.hediffSet.GetFirstHediff<Hediff_Undead>();
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
     }
 }

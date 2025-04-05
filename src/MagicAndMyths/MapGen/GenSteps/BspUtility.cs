@@ -62,6 +62,7 @@ namespace MagicAndMyths
             public bool IsWaypoint { get; set; } = false;
         }
 
+
         public static BspNode GenerateBspTree(CellRect rootRect, int maxDepth, int minRoomSize = 8)
         {
             BspNode rootNode = new BspNode { rect = rootRect };
@@ -140,7 +141,122 @@ namespace MagicAndMyths
             return rootNode;
         }
 
+        public static List<RoomConnection> GenerateRuleBasedConnections(List<BspUtility.BspNode> leafNodes)
+        {
+            List<RoomConnection> potentialConnections = new List<RoomConnection>();
+            HashSet<string> processedConnections = new HashSet<string>();
 
+            foreach (var node in leafNodes)
+            {
+                foreach (var connectedNode in node.connectedNodes)
+                {
+                    string connectionId = GetConnectionId(node, connectedNode);
+
+                    if (!processedConnections.Contains(connectionId))
+                    {
+                        var connection = new RoomConnection(node, connectedNode);
+                        connection.corridors = CorridoorUtility.GenerateCorridors(node, connectedNode);
+                        potentialConnections.Add(connection);
+                        processedConnections.Add(connectionId);
+                    }
+                }
+            }
+
+            List<RoomConnection> validConnections = RoomConnectionRuleManager.ApplyRules(leafNodes, potentialConnections);
+
+            foreach (var connection in validConnections)
+            {
+                DetermineIfConnectionNeedsDoor(connection, leafNodes);
+            }
+
+            UpdateNodeConnections(leafNodes, validConnections);
+
+            return validConnections;
+        }
+
+        private static void UpdateNodeConnections(List<BspUtility.BspNode> nodes, List<RoomConnection> validConnections)
+        {
+            // Clear existing connections
+            foreach (var node in nodes)
+            {
+                if (node.IsOnCriticalPath)
+                {
+                    continue;
+                }
+
+                node.connectedNodes.Clear();
+            }
+
+            // Set connections based on validated connections
+            foreach (var connection in validConnections)
+            {
+                connection.roomA.connectedNodes.Add(connection.roomB);
+                connection.roomB.connectedNodes.Add(connection.roomA);
+            }
+        }
+
+        public static string GetConnectionId(BspUtility.BspNode node1, BspUtility.BspNode node2)
+        {
+            ulong id1 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(node1);
+            ulong id2 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(node2);
+            return id1 < id2 ? $"{id1}-{id2}" : $"{id2}-{id1}";
+        }
+
+        private static void DetermineIfConnectionNeedsDoor(RoomConnection connection, List<BspUtility.BspNode> allRooms)
+        {
+            // Reuse existing door determination logic
+            if (connection.roomA.IsOnCriticalPath && connection.roomB.IsOnCriticalPath)
+            {
+                connection.needsDoor = true;
+
+                if (Math.Abs(connection.roomA.CriticalPathIndex - connection.roomB.CriticalPathIndex) == 1)
+                {
+                    int lowerIndex = Math.Min(connection.roomA.CriticalPathIndex, connection.roomB.CriticalPathIndex);
+                    if (lowerIndex > 0)
+                    {
+                        connection.isLocked = true;
+                    }
+                }
+                return;
+            }
+
+            // Check room definitions
+            RoomTypeDef roomADef = GetRoomTypeDef(connection.roomA);
+            RoomTypeDef roomBDef = GetRoomTypeDef(connection.roomB);
+
+            if ((roomADef != null && IsSpecialRoomDef(roomADef)) ||
+                (roomBDef != null && IsSpecialRoomDef(roomBDef)))
+            {
+                connection.needsDoor = true;
+                return;
+            }
+
+            // Random chance for normal rooms
+            if (Rand.Value < 0.6f)
+            {
+                connection.needsDoor = true;
+            }
+        }
+        public static List<BspUtility.BspNode> SelectWaypoints(List<BspUtility.BspNode> nodes, BspUtility.BspNode start, BspUtility.BspNode end, int count)
+        {
+            var possibleWaypoints = nodes.Where(n => n != start && n != end).ToList();
+
+            var straightLineDir = (end.room.CenterCell.ToVector3() - start.room.CenterCell.ToVector3()).normalized;
+            var startPos = start.room.CenterCell.ToVector3();
+
+            possibleWaypoints.Sort((a, b) => {
+                var aPos = a.room.CenterCell.ToVector3();
+                var bPos = b.room.CenterCell.ToVector3();
+
+                var aProj = Vector3.Dot((aPos - startPos), straightLineDir);
+                var bProj = Vector3.Dot((bPos - startPos), straightLineDir);
+
+                return -((aPos - (startPos + straightLineDir * aProj)).magnitude
+                       .CompareTo((bPos - (startPos + straightLineDir * bProj)).magnitude));
+            });
+
+            return possibleWaypoints.Take(count).ToList();
+        }
 
         public static List<RoomConnection> GenerateRoomConnections(List<BspUtility.BspNode> leafNodes)
         {
@@ -167,47 +283,10 @@ namespace MagicAndMyths
             return connections;
         }
 
-        private static void DetermineIfConnectionNeedsDoor(RoomConnection connection, List<BspUtility.BspNode> allRooms)
-        {
-            if (connection.roomA.IsOnCriticalPath && connection.roomB.IsOnCriticalPath)
-            {
-                connection.needsDoor = true;
-
-                if (Mathf.Abs(connection.roomA.CriticalPathIndex - connection.roomB.CriticalPathIndex) == 1)
-                {
-                    int lowerIndex = Mathf.Min(connection.roomA.CriticalPathIndex, connection.roomB.CriticalPathIndex);
-                    if (lowerIndex > 0)
-                    {
-                        connection.isLocked = true;
-                    }
-                }
-                return;
-            }
-
-            RoomTypeDef roomADef = GetRoomTypeDef(connection.roomA);
-            RoomTypeDef roomBDef = GetRoomTypeDef(connection.roomB);
-
-            if ((roomADef != null && IsSpecialRoomDef(roomADef)) ||
-                (roomBDef != null && IsSpecialRoomDef(roomBDef)))
-            {
-                connection.needsDoor = true;
-                return;
-            }
-
-            if (Rand.Value < 0.6f)
-            {
-                connection.needsDoor = true;
-            }
-        }
 
         private static RoomTypeDef GetRoomTypeDef(BspUtility.BspNode node)
         {
-            if (node.tag is DungeonRoom dr)
-            {
-                return DefDatabase<RoomTypeDef>.AllDefs
-                    .FirstOrDefault(def => def.roomType == dr.type);
-            }
-            return null;
+            return node.def;
         }
 
         private static bool IsSpecialRoomDef(RoomTypeDef def)
@@ -215,258 +294,7 @@ namespace MagicAndMyths
             return def?.roomType == RoomType.Start || def?.roomType == RoomType.End;
         }
 
-        public static void PlaceDoors(Map map, List<BspUtility.BspNode> rooms)
-        {
-            foreach (var room in rooms)
-            {
-                // Skip rooms without walls
-                if (room.roomWalls == null || !room.roomWalls.EdgeCells.Any())
-                    continue;
 
-                // Get all potential door locations on room walls
-                List<IntVec3> doorCandidates = new List<IntVec3>();
-
-                // Make a copy of edge cells to avoid enumeration issues
-                List<IntVec3> edgeCells = room.roomWalls.EdgeCells.ToList();
-
-                foreach (IntVec3 cell in edgeCells)
-                {
-                    if (IsGoodDoorLocation(map, cell))
-                    {
-                        doorCandidates.Add(cell);
-                    }
-                }
-
-                // If we found candidates, select the best ones
-                if (doorCandidates.Count > 0)
-                {
-                    // Sort candidates by quality score
-                    doorCandidates = doorCandidates
-                        .OrderByDescending(c => ScoreDoorLocation(map, c))
-                        .ToList();
-
-                    // Calculate how many doors to place
-                    int doorsToPlace = CalculateDoorsForRoom(room, doorCandidates.Count);
-
-                    // Place doors, ensuring good spacing
-                    List<IntVec3> placedDoorPositions = new List<IntVec3>();
-                    foreach (IntVec3 candidate in doorCandidates)
-                    {
-                        // Skip if too close to an existing door
-                        if (IsTooCloseToExistingDoors(candidate, placedDoorPositions))
-                            continue;
-
-                        // Place the door
-                        Thing existing = candidate.GetFirstBuilding(map);
-                        if (existing != null) existing.Destroy();
-
-                        Building_Door door = (Building_Door)GenSpawn.Spawn(ThingDefOf.Door, candidate, map);
-
-                        // Lock doors on critical path (except first door)
-                        if (room.IsOnCriticalPath && room.CriticalPathIndex > 0)
-                        {
-                            door.SetForbidden(true);
-                        }
-                        else
-                        {
-                            door.SetFaction(Faction.OfAncientsHostile);
-                        }
-
-                        placedDoorPositions.Add(candidate);
-
-                        // Stop if we've placed enough doors
-                        if (placedDoorPositions.Count >= doorsToPlace)
-                            break;
-                    }
-                }
-            }
-        }
-
-        private static bool IsGoodDoorLocation(Map map, IntVec3 cell)
-        {
-            if (!cell.InBounds(map)) return false;
-
-            // Check if there's a wall here
-            Building wall = cell.GetFirstBuilding(map);
-            if (wall == null || wall.def != MagicAndMythDefOf.DungeonWall)
-                return false;
-
-            // Check orientation (doors need support on opposite sides)
-            IntVec3 north = new IntVec3(cell.x, cell.y, cell.z + 1);
-            IntVec3 south = new IntVec3(cell.x, cell.y, cell.z - 1);
-            IntVec3 east = new IntVec3(cell.x + 1, cell.y, cell.z);
-            IntVec3 west = new IntVec3(cell.x - 1, cell.y, cell.z);
-
-            bool canPlaceHorizontal = IsWall(map, east) && IsWall(map, west);
-            bool canPlaceVertical = IsWall(map, north) && IsWall(map, south);
-
-            if (!canPlaceHorizontal && !canPlaceVertical)
-                return false;
-
-            // Check if there's open space on BOTH sides of the door
-            bool hasValidPath = false;
-
-            if (canPlaceHorizontal)
-            {
-                bool northIsPassable = IsPassable(map, north);
-                bool southIsPassable = IsPassable(map, south);
-
-                // For a door to be useful, you need access from BOTH sides
-                if (northIsPassable && southIsPassable)
-                {
-                    // Check if there's enough room on both sides
-                    int northOpenSpace = CountAdjacentOpenSpace(map, north);
-                    int southOpenSpace = CountAdjacentOpenSpace(map, south);
-
-                    if (northOpenSpace >= 2 && southOpenSpace >= 2)
-                        hasValidPath = true;
-                }
-            }
-
-            if (canPlaceVertical && !hasValidPath)
-            {
-                bool eastIsPassable = IsPassable(map, east);
-                bool westIsPassable = IsPassable(map, west);
-
-                // For a door to be useful, you need access from BOTH sides
-                if (eastIsPassable && westIsPassable)
-                {
-                    // Check if there's enough room on both sides
-                    int eastOpenSpace = CountAdjacentOpenSpace(map, east);
-                    int westOpenSpace = CountAdjacentOpenSpace(map, west);
-
-                    if (eastOpenSpace >= 2 && westOpenSpace >= 2)
-                        hasValidPath = true;
-                }
-            }
-
-            return hasValidPath;
-        }
-        private static int CountAdjacentOpenSpace(Map map, IntVec3 cell)
-        {
-            int count = 0;
-            foreach (IntVec3 adj in GenAdjFast.AdjacentCellsCardinal(cell))
-            {
-                if (adj.InBounds(map) && IsPassable(map, adj))
-                    count++;
-            }
-            return count;
-        }
-
-        private static int ScoreDoorLocation(Map map, IntVec3 cell)
-        {
-            int score = 0;
-
-            // Check orientation
-            IntVec3 north = new IntVec3(cell.x, cell.y, cell.z + 1);
-            IntVec3 south = new IntVec3(cell.x, cell.y, cell.z - 1);
-            IntVec3 east = new IntVec3(cell.x + 1, cell.y, cell.z);
-            IntVec3 west = new IntVec3(cell.x - 1, cell.y, cell.z);
-
-            // Check if door has wall support
-            bool hasHorizontalSupport = IsWall(map, east) && IsWall(map, west);
-            bool hasVerticalSupport = IsWall(map, north) && IsWall(map, south);
-
-            if (hasHorizontalSupport) score += 20;
-            if (hasVerticalSupport) score += 20;
-
-            // Count open adjacent cells - more open space is better
-            int openCount = 0;
-            if (IsPassable(map, north)) openCount++;
-            if (IsPassable(map, south)) openCount++;
-            if (IsPassable(map, east)) openCount++;
-            if (IsPassable(map, west)) openCount++;
-
-            score += 10 * openCount;
-
-            // Penalize corner doors
-            int adjacentWalls = 0;
-            foreach (IntVec3 adj in GenAdjFast.AdjacentCellsCardinal(cell))
-            {
-                if (IsWall(map, adj))
-                    adjacentWalls++;
-            }
-
-            if (adjacentWalls > 2)
-                score -= 30; // Heavily penalize corners
-
-            // Bonus for being away from edges (prevents doors on outer map boundaries)
-            IntVec3 mapSize = map.Size;
-            if (cell.x > 5 && cell.x < mapSize.x - 5) score += 10;
-            if (cell.z > 5 && cell.z < mapSize.z - 5) score += 10;
-
-            return score;
-        }
-
-        private static int CalculateDoorsForRoom(BspUtility.BspNode room, int candidateCount)
-        {
-            // Calculate based on room size and importance
-            int baseDoorsCount = 1; // At least one door
-
-            // More doors for larger rooms
-            int roomArea = room.room.Width * room.room.Height;
-            if (roomArea > 150) baseDoorsCount++;
-            if (roomArea > 300) baseDoorsCount++;
-
-            // Critical path nodes need at least one door
-            if (room.IsOnCriticalPath)
-                baseDoorsCount = Mathf.Max(baseDoorsCount, 1);
-
-            // Cap at available candidates
-            return Mathf.Min(baseDoorsCount, candidateCount);
-        }
-
-        private static bool IsTooCloseToExistingDoors(IntVec3 candidate, List<IntVec3> existingDoors)
-        {
-            // Don't place doors too close to each other
-            const int MIN_DOOR_SPACING = 3;
-
-            foreach (IntVec3 existingDoor in existingDoors)
-            {
-                float distance = (candidate - existingDoor).LengthHorizontal;
-                if (distance < MIN_DOOR_SPACING)
-                    return true;
-            }
-
-            return false;
-        }
-
-        private static bool IsWall(Map map, IntVec3 cell)
-        {
-            if (!cell.InBounds(map))
-                return false;
-
-            Building building = cell.GetFirstBuilding(map);
-            return building != null && building.def == MagicAndMythDefOf.DungeonWall;
-        }
-
-        private static bool IsPassable(Map map, IntVec3 cell)
-        {
-            if (!cell.InBounds(map))
-                return false;
-
-            Building building = cell.GetFirstBuilding(map);
-            if (building == null)
-                return true;
-
-            if (building.def != MagicAndMythDefOf.DungeonWall && !building.def.passability.Equals(Traversability.Impassable))
-            {
-                return true;
-            }
-
-            return false;
-        }
-    
-        private static string GetConnectionId(BspUtility.BspNode node1, BspUtility.BspNode node2)
-        {
-            ulong id1 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(node1);
-            ulong id2 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(node2);
-            return id1 < id2 ? $"{id1}-{id2}" : $"{id2}-{id1}";
-        }
-    
-
-
-    // New method to prune the BSP tree
         private static bool PruneNonMarkedLeafNodes(BspNode node)
         {
             if (node == null) return false;
@@ -587,7 +415,6 @@ namespace MagicAndMyths
             SplitNode(node.right, depth + 1, maxDepth, minRoomSize,
                       minSizeMultiplier, aspectRatioThreshold, edgeMarginDivisor);
         }
-
         public static void GetLeafNodes(BspNode node, List<BspNode> leafNodes)
         {
             if (node == null)
@@ -603,7 +430,6 @@ namespace MagicAndMyths
                 GetLeafNodes(node.right, leafNodes);
             }
         }
-
         public static void GenerateRooms(List<BspNode> leafNodes, int minPadding = 1, float roomSizeFactor = 0.75f)
         {
             foreach (BspNode leaf in leafNodes)
@@ -656,9 +482,7 @@ namespace MagicAndMyths
             }
         }
 
-
-
-        public static Tuple<BspNode, BspNode> FindFurthestPair(List<BspNode> nodes)
+        public static BspNodePair FindFurthestPair(List<BspNode> nodes)
         {
             BspNode node1 = null;
             BspNode node2 = null;
@@ -681,7 +505,22 @@ namespace MagicAndMyths
                 }
             }
 
-            return new Tuple<BspNode, BspNode>(node1, node2);
-        }  
+            return new BspNodePair(node1, node2);
+        }
+
+        public class BspNodePair
+        {
+            public BspNode NodeOne;
+            public BspNode NodeTwo;
+
+            public BspNodePair(BspNode nodeOne, BspNode nodeTwo)
+            {
+                NodeOne = nodeOne;
+                NodeTwo = nodeTwo;
+            }
+        }
     }
+
+
+
 }

@@ -16,71 +16,8 @@
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_Transform">
-        <kindDef>Megaspider</kindDef>
+        <kindDef>Bear_DireGrizzly</kindDef>
       </li>
     </comps>
   </AbilityDef>
-
-  <ThingDef ParentName="BaseBear">
-    <defName>Bear_DireGrizzly</defName>
-    <label>grizzly dire bear</label>
-    <description>A huge omnivorous mammal adapted for cold climates. Bears' thick blubber and fur keeps them warm in winter.\n\nWhile their usual diet consists of fish, berries, honey, and scavenged meat, the grizzly is capable of using its massive strength and deadly claws to kill live prey. They are startlingly quick for such lumbering creatures.</description>
-    <race>
-      <wildness>0.80</wildness>
-      <meatLabel>bear meat</meatLabel>
-    </race>
-  </ThingDef>
-
-  <PawnKindDef ParentName="BearBase">
-    <defName>Bear_DireGrizzly</defName>
-    <label>grizzly bear</label>
-    <race>Bear_DireGrizzly</race>
-    <lifeStages>
-      <li>
-        <bodyGraphicData>
-          <texPath>Things/Pawn/Animal/Bear/Bear</texPath>
-          <drawSize>1.4</drawSize>
-          <color>(112,82,65)</color>
-          <shadowData>
-            <volume>(0.4, 0.3, 0.3)</volume>
-            <offset>(0,0,-0.2)</offset>
-          </shadowData>
-        </bodyGraphicData>
-        <dessicatedBodyGraphicData>
-          <texPath>Things/Pawn/Animal/Bear/Dessicated_Bear</texPath>
-          <drawSize>4</drawSize>
-        </dessicatedBodyGraphicData>
-      </li>
-      <li>
-        <bodyGraphicData>
-          <texPath>Things/Pawn/Animal/Bear/Bear</texPath>
-          <drawSize>2</drawSize>
-          <color>(112,82,65)</color>
-          <shadowData>
-            <volume>(0.6, 0.45, 0.45)</volume>
-            <offset>(0,0,-0.25)</offset>
-          </shadowData>
-        </bodyGraphicData>
-        <dessicatedBodyGraphicData>
-          <texPath>Things/Pawn/Animal/Bear/Dessicated_Bear</texPath>
-          <drawSize>5</drawSize>
-        </dessicatedBodyGraphicData>
-      </li>
-      <li>
-        <bodyGraphicData>
-          <texPath>Things/Pawn/Animal/Bear/Bear</texPath>
-          <drawSize>2.7</drawSize>
-          <color>(112,82,65)</color>
-          <shadowData>
-            <volume>(0.8, 0.6, 0.6)</volume>
-            <offset>(0,0,-0.3)</offset>
-          </shadowData>
-        </bodyGraphicData>
-        <dessicatedBodyGraphicData>
-          <texPath>Things/Pawn/Animal/Bear/Dessicated_Bear</texPath>
-          <drawSize>4</drawSize>
-        </dessicatedBodyGraphicData>
-      </li>
-    </lifeStages>
-  </PawnKindDef>
 </Defs>

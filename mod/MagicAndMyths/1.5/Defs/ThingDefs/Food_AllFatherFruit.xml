@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MealBase">
+    <defName>MagicAndMyths_AllFatherFruit</defName>
+    <label>fruit of the all-father</label>
+    <description>It's said this fruit originated from the world tree Yssdrassil on the same night Odin gave an eye to gain knowledge of everything, eating this fruit will forever change the one who consumes it.</description>
+    <graphicData>
+      <texPath>Things/Item/Meal/SurvivalPack</texPath>
+      <graphicClass>Graphic_MealVariants</graphicClass>
+    </graphicData>
+    <statBases>
+      <DeteriorationRate>0.25</DeteriorationRate>
+      <MarketValue>30000</MarketValue>
+      <Mass>0.7</Mass>
+      <WorkToMake>450000</WorkToMake>
+      <Nutrition>2</Nutrition>
+      <Beauty>10</Beauty>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <optimalityOffsetHumanlikes>-5</optimalityOffsetHumanlikes>
+      <optimalityOffsetFeedingAnimals>-10</optimalityOffsetFeedingAnimals>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <allowedArchonexusCount>40</allowedArchonexusCount>
+  </ThingDef>
+</Defs>

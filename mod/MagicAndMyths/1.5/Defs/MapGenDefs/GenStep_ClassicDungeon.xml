@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <MagicAndMyths.GenStepDef_BspDungeon>
+      <defName>DungeonGen</defName>
+      <order>10000</order>
+      <genStep Class="MagicAndMyths.GenStep_BspDungeon"/>
+      <randomCorridoorAmount>1</randomCorridoorAmount>
+      <maxDepth>20</maxDepth>
+      <minRoomSize>8</minRoomSize>
+      <minRoomPadding>2</minRoomPadding>
+      <roomSizeFactor>1</roomSizeFactor>
+      <minSizeMultiplier>1</minSizeMultiplier>
+      <aspectRatioThreshold>1.2</aspectRatioThreshold>
+      <edgeMarginDivisor>2</edgeMarginDivisor>
+      <minRooms>3</minRooms>
+      <maxRooms>15</maxRooms>
+      <addRandomCorridoors>false</addRandomCorridoors>
+      <availableRoomTypes>
+        <li>TreasureRoom</li>
+      </availableRoomTypes>
+      <earlyAutomata>
+        <li>NaturalWalls</li>
+      </earlyAutomata>
+      <postGenAutomata>
+        <li>CaveDecorator</li>
+      </postGenAutomata>
+    </MagicAndMyths.GenStepDef_BspDungeon>
+</Defs>

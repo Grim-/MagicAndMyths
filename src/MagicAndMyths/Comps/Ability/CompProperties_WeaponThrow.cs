@@ -88,7 +88,7 @@ namespace MagicAndMyths
             thrownWeapon = weapon;
             pawn.equipment.Remove(weapon);
 
-            Projectile_MjolnirRebound throwProjectile = (Projectile_MjolnirRebound)ThingMaker.MakeThing(MagicAndMythDefOf.Thor_MjolnirProjectile);
+            Projectile_MjolnirRebound throwProjectile = (Projectile_MjolnirRebound)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_MjolnirProjectile);
             GenSpawn.Spawn(throwProjectile, pawn.Position, pawn.Map);
             throwProjectile.Launch(pawn, target, target, ProjectileHitFlags.IntendedTarget);
             throwProjectile.OnImpact = OnWeaponThrow_Land;
@@ -129,7 +129,7 @@ namespace MagicAndMyths
             if (thrownWeapon == null || !thrownWeapon.Spawned)
                 return;
 
-            Projectile_Delegate throwProjectile = (Projectile_Delegate)ThingMaker.MakeThing(MagicAndMythDefOf.Thor_MjolnirProjectile);
+            Projectile_Delegate throwProjectile = (Projectile_Delegate)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_MjolnirProjectile);
             GenSpawn.Spawn(throwProjectile, thrownWeapon.Position, pawn.Map);
             throwProjectile.Launch(pawn, this.parent.pawn, this.parent.pawn, ProjectileHitFlags.IntendedTarget);
             thrownWeapon.DeSpawn();
