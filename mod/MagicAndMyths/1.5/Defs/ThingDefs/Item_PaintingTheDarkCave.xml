@@ -5,7 +5,7 @@
       <label>Painting :The Dark Cave</label>
       <description>A life-like painting of a dark scene with the something looking out..</description>
       <graphicData>
-        <texPath>Scrolls/IconScroll</texPath>
+        <texPath>Scrolls/FancyScroll</texPath>
         <graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <statBases>

@@ -39,8 +39,6 @@ namespace MagicAndMyths
         public static QuestScriptDef Quest_DeathKnightStartingPath;
 
 
-        public static JobDef MagicAndMyths_UndeadExplodeAt;
-
 
         public static ThingDef MagicAndMyths_PhilsophersStone;
 
@@ -64,6 +62,9 @@ namespace MagicAndMyths
         public static ThingDef DungeonLockedDoor;
         public static ThingDef DungeonTestKey;
         public static ThingDef DungeonHiddenWallDoor;
+
+
+        public static JobDef MagicAndMyths_UnlockDoor;
 
         public static MapGeneratorDef MapGenEmpty;
 

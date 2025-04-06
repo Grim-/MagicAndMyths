@@ -26,7 +26,7 @@ namespace MagicAndMyths
 
         public override bool TryPlaceObstacles(Map map, Dungeon dungeon, DungeonRoom room)
         {
-            // 1. Find a suitable room pair connected by a corridor
+            //fnd a suitable room pair connected by a corridor
             var potentialDoorConnections = dungeon.GetAllRooms()
                 .SelectMany(r => r.connections)
                 .Where(c => c.corridors != null && c.corridors.Any())
@@ -90,11 +90,17 @@ namespace MagicAndMyths
 
             // 6. Place the key
             Key keyThing = (Key)GenSpawn.Spawn(MagicAndMythDefOf.DungeonTestKey, keyPos, map);
-            door.SetKeyReference(keyThing);
+            door.SetKeyReference(keyThing, KeyColorChoices.RandomElement());
             Log.Message($"ObstacleWorker_KeyAndDoor: Placed key ({Def.keyDef.defName}) at {keyPos} in {keyRoom.roomCellRect.CenterCell}.");
 
             return true;
         }
+
+
+        private List<Color> KeyColorChoices = new List<Color>()
+        {
+            Color.red, Color.green, Color.blue, Color.yellow, Color.magenta, Color.white, Color.cyan
+        };
 
         private DungeonRoom FindKeyRoom(Dungeon dungeon, DungeonRoom roomBefore, DungeonRoom roomAfter)
         {

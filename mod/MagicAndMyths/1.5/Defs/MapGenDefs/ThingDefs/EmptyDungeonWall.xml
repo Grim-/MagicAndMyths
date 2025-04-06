@@ -4,8 +4,9 @@
     <defName>EmptyDungeonWall</defName>
     <label>wall</label>
     <description>It is impervious to damage.</description>
-    <thingClass>MagicAndMyths.Building_DangerousFloorWall</thingClass>
+    <thingClass>MagicAndMyths.Building_FakeWall</thingClass>
     <useHitPoints>false</useHitPoints>
+    <drawerType>MapMeshAndRealTime</drawerType>
     <uiIconPath>Things/Building/Linked/VoidMetalWall_MenuIcon</uiIconPath>
     <graphicData>
       <texPath>Things/Building/Linked/VoidmetalWall_Atlas</texPath>
@@ -40,7 +41,7 @@
     <staticSunShadowHeight>1.0</staticSunShadowHeight>
     <blockLight>true</blockLight>
     <rotatable>false</rotatable>
-    <selectable>false</selectable>
+    <selectable>true</selectable>
     <neverMultiSelect>true</neverMultiSelect>
     <canOverlapZones>false</canOverlapZones>
     <mineable>false</mineable>

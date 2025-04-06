@@ -5,7 +5,7 @@
 		<label>Painting : Hidden forest</label>
 		<description>A life-like painting that seems to be gently swaying</description>
 		<graphicData>
-			<texPath>Scrolls/IconScroll</texPath>
+			<texPath>Scrolls/FancyScroll</texPath>
       <graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
     <statBases>

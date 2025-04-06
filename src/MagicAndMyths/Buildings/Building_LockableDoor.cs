@@ -1,7 +1,9 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace MagicAndMyths
 {
@@ -11,10 +13,15 @@ namespace MagicAndMyths
         private Key keyReference = null;
 
 
-        public void SetKeyReference(Key keyThing)
+        private Color? pairingColor;
+
+        public override Color DrawColor => pairingColor != null ? pairingColor.Value : base.DrawColor;
+
+        public void SetKeyReference(Key keyThing, Color color)
         {
             keyReference = keyThing;
-            keyReference.SetDoorReference(this);
+            pairingColor = color;
+            keyReference.SetDoorReference(this, color);
         }
 
         public void Unlock()
@@ -45,10 +52,8 @@ namespace MagicAndMyths
                 {
                     yield return new FloatMenuOption("Unlock", () =>
                     {
-                        if (TryFindAndConsumeKey(selPawn))
-                        {
-                            this.Unlock();
-                        }
+                        Job job = JobMaker.MakeJob(MagicAndMythDefOf.MagicAndMyths_UnlockDoor, this);
+                        selPawn.jobs.StartJob(job, JobCondition.InterruptOptional);
                     });
                 }
                 else
@@ -66,7 +71,7 @@ namespace MagicAndMyths
             return Pawn.EquippedWornOrInventoryThings.Any(x => x == keyReference);
         }
 
-        private bool TryFindAndConsumeKey(Pawn Pawn)
+        public bool TryFindAndConsumeKey(Pawn Pawn)
         {
             if (PawnHasRequiredKey(Pawn))
             {
@@ -89,16 +94,6 @@ namespace MagicAndMyths
         public override string GetInspectString()
         {
             return base.GetInspectString() + $"Is Locked ? {_IsLocked}";
-        }
-
-        new public bool CanPhysicallyPass(Pawn p)
-        {
-            if (_IsLocked && !PawnCanOpen(p))
-            {
-                return false;
-            }
-
-            return base.CanPhysicallyPass(p);
         }
 
         public override bool PawnCanOpen(Pawn p)

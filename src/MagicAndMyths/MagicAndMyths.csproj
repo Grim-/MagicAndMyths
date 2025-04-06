@@ -83,8 +83,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
-    <Compile Include="Buildings\Building_DangerousFloorWall.cs" />
+    <Compile Include="AI\JobDriver_UnlockDoor.cs" />
+    <Compile Include="Buildings\Building_FakeWall.cs" />
     <Compile Include="Buildings\Building_LockableDoor.cs" />
+    <Compile Include="Buildings\Key.cs" />
     <Compile Include="Comps\Ability\CompProperties_EquippableAbility.cs" />
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />

@@ -1,42 +1,10 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
-
-    public class Key : Thing
-    {
-        private Building_LockableDoor doorReference = null;
-        public override string Label
-        {
-            get
-            {
-                if (doorReference != null)
-                {
-                    return $"Key ({doorReference}";
-                }
-                return base.Label;
-            }
-        }
-
-        public void SetDoorReference(Building_LockableDoor door)
-        {
-            doorReference = door;
-        }
-
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_References.Look(ref doorReference, "doorReference");
-        }
-    }
-
-
-
     public class CompProperties_DirectGrower : CompProperties
     { 
         public CompProperties_DirectGrower()

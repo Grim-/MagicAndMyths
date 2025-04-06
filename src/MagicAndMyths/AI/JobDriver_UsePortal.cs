@@ -16,7 +16,6 @@ namespace MagicAndMyths
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            // Fail if target isn't a portal provider or if it's inactive
             this.FailOn(() =>
             {
                 Thing portalThing = job.GetTarget(PortalInd).Thing;
@@ -64,13 +63,11 @@ namespace MagicAndMyths
 
         private IPortalProvider GetPortalProvider(Thing thing)
         {
-            // Check if the thing itself is a portal provider
             if (thing is IPortalProvider thingPortal)
             {
                 return thingPortal;
             }
 
-            // Check if it has a comp that's a portal provider
             CompPortalGenerator portalComp = thing.TryGetComp<CompPortalGenerator>();
             if (portalComp != null)
             {
