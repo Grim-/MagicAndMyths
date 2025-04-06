@@ -3,11 +3,11 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class Building_DangerousFloorWall : Building_Door
+    public class Building_DangerousFloorWall : Building
     {
         public override bool BlocksPawn(Pawn p)
         {
-            return false;
+            return !p.Drafted;
         }
 
         public override bool IsDangerousFor(Pawn pawn)
@@ -21,12 +21,7 @@ namespace MagicAndMyths
 
         public override ushort PathWalkCostFor(Pawn p)
         {
-            return (ushort)(p.Drafted ? 0 : 40);
-        }
-
-        public override bool PawnCanOpen(Pawn p)
-        {
-            return p.Drafted && base.PawnCanOpen(p);
+            return (ushort)(p.Drafted ? 0 : 4000);
         }
     }
 }

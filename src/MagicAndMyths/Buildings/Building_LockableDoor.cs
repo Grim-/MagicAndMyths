@@ -8,12 +8,13 @@ namespace MagicAndMyths
     public class Building_LockableDoor : Building_Door
     {
         private bool _IsLocked = false;
-        private Thing keyReference = null;
+        private Key keyReference = null;
 
 
-        public void SetKeyReference(Thing keyThing)
+        public void SetKeyReference(Key keyThing)
         {
             keyReference = keyThing;
+            keyReference.SetDoorReference(this);
         }
 
         public void Unlock()

@@ -89,7 +89,7 @@ namespace MagicAndMyths
             }
 
             // 6. Place the key
-             Thing keyThing = GenSpawn.Spawn(MagicAndMythDefOf.DungeonTestKey, keyPos, map);
+            Key keyThing = (Key)GenSpawn.Spawn(MagicAndMythDefOf.DungeonTestKey, keyPos, map);
             door.SetKeyReference(keyThing);
             Log.Message($"ObstacleWorker_KeyAndDoor: Placed key ({Def.keyDef.defName}) at {keyPos} in {keyRoom.roomCellRect.CenterCell}.");
 
@@ -120,9 +120,7 @@ namespace MagicAndMyths
                 }
             }
 
-            // Ensure the key room is not the room immediately before the door
             var potentialKeyRooms = accessibleFromStart.Where(r => r != roomBefore).ToList();
-
             if (potentialKeyRooms.Any())
             {
                 return potentialKeyRooms.RandomElement();
@@ -133,7 +131,7 @@ namespace MagicAndMyths
 
         private IntVec3 FindKeyPlacementPosition(Map map, DungeonRoom keyRoom)
         {
-            for (int i = 0; i < 20; i++) // Try a few times to find a good spot
+            for (int i = 0; i < 20; i++)
             {
                 IntVec3 randomCell = keyRoom.roomCellRect.Cells.RandomElement();
                 if (randomCell.InBounds(map) && randomCell.Walkable(map))
