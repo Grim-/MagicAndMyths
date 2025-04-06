@@ -4,7 +4,7 @@
       <defName>DungeonGen</defName>
       <order>10000</order>
       <genStep Class="MagicAndMyths.GenStep_BspDungeon"/>
-      <randomCorridoorAmount>1</randomCorridoorAmount>
+      <randomCorridoorAmount>1~2</randomCorridoorAmount>
       <maxDepth>20</maxDepth>
       <minRoomSize>8</minRoomSize>
       <minRoomPadding>2</minRoomPadding>
@@ -17,6 +17,7 @@
       <addRandomCorridoors>false</addRandomCorridoors>
       <availableRoomTypes>
         <li>TreasureRoom</li>
+        <li>EncounterRoom_Fight</li>
       </availableRoomTypes>
       <earlyAutomata>
         <li>NaturalWalls</li>

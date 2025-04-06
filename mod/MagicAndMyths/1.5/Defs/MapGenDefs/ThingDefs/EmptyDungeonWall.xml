@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <ThingDef ParentName="Door">
-    <defName>DungeonHiddenWallDoor</defName>
-    <label>dungeon door</label>
-    <description>Divides rooms. Simple doors must be manually opened, which slows people down.</description>
-    <thingClass>MagicAndMyths.Building_HiddenDoor</thingClass>
-    <statBases>
-      <WorkToBuild>850</WorkToBuild>
-    </statBases>
-        <drawerType>MapMeshAndRealTime</drawerType>
+  <ThingDef ParentName="BuildingBase">
+    <defName>EmptyDungeonWall</defName>
+    <label>wall</label>
+    <description>It is impervious to damage.</description>
+    <thingClass>MagicAndMyths.Building_DangerousFloorWall</thingClass>
+    <useHitPoints>false</useHitPoints>
+    <uiIconPath>Things/Building/Linked/VoidMetalWall_MenuIcon</uiIconPath>
     <graphicData>
       <texPath>Things/Building/Linked/VoidmetalWall_Atlas</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -29,13 +27,23 @@
         <edgeRight>Damage/Edge</edgeRight>
       </damageData>
     </graphicData>
-    <uiIconPath>Things/Building/Door/DoorSimple_MenuIcon</uiIconPath>
-    <stuffCategories Inherit="false">
-    </stuffCategories>
-    <costList>
-      <Steel>25</Steel>
-    </costList>
-    <designationHotKey>Misc1</designationHotKey>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Standable</passability>
+    <blockWind>true</blockWind>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0</fillPercent>
+    <coversFloor>true</coversFloor>
+    <holdsRoof>true</holdsRoof>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+    <blockLight>true</blockLight>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <canOverlapZones>false</canOverlapZones>
+    <mineable>false</mineable>
     <building>
       <isInert>true</isInert>
       <repairable>false</repairable>
@@ -43,6 +51,8 @@
       <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
       <deconstructible>false</deconstructible>
       <isTargetable>false</isTargetable>
+      <supportsWallAttachments>true</supportsWallAttachments>
     </building>
   </ThingDef>
+
 </Defs>

@@ -3,7 +3,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    // Manager to handle all active modifiers
     public class MapModifierManager : IExposable
     {
         private Map map;
@@ -29,7 +28,7 @@ namespace MagicAndMyths
 
         public void ExposeData()
         {
-            // TODO: Handle saving/loading of modifiers
+         
         }
     }
 }

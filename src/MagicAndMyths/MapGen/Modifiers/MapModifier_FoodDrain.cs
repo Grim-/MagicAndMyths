@@ -12,7 +12,6 @@ namespace MagicAndMyths
 
         public override void ApplyEffect()
         {
-            // Find food items
             List<Thing> foodItems = map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSource);
 
             foreach (Thing food in foodItems)
@@ -20,7 +19,6 @@ namespace MagicAndMyths
                 CompRottable rottable = food.TryGetComp<CompRottable>();
                 if (rottable != null)
                 {
-                    // Accelerate rot
                     rottable.RotProgress += 2000;
                 }
             }

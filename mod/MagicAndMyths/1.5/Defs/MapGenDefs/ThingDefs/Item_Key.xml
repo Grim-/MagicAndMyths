@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ArtifactBase">
+    <defName>DungeonTestKey</defName>
+    <label>a key</label>
+    <description>A Key..</description>
+    <graphicData>
+      <texPath>Things/Item/Artifact/PsychicAnimalPulser</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>false</useHitPoints>
+    <relicChance>0</relicChance>
+    <statBases>
+      <MarketValue>700</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <drawGUIOverlay>false</drawGUIOverlay>
+  </ThingDef>
+
+</Defs>

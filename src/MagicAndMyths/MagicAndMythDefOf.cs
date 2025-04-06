@@ -61,7 +61,8 @@ namespace MagicAndMyths
         public static StatDef Portal_BioEnergyMax;
         public static StatDef Portal_BioEnergyRegen;
 
-
+        public static ThingDef DungeonLockedDoor;
+        public static ThingDef DungeonTestKey;
         public static ThingDef DungeonHiddenWallDoor;
 
         public static MapGeneratorDef MapGenEmpty;
@@ -70,6 +71,7 @@ namespace MagicAndMyths
 
         public static ThingDef Plant_GoldenTree;
         public static ThingDef DungeonWall;
+        public static ThingDef EmptyDungeonWall;
         public static ThingDef MagicAndMythsReturnRune;
 
 

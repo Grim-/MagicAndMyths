@@ -29,11 +29,11 @@ namespace MagicAndMyths
             }
         }
 
-        public static void SpawnDoorsForRoom(Map map, List<BspUtility.BspNode> rooms)
+        public static void SpawnDoorsForRoom(Map map, List<DungeonRoom> rooms)
         {
             foreach (var room in rooms)
             {
-                foreach (var item in room.roomWalls.EdgeCells)
+                foreach (var item in room.roomCellRect.EdgeCells)
                 {
                     if (item.GetFirstBuilding(map) == null)
                     {

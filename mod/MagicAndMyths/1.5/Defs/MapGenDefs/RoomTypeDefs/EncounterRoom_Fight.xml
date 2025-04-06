@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <MagicAndMyths.EncounterRoomDef_Fight>
+    <defName>EncounterRoom_Fight</defName>
+    <roomType>Normal</roomType>
+    <minSize>(10,10)</minSize>
+    <enemyCountRange>1~4</enemyCountRange>
+    <possibleEnemies>
+      <li>Bear_Grizzly</li>
+    </possibleEnemies>
+  </MagicAndMyths.EncounterRoomDef_Fight>
+
+</Defs>
