@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -20,6 +21,17 @@ namespace MagicAndMyths
                 Log.Message("Starting fire at");
                 FireUtility.TryStartFireIn(cell, map, 0.1f, null);
             }
+        }
+
+        public override Texture2D GetModifierTexture()
+        {
+            return ContentFinder<Texture2D>.Get("UI/Icons/ThingCategories/FoodMeals", true);
+        }
+
+        public override string GetModifierExplanation()
+        {
+            return "Fires are started randomly.\n" +
+                   $"Next in: {ticksUntilNext} ticks";
         }
     }
 }

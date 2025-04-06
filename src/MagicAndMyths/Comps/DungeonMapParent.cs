@@ -4,7 +4,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class CustomMapParent : MapParent
+    public class DungeonMapParent : MapParent
     {
         private List<MapModifier> activeModifiers = new List<MapModifier>();
         public bool ShouldDestroy = false;

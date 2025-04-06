@@ -6,7 +6,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class WorldCustomSiteManager : WorldComponent
+    public class WorldComp_SiteManager : WorldComponent
     {
         private List<StoredSiteData> storedSites = new List<StoredSiteData>();
         // Separate list for component portal data
@@ -25,7 +25,7 @@ namespace MagicAndMyths
             SitePartDefOf.AncientAltar,
         };
 
-        public WorldCustomSiteManager(World world) : base(world)
+        public WorldComp_SiteManager(World world) : base(world)
         {
 
         }
@@ -123,7 +123,7 @@ namespace MagicAndMyths
                 return null;
             }
 
-            CustomMapParent mapParent = (CustomMapParent)WorldObjectMaker.MakeWorldObject(DefDatabase<WorldObjectDef>.GetNamed("CustomMapParent"));
+            DungeonMapParent mapParent = (DungeonMapParent)WorldObjectMaker.MakeWorldObject(MagicAndMythDefOf.DungeonMapParent);
             mapParent.Tile = tileId;
 
             Find.WorldObjects.Add(mapParent);
@@ -138,8 +138,6 @@ namespace MagicAndMyths
                 Map newMap = MapGenerator.GenerateMap(Find.World.info.initialMapSize, mapParent, mapGenDef, null, null, true);
 
                 mapParent.AddModifier(new MapModifier_RandomFires(newMap));
-                mapParent.AddModifier(new MapModifier_RandomLightningStrikes(newMap));
-                mapParent.AddModifier(new MapModifier_StoneCreep(newMap));
 
                 newMap.info.parent = mapParent;
                 storedSites.Add(new StoredSiteData(tileId, newSite, mapParent));
@@ -179,8 +177,7 @@ namespace MagicAndMyths
             }
 
             // Create new portal map
-            CustomMapParent mapParent = (CustomMapParent)WorldObjectMaker.MakeWorldObject(
-                DefDatabase<WorldObjectDef>.GetNamed("CustomMapParent"));
+            DungeonMapParent mapParent = (DungeonMapParent)WorldObjectMaker.MakeWorldObject(MagicAndMythDefOf.DungeonMapParent);
 
             // Use source tile to avoid cluttering world map
             mapParent.Tile = sourceTile;
@@ -257,7 +254,7 @@ namespace MagicAndMyths
             {
                 if (item.Faction == RimWorld.Faction.OfPlayer)
                 {
-                    item.TransferToMap(WorldCustomSiteManager.StartingColonyMap.Center, WorldCustomSiteManager.StartingColonyMap);
+                    item.TransferToMap(WorldComp_SiteManager.StartingColonyMap.Center, WorldComp_SiteManager.StartingColonyMap);
                 }
             }
         }

@@ -4,7 +4,7 @@
        <defName>KeyAndLockObstacle</defName>
        <label>Locked Door Obstacle</label>
        <description>A door that requires a key from elsewhere in the dungeon.</description>
-       <commonality>1.0</commonality>
+       <commonality>0.2</commonality>
        <minDistanceFromStart>2</minDistanceFromStart>
        <requiresSeparateRooms>true</requiresSeparateRooms>
        <obstacleDef>MagicAndMythCraftingObstacle</obstacleDef>

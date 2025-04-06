@@ -4,11 +4,11 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class SummonCreatureManager : GameComponent
+    public class GameComp_SummonCreatureManager : GameComponent
     {
         private List<SummonCreatureData> summonCreatureDatas = new List<SummonCreatureData>();
 
-        public SummonCreatureManager(Game game)
+        public GameComp_SummonCreatureManager(Game game)
         {
            
         }

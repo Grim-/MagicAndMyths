@@ -7,10 +7,10 @@ namespace MagicAndMyths
     {
         public int tileId;
         public Site site;
-        public CustomMapParent mapParent;
+        public DungeonMapParent mapParent;
         public StoredSiteData() { }
 
-        public StoredSiteData(int tileId, Site site, CustomMapParent mapParent)
+        public StoredSiteData(int tileId, Site site, DungeonMapParent mapParent)
         {
             this.tileId = tileId;
             this.site = site;

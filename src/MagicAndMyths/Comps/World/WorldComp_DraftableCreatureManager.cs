@@ -5,11 +5,11 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class WorldComponent_DraftableCreatures : WorldComponent
+    public class WorldComp_DraftableCreatureManager : WorldComponent
     {
         private HashSet<Pawn> draftableCreatures = new HashSet<Pawn>();
 
-        public WorldComponent_DraftableCreatures(World world) : base(world)
+        public WorldComp_DraftableCreatureManager(World world) : base(world)
         {
 
         }

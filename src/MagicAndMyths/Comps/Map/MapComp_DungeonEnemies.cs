@@ -4,11 +4,11 @@ using Verse.AI.Group;
 
 namespace MagicAndMyths
 {
-    public class MapComponent_DungeonEnemies : MapComponent
+    public class MapComp_DungeonEnemies : MapComponent
     {
         private Dictionary<int, Lord> dungeonLords = new Dictionary<int, Lord>();
 
-        public MapComponent_DungeonEnemies(Map map) : base(map)
+        public MapComp_DungeonEnemies(Map map) : base(map)
         {
         }
 

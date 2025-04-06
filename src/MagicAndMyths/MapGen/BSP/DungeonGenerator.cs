@@ -80,6 +80,12 @@ namespace MagicAndMyths
             }
 
             ObstacleGenerator.GenerateObstacles(dungeon.Map, dungeon);
+
+
+            dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_FoodDrain(dungeon.Map));
+
+            dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_Temperature(dungeon.Map));
+            
         }
 
         private void FillMapWithWalls()

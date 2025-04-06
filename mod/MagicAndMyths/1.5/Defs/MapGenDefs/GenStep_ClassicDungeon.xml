@@ -6,7 +6,7 @@
       <genStep Class="MagicAndMyths.GenStep_BspDungeon"/>
       <randomCorridoorAmount>1~2</randomCorridoorAmount>
       <maxDepth>20</maxDepth>
-      <minRoomSize>8</minRoomSize>
+      <minRoomSize>10</minRoomSize>
       <minRoomPadding>2</minRoomPadding>
       <roomSizeFactor>1</roomSizeFactor>
       <minSizeMultiplier>1</minSizeMultiplier>

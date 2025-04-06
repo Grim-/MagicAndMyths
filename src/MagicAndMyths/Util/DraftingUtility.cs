@@ -6,13 +6,13 @@ namespace MagicAndMyths
 {
     public static class DraftingUtility
     {
-        public static WorldComponent_DraftableCreatures DraftManager
+        public static WorldComp_DraftableCreatureManager DraftManager
         {
             get
             {
                 if (Current.Game != null && Current.Game.World != null)
                 {
-                    return Current.Game.World.GetComponent<WorldComponent_DraftableCreatures>();
+                    return Current.Game.World.GetComponent<WorldComp_DraftableCreatureManager>();
                 }
 
                 return null;

@@ -1,16 +1,16 @@
-﻿using RimWorld;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
-    public class MapModifier_FoodDrain : MapModifier
+    public class MapModifier_Aging : MapModifier
     {
+
+        public int AgeChangeTicks = 1000;
         public override int MinTicksBetweenEffects => 1000;
         public override Color ModifierColor => new Color(0.8f, 0.4f, 0.0f, 0.4f);
 
-        public MapModifier_FoodDrain(Map map) : base(map) { }
+        public MapModifier_Aging(Map map) : base(map) { }
 
         public override void ExposeData()
         {
@@ -19,14 +19,9 @@ namespace MagicAndMyths
 
         public override void ApplyEffect()
         {
-            List<Thing> foodItems = map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSource);
-            foreach (Thing food in foodItems)
+            foreach (var item in map.mapPawns.FreeColonistsSpawned)
             {
-                CompRottable rottable = food.TryGetComp<CompRottable>();
-                if (rottable != null)
-                {
-                    rottable.RotProgress += 2000;
-                }
+                item.ageTracker.AgeBiologicalTicks += AgeChangeTicks;
             }
         }
 
@@ -37,7 +32,7 @@ namespace MagicAndMyths
 
         public override string GetModifierExplanation()
         {
-            return "Food Decay Curse: Food in this area is rotting at an accelerated rate.\n" +
+            return "Aging all colonists in this area are aging at an accelerated rate.\n" +
                    $"Next decay effect in: {ticksUntilNext} ticks";
         }
     }

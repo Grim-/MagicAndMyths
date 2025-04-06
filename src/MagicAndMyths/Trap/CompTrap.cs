@@ -2,13 +2,8 @@
 
 namespace MagicAndMyths
 {
-
-    public class CompProperties_Trap : CompProperties
-    {
-       
-    }
-
-    public abstract class CompTrap : ThingComp
+    //a trap has payloads that are triggered, and sensors to trigger it
+    public abstract class Trap : ThingWithComps
     {
         public bool IsArmed = true;
         public bool IsTriggered = false;
@@ -49,9 +44,9 @@ namespace MagicAndMyths
             IsTriggered = false;
         }
 
-        public override void PostExposeData()
+        public override void ExposeData()
         {
-            base.PostExposeData();
+            base.ExposeData();
             Scribe_Values.Look(ref IsArmed, "isArmed", true);
             Scribe_Values.Look(ref IsTriggered, "isTriggered", false);
             Scribe_Values.Look(ref CanBeRearmed, "canBeRearmed", false);

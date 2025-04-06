@@ -20,28 +20,28 @@ namespace MagicAndMyths
         private Effecter portalEffect = null;
         protected Zone_Stockpile linkedZone = null;
 
-        private GateWorldManager _GateManager;
-        private GateWorldManager GateManager
+        private WorldComp_GateManager _GateManager;
+        private WorldComp_GateManager GateManager
         {
             get
             {
                 if (_GateManager == null)
                 {
-                    _GateManager = Find.World.GetComponent<GateWorldManager>();
+                    _GateManager = Find.World.GetComponent<WorldComp_GateManager>();
                 }
 
                 return _GateManager;
             }
         }
 
-        private WorldCustomSiteManager _SiteManager;
-        private WorldCustomSiteManager SiteManager
+        private WorldComp_SiteManager _SiteManager;
+        private WorldComp_SiteManager SiteManager
         {
             get
             {
                 if (_SiteManager == null)
                 {
-                    _SiteManager = Find.World.GetComponent<WorldCustomSiteManager>();
+                    _SiteManager = Find.World.GetComponent<WorldComp_SiteManager>();
                 }
 
                 return _SiteManager;

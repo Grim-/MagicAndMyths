@@ -32,14 +32,14 @@ namespace MagicAndMyths
         private Effecter portalEffect = null;
         private int uniqueMapId = -1;
 
-        private WorldCustomSiteManager _siteManager;
-        private WorldCustomSiteManager SiteManager
+        private WorldComp_SiteManager _siteManager;
+        private WorldComp_SiteManager SiteManager
         {
             get
             {
                 if (_siteManager == null)
                 {
-                    _siteManager = Find.World.GetComponent<WorldCustomSiteManager>();
+                    _siteManager = Find.World.GetComponent<WorldComp_SiteManager>();
                 }
                 return _siteManager;
             }

@@ -20,7 +20,7 @@ namespace MagicAndMyths
             return stages[index];
         }
 
-        //Used by the editor, purely for data modelling, user is expected to export Def to xml.
+        //Used by the editor, purely for data modelling, user is expected to export Def to xml. so dont bitch at me
         public StructureLayoutDef DeepCopy()
         {
             StructureLayoutDef copiedDef = new StructureLayoutDef();
@@ -88,6 +88,33 @@ namespace MagicAndMyths
                 copiedDef.stages.Add(newStage);
             }
             return copiedDef;
+        }
+
+        public CellRect GetCellRect(IntVec3 position, int stageIndex = -1)
+        {
+            IntVec2 size;
+            if (stageIndex == -1)
+            {
+                size = MaxBuildSize;
+            }
+            else
+            {
+                BuildingStage stage = GetStage(stageIndex);
+                if (stage == null)
+                {
+                    return CellRect.Empty;
+                }
+                size = stage.size;
+            }
+
+            // Create a CellRect with the bottom-left corner at the specified position
+            // and the width and height from the calculated size
+            return new CellRect(
+                position.x,
+                position.z,
+                size.x,
+                size.z
+            );
         }
     }
 

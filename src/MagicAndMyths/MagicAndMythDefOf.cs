@@ -45,12 +45,13 @@ namespace MagicAndMyths
         public static HediffDef MagicAndMyths_Phylactery;
 
 
+        public static StructureLayoutDef TurretObstacleStructure;
 
 
 
 
         //portal
-        public static WorldObjectDef CustomMapParent;
+        public static WorldObjectDef DungeonMapParent;
         public static ThingDef Portal_Oneway;
         public static ThingDef Portal_GateLarge;
         public static EffecterDef Portal_Effect;

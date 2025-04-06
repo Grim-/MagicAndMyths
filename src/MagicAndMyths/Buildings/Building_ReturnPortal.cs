@@ -11,7 +11,7 @@ namespace MagicAndMyths
         private PortalMode mode = PortalMode.Single;
         private float groupRadius = 4f;
         private Map homeMap;
-        protected Map ReturnMap => homeMap != null ? homeMap : WorldCustomSiteManager.StartingColonyMap;
+        protected Map ReturnMap => homeMap != null ? homeMap : WorldComp_SiteManager.StartingColonyMap;
 
         private Thing PortalThingOrigin = null;
 

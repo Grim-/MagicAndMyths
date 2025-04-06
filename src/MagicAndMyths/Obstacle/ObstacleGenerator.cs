@@ -51,8 +51,12 @@ namespace MagicAndMyths
 
                 if (TryPlaceObstacle(map, Dungeon, dungeonRoom, obstacleDef))
                 {
-                    Log.Message($"Successfully placed obstacle in {dungeonRoom}");
+                    Log.Message($"Successfully placed {obstacleDef.defName} in {dungeonRoom}");
                     placedObstacles[obstacleDef]++;
+                }
+                else
+                {
+                    Log.Message($"failed to place {obstacleDef.defName} in {dungeonRoom}");
                 }
             }
         }

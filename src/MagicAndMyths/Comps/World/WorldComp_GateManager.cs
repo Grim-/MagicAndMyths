@@ -11,12 +11,12 @@ namespace MagicAndMyths
     /// <summary>
     /// Saves resolved addresses
     /// </summary>
-    public class GateWorldManager : WorldComponent
+    public class WorldComp_GateManager : WorldComponent
     {
         private Dictionary<int, int> ResolvedAddresses = new Dictionary<int, int>();
         private int worldSeed;
         private const int MAX_ATTEMPTS = 100;
-        public GateWorldManager(World world) : base(world)
+        public WorldComp_GateManager(World world) : base(world)
         {
             this.worldSeed = world.ConstantRandSeed;
         }

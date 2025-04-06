@@ -3,6 +3,13 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
+    /// <summary>
+    /// An obstacle has solutions and mechanisms
+    /// solutions are ways to circumvent or complete what is required of the obstacle, an obstacle will have multiple solutions
+    /// mechanisms are simply components that do things in reaction to other things, start a timer, trigger a trap, whatever
+    /// </summary>
+
     public class Obstacle : ThingWithComps
     {
         // Cached comps

@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <WorldObjectDef>
-      <defName>CustomMapParent</defName>
-      <label>custom location</label>
-      <description>A custom map location</description>
-      <worldObjectClass>MagicAndMyths.CustomMapParent</worldObjectClass>
-      <texture>World/WorldObjects/TribalSettlement</texture>
-          <!-- <worldObjectClass>Settlement</worldObjectClass> -->
-  </WorldObjectDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>Apparel_PortalReturnBelt</defName>
     <label>shield belt</label>

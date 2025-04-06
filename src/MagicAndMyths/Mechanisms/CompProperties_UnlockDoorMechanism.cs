@@ -13,17 +13,16 @@ namespace MagicAndMyths
 
     public class CompMechanism_UnlockLinkedDoor : CompMechanism
     {
-
-        private Building_Door LinkedDoor;
+        private Building_LockableDoor LinkedDoor;
         public override void OnSolutionComplete()
         {
             if (LinkedDoor != null)
             {
-                LinkedDoor.SetForbidden(false);
+                LinkedDoor.Unlock();
             }
         }
 
-        public void SetLinkedDoor(Building_Door door)
+        public void SetLinkedDoor(Building_LockableDoor door)
         {
             LinkedDoor = door;
         }

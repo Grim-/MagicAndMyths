@@ -6,14 +6,14 @@ namespace MagicAndMyths
     {
         public int uniqueId;
         public MapGeneratorDef mapGeneratorDef;
-        public CustomMapParent mapParent;
+        public DungeonMapParent mapParent;
 
         public ComponentPortalData()
         {
             // For Scribe
         }
 
-        public ComponentPortalData(int uniqueId, MapGeneratorDef mapGeneratorDef, CustomMapParent mapParent)
+        public ComponentPortalData(int uniqueId, MapGeneratorDef mapGeneratorDef, DungeonMapParent mapParent)
         {
             this.uniqueId = uniqueId;
             this.mapGeneratorDef = mapGeneratorDef;
