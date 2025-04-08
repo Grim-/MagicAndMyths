@@ -6,16 +6,18 @@
       <genStep Class="MagicAndMyths.GenStep_BspDungeon"/>
       <randomCorridoorAmount>1~2</randomCorridoorAmount>
       <maxDepth>20</maxDepth>
-      <minRoomSize>10</minRoomSize>
-      <minRoomPadding>2</minRoomPadding>
+      <minRoomSize>25</minRoomSize>
+      <minRoomPadding>1</minRoomPadding>
       <roomSizeFactor>1</roomSizeFactor>
-      <minSizeMultiplier>1</minSizeMultiplier>
-      <aspectRatioThreshold>1.2</aspectRatioThreshold>
-      <edgeMarginDivisor>2</edgeMarginDivisor>
-      <minRooms>3</minRooms>
-      <maxRooms>15</maxRooms>
+      <minSizeMultiplier>0.6</minSizeMultiplier>
+      <aspectRatioThreshold>1.1</aspectRatioThreshold>
+      <edgeMarginDivisor>1.1</edgeMarginDivisor>
+      <roomAmount>90~100</roomAmount>
+      <sideRoomCount>3~8</sideRoomCount>
       <addRandomCorridoors>false</addRandomCorridoors>
       <availableRoomTypes>
+        <li>StartRoom</li>
+        <li>EndRoom</li>
         <li>TreasureRoom</li>
         <li>EncounterRoom_Fight</li>
       </availableRoomTypes>
@@ -23,7 +25,9 @@
         <li>NaturalWalls</li>
       </earlyAutomata>
       <postGenAutomata>
+        <li>AddAlcoves</li>
         <li>CaveDecorator</li>
+        <li>FillSmallGaps</li>
       </postGenAutomata>
     </MagicAndMyths.GenStepDef_BspDungeon>
 </Defs>

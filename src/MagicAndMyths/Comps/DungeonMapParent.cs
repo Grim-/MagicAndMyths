@@ -4,6 +4,20 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
+
+    //public class MetaMapParent : MapParent
+    //{
+
+    //}
+
+
+    //public class HeavenMetaMapMapParent : MetaMapParent
+    //{
+
+    //}
+
+
     public class DungeonMapParent : MapParent
     {
         private List<MapModifier> activeModifiers = new List<MapModifier>();

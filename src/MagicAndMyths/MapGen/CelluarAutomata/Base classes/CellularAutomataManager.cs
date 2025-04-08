@@ -5,8 +5,9 @@ namespace MagicAndMyths
 {
     public static class CellularAutomataManager
     {
-        public static void ApplyRules(Map map, Dictionary<BspNode, DungeonRoom> nodeToRoomMap, BoolGrid dungeonGrid, List<CelluarAutomataDef> workers, int iterations = 3)
+        public static void ApplyRules(Map map, Dungeon Dungeon, List<CelluarAutomataDef> workers, int iterations = 3)
         {
+            BoolGrid dungeonGrid = Dungeon.DungeonGrid;
             BoolGrid originalGrid = new BoolGrid(map);
             foreach (IntVec3 cell in map.AllCells)
             {
@@ -22,7 +23,7 @@ namespace MagicAndMyths
                     {
                         currentState[cell] = dungeonGrid[cell];
                     }
-                    worker.Apply(map,nodeToRoomMap, dungeonGrid, currentState);
+                    worker.Apply(map, Dungeon, dungeonGrid, currentState);
                 }
             }
 

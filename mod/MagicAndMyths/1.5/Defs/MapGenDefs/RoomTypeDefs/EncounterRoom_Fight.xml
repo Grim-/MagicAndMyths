@@ -9,6 +9,7 @@
     <possibleEnemies>
       <li>Bear_Grizzly</li>
     </possibleEnemies>
+    <requiresExactSize>true</requiresExactSize>
   </MagicAndMyths.EncounterRoomDef_Fight>
 
 </Defs>

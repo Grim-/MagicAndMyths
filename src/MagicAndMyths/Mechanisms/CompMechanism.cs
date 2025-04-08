@@ -5,22 +5,9 @@ namespace MagicAndMyths
 {
     public abstract class CompMechanism : ThingComp
     {
-        protected Obstacle parentObstacle;
+        public abstract void Trigger();
 
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            base.PostSpawnSetup(respawningAfterLoad);
-            parentObstacle = (Obstacle)parent;
-        }
-
-        public abstract void OnSolutionComplete();
-
-        public virtual void OnProgress(float progressPercent)
-        {
-          
-        }
-
-        public virtual void OnSolutionFailed()
+        public virtual void Reset()
         {
          
         }

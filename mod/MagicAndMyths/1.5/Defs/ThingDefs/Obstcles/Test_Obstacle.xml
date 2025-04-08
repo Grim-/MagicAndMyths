@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <ThingDef ParentName="BuildingBase">
+  <!-- <ThingDef ParentName="BuildingBase">
     <defName>MagicAndMythCraftingObstacle</defName>
     <label>Obstacle.</label>
     <description>.</description>
@@ -44,5 +44,5 @@
       <li Class="MagicAndMyths.CompProperties_SolutionCraftingChallenge"/>
       <li Class="MagicAndMyths.CompProperties_UnlockDoorMechanism" />
     </comps>
-  </ThingDef>
+  </ThingDef> -->
 </Defs>

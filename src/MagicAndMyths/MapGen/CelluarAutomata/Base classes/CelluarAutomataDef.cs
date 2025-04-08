@@ -22,7 +22,7 @@ namespace MagicAndMyths
 
         public Type workerClass;
 
-        public void Apply(Map map, Dictionary<BspNode, DungeonRoom> nodeToRoomMap, BoolGrid dungeonGrid, BoolGrid currentState)
+        public void Apply(Map map, Dungeon Dungeon, BoolGrid dungeonGrid, BoolGrid currentState)
         {
             if (workerClass == null)
             {
@@ -30,7 +30,7 @@ namespace MagicAndMyths
             }
 
             Log.Message($"Applying Cellular Automata {this.defName}");
-            Worker.Apply(map, nodeToRoomMap, dungeonGrid, currentState);
+            Worker.Apply(map, Dungeon, dungeonGrid, currentState);
         }
     }
 }

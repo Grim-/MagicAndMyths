@@ -10,6 +10,7 @@ namespace MagicAndMyths
         private List<MapModifier> activeModifiers = new List<MapModifier>();
         private static readonly Vector2 iconSize = new Vector2(32f, 32f);
         private static readonly float padding = 5f;
+        private bool showModifiers = true;
 
         public MapComp_ModifierManager(Map map) : base(map)
         {
@@ -39,11 +40,9 @@ namespace MagicAndMyths
                 {
                     activeModifiers.RemoveAt(i);
                 }
-
                 activeModifiers[i].Tick();
             }
         }
-
 
         public override void MapComponentOnGUI()
         {
@@ -51,28 +50,59 @@ namespace MagicAndMyths
             if (activeModifiers.Count == 0)
                 return;
 
+            float xPosition = UI.screenWidth - 220f;
             float yPosition = 15f;
-            float xPosition = UI.screenWidth - iconSize.x - padding * 2 - 15f;
+
+            // Toggle button
+            Rect toggleRect = new Rect(xPosition, yPosition, 220f, 24f);
+            if (Widgets.ButtonText(toggleRect, showModifiers ? "Hide Modifiers" : "Show Modifiers"))
+            {
+                showModifiers = !showModifiers;
+            }
+
+            if (!showModifiers)
+                return;
+
+            float totalHeight = 24f + 5f;
+
+            for (int i = 0; i < activeModifiers.Count; i++)
+            {
+                totalHeight += iconSize.y + padding * 2;
+                string explanation = activeModifiers[i].GetModifierExplanation();
+                float textHeight = Text.CalcHeight(explanation, 200f);
+                totalHeight += textHeight + 10f;
+            }
+
+            Rect panelRect = new Rect(xPosition, yPosition, 220f, totalHeight);
+            Widgets.DrawBoxSolid(panelRect, new Color(0.1f, 0.1f, 0.1f, 0.7f));
+            Widgets.DrawBox(panelRect, 1);
+
+
+            if (Widgets.ButtonText(toggleRect, showModifiers ? "Hide Modifiers" : "Show Modifiers"))
+            {
+                showModifiers = !showModifiers;
+            }
+
+            float currentY = yPosition + 24f + padding;
 
             for (int i = 0; i < activeModifiers.Count; i++)
             {
                 MapModifier modifier = activeModifiers[i];
-                Rect boxRect = new Rect(xPosition, yPosition, iconSize.x + padding * 2, iconSize.y + padding * 2);
+                Rect iconBgRect = new Rect(xPosition + padding, currentY, iconSize.x, iconSize.y);
+                Widgets.DrawBoxSolid(iconBgRect, modifier.ModifierColor);
+                Widgets.DrawBox(iconBgRect, 1);
 
-                Widgets.DrawBoxSolid(boxRect, modifier.ModifierColor);
-
-                Widgets.DrawBox(boxRect, 1);
-
-                Rect iconRect = new Rect(xPosition + padding, yPosition + padding, iconSize.x, iconSize.y);
-                GUI.DrawTexture(iconRect, modifier.GetModifierTexture());
-
-                if (Mouse.IsOver(boxRect))
-                {
-                    Widgets.DrawHighlight(boxRect);
-                    TooltipHandler.TipRegion(boxRect, modifier.GetModifierExplanation());
-                }
-
-                yPosition += boxRect.height + 5f;
+                GUI.DrawTexture(iconBgRect, modifier.GetModifierTexture());
+                string name = modifier.GetModifierName();
+                Rect nameRect = new Rect(xPosition + iconSize.x + padding * 2, currentY,
+                                       150f, Text.LineHeight);
+                Widgets.Label(nameRect, name);
+                currentY += iconSize.y + padding;
+                string explanation = modifier.GetModifierExplanation();
+                float textHeight = Text.CalcHeight(explanation, 200f - padding * 2);
+                Rect textRect = new Rect(xPosition + padding, currentY, 200f - padding * 2, textHeight);
+                Widgets.Label(textRect, explanation);
+                currentY += textHeight + 10f;
             }
         }
 
@@ -80,8 +110,8 @@ namespace MagicAndMyths
         {
             base.ExposeData();
             Scribe_Collections.Look(ref activeModifiers, "activeModifiers", LookMode.Deep);
+            Scribe_Values.Look(ref showModifiers, "showModifiers", true);
         }
-
     }
 }
 

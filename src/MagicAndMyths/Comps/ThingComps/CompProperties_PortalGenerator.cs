@@ -85,7 +85,6 @@ namespace MagicAndMyths
                 return;
             }
 
-            // Get or create map based on the MapGeneratorDef
             linkedMap = GetOrCreatePortalMap();
 
             if (linkedMap == null)
@@ -131,7 +130,6 @@ namespace MagicAndMyths
 
         private Map GetOrCreatePortalMap()
         {
-            // Use the site manager to create or get the map
             return SiteManager.GetOrCreateComponentPortalMap(
                 uniqueMapId,
                 Props.mapGeneratorDef,
@@ -152,7 +150,6 @@ namespace MagicAndMyths
             pawn.DeSpawn(DestroyMode.Vanish);
             GenSpawn.Spawn(pawn, spawnLoc, linkedMap);
 
-            // Create a return portal if needed
             TrySpawnReturnPortal(spawnLoc, linkedMap);
 
             return true;
@@ -308,10 +305,9 @@ namespace MagicAndMyths
             {
                 if (isPortalOpen && uniqueMapId != -1)
                 {
-                    // Re-establish portal connection on load
+
                     linkedMap = GetOrCreatePortalMap();
 
-                    // Re-establish portal effect on load
                     if (MagicAndMythDefOf.Portal_Effect != null)
                     {
                         portalEffect = MagicAndMythDefOf.Portal_Effect.Spawn(this.parent.Position, this.parent.Map, 1.5f);
@@ -320,138 +316,4 @@ namespace MagicAndMyths
             }
         }
     }
-
-    //public class GameCondition_UnderWaterCondition : GameCondition
-    //{
-    //    private Color SkyColor = new Color(1f, 1f, 1f);
-    //    private Color SkyColorNight = Color.white;
-    //    private Color ShadowColor = new Color(0.4f, 0, 0, 0.2f);
-    //    private Color OverlayColor = new Color(0.5f, 0.5f, 0.5f);
-    //    private float Saturation = 0.75f;
-    //    private float Glow = 1;
-
-    //    public override int TransitionTicks => 120;
-    //    public override void Init()
-    //    {
-    //        base.Init();
-
-    //        UnderWaterGameConditionDef def = (UnderWaterGameConditionDef)this.def;
-
-    //        this.SkyColor = def.SkyColor;
-    //        this.SkyColorNight = def.SkyColorNight;
-    //        this.ShadowColor = def.ShadowColor;
-    //        this.OverlayColor = def.OverlayColor;
-    //        this.Saturation = def.SkyColorSaturation;
-    //        this.Glow = def.OverallGlowIntensityMultiplier;
-    //    }
-    //    public override void GameConditionTick()
-    //    {
-    //        base.GameConditionTick();
-    //        List<Map> affectedMaps = base.AffectedMaps;
-    //        foreach (var map in affectedMaps)
-    //        {
-    //            foreach (var item in SkyOverlays(map))
-    //            {
-    //                item.TickOverlay(map);
-    //            }
-    //        }
-    //    }
-
-    //    public override void GameConditionDraw(Map map)
-    //    {
-    //        base.GameConditionDraw(map);
-
-    //        if (map == null)
-    //        {
-    //            return;
-    //        }
-
-    //        foreach (var item in this.SkyOverlays(map))
-    //        {
-    //            item.DrawOverlay(map);
-
-    //            if (item is CausticsOverlay causticsOverlay)
-    //            {
-    //                causticsOverlay.UpdateZoom();
-    //                causticsOverlay.UpdateMaterial();
-    //            }
-    //        }
-    //    }
-
-    //    public override List<SkyOverlay> SkyOverlays(Map map)
-    //    {
-    //        return new List<SkyOverlay>() { new CausticsOverlay() };
-    //    }
-
-    //    public override float SkyTargetLerpFactor(Map map)
-    //    {
-    //        return GameConditionUtility.LerpInOutValue(this, TransitionTicks);
-    //    }
-
-    //    public SkyColorSet TestSkyColors
-    //    {
-    //        get
-    //        {
-    //            float dayPercent = GenCelestial.CurCelestialSunGlow(Find.CurrentMap);
-    //            Color lerpedColor = Color.Lerp(SkyColorNight, SkyColor, dayPercent);
-    //            return new SkyColorSet(lerpedColor, ShadowColor, OverlayColor, Saturation);
-    //        }
-    //    }
-
-    //    public override SkyTarget? SkyTarget(Map map)
-    //    {
-    //        return new SkyTarget(Glow, TestSkyColors, 1f, 1f);
-    //    }
-    //}
-    //public class CausticsOverlay : SkyOverlay
-    //{
-    //    public Shader Shader;
-    //    public Texture2D MainTex;
-    //    public Texture2D SecondTex;
-    //    public Texture2D DistortTex;
-    //    public Material Material;
-
-    //    public const string CausticShaderAssetName = "causticsshader";
-
-    //    public CausticsOverlay()
-    //    {
-    //        //this.MainTex = ContentFinder<Texture2D>.Get("Layer1");
-    //        //this.SecondTex = ContentFinder<Texture2D>.Get("Layer2");
-    //        //this.DistortTex = ContentFinder<Texture2D>.Get("DistortionNoise");
-    //        //this.Shader = LoadedModManager.GetMod<BiomesUnderwater>().GetShaderFromAssets(CausticShaderAssetName);
-
-    //        //if (this.Shader == null)
-    //        //{
-    //        //    Log.Error($"Could not find shader {CausticShaderAssetName} in assets.");
-    //        //    return;
-    //        //}
-
-    //        //this.Material = new Material(this.Shader);
-    //        //this.Material.SetTexture("_MainTex", this.MainTex);
-    //        //this.Material.SetTexture("_LayerTwo", this.SecondTex);
-    //        //this.Material.SetTexture("_DistortMap", this.DistortTex);
-
-
-    //        //this.Material.SetFloat("_Opacity", 0.14f);
-    //        //this.Material.SetFloat("_ScrollSpeed", 0.3f);
-
-    //        //this.Material.SetFloat("_DistortionSpeed", 0.04f);
-    //        //this.Material.SetFloat("_DistortionStrR", 0.06f);
-    //        //this.Material.SetFloat("_DistortionStrG", 0.06f);
-
-
-    //        //this.Material.SetColor("_Color", new Color(1, 1, 1));
-    //        //this.Material.SetColor("_Color2", new Color(1, 1, 1));
-
-
-    //        //this.worldOverlayMat = this.Material;
-    //    }
-
-
-
-    //    public void UpdateMaterial()
-    //    {
-
-    //    }
-    //}
 }

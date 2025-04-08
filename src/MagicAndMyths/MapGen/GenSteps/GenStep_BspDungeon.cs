@@ -1,8 +1,6 @@
 ﻿using RimWorld;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -18,12 +16,13 @@ namespace MagicAndMyths
         //larger factor more of its BSP partition it takes
         public float roomSizeFactor = 0.65f;
 
-        public int minRooms = 5;
-        public int maxRooms = 8;
+        public IntRange roomAmount = new IntRange(4, 5);
         public float minSizeMultiplier = 1.2f;
         public float aspectRatioThreshold = 1.3f;
         public float edgeMarginDivisor = 1.5f;
-
+        public IntRange sideRoomCount = new IntRange(3, 6);
+        public bool allowHiddenSidePaths = true;
+        public float hiddenSidePathChance = 0.3f;
         public bool addRandomCorridoors = true;
 
         public List<RoomTypeDef> availableRoomTypes;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
     <ThingDef ParentName="ResourceBase">
-      <defName>MagicAndMythsPaintingTestDungeon</defName>
-      <label>Painting :The Dark Cave</label>
-      <description>A life-like painting of a dark scene with the something looking out..</description>
+      <defName>MagicAndMythsPaintingTheLookout</defName>
+      <label>Painting :The Lookout</label>
+      <description>How do all these squares make a circle?</description>
       <graphicData>
         <texPath>Scrolls/FancyScroll</texPath>
         <graphicClass>Graphic_Single</graphicClass>
@@ -18,8 +18,8 @@
       </statBases>
       <comps>
        <li Class="MagicAndMyths.CompProperties_PortalGenerator">
-         <mapGeneratorDef>MapGenEasyDungeon</mapGeneratorDef>
-         <mapSize>(300,1,300)</mapSize>
+         <mapGeneratorDef>MapGenHeaven</mapGeneratorDef>
+         <mapSize>(80,1,80)</mapSize>
          <cooldownTicks>600</cooldownTicks>
          <displayString>Touch Painting</displayString>
        </li>

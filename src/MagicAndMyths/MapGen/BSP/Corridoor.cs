@@ -21,6 +21,11 @@ namespace MagicAndMyths
             RoomBEntryPoint = End;
         }
 
+        public bool CellOnPath(IntVec3 c)
+        {
+            return Start == c || End == c || path.Contains(c);
+        }
+
         public void SetPath(List<IntVec3> pathCells)
         {
             path = pathCells;

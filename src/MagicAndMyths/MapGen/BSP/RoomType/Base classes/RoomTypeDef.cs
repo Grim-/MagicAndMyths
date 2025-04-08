@@ -10,9 +10,9 @@ namespace MagicAndMyths
         public Type roomTypeWorker;
         public List<ObstacleDef> roomObstacles;
 
-        public IntVec2 minSize;
-        public IntVec2 maxSize;
-
+        public IntVec2 minSize = IntVec2.Invalid;
+        public IntVec2 maxSize = IntVec2.Invalid;
+        public bool requiresExactSize = false;
 
         public RoomTypeWorker DoWorker(Map map, DungeonRoom Room)
         {

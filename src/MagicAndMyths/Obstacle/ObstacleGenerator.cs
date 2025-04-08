@@ -8,6 +8,8 @@ namespace MagicAndMyths
 {
     public static class ObstacleGenerator
     {
+
+        static Dictionary<ObstacleDef, int> placedObstacles = new Dictionary<ObstacleDef, int>();
         /// <summary>
         /// Places obstacles throughout the dungeon after room generation is complete
         /// </summary>
@@ -16,24 +18,25 @@ namespace MagicAndMyths
             if (Dungeon.nodeToRoomMap.Count <= 1)
                 return;
 
-            List<ObstacleDef> availableObstacles = DefDatabase<ObstacleDef>.AllDefs.ToList();
-            if (availableObstacles.Count == 0)
-            {
-                Log.Warning("No obstacle defs found for dungeon generation");
-                return;
-            }
-
             int obstacleCount = DetermineObstacleCount(Dungeon.nodeToRoomMap.Count);
             Log.Message($"Attempting to place {obstacleCount} obstacles in dungeon with {Dungeon.nodeToRoomMap.Count} rooms");
 
-            Dictionary<ObstacleDef, int> placedObstacles = new Dictionary<ObstacleDef, int>();
-
-
-
             for (int i = 0; i < obstacleCount; i++)
             {
-                DungeonRoom dungeonRoom = Dungeon.Rooms.RandomElement();
-                ObstacleDef obstacleDef = SelectObstacleDef(availableObstacles);
+                DungeonRoom dungeonRoom = Dungeon.Rooms.Where(x=> x.def.roomType != RoomType.Start && x.def.roomType != RoomType.End).ToList().RandomElement();
+
+                if (dungeonRoom == null || dungeonRoom.def == null || dungeonRoom.def.roomObstacles == null)
+                {
+                    continue;
+                }
+
+                if (dungeonRoom.def.roomObstacles.Count == 0)
+                {
+                    Log.Warning("No obstacle defs found for dungeon generation");
+                    return;
+                }
+
+                ObstacleDef obstacleDef = SelectObstacleDef(dungeonRoom.def.roomObstacles);
 
                 if (placedObstacles.Count >= obstacleCount)
                     break;
@@ -59,6 +62,8 @@ namespace MagicAndMyths
                     Log.Message($"failed to place {obstacleDef.defName} in {dungeonRoom}");
                 }
             }
+
+            placedObstacles.Clear();
         }
 
         /// <summary>

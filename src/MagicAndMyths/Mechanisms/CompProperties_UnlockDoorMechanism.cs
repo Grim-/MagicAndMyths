@@ -14,7 +14,7 @@ namespace MagicAndMyths
     public class CompMechanism_UnlockLinkedDoor : CompMechanism
     {
         private Building_LockableDoor LinkedDoor;
-        public override void OnSolutionComplete()
+        public override void Trigger()
         {
             if (LinkedDoor != null)
             {

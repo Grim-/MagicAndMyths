@@ -7,11 +7,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public struct PlannedRoom
-    {
-        public RoomTypeDef RoomType;
-    }
-
     public class DungeonGenerator
     {
         private Dungeon dungeon;
@@ -51,26 +46,32 @@ namespace MagicAndMyths
             Log.Message("Assigning room types");
             AssignRoomTypes();
 
-            // Phase 6: Connections
-            Log.Message("Creating room connections");
+            Log.Message("Creating Minimum spanning tree...");
             CreateMinimumSpanningTree();
+            Log.Message("Creating room connections..");
             List<RoomConnection> connections = GenerateRoomConnections(map);
             EnsureAllRoomsConnected();
 
-            // Phase 7: Create critical path 
+            Log.Message("Designating critical path"); 
             DesignateCriticalPath();
+            ProcessSidePaths();
 
+
+            Log.Message("Drawing connections");
             ApplyConnectionsToGrid(connections);
+            Log.Message("Drawing rooms");
             ApplyRoomsToGrid();
-
             ClearWalls();
 
             if (def.postGenAutomata != null)
             {
                 Log.Message("Applying Post-Generation Cellular Automata");
-                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon.nodeToRoomMap, dungeon.DungeonGrid, def.postGenAutomata);
+                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon, def.postGenAutomata);
             }
 
+
+
+            Log.Message("Applying Room workers to rooms");
             foreach (var room in dungeon.GetAllRooms())
             {
                 if (room.def != null)
@@ -79,13 +80,11 @@ namespace MagicAndMyths
                 }
             }
 
+            Log.Message("Generating Obstacles");
             ObstacleGenerator.GenerateObstacles(dungeon.Map, dungeon);
 
-
             dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_FoodDrain(dungeon.Map));
-
-            dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_Temperature(dungeon.Map));
-            
+            dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_Temperature(dungeon.Map));        
         }
 
         private void FillMapWithWalls()
@@ -101,12 +100,13 @@ namespace MagicAndMyths
 
         private void GenerateBspStructure()
         {
-            Log.Message("Generating BSP tree structure");
+            Log.Message("Generating BSP tree structure with side paths");
             CellRect mapArea = new CellRect(2, 2, dungeon.Map.Size.x - 4, dungeon.Map.Size.z - 4);
-            BspNode rootNode = BspUtility.GenerateBspTreeWithRoomCount(
+
+            BspNode rootNode = BspUtility.GenerateBspTreeWithSideRooms(
                 mapArea,
-                minRooms: def.minRooms,
-                maxRooms: def.maxRooms,
+                mainRoomCount: Math.Max(3,def.roomAmount.RandomInRange),
+                sideRoomCount: def.sideRoomCount.RandomInRange, 
                 minRoomSize: def.minRoomSize,
                 maxSplitAttempts: 200,
                 minSizeMultiplier: def.minSizeMultiplier,
@@ -116,11 +116,117 @@ namespace MagicAndMyths
             List<BspNode> leafNodes = new List<BspNode>();
             BspUtility.GetLeafNodes(rootNode, leafNodes);
 
+            // Track side path nodes separately
+            foreach (var node in leafNodes)
+            {
+                if (node.HasTag("side_path"))
+                {
+                    dungeon.AddSidePathNode(node);
+                }
+            }
+
             dungeon.SetBspStructure(rootNode, leafNodes);
 
             BspUtility.GenerateRoomGeometry(dungeon.LeafNodes,
                 minPadding: def.minRoomPadding,
                 roomSizeFactor: def.roomSizeFactor);
+        }
+        private void ProcessSidePaths()
+        {
+            Log.Message("Processing side paths...");
+
+            var criticalPathRooms = dungeon.GetAllRooms()
+                .Where(r => r.IsOnCriticalPath)
+                .OrderBy(r => r.CriticalPathIndex)
+                .ToList();
+
+            var sidePathNodes = dungeon.SidePathNodes;
+            var sidePathRooms = new List<DungeonRoom>();
+
+            foreach (var node in sidePathNodes)
+            {
+                DungeonRoom room = dungeon.GetRoom(node);
+                if (room != null)
+                {
+                    room.AddTag("side_path");
+                    sidePathRooms.Add(room);
+                }
+            }
+
+            ConnectSidePathsToMainPath(criticalPathRooms, sidePathRooms);
+
+            if (def.allowHiddenSidePaths && def.hiddenSidePathChance > 0)
+            {
+                HideRandomSidePaths(sidePathRooms, def.hiddenSidePathChance);
+            }
+        }
+
+        private void ConnectSidePathsToMainPath(List<DungeonRoom> criticalPathRooms, List<DungeonRoom> sidePathRooms)
+        {
+            if (!sidePathRooms.Any() || !criticalPathRooms.Any())
+                return;
+
+            foreach (var sideRoom in sidePathRooms)
+            {
+                var orderedMainRooms = criticalPathRooms
+                    .OrderBy(r => (r.Center - sideRoom.Center).LengthHorizontalSquared)
+                    .ToList();
+
+                DungeonRoom connectedMainRoom = null;
+
+                foreach (var mainRoom in orderedMainRooms)
+                {
+                    // Connect the rooms
+                    Dungeon.ConnectRooms(sideRoom, mainRoom);
+                    sideRoom.AddConnectionTo(map, mainRoom);
+                    mainRoom.AddConnectionTo(map, sideRoom);
+                    connectedMainRoom = mainRoom;
+
+                    break;
+                }
+
+                if (connectedMainRoom != null)
+                {
+                    PreventForwardConnections(sideRoom, connectedMainRoom, criticalPathRooms);
+                }
+            }
+        }
+        private void PreventForwardConnections(DungeonRoom sideRoom, DungeonRoom connectedMainRoom, List<DungeonRoom> criticalPathRooms)
+        {
+            var forwardRooms = criticalPathRooms
+                .Where(r => r.CriticalPathIndex > connectedMainRoom.CriticalPathIndex)
+                .ToList();
+
+            foreach (var forwardRoom in forwardRooms)
+            {
+                if (sideRoom.IsConnectedTo(forwardRoom))
+                {
+                    sideRoom.connectedRooms.Remove(forwardRoom);
+                    forwardRoom.connectedRooms.Remove(sideRoom);
+
+                    var connection = sideRoom.connections.FirstOrDefault(c => c.DestinationRoom == forwardRoom);
+                    if (connection != null)
+                    {
+                        sideRoom.connections.Remove(connection);
+                    }
+
+                    connection = forwardRoom.connections.FirstOrDefault(c => c.DestinationRoom == sideRoom);
+                    if (connection != null)
+                    {
+                        forwardRoom.connections.Remove(connection);
+                    }
+                }
+            }
+        }
+        private void HideRandomSidePaths(List<DungeonRoom> sidePathRooms, float hiddenChance)
+        {
+            foreach (var room in sidePathRooms)
+            {
+                if (Rand.Value < hiddenChance)
+                {
+                    dungeon.MarkRoomAsHidden(room);
+                }
+            }
         }
 
         //this is shit
@@ -129,102 +235,56 @@ namespace MagicAndMyths
             if (plannedRooms == null || plannedRooms.Count == 0)
                 return;
 
-            // Sort nodes by size to better match requirements
             dungeon.LeafNodes.Sort((a, b) =>
                 (b.rect.Width * b.rect.Height).CompareTo(a.rect.Width * a.rect.Height));
 
-            // Track which nodes have been assigned
             HashSet<BspNode> assignedNodes = new HashSet<BspNode>();
 
-            //ry to find exact matches for planned rooms
-            foreach (var plannedRoom in plannedRooms)
+            foreach (var roomType in plannedRooms)
             {
-                BspNode bestNode = null;
-                float bestFitScore = float.MaxValue;
+                if (roomType.minSize == IntVec2.Invalid)
+                    continue;
 
-                //the node that best fits this planned room
+                BspNode bestNode = null;
                 foreach (var node in dungeon.LeafNodes)
                 {
                     if (assignedNodes.Contains(node))
                         continue;
 
-                    // Check if node is large enough
-                    if (node.rect.Width < plannedRoom.minSize.x + (def.minRoomPadding * 2) ||
-                        node.rect.Height < plannedRoom.minSize.z + (def.minRoomPadding * 2))
-                        continue;
-
-                    // Calculate how well this node fits (lower is better)
-                    float fitScore = (node.rect.Width * node.rect.Height) -
-                                    (plannedRoom.minSize.x * plannedRoom.minSize.z);
-
-                    if (fitScore < bestFitScore)
+                    // Check if node is large enough with padding)
+                    if (node.rect.Width >= roomType.minSize.x + (def.minRoomPadding * 2) &&
+                        node.rect.Height >= roomType.minSize.z + (def.minRoomPadding * 2))
                     {
-                        bestFitScore = fitScore;
                         bestNode = node;
+                        break;
                     }
                 }
 
-                // If we found a suitable node, assign the room
                 if (bestNode != null)
                 {
-                    // Get the center of the node
-                    int centerX = bestNode.rect.minX + bestNode.rect.Width / 2;
-                    int centerZ = bestNode.rect.minZ + bestNode.rect.Height / 2;
+                    bestNode.roomRect = bestNode.GenerateRoomGeometryWithSize(
+                        roomType.minSize.x, roomType.minSize.z, def.minRoomPadding);
 
-                    // Calculate room position (centered in node)
-                    int x = centerX - plannedRoom.minSize.x / 2;
-                    int z = centerZ - plannedRoom.minSize.z / 2;
-
-                    // Ensure room stays within node boundaries with padding
-                    x = Math.Max(bestNode.rect.minX + def.minRoomPadding,
-                            Math.Min(x, bestNode.rect.maxX - plannedRoom.minSize.x - def.minRoomPadding));
-                    z = Math.Max(bestNode.rect.minZ + def.minRoomPadding,
-                            Math.Min(z, bestNode.rect.maxZ - plannedRoom.minSize.z - def.minRoomPadding));
-
-                    // Set the room rectangle
-                    bestNode.roomRect = new CellRect(x, z, plannedRoom.minSize.x, plannedRoom.minSize.z);
-
-                    // Create and assign the room
-                    DungeonRoom room = DungeonRoom.FromBspNode(bestNode);
-                    room.def = plannedRoom;
+                    DungeonRoom room = DungeonRoom.FromBspNode(dungeon, bestNode);
+                    room.def = roomType;
                     dungeon.AddRoom(bestNode, room);
-
-                    // Mark as assigned
                     assignedNodes.Add(bestNode);
                 }
-                else
+            }
+
+            foreach (var node in dungeon.LeafNodes)
+            {
+                if (assignedNodes.Contains(node) || dungeon.HasMapping(node))
+                    continue;
+
+                DungeonRoom room = DungeonRoom.FromBspNode(dungeon, node);
+                var normalRoomTypes = plannedRooms.Where(x => x.roomType == RoomType.Normal).ToList();
+                if (normalRoomTypes.Any())
                 {
-                    // No suitable node found - need to split an existing node
-                    Log.Message($"No suitable node for planned room {plannedRoom}. Attempting to create one...");
-
-                    // Find the largest unassigned node
-                    BspNode largestNode = dungeon.LeafNodes
-                        .Where(n => !assignedNodes.Contains(n))
-                        .OrderByDescending(n => n.rect.Width * n.rect.Height)
-                        .FirstOrDefault();
-
-                    if (largestNode != null)
-                    {
-                        // Force the node's room rect to our planned size
-                        int x = largestNode.rect.minX + Math.Max(def.minRoomPadding,
-                                    (largestNode.rect.Width - plannedRoom.minSize.x) / 2);
-                        int z = largestNode.rect.minZ + Math.Max(def.minRoomPadding,
-                                    (largestNode.rect.Height - plannedRoom.minSize.z) / 2);
-
-                        largestNode.roomRect = new CellRect(x, z, plannedRoom.minSize.x, plannedRoom.minSize.z);
-
-                        // Create and assign the room
-                        DungeonRoom room = DungeonRoom.FromBspNode(largestNode);
-                        room.def = plannedRoom;
-                        dungeon.AddRoom(largestNode, room);
-
-                        assignedNodes.Add(largestNode);
-                    }
-                    else
-                    {
-                        Log.Error($"Failed to create planned room {plannedRoom} - no nodes available!");
-                    }
+                    room.def = normalRoomTypes.RandomElement();
                 }
+
+                dungeon.AddRoom(node, room);
             }
         }
 
@@ -237,7 +297,7 @@ namespace MagicAndMyths
                 if (dungeon.HasMapping(node))
                     continue;
 
-                DungeonRoom room = DungeonRoom.FromBspNode(node);
+                DungeonRoom room = DungeonRoom.FromBspNode(dungeon, node);
                 dungeon.AddRoom(node, room);
             }
         }
@@ -248,7 +308,7 @@ namespace MagicAndMyths
 
             if (def.earlyAutomata != null)
             {
-                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon.nodeToRoomMap, dungeon.DungeonGrid, def.earlyAutomata);
+                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon, def.earlyAutomata);
             }
         }
 

@@ -33,7 +33,7 @@ namespace MagicAndMyths
 
         public static ThingDef MagicAndMyths_Reanimator;
 
-
+        public static JobDef MagicAndMyths_JumpOverObstacle;
         public static JobDef GotoAndTalk;
 
         public static QuestScriptDef Quest_DeathKnightStartingPath;

@@ -147,7 +147,7 @@ namespace MagicAndMyths
         }
 
         // Method for component-based portals
-        public Map GetOrCreateComponentPortalMap(int uniqueId, MapGeneratorDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
+        public Map GetOrCreateComponentPortalMap(int uniqueId, MapGeneratorDef mapGeneratorDef, IntVec3 mapSize, int sourceTile, WorldObjectDef worldObjectDef = null)
         {
             // Check if portal already exists
             var existingPortal = componentPortals.FirstOrDefault(p => p.uniqueId == uniqueId);
@@ -177,7 +177,7 @@ namespace MagicAndMyths
             }
 
             // Create new portal map
-            DungeonMapParent mapParent = (DungeonMapParent)WorldObjectMaker.MakeWorldObject(MagicAndMythDefOf.DungeonMapParent);
+            DungeonMapParent mapParent = (DungeonMapParent)WorldObjectMaker.MakeWorldObject(worldObjectDef != null ? worldObjectDef : MagicAndMythDefOf.DungeonMapParent);
 
             // Use source tile to avoid cluttering world map
             mapParent.Tile = sourceTile;
@@ -224,7 +224,6 @@ namespace MagicAndMyths
             }
         }
 
-        // Remove component portal data
         public void RemoveComponentPortalData(int uniqueId)
         {
             var portalData = componentPortals.FirstOrDefault(p => p.uniqueId == uniqueId);

@@ -10,6 +10,10 @@
     <maxSeverity>1.0</maxSeverity>
     <isBad>false</isBad>
     <duplicationAllowed>false</duplicationAllowed>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_TorturedSoul">
+      </li>
+    </comps>
   </HediffDef>
 
 </Defs>

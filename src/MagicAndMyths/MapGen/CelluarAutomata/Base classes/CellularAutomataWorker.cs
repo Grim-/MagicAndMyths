@@ -5,7 +5,15 @@ namespace MagicAndMyths
 {
     public abstract class CellularAutomataWorker
     {
-        public abstract void Apply(Map map, Dictionary<BspNode, DungeonRoom> nodeToRoomMap, BoolGrid dungeonGrid, BoolGrid currentState);
+        public abstract void Apply(Map map, Dungeon Dungeon, BoolGrid dungeonGrid, BoolGrid currentState);
+
+
+
+        //public virtual bool CanModify(Map map, IntVec3 c)
+        //{
+
+        //}
+
 
         protected int CountWallNeighbors(IntVec3 cell, Map map, BoolGrid grid)
         {

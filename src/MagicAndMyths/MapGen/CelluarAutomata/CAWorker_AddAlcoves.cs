@@ -14,7 +14,7 @@ namespace MagicAndMyths
 
         }
 
-        public override void Apply(Map map, Dictionary<BspNode, DungeonRoom> nodeToRoomMap, BoolGrid dungeonGrid, BoolGrid currentState)
+        public override void Apply(Map map, Dungeon Dungeon, BoolGrid dungeonGrid, BoolGrid currentState)
         {
             foreach (IntVec3 cell in map.AllCells)
             {

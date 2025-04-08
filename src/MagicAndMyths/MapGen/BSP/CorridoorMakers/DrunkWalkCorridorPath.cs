@@ -27,8 +27,8 @@ namespace MagicAndMyths
             {
                 steps++;
 
-                // 70% chance of random move, 30% chance of directed move
-                if (Rand.Value < 0.7f)
+                // 40% chance of random move, 30% chance of directed move
+                if (Rand.Value < 0.4f)
                 {
                     // Random move in cardinal direction
                     IntVec3 dir = directions[Rand.RangeInclusive(0, 3)];

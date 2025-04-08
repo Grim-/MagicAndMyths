@@ -6,6 +6,7 @@ namespace MagicAndMyths
 {
     public class DungeonRoom
     {
+        protected Dungeon ParentDungeon;
         public CellRect roomCellRect;
         public CellRect roomWalls;
         public List<string> tags = new List<string>();
@@ -19,19 +20,20 @@ namespace MagicAndMyths
         public bool IsWaypoint = false;
         public IntVec3 Center => roomCellRect.CenterCell;
 
-        public DungeonRoom()
+        public DungeonRoom(Dungeon dungeon)
         {
             tags = new List<string>();
             connectedRooms = new List<DungeonRoom>();
+            ParentDungeon = dungeon;
         }
 
-        public static DungeonRoom FromBspNode(BspNode node)
+        public static DungeonRoom FromBspNode(Dungeon dungeon, BspNode node, int minPadding = 2, float roomSizeFactor = 0.95f)
         {
             if (node.roomRect.Area == 0)
             {
-                node.roomRect = node.GenerateRoomGeometry();
+                node.roomRect = node.GenerateRoomGeometry(minPadding, roomSizeFactor);
             }
-            var dungeonRoom = new DungeonRoom
+            var dungeonRoom = new DungeonRoom(dungeon)
             {
                 roomCellRect = node.roomRect,
                 roomWalls = new CellRect(
@@ -55,13 +57,26 @@ namespace MagicAndMyths
                 RoomConnection newConnection = new RoomConnection(this, OtherRoom);
                 newConnection.corridors = CorridoorUtility.GenerateCorridors(map, this, OtherRoom);
                 connections.Add(newConnection);
+                ParentDungeon.MarkCellsProtected(newConnection.GetAllCells(), true);
             }
         }
-
+        public void RemoveConnectionTo(DungeonRoom OtherRoom)
+        {
+            if (HasConnectionTo(OtherRoom))
+            {
+                connections.RemoveWhere(x => x.DestinationRoom == OtherRoom);
+            }
+        }
 
         public bool HasConnectionTo(DungeonRoom OtherRoom)
         {
             return connections.Any(x => x.DestinationRoom == OtherRoom);
+        }
+
+
+        public bool IsConnectedTo(DungeonRoom OtherRoom)
+        {
+            return connectedRooms.Contains(OtherRoom);
         }
 
         public void AddTag(string tag)
@@ -83,8 +98,6 @@ namespace MagicAndMyths
             ulong id2 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(room2);
             return id1 < id2 ? $"{id1}-{id2}" : $"{id2}-{id1}";
         }
-
-        // New accessibility methods
 
         /// <summary>
         /// Gets all rooms that are ahead of this room on the critical path

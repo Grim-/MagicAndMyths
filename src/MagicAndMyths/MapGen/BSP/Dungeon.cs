@@ -13,6 +13,10 @@ namespace MagicAndMyths
         public Dictionary<BspNode, DungeonRoom> nodeToRoomMap = new Dictionary<BspNode, DungeonRoom>();
         public BoolGrid DungeonGrid { get; private set; }
 
+        public BoolGrid ProtectionGrid { get; private set; }
+
+        public List<BspNode> SidePathNodes { get; private set; } = new List<BspNode>();
+        public HashSet<DungeonRoom> HiddenRooms { get; private set; } = new HashSet<DungeonRoom>();
         public List<BspNode> BSPNodes => nodeToRoomMap.Keys.ToList();
         public List<DungeonRoom> Rooms => nodeToRoomMap.Values.ToList();
 
@@ -24,8 +28,64 @@ namespace MagicAndMyths
         {
             Map = map;
             DungeonGrid = new BoolGrid(map);
+            ProtectionGrid = new BoolGrid(map);
         }
 
+        public void MarkCellProtected(IntVec3 cell, bool Protected)
+        {
+            if (cell.InBounds(Map))
+            {
+                ProtectionGrid[cell] = Protected;
+            }
+        }
+
+        public void MarkCellsProtected(IEnumerable<IntVec3> cells, bool Protected)
+        {
+            foreach (var c in cells)
+            {
+                if (c.InBounds(Map))
+                {
+                    ProtectionGrid[c] = Protected;
+                }
+            }
+        }
+
+        public void AddSidePathNode(BspNode node)
+        {
+            if (!SidePathNodes.Contains(node))
+            {
+                SidePathNodes.Add(node);
+            }
+        }
+
+        public void MarkRoomAsHidden(DungeonRoom room)
+        {
+            if (!HiddenRooms.Contains(room))
+            {
+                HiddenRooms.Add(room);
+                room.AddTag("hidden");
+            }
+        }
+        public bool IsRoomCell(IntVec3 c)
+        {
+            return Rooms.Any(x => x.roomCellRect.Contains(c));
+        }
+        public bool IsPathCell(IntVec3 c)
+        {
+            return Rooms.Any(x => x.connections.Any(y => y.CellIsOnCorridoor(c)));
+        }
+
+        public DungeonRoom GetRandomHiddenRoom()
+        {
+            return HiddenRooms.Any() ? HiddenRooms.RandomElement() : null;
+        }
+
+        public List<DungeonRoom> GetAllSidePathRooms()
+        {
+            return GetAllRooms()
+                .Where(r => !r.IsOnCriticalPath && r.HasTag("side_path"))
+                .ToList();
+        }
         public void AddRoom(BspNode node, DungeonRoom room)
         {
             nodeToRoomMap[node] = room;
@@ -156,7 +216,18 @@ namespace MagicAndMyths
             return nodeToRoomMap;
         }
 
+        public bool IsIsolatedWall(IntVec3 cell)
+        {
+            foreach (IntVec3 adj in GenAdjFast.AdjacentCells8Way(cell))
+            {
+                if (!adj.InBounds(this.Map) || !this.IsCellFloor(adj))
+                {
+                    return false;
+                }
+            }
 
+            return true;
+        }
         public void SetBspStructure(BspNode rootNode, List<BspNode> leafNodes)
         {
             RootNode = rootNode;
