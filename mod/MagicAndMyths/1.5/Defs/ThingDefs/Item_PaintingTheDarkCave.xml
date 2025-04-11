@@ -19,7 +19,7 @@
       <comps>
        <li Class="MagicAndMyths.CompProperties_PortalGenerator">
          <mapGeneratorDef>MapGenEasyDungeon</mapGeneratorDef>
-         <mapSize>(300,1,300)</mapSize>
+         <mapSize>(150, 1, 150)</mapSize>
          <cooldownTicks>600</cooldownTicks>
          <displayString>Touch Painting</displayString>
        </li>

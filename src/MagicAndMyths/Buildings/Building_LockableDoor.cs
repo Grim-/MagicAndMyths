@@ -57,7 +57,11 @@ namespace MagicAndMyths
                     });
                 }
                 else
-                {
+                {                
+                    yield return new FloatMenuOption($"{DCUtility.FormatDCCheck(5, DCUtility.GetSkillBonus(selPawn, SkillDefOf.Crafting))}", () =>
+                    {
+
+                    });
                     yield return new FloatMenuOption($"Key Required {keyReference}", () =>
                     {
 

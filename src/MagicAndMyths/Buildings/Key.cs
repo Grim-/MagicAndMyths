@@ -3,7 +3,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class Key : Thing
+    public class Key : ThingWithComps
     {
         private Building_LockableDoor doorReference = null;
         private Color? pairingColor;

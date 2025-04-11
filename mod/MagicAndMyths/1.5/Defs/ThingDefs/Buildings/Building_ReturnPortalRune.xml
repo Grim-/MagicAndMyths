@@ -31,6 +31,8 @@
       <li>PlaceWorker_NotUnderRoof</li>
     </placeWorkers>
     <building>
+      <deconstructible>false</deconstructible>
+      <claimable>false</claimable>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
       <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
     </building>

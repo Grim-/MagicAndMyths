@@ -3,7 +3,7 @@
   <ThingDef ParentName="ApparelMakeableBase">
     <defName>Apparel_InvisibiliyCloak</defName>
     <label>cape</label>
-    <description>A long cape of elegant design. It hangs over one side of the torso. It seems to vanish with the wind. </description>
+    <description>A long cape of elegant design. It hangs over one side of the torso. It seems to vanish with the wind.</description>
     <possessionCount>1</possessionCount>
     <graphicData>
       <texPath>Things/Pawn/Humanlike/Apparel/Cape/Cape</texPath>

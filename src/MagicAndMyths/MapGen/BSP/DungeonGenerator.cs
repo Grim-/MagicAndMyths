@@ -103,13 +103,22 @@ namespace MagicAndMyths
             Log.Message("Generating BSP tree structure with side paths");
             CellRect mapArea = new CellRect(2, 2, dungeon.Map.Size.x - 4, dungeon.Map.Size.z - 4);
 
-            BspNode rootNode = BspUtility.GenerateBspTreeWithSideRooms(
+            //BspNode rootNode = BspUtility.GenerateBspTreeWithSideRooms(
+            //    mapArea,
+            //    mainRoomCount: Math.Max(3,def.roomAmount.RandomInRange),
+            //    sideRoomCount: def.sideRoomCount.RandomInRange, 
+            //    minRoomSize: def.minRoomSize,
+            //    maxSplitAttempts: 200,
+            //    minSizeMultiplier: def.minSizeMultiplier,
+            //    aspectRatioThreshold: def.aspectRatioThreshold,
+            //    edgeMarginDivisor: def.edgeMarginDivisor);
+
+            BspNode rootNode = BspUtility.GenerateBspTreeWithRoomCount(
                 mapArea,
-                mainRoomCount: Math.Max(3,def.roomAmount.RandomInRange),
-                sideRoomCount: def.sideRoomCount.RandomInRange, 
+                minRooms : def.roomAmount.min,
+                maxRooms : def.roomAmount.max,
                 minRoomSize: def.minRoomSize,
                 maxSplitAttempts: 200,
-                minSizeMultiplier: def.minSizeMultiplier,
                 aspectRatioThreshold: def.aspectRatioThreshold,
                 edgeMarginDivisor: def.edgeMarginDivisor);
 

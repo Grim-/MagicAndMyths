@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using HarmonyLib;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
+
     [StaticConstructorOnStartup]
     public static class AssetBundleShaderManager
     {
@@ -11,10 +13,56 @@ namespace MagicAndMyths
 
         public static bool Cached = false;
 
+
+
+        static AssetBundleShaderManager()
+        {
+            if (!AssetBundleShaderManager.Cached)
+            {
+                AssetBundleShaderManager.CacheAllLoadedShaders();
+            }
+        }
+
+
         public static bool HasShader(string ShaderName)
         {
             return ShaderCache.ContainsKey(ShaderName);
         }
+
+
+
+
+        public static bool TryGet(string ShaderName, out Shader shader)
+        {
+            shader = null;
+            if (ShaderCache.ContainsKey(ShaderName))
+            {
+                shader = GetShaderByAssetName(ShaderName);
+                return true;
+            }
+            else
+            {
+                foreach (var mod in LoadedModManager.RunningMods)
+                {
+                    foreach (var bundle in mod.assetBundles.loadedAssetBundles)
+                    {
+                        foreach (var item in bundle.LoadAllAssets())
+                        {
+                            if (item is Shader foundshader)
+                            {
+                                RegisterShader(item.name, foundshader);
+                                shader = foundshader;
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+            }
+            return false;
+        }
+
+
 
 
         public static void RegisterShader(string ShaderName, Shader Shader)
@@ -33,10 +81,10 @@ namespace MagicAndMyths
 
         public static Shader GetShaderByAssetName(string ShaderName)
         {
-            Log.Message($"Attemping to retrieving Shader with name {ShaderName} from cache");
+            //Log.Message($"Attemping to retrieving Shader with name {ShaderName} from cache");
             if (HasShader(ShaderName))
             {
-                Log.Message($"{ShaderName} found.");
+               // Log.Message($"{ShaderName} found.");
                 return ShaderCache[ShaderName];
             }
             Log.Message($"{ShaderName} not found.");

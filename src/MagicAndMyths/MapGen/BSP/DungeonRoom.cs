@@ -45,6 +45,7 @@ namespace MagicAndMyths
             return dungeonRoom;
         }
 
+
         public void SetCriticalPathIndex(int index)
         {
             this.CriticalPathIndex = index;

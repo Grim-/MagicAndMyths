@@ -12,7 +12,7 @@ using Verse;
 namespace MagicAndMyths
 {
     [StaticConstructorOnStartup]
-    public static partial class MagicAndMythPatchClass
+    public static class MagicAndMythPatchClass
     {
         static MagicAndMythPatchClass()
         {
@@ -20,7 +20,50 @@ namespace MagicAndMyths
             harmony.PatchAll();
         }
 
+        //[HarmonyPatch(typeof(ShaderDatabase))]
+        //[HarmonyPatch("LoadShader")]
+        //public static class ShaderDatabase_LoadShader_Patch
+        //{
+        //    [HarmonyPrefix]
+        //    public static bool Prefix(string shaderPath, ref Shader __result)
+        //    {
+        //        Shader customShader = AssetBundleShaderManager.GetShaderByAssetName(shaderPath);
+        //        if (customShader != null)
+        //        {
+        //            __result = customShader;
+        //            return false;
+        //        }
+        //        return true;
+        //    }
+        //}
 
+        //[HarmonyPatch(typeof(Root_Entry))]
+        //[HarmonyPatch("Start")]
+        //public static class Root_Entrye_Start_Patch
+        //{
+        //    [HarmonyPostfix]
+        //    public static void Postfix()
+        //    {
+        //        AssetBundleShaderManager.CacheAllLoadedShaders();
+        //    }
+        //}
+
+
+        [HarmonyPatch(typeof(ApparelGraphicRecordGetter))]
+        [HarmonyPatch("TryGetGraphicApparel")]
+        public static class Patch_ApparelGraphicRecordGetter_TryGetGraphicApparel
+        {
+            [HarmonyPostfix]
+            public static void Postfix(Apparel apparel, BodyTypeDef bodyType, ref ApparelGraphicRecord rec)
+            {
+                if (apparel.def.graphicData is GraphicDataWithShader graphicDataWithShader)
+                {
+                    Graphic_MultiWithShader graphic = (Graphic_MultiWithShader)GraphicDatabase.Get<Graphic_MultiWithShader>(graphicDataWithShader.texPath, AssetBundleShaderManager.GetShaderByAssetName(graphicDataWithShader.customShaderName), apparel.def.graphicData.drawSize, apparel.DrawColor, apparel.DrawColor, graphicDataWithShader);
+                    rec = new ApparelGraphicRecord(graphic, apparel);
+  
+                }
+            }
+        }
 
         [HarmonyPatch(typeof(PawnRenderer), "CurRotDrawMode",  MethodType.Getter)]
         public class CurRotDrawMode_Patch

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MagicAndMyths_DesecratedAltar</defName>
+    <label>Desecrated Altar</label>
+    <thingClass>Building</thingClass>
+    <description>This is the thingy thats doing the thing</description>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Potions/Phylacterycentered</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shadowData>
+        <volume>(0.3, 0.2, 0.3)</volume>
+        <offset>(0,0,-0.1)</offset>
+      </shadowData>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>8000</WorkToBuild>
+      <Flammability>0</Flammability>
+      <Mass>500</Mass>
+    </statBases>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>1</fillPercent>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <building>
+      <deconstructible>false</deconstructible>
+      <claimable>false</claimable>
+      <destroySound>BuildingDestroyed_Metal_Small</destroySound>
+    </building>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <pathCost>14</pathCost>
+    <uiOrder>2100</uiOrder>
+    <rotatable>false</rotatable>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_MapWideApplyHediff">
+        <ticksBetweenEffect>2000~3000</ticksBetweenEffect>
+        <hediff>MagicAndMyths_DesecrationInfluence</hediff>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <HediffDef>
+    <defName>MagicAndMyths_DesecrationInfluence</defName>
+    <label>desecration influence</label>
+    <description>This pawn is under the influence of a desecrated altar. Their mind is being corrupted, making them more susceptible to mental breaks.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <makesSickThought>true</makesSickThought>
+    <initialSeverity>0.11</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>0.02</severityPerDay>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <label>minor</label>
+        <minSeverity>0.1</minSeverity>
+        <mentalBreakMtbDays>30</mentalBreakMtbDays>
+        <statOffsets>
+          <MentalBreakThreshold>0.05</MentalBreakThreshold>
+        </statOffsets>
+      </li>
+      <li>
+        <label>moderate</label>
+        <minSeverity>0.3</minSeverity>
+        <mentalBreakMtbDays>20</mentalBreakMtbDays>
+        <statOffsets>
+          <MentalBreakThreshold>0.1</MentalBreakThreshold>
+        </statOffsets>
+      </li>
+      <li>
+        <label>serious</label>
+        <minSeverity>0.5</minSeverity>
+        <mentalBreakMtbDays>15</mentalBreakMtbDays>
+        <statOffsets>
+          <MentalBreakThreshold>0.15</MentalBreakThreshold>
+        </statOffsets>
+      </li>
+      <li>
+        <label>severe</label>
+        <minSeverity>0.7</minSeverity>
+        <mentalBreakMtbDays>10</mentalBreakMtbDays>
+        <statOffsets>
+          <MentalBreakThreshold>0.2</MentalBreakThreshold>
+        </statOffsets>
+      </li>
+      <li>
+        <label>extreme</label>
+        <minSeverity>0.9</minSeverity>
+        <mentalBreakMtbDays>5</mentalBreakMtbDays>
+        <statOffsets>
+          <MentalBreakThreshold>0.3</MentalBreakThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

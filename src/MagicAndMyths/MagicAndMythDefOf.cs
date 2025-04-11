@@ -9,7 +9,6 @@ namespace MagicAndMyths
         public static ThingDef MagicAndMyths_SimpleFlyer;
         public static ThingDef MagicAndMyths_MjolnirProjectile;
         public static ThingDef MagicAndMyths_DelegateFlyer;
-        public static ThingDef MagicAndMyths_MultiJumpFlyer;
         public static AbilityDef MagicAndMyths_RevertTransformation;
 
 
@@ -31,7 +30,6 @@ namespace MagicAndMyths
 
         public static BackstoryDef MagicAndMyths_LesserUndead;
 
-        public static ThingDef MagicAndMyths_Reanimator;
 
         public static JobDef MagicAndMyths_JumpOverObstacle;
         public static JobDef GotoAndTalk;

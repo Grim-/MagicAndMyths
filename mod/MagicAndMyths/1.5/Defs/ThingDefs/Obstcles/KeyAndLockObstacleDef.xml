@@ -7,9 +7,8 @@
        <commonality>0.2</commonality>
        <minDistanceFromStart>2</minDistanceFromStart>
        <requiresSeparateRooms>true</requiresSeparateRooms>
-       <obstacleDef>MagicAndMythCraftingObstacle</obstacleDef>
-       <keyDef>MedicineIndustrial</keyDef>
-       <doorDef>Door</doorDef>
-       <doorStuffing>Steel</doorStuffing>
+       <obstacleDef>DungeonLockedDoor</obstacleDef>
+       <keyDef>DungeonTestKey</keyDef>
+       <doorDef>DungeonLockedDoor</doorDef>
    </MagicAndMyths.ObstacleDef_KeyAndDoor>
 </Defs>

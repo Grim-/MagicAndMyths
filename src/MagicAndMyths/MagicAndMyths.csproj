@@ -7,6 +7,7 @@
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
+    <Publicize Include="Assembly-CSharp" MemberPattern="^Verse\.ShaderDatabase\.lookup$" />
     <Publicize Include="Assembly-CSharp" MemberPattern="^Verse\.ZoneManager\.AddZoneGridCell$" />
     <PackageReference Include="Krafs.Publicizer" Version="2.*" />
   </ItemGroup>
@@ -93,8 +94,12 @@
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
     <Compile Include="Comps\ThingComps\CausticsOverlay.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_MapWideApplyHediff.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_MapWideEffect.cs" />
     <Compile Include="Comps\ThingComps\GameCondition_UnderWaterCondition.cs" />
     <Compile Include="Comps\World\WorldComp_HeavenTracker.cs" />
+    <Compile Include="Graphic\GraphicDataWithShader.cs" />
+    <Compile Include="Graphic\Graphic_MultiWithShader.cs" />
     <Compile Include="Hediff\HediffCompProperties_TorturedSoul.cs" />
     <Compile Include="Interfaces\IObstacle.cs" />
     <Compile Include="MapGen\BSP\Dungeon.cs" />
@@ -164,6 +169,7 @@
     <Compile Include="Obstacle\Pitfall\PitfallSolutionWorker_Jump.cs" />
     <Compile Include="Obstacle\ObstacleComps\SolutionDef.cs" />
     <Compile Include="Obstacle\Workers\ObstacleWorker_PlaceStructureLayout.cs" />
+    <Compile Include="Obstacle\Workers\ObstacleWorker_PlaceThing.cs" />
     <Compile Include="Util\CurveDefMagicMyths.cs" />
     <Compile Include="Util\DCOutcome.cs" />
     <Compile Include="Util\DungeonUtil.cs" />
@@ -238,7 +244,7 @@
     <Compile Include="Buildings\Building_Phylactery.cs" />
     <Compile Include="Util\GrowableStructurePatches.cs" />
     <Compile Include="Util\MagicUtil.cs" />
-    <Compile Include="Patch\DrawOffsetExt.cs" />
+    <Compile Include="Extensions\DrawOffsetExt.cs" />
     <Compile Include="Util\EventManager.cs" />
     <Compile Include="Util\EventPatches.cs" />
     <Compile Include="Graphic\GraphicPhilsophersRune.cs" />

@@ -15,8 +15,8 @@ namespace MagicAndMyths
         /// </summary>
         public static void GenerateObstacles(Map map, Dungeon Dungeon)
         {
-            if (Dungeon.nodeToRoomMap.Count <= 1)
-                return;
+            //if (Dungeon.nodeToRoomMap.Count <= 1)
+            //    return;
 
             int obstacleCount = DetermineObstacleCount(Dungeon.nodeToRoomMap.Count);
             Log.Message($"Attempting to place {obstacleCount} obstacles in dungeon with {Dungeon.nodeToRoomMap.Count} rooms");
@@ -25,37 +25,23 @@ namespace MagicAndMyths
             {
                 DungeonRoom dungeonRoom = Dungeon.Rooms.Where(x=> x.def.roomType != RoomType.Start && x.def.roomType != RoomType.End).ToList().RandomElement();
 
-                if (dungeonRoom == null || dungeonRoom.def == null || dungeonRoom.def.roomObstacles == null)
+                if (dungeonRoom == null || dungeonRoom.def == null)
                 {
                     continue;
                 }
 
-                if (dungeonRoom.def.roomObstacles.Count == 0)
-                {
-                    Log.Warning("No obstacle defs found for dungeon generation");
-                    return;
-                }
+                //if (dungeonRoom.def.roomObstacles.Count == 0)
+                //{
+                //    Log.Warning("No obstacle defs found for dungeon generation");
+                //    return;
+                //}
 
-                ObstacleDef obstacleDef = SelectObstacleDef(dungeonRoom.def.roomObstacles);
-
-                if (placedObstacles.Count >= obstacleCount)
-                    break;
-
-                if (!placedObstacles.ContainsKey(obstacleDef))
-                {
-                    placedObstacles.Add(obstacleDef, 0);
-                }
-
-                //reached count limit for this obstacle
-                if (placedObstacles[obstacleDef] >= obstacleDef.maxCount)
-                {
-                    continue;
-                }
+                ObstacleDef obstacleDef = SelectObstacleDef(DefDatabase<ObstacleDef>.AllDefsListForReading);
 
                 if (TryPlaceObstacle(map, Dungeon, dungeonRoom, obstacleDef))
                 {
                     Log.Message($"Successfully placed {obstacleDef.defName} in {dungeonRoom}");
-                    placedObstacles[obstacleDef]++;
+                    //placedObstacles[obstacleDef]++;
                 }
                 else
                 {
@@ -103,19 +89,19 @@ namespace MagicAndMyths
             if (availableObstacles.Count == 0)
                 return null;
 
-            float totalCommonality = availableObstacles.Sum(def => def.commonality);
+            //float totalCommonality = availableObstacles.Sum(def => def.commonality);
 
-            float selection = Rand.Range(0, totalCommonality);
+            //float selection = Rand.Range(0, totalCommonality);
 
-            float runningTotal = 0;
-            foreach (ObstacleDef def in availableObstacles)
-            {
-                runningTotal += def.commonality;
-                if (selection <= runningTotal)
-                    return def;
-            }
+            //float runningTotal = 0;
+            //foreach (ObstacleDef def in availableObstacles)
+            //{
+            //    runningTotal += def.commonality;
+            //    if (selection <= runningTotal)
+            //        return def;
+            //}
 
-            return availableObstacles.RandomElement();
+            return availableObstacles.RandomElementByWeight(x => x.commonality);
         }
     }
 }
