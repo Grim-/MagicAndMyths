@@ -34,6 +34,22 @@ namespace MagicAndMyths
         }
 
 
+
+
+        public static int NewPortalID(Thing thing)
+        {
+            return Find.TickManager.TicksGame + thing.thingIDNumber;
+        }
+
+        public static Portal CreatePortal(Map map, int mapID)
+        {
+            Portal portal = (Portal)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_Portal);
+            portal.DestinationMap = map;
+            portal.LinkedMapId = mapID;
+            return portal;
+        }
+
+
         public static IntVec3 FindTeleportLocation(Pawn pawn, Map map)
         {
 

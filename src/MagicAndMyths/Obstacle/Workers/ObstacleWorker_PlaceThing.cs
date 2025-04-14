@@ -25,7 +25,7 @@ namespace MagicAndMyths
             
             if (GenPlace.TryPlaceThing(thing, Room.roomCellRect.CenterCell, map, ThingPlaceMode.Direct))
             {
-                thing = GenSpawn.Spawn(thing, Room.roomCellRect.CenterCell, map);
+                //thing = GenSpawn.Spawn(thing, Room.roomCellRect.CenterCell, map);
                 return true;
             }
 

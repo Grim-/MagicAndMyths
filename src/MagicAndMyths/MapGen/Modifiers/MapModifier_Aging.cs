@@ -12,10 +12,6 @@ namespace MagicAndMyths
 
         public MapModifier_Aging(Map map) : base(map) { }
 
-        public override void ExposeData()
-        {
-            base.ExposeData();
-        }
 
         public override void ApplyEffect()
         {

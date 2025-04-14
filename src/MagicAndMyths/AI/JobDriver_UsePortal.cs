@@ -68,7 +68,7 @@ namespace MagicAndMyths
                 return thingPortal;
             }
 
-            CompPortalGenerator portalComp = thing.TryGetComp<CompPortalGenerator>();
+            Comp_Portal portalComp = thing.TryGetComp<Comp_Portal>();
             if (portalComp != null)
             {
                 return portalComp;

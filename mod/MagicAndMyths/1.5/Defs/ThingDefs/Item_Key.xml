@@ -4,9 +4,9 @@
     <defName>DungeonTestKey</defName>
     <label>a key</label>
     <description>A Key..</description>
-    <thingClass>MagicAndMyths.Key</thingClass>
+    <thingClass>MagicAndMyths.Thing_Key</thingClass>
     <graphicData>
-      <texPath>Things/Item/Artifact/PsychicAnimalPulser</texPath>
+      <texPath>Keys/BasicKey</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>

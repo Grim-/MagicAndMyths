@@ -1,4 +1,6 @@
-﻿using Verse;
+﻿using RimWorld;
+using System.Linq;
+using Verse;
 
 namespace MagicAndMyths
 {
@@ -13,14 +15,41 @@ namespace MagicAndMyths
 
     public class HediffComp_TorturedSoul : HediffComp
     {
+        protected Ideo targetIdeo = null;
+
+        protected Ideo TargetIdeo
+        {
+            get
+            {
+                if (targetIdeo != null)
+                {
+                    return targetIdeo;
+                }
+
+                return Find.World.ideoManager.IdeosListForReading.FirstOrDefault(x => x.initialPlayerIdeo);
+            }
+        }
+
+        public void SetTargetIdeo(Ideo newTarget)
+        {
+            targetIdeo = newTarget;
+        }
+
         public override void CompPostPostRemoved()
         {
             base.CompPostPostRemoved();
 
             if (Pawn.ideo != null)
             {
-                //change ideology to dominante player ideo
+                Pawn.ideo.SetIdeo(TargetIdeo);
             }
+        }
+
+        public override void CompExposeData()
+        {
+            base.CompExposeData();
+
+            Scribe_References.Look(ref targetIdeo, "targetIdeo");
         }
     }
 }

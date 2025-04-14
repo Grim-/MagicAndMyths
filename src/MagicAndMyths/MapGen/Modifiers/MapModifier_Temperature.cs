@@ -5,11 +5,11 @@ namespace MagicAndMyths
 {
     public class MapModifier_Temperature : MapModifier
     {
-        public float targetTemperature = 100f; // Target temperature in Celsius
-        public float temperaturePushAmount = 5f; // How much to push temperature per effect
-        public float temperatureRadius = 10f; // Radius of effect for each push
-        public override int MinTicksBetweenEffects => 250; // More frequent updates for smoother transition
-        public override Color ModifierColor => new Color(0.2f, 0.6f, 0.8f, 0.4f); // Blue-ish tint
+        public float targetTemperature = 100f;
+        public float temperaturePushAmount = 5f;
+        public float temperatureRadius = 10f;
+        public override int MinTicksBetweenEffects => 250;
+        public override Color ModifierColor => new Color(0.2f, 0.6f, 0.8f, 0.4f);
 
         public MapModifier_Temperature(Map map) : base(map) { }
 
@@ -17,7 +17,6 @@ namespace MagicAndMyths
 
         public override void ApplyEffect()
         {
-            // Sample the current average temperature of the map
             float currentAvgTemp = 0f;
             int cellCount = 0;
 

@@ -13,12 +13,11 @@ namespace MagicAndMyths
                 map.terrainGrid.SetUnderTerrain(item, TerrainDefOf.MetalTile);
             }
 
-            if (MagicAndMythDefOf.MagicAndMythsReturnRune != null)
+            if (MagicAndMythDefOf.MagicAndMyths_ReturnPortal != null)
             {
-                Building_ReturnPortal returnPortal = (Building_ReturnPortal)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMythsReturnRune);
+                Building_ReturnPortal returnPortal = (Building_ReturnPortal)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_ReturnPortal);
                 GenSpawn.Spawn(returnPortal, Room.roomCellRect.RandomCell, map);
             }
         }
     }
-
 }

@@ -205,7 +205,7 @@ namespace MagicAndMyths
 
             if (portalEffect == null)
             {
-               // portalEffect = PortalDefOf.Portal_Effect.SpawnMaintained(this, this.Map, 4f);
+                // portalEffect = PortalDefOf.Portal_Effect.SpawnMaintained(this, this.Map, 4f);
             }
 
 

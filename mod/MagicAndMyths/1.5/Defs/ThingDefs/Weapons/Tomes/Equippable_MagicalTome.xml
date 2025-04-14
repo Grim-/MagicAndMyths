@@ -6,7 +6,7 @@
     <description>MagicalTomeFireball</description>
     <thingClass>Apparel</thingClass>
     <graphicData>
-      <texPath>MagicTome_Purple</texPath>
+      <texPath>Tomes/TomeOfTheInferno</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <tickerType>Normal</tickerType>
@@ -58,11 +58,12 @@
         <li>Belt</li>
       </layers>
       <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+      <wornGraphicPath>Tomes/TomeOfTheInferno</wornGraphicPath>
     </apparel>
     <comps>
       <li Class="MagicAndMyths.CompProperties_MagicalTome">
         <abilityDefs>
-          <li>Thor_Fly</li>
+          <li>MagicAndMyths_Fly</li>
         </abilityDefs>
       </li>
     </comps>

@@ -48,9 +48,6 @@
       </tags>
     </apparel>
     <colorGenerator Class="ColorGenerator_StandardApparel" />
-    <recipeMaker>
-      <displayPriority>235</displayPriority>
-    </recipeMaker>
     <comps>
       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
         <abilityDef>MagicAndMyths_Fly</abilityDef>

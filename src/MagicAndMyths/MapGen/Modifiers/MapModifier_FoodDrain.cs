@@ -19,7 +19,7 @@ namespace MagicAndMyths
 
         public override void ApplyEffect()
         {
-            List<Thing> foodItems = map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSource);
+            List<Thing> foodItems = map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver);
             foreach (Thing food in foodItems)
             {
                 CompRottable rottable = food.TryGetComp<CompRottable>();

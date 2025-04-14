@@ -9,11 +9,6 @@ namespace MagicAndMyths
     public class WorldComp_SiteManager : WorldComponent
     {
         private List<StoredSiteData> storedSites = new List<StoredSiteData>();
-        // Separate list for component portal data
-        private List<ComponentPortalData> componentPortals = new List<ComponentPortalData>();
-
-
-
         public static Map StartingColonyMap => Find.Maps.First(x => x.IsPlayerHome);
 
 
@@ -55,7 +50,6 @@ namespace MagicAndMyths
 
                         Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tileId, Find.World.info.initialMapSize, null);
 
-                        storedData.mapParent.AddModifier(new MapModifier_RandomFires(map));
                         return map;
                     }
                     else if (storedData.mapParent?.HasMap == true)
@@ -63,36 +57,6 @@ namespace MagicAndMyths
                         Log.Message($"Found stored active map for tile {tileId}");
                         return storedData.mapParent.Map;
                     }
-                }
-            }
-
-            // Check for component portal with this ID
-            var componentPortal = componentPortals.FirstOrDefault(p => p.uniqueId == tileId);
-            if (componentPortal != null)
-            {
-                if (componentPortal.mapParent != null && !componentPortal.mapParent.HasMap)
-                {
-                    Log.Message($"Generating stored component portal map for ID {tileId}");
-
-                    if (!Find.WorldObjects.Contains(componentPortal.mapParent))
-                    {
-                        Find.WorldObjects.Add(componentPortal.mapParent);
-                    }
-
-                    Map map = MapGenerator.GenerateMap(
-                        Find.World.info.initialMapSize,
-                        componentPortal.mapParent,
-                        componentPortal.mapGeneratorDef,
-                        null,
-                        null,
-                        true);
-
-                    return map;
-                }
-                else if (componentPortal.mapParent?.HasMap == true)
-                {
-                    Log.Message($"Found stored active component portal map for ID {tileId}");
-                    return componentPortal.mapParent.Map;
                 }
             }
 
@@ -146,63 +110,6 @@ namespace MagicAndMyths
             return null;
         }
 
-        // Method for component-based portals
-        public Map GetOrCreateComponentPortalMap(int uniqueId, MapGeneratorDef mapGeneratorDef, IntVec3 mapSize, int sourceTile, WorldObjectDef worldObjectDef = null)
-        {
-            // Check if portal already exists
-            var existingPortal = componentPortals.FirstOrDefault(p => p.uniqueId == uniqueId);
-            if (existingPortal != null)
-            {
-                if (existingPortal.mapParent?.HasMap == true)
-                {
-                    return existingPortal.mapParent.Map;
-                }
-                else if (existingPortal.mapParent != null)
-                {
-                    if (!Find.WorldObjects.Contains(existingPortal.mapParent))
-                    {
-                        Find.WorldObjects.Add(existingPortal.mapParent);
-                    }
-
-                    Map map = MapGenerator.GenerateMap(
-                        mapSize,
-                        existingPortal.mapParent,
-                        existingPortal.mapGeneratorDef ?? mapGeneratorDef,
-                        null,
-                        null,
-                        true);
-
-                    return map;
-                }
-            }
-
-            // Create new portal map
-            DungeonMapParent mapParent = (DungeonMapParent)WorldObjectMaker.MakeWorldObject(worldObjectDef != null ? worldObjectDef : MagicAndMythDefOf.DungeonMapParent);
-
-            // Use source tile to avoid cluttering world map
-            mapParent.Tile = sourceTile;
-            Find.WorldObjects.Add(mapParent);
-
-
-
-            Log.Message($"Generating map with MapGenDef {mapGeneratorDef.defName}");
-
-            Map customMap = MapGenerator.GenerateMap(
-                mapSize,
-                mapParent,
-                mapGeneratorDef,
-                null,
-                null,
-                true
-            );
-
-            // Store the component portal data
-            ComponentPortalData portalData = new ComponentPortalData(uniqueId, mapGeneratorDef, mapParent);
-            componentPortals.Add(portalData);
-
-            return customMap;
-        }
-
         public void RemoveStoredDataForTileID(int tileId)
         {
             var storedData = storedSites.FirstOrDefault(s => s.tileId == tileId);
@@ -224,66 +131,22 @@ namespace MagicAndMyths
             }
         }
 
-        public void RemoveComponentPortalData(int uniqueId)
-        {
-            var portalData = componentPortals.FirstOrDefault(p => p.uniqueId == uniqueId);
-            if (portalData != null)
-            {
-                if (portalData.mapParent != null && Find.WorldObjects.Contains(portalData.mapParent))
-                {
-                    if (portalData.mapParent.HasMap)
-                    {
-                        EjectColonistAndItemsFromMap(portalData.mapParent.Map);
-
-
-                        Current.Game.DeinitAndRemoveMap(portalData.mapParent.Map, true);
-                    }
-                    Find.WorldObjects.Remove(portalData.mapParent);
-                }
-
-                componentPortals.Remove(portalData);
-            }
-        }
-
-
-        public void EjectColonistAndItemsFromMap(Map map)
-        {
-            Log.Message("Returning all pawns to a player map");
-            foreach (var item in map.mapPawns.AllPawns.ToList())
-            {
-                if (item.Faction == RimWorld.Faction.OfPlayer)
-                {
-                    item.TransferToMap(WorldComp_SiteManager.StartingColonyMap.Center, WorldComp_SiteManager.StartingColonyMap);
-                }
-            }
-        }
 
         public bool HasStoredDataForTileID(int tileId)
         {
             return storedSites.Any(s => s.tileId == tileId);
         }
 
-        public bool HasComponentPortalData(int uniqueId)
-        {
-            return componentPortals.Any(p => p.uniqueId == uniqueId);
-        }
-
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Collections.Look(ref storedSites, "storedSites", LookMode.Deep);
-            Scribe_Collections.Look(ref componentPortals, "componentPortals", LookMode.Deep);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 if (storedSites == null)
                 {
                     storedSites = new List<StoredSiteData>();
-                }
-
-                if (componentPortals == null)
-                {
-                    componentPortals = new List<ComponentPortalData>();
                 }
 
                 foreach (var storedData in storedSites)

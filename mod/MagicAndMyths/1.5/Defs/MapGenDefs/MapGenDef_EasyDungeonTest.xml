@@ -7,7 +7,6 @@
       <li>Terrain</li>
       <li>Plants</li>
       <li>DungeonGen</li>
-      <li>Fog</li>
     </genSteps>
     <pocketMapProperties>
         <biome>HiddenForest</biome>

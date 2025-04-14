@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace MagicAndMyths
 {
@@ -19,6 +20,63 @@ namespace MagicAndMyths
             var harmony = new Harmony("com.emo.magicandmyths");
             harmony.PatchAll();
         }
+
+
+        [HarmonyPatch(typeof(Pawn_PathFollower), "SetupMoveIntoNextCell")]
+        public static class Patch_Pawn_PathFollower_SetupMoveIntoNextCell
+        {
+            public static void Postfix(Pawn_PathFollower __instance, ref IntVec3 ___nextCell, Pawn ___pawn)
+            {
+                if (___pawn != null)
+                {
+                    EventManager.PawnArrivedAtPathDestination(___pawn, ___nextCell);
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
+        [HarmonyPatch("HandleGroupFrameClicks")]
+        public static class Patch_ColonistBarColonistDrawer_HandleGroupFrameClicks
+        {
+            [HarmonyPrefix]
+            public static bool Prefix(ColonistBarColonistDrawer __instance, int group)
+            {
+                Rect rect = __instance.GroupFrameRect(group);
+
+                if (Event.current.type == EventType.MouseDown && Event.current.button == 1 && Mouse.IsOver(rect))
+                {
+                    Event.current.Use();
+
+                    ColonistBar.Entry entry = Find.ColonistBar.Entries.Find(x => x.group == group);
+                    Map map = entry.map;
+
+                    if (map != null)
+                    {
+                        ExtendedMapParent dungeonParent = map.Parent as ExtendedMapParent;
+                        if (dungeonParent != null)
+                        {
+                            HandleDungeonMapRightClick(dungeonParent, map);
+                            return false;
+                        }
+                    }
+                }
+
+                return true; 
+            }
+
+            private static void HandleDungeonMapRightClick(ExtendedMapParent dungeonParent, Map map)
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+
+                options.AddRange(dungeonParent.GetFloatMenuOptions());
+
+                if (options.Count > 0)
+                {
+                    Find.WindowStack.Add(new FloatMenu(options));
+                }
+            }
+        }
+
 
         //[HarmonyPatch(typeof(ShaderDatabase))]
         //[HarmonyPatch("LoadShader")]

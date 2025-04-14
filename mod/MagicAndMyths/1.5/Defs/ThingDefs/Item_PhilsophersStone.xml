@@ -5,7 +5,7 @@
     <label>philsophers stone</label>
     <description>A dust used to help raise the dead without a corpse present.</description>
     <graphicData>
-      <texPath>Redstone</texPath>
+      <texPath>PhilosophersStone</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>

@@ -39,7 +39,6 @@
       <inheritable>true</inheritable>
       <genes>
           <li>AsgardianGene</li>
-          <li>Immunity_Superior</li>
       </genes>
   </XenotypeDef>
 </Defs>

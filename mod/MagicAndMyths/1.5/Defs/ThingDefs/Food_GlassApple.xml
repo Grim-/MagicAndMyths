@@ -5,8 +5,8 @@
     <label>glass apple</label>
     <description>A translucent apple that bends the light through it, not only the skin but the entire fruit is glass like in appearance despite being edible..</description>
     <graphicData>
-      <texPath>Things/Item/Meal/SurvivalPack</texPath>
-      <graphicClass>Graphic_MealVariants</graphicClass>
+      <texPath>Resources/Apple</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
       <DeteriorationRate>0.25</DeteriorationRate>

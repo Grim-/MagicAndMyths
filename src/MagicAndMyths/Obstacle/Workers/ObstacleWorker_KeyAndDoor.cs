@@ -89,7 +89,7 @@ namespace MagicAndMyths
             }
 
             // 6. Place the key
-            Key keyThing = (Key)GenSpawn.Spawn(MagicAndMythDefOf.DungeonTestKey, keyPos, map);
+            Thing_Key keyThing = (Thing_Key)GenSpawn.Spawn(MagicAndMythDefOf.DungeonTestKey, keyPos, map);
             door.SetKeyReference(keyThing, KeyColorChoices.RandomElement());
             Log.Message($"ObstacleWorker_KeyAndDoor: Placed key ({Def.keyDef.defName}) at {keyPos} in {keyRoom.roomCellRect.CenterCell}.");
 

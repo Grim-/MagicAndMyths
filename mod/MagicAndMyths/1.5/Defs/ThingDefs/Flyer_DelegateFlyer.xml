@@ -10,14 +10,13 @@
       <altitudeLayer>Skyfaller</altitudeLayer>
       <drawerType>RealtimeOnly</drawerType>
       <pawnFlyer>
-        <flightDurationMin>0.5</flightDurationMin>
+        <flightDurationMin>0</flightDurationMin>
         <flightSpeed>12</flightSpeed>
         <workerClass>PawnFlyerWorker</workerClass>
         <heightFactor>1</heightFactor>
         <progressCurve>
           <points>
             <li>(0, 0)</li>
-            <li>(0.1, 0.15)</li> <!-- Complete 15% of the journey in first 10% of time -->
             <li>(1, 1)</li>
           </points>
         </progressCurve>

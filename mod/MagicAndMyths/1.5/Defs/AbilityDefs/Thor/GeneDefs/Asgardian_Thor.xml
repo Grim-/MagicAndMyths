@@ -4,6 +4,9 @@
     <defName>Gene_AsgardianThor</defName>
     <label>Asgardian (Thor)</label>
     <description>Carriers of this gene should they be worthy shall have the power of MagicAndMyths.</description>
+    <customEffectDescriptions>
+      <li>Carriers of this gene should they be worthy shall have the power of MagicAndMyths.</li>
+    </customEffectDescriptions>
     <resourceGizmoThresholds>
       <li>0.25</li>
       <li>0.5</li>
@@ -15,16 +18,6 @@
     <selectionWeight>0.2</selectionWeight>
     <displayCategory>Hemogen</displayCategory>
     <displayOrderInCategory>-2</displayOrderInCategory>
-    <customEffectDescriptions>
-      <li>Carriers of this gene should they be worthy shall have the power of MagicAndMyths.</li>
-    </customEffectDescriptions>
-    <symbolPack>
-      <prefixSymbols>
-        <li>
-          <symbol>cursed energy</symbol>
-        </li>
-      </prefixSymbols>
-    </symbolPack>
     <minAgeActive>3</minAgeActive>
     <resourceLossPerDay>0</resourceLossPerDay>
     <biostatCpx>1</biostatCpx>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="ArtifactBase">
-    <defName>Artifact_BloodStainedManacles</defName>
-    <label>blood-stained manacles</label>
+    <defName>Artifact_BloodStainedShackle</defName>
+    <label>blood-stained shackle</label>
     <description>An aritfact wrought of vile magic, when placed on a victim, the victim suffers 100 years of torment, breaking their will, they will immediately convert to the colonys main ideology, if one exists, their will will also be broken completely.</description>
     <graphicData>
-      <texPath>Things/Item/Artifact/PsychicSoothePulser</texPath>
+      <texPath>Shackle</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
@@ -18,20 +18,27 @@
     </statBases>
     <drawGUIOverlay>false</drawGUIOverlay>
     <relicChance>3</relicChance>
-    <comps>
+    <comps Inherit="false">
+      <li Class="CompProperties_Usable">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Activate {0_label}</useLabel>
+        <showUseGizmo>false</showUseGizmo>
+        <useDuration>132</useDuration>
+      </li>
       <li Class="CompProperties_Targetable">
         <compClass>CompTargetable_SinglePawn</compClass>
-        <psychicSensitiveTargetsOnly>false</psychicSensitiveTargetsOnly>
-        <doCameraShake>true</doCameraShake>
-        <fleckOnTarget>PsycastPsychicEffect</fleckOnTarget>
+        <doCameraShake>false</doCameraShake>
         <fleckOnUsed>PsycastAreaEffect</fleckOnUsed>
-        <fleckOnUsedScale>10</fleckOnUsedScale>
+        <fleckOnUsedScale>1</fleckOnUsedScale>
       </li>
-      <li Class="CompProperties_UseEffectArtifact">
-        <sound>PsychicSoothePulserCast</sound>
+      <li Class="MagicAndMyths.CompProperties_TargetEffectAddHediff">
+        <hediff>MagicAndMyths_TorturedSoul</hediff>
       </li>
       <li Class="CompProperties_UseEffectPlayWarmupSound">
         <warmupSound>PsychicSoothePulserWarmupSustained</warmupSound>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_UseEffectDestroyAfterCount">
+        <maxUses>1</maxUses>
       </li>
     </comps>
   </ThingDef>

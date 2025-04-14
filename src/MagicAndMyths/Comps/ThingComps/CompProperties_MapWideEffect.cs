@@ -38,4 +38,5 @@ namespace MagicAndMyths
             Scribe_Values.Look(ref tickCounter, "tickCounter", 0);
         }
     }
+
 }

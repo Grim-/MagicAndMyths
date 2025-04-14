@@ -2,7 +2,7 @@
 <Defs>
   <HediffDef>
     <defName>MagicAndMyths_TorturedSoul</defName>
-    <label>invisibility</label>
+    <label>Tortured Soul</label>
     <description>This pawn is suffering under the effects of the Blood soaked manacles, their will is being broken.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
@@ -12,6 +12,10 @@
     <duplicationAllowed>false</duplicationAllowed>
     <comps>
       <li Class="MagicAndMyths.HediffCompProperties_TorturedSoul">
+      </li>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>6000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
       </li>
     </comps>
   </HediffDef>

@@ -6,9 +6,9 @@
      <description>A simple ring that can be worn on a finger.</description>
      <techLevel>Medieval</techLevel>
      <graphicData>
-       <texPath>MagicRing_Gold</texPath>
+       <texPath>Jewelry/Goldring</texPath>
        <graphicClass>Graphic_Single</graphicClass>
-       <drawSize>0.85</drawSize>
+       <drawSize>0.45</drawSize>
      </graphicData>
      <statBases>
        <MaxHitPoints>100</MaxHitPoints>

@@ -5,7 +5,7 @@
     <label>Gap stone</label>
     <description>Gap stones can be crushed to return you home, this destroys the stone.</description>
     <graphicData>
-      <texPath>Redstone</texPath>
+      <texPath>Runestones/Gapstone</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
@@ -38,5 +38,10 @@
         <li>Belt</li>
       </layers>
     </apparel>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+        <abilityDef>MagicAndMyths_ReturnHome</abilityDef>
+      </li>
+    </comps>
   </ThingDef>
 </Defs>

@@ -14,16 +14,18 @@ namespace MagicAndMyths
         {
             get => dungeon;
         }
-        private GenStepDef_BspDungeon def;
-
-
+        private DungeonGenDef parentGenStep;
         private Map map;
 
-        public DungeonGenerator(Map map, GenStepDef_BspDungeon def)
+        public DungeonGenerator(Map map, DungeonGenDef def)
         {
-            this.dungeon = new Dungeon(map);
-            this.def = def;
+            this.parentGenStep = def;
             this.map = map;
+            this.dungeon = new Dungeon(map);
+            if (map.Parent is DungeonMapParent dungeonMapParent)
+            {
+                dungeonMapParent.SetDungeon(this.dungeon);
+            }
         }
 
         public void Generate()
@@ -34,7 +36,7 @@ namespace MagicAndMyths
             // Phase 2: Generate BSP structure
             GenerateBspStructure();
 
-            ProcessPlannedRooms(def.availableRoomTypes);
+            ProcessPlannedRooms(parentGenStep.availableRoomTypes);
 
             // Phase 3: Create rooms from BSP nodes
             CreateRoomsFromBspNodes();
@@ -51,9 +53,9 @@ namespace MagicAndMyths
             Log.Message("Creating room connections..");
             List<RoomConnection> connections = GenerateRoomConnections(map);
             EnsureAllRoomsConnected();
-
             Log.Message("Designating critical path"); 
             DesignateCriticalPath();
+            Log.Message("Processing side paths...");
             ProcessSidePaths();
 
 
@@ -63,10 +65,10 @@ namespace MagicAndMyths
             ApplyRoomsToGrid();
             ClearWalls();
 
-            if (def.postGenAutomata != null)
+            if (parentGenStep.postGenAutomata != null)
             {
                 Log.Message("Applying Post-Generation Cellular Automata");
-                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon, def.postGenAutomata);
+                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon, parentGenStep.postGenAutomata);
             }
 
 
@@ -80,16 +82,17 @@ namespace MagicAndMyths
                 }
             }
 
-            Log.Message("Generating Obstacles");
+            //Log.Message("Generating Obstacles");
             ObstacleGenerator.GenerateObstacles(dungeon.Map, dungeon);
 
             dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_FoodDrain(dungeon.Map));
-            dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_Temperature(dungeon.Map));        
+            dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_Temperature(dungeon.Map));
+            dungeon.Map.GetComponent<MapComp_ModifierManager>().AddModifier(new MapModifier_UnstableRealm(dungeon.Map));
         }
 
         private void FillMapWithWalls()
         {
-            Log.Message("Filling map with walls...");
+            //Log.Message("Filling map with walls...");
 
             foreach (IntVec3 cell in dungeon.Map.AllCells)
             {
@@ -100,7 +103,7 @@ namespace MagicAndMyths
 
         private void GenerateBspStructure()
         {
-            Log.Message("Generating BSP tree structure with side paths");
+            //Log.Message("Generating BSP tree structure with side paths");
             CellRect mapArea = new CellRect(2, 2, dungeon.Map.Size.x - 4, dungeon.Map.Size.z - 4);
 
             //BspNode rootNode = BspUtility.GenerateBspTreeWithSideRooms(
@@ -115,17 +118,16 @@ namespace MagicAndMyths
 
             BspNode rootNode = BspUtility.GenerateBspTreeWithRoomCount(
                 mapArea,
-                minRooms : def.roomAmount.min,
-                maxRooms : def.roomAmount.max,
-                minRoomSize: def.minRoomSize,
+                minRooms : parentGenStep.roomAmount.min,
+                maxRooms : parentGenStep.roomAmount.max,
+                minRoomSize: parentGenStep.minRoomSize,
                 maxSplitAttempts: 200,
-                aspectRatioThreshold: def.aspectRatioThreshold,
-                edgeMarginDivisor: def.edgeMarginDivisor);
+                aspectRatioThreshold: parentGenStep.aspectRatioThreshold,
+                edgeMarginDivisor: parentGenStep.edgeMarginDivisor);
 
             List<BspNode> leafNodes = new List<BspNode>();
             BspUtility.GetLeafNodes(rootNode, leafNodes);
 
-            // Track side path nodes separately
             foreach (var node in leafNodes)
             {
                 if (node.HasTag("side_path"))
@@ -137,12 +139,12 @@ namespace MagicAndMyths
             dungeon.SetBspStructure(rootNode, leafNodes);
 
             BspUtility.GenerateRoomGeometry(dungeon.LeafNodes,
-                minPadding: def.minRoomPadding,
-                roomSizeFactor: def.roomSizeFactor);
+                minPadding: parentGenStep.minRoomPadding,
+                roomSizeFactor: parentGenStep.roomSizeFactor);
         }
         private void ProcessSidePaths()
         {
-            Log.Message("Processing side paths...");
+
 
             var criticalPathRooms = dungeon.GetAllRooms()
                 .Where(r => r.IsOnCriticalPath)
@@ -164,9 +166,9 @@ namespace MagicAndMyths
 
             ConnectSidePathsToMainPath(criticalPathRooms, sidePathRooms);
 
-            if (def.allowHiddenSidePaths && def.hiddenSidePathChance > 0)
+            if (parentGenStep.allowHiddenSidePaths && parentGenStep.hiddenSidePathChance > 0)
             {
-                HideRandomSidePaths(sidePathRooms, def.hiddenSidePathChance);
+                HideRandomSidePaths(sidePathRooms, parentGenStep.hiddenSidePathChance);
             }
         }
 
@@ -185,7 +187,6 @@ namespace MagicAndMyths
 
                 foreach (var mainRoom in orderedMainRooms)
                 {
-                    // Connect the rooms
                     Dungeon.ConnectRooms(sideRoom, mainRoom);
                     sideRoom.AddConnectionTo(map, mainRoom);
                     mainRoom.AddConnectionTo(map, sideRoom);
@@ -261,8 +262,8 @@ namespace MagicAndMyths
                         continue;
 
                     // Check if node is large enough with padding)
-                    if (node.rect.Width >= roomType.minSize.x + (def.minRoomPadding * 2) &&
-                        node.rect.Height >= roomType.minSize.z + (def.minRoomPadding * 2))
+                    if (node.rect.Width >= roomType.minSize.x + (parentGenStep.minRoomPadding * 2) &&
+                        node.rect.Height >= roomType.minSize.z + (parentGenStep.minRoomPadding * 2))
                     {
                         bestNode = node;
                         break;
@@ -272,7 +273,7 @@ namespace MagicAndMyths
                 if (bestNode != null)
                 {
                     bestNode.roomRect = bestNode.GenerateRoomGeometryWithSize(
-                        roomType.minSize.x, roomType.minSize.z, def.minRoomPadding);
+                        roomType.minSize.x, roomType.minSize.z, parentGenStep.minRoomPadding);
 
                     DungeonRoom room = DungeonRoom.FromBspNode(dungeon, bestNode);
                     room.def = roomType;
@@ -299,7 +300,7 @@ namespace MagicAndMyths
 
         private void CreateRoomsFromBspNodes()
         {
-            Log.Message("Creating dungeon rooms from BSP nodes");
+           // Log.Message("Creating dungeon rooms from BSP nodes");
 
             foreach (var node in dungeon.LeafNodes)
             {
@@ -313,11 +314,11 @@ namespace MagicAndMyths
 
         private void ApplyEarlyAutomata()
         {
-            Log.Message("Applying Early Cellular Automata");
+            //Log.Message("Applying Early Cellular Automata");
 
-            if (def.earlyAutomata != null)
+            if (parentGenStep.earlyAutomata != null)
             {
-                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon, def.earlyAutomata);
+                CellularAutomataManager.ApplyRules(dungeon.Map, dungeon, parentGenStep.earlyAutomata);
             }
         }
 
@@ -339,7 +340,7 @@ namespace MagicAndMyths
                 }
 
                 // Assign a random normal room type
-                RoomTypeDef normalDef = def.availableRoomTypes
+                RoomTypeDef normalDef = parentGenStep.availableRoomTypes
                     .Where(x => x.roomType == RoomType.Normal)
                     .RandomElement();
                 room.def = normalDef;
@@ -348,7 +349,7 @@ namespace MagicAndMyths
 
         private void DesignateCriticalPath()
         {
-            Log.Message("Designating Critical Path Using Graph Distance");
+           // Log.Message("Designating Critical Path Using Graph Distance");
 
             //Pick a random room
             DungeonRoom firstRoom = dungeon.GetAllRooms().RandomElement();
@@ -392,7 +393,7 @@ namespace MagicAndMyths
 
         private void CreateMinimumSpanningTree()
         {
-            Log.Message("Generating Minimum Spanning Tree");
+            //Log.Message("Generating Minimum Spanning Tree");
 
             // Convert BSP node connections to dungeon room connections
             MspUtility.CreateMinimumSpanningTree(dungeon.LeafNodes);
@@ -415,7 +416,7 @@ namespace MagicAndMyths
 
         private List<RoomConnection> GenerateRoomConnections(Map map)
         {
-            Log.Message("Generating connections based on rules");
+            //Log.Message("Generating connections based on rules");
             List<DungeonRoom> allRooms = dungeon.GetAllRooms().ToList();
 
             List<RoomConnection> connections = new List<RoomConnection>();
@@ -443,12 +444,11 @@ namespace MagicAndMyths
                 }
             }
 
-            if (def.addRandomCorridoors)
+            if (parentGenStep.addRandomCorridoors)
             {
-                // Add some random connections between non critical path nodes
                 List<DungeonRoom> nonCriticalRooms = dungeon.GetAllRooms().Where(x => !x.IsOnCriticalPath).ToList();
 
-                for (int i = 0; i < def.randomCorridoorAmount.RandomInRange; i++)
+                for (int i = 0; i < parentGenStep.randomCorridoorAmount.RandomInRange; i++)
                 {
                     if (nonCriticalRooms.Count < 2)
                         break;
@@ -477,12 +477,10 @@ namespace MagicAndMyths
 
         private void EnsureAllRoomsConnected()
         {
-            // Check for any disconnected rooms
             foreach (var room in dungeon.GetAllRooms())
             {
                 if (room.connectedRooms == null || room.connectedRooms.Count == 0)
                 {
-                    // Connect to a random room
                     var otherRoom = dungeon.GetAllRooms().Where(r => r != room).RandomElement();
                     room.connectedRooms = new List<DungeonRoom> { otherRoom };
                     otherRoom.connectedRooms.Add(room);
@@ -492,7 +490,7 @@ namespace MagicAndMyths
 
         private void ApplyConnectionsToGrid(List<RoomConnection> connections)
         {
-            Log.Message("Applying connections to dungeon grid");
+           // Log.Message("Applying connections to dungeon grid");
 
             foreach (var connection in connections)
             {
@@ -507,7 +505,7 @@ namespace MagicAndMyths
         }
         private void ApplyRoomsToGrid()
         {
-            Log.Message("Applying room shapes to dungeon grid");
+           // Log.Message("Applying room shapes to dungeon grid");
 
             foreach (var room in dungeon.GetAllRooms())
             {

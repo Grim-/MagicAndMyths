@@ -13,9 +13,9 @@ namespace MagicAndMyths
                 map.terrainGrid.SetUnderTerrain(item, TerrainDefOf.FlagstoneSandstone);
             }
 
-            if (MagicAndMythDefOf.MagicAndMythsReturnRune != null)
+            if (MagicAndMythDefOf.MagicAndMyths_ReturnPortal != null)
             {
-                Building_ReturnPortal returnPortal = (Building_ReturnPortal)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMythsReturnRune);
+                Building_ReturnPortal returnPortal = (Building_ReturnPortal)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_ReturnPortal);
                 GenSpawn.Spawn(returnPortal, Room.roomCellRect.CenterCell, map);
             }
         }

@@ -5,7 +5,7 @@
       <label>Painting :The Dark Cave</label>
       <description>A life-like painting of a dark scene with the something looking out..</description>
       <graphicData>
-        <texPath>Scrolls/FancyScroll</texPath>
+        <texPath>PaintingDarkCave</texPath>
         <graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <statBases>
@@ -17,11 +17,9 @@
         <Flammability>1.0</Flammability>
       </statBases>
       <comps>
-       <li Class="MagicAndMyths.CompProperties_PortalGenerator">
+       <li Class="MagicAndMyths.CompProperties_Portal">
          <mapGeneratorDef>MapGenEasyDungeon</mapGeneratorDef>
-         <mapSize>(150, 1, 150)</mapSize>
-         <cooldownTicks>600</cooldownTicks>
-         <displayString>Touch Painting</displayString>
+         <mapSize>(100, 1, 100)</mapSize>
        </li>
      </comps>
     </ThingDef>

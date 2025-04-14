@@ -6,7 +6,7 @@
     <description>A pair of decorative bracers worn on the forearms.</description>
     <techLevel>Medieval</techLevel>
     <graphicData>
-      <texPath>Things/Apparel/Bracers/Bracers</texPath>
+      <texPath>Jewelry/RunedBracer</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>

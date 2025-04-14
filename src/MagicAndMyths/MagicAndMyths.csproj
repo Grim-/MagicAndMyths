@@ -2,14 +2,17 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony">
-      <Version>2.3.5</Version>
+    <PackageReference Include="Lib.Harmony" Version="2.3.5">
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
-    <Publicize Include="Assembly-CSharp" MemberPattern="^Verse\.ShaderDatabase\.lookup$" />
-    <Publicize Include="Assembly-CSharp" MemberPattern="^Verse\.ZoneManager\.AddZoneGridCell$" />
     <PackageReference Include="Krafs.Publicizer" Version="2.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Publicize Include="Assembly-CSharp:RimWorld.ColonistBarColonistDrawer.GroupFrameRect" />
+    <Publicize Include="Assembly-CSharp:RimWorld.ColonistBarColonistDrawer.ColonistBar" />
+    <Publicize Include="Assembly-CSharp:Verse.ShaderDatabase.lookup" />
+    <Publicize Include="Assembly-CSharp:Verse.ZoneManager.AddZoneGridCell" />
   </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -87,19 +90,37 @@
     <Compile Include="AI\JobDriver_JumpOverObstacle.cs" />
     <Compile Include="AI\JobDriver_UnlockDoor.cs" />
     <Compile Include="AI\SolutionToilMaker.cs" />
-    <Compile Include="Buildings\Building_FakeWall.cs" />
+    <Compile Include="Buildings\Dungeon\Building_DungeonBuildingBase.cs" />
+    <Compile Include="Buildings\Dungeon\Building_FakeWall.cs" />
     <Compile Include="Buildings\Building_LockableDoor.cs" />
-    <Compile Include="Buildings\Key.cs" />
+    <Compile Include="Buildings\Thing_Key.cs" />
     <Compile Include="Comps\Ability\CompProperties_EquippableAbility.cs" />
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
+    <Compile Include="Comps\Ability\CompProperties_TeleportPawnToHomeMap.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
+    <Compile Include="Comps\ExtendedMapParent.cs" />
+    <Compile Include="Buildings\Building_Portal.cs" />
     <Compile Include="Comps\ThingComps\CausticsOverlay.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_PortalGenerator.cs" />
+    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_TargetablePosition.cs" />
+    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectChangeWeather.cs" />
+    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectCooldown.cs" />
+    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectDestroyAfterCount.cs" />
+    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectVFX.cs" />
+    <Compile Include="Comps\ThingComps\Trap\CompProperties_ApplyHediff.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_MapWideApplyHediff.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_MapWideEffect.cs" />
+    <Compile Include="Comps\ThingComps\Trap\CompProperties_TrapBase.cs" />
+    <Compile Include="Comps\ThingComps\Trap\Sensors\CompProperties_ProximitySensor.cs" />
+    <Compile Include="Comps\ThingComps\Trap\Sensors\CompProperties_SensorBase.cs" />
+    <Compile Include="Comps\ThingComps\Trap\Sensors\CompProperties_WeightSensor.cs" />
+    <Compile Include="Comps\ThingComps\Trap\Sensors\CompProperties_TriggerBase.cs" />
     <Compile Include="Comps\ThingComps\GameCondition_UnderWaterCondition.cs" />
+    <Compile Include="Comps\World\WorldComp_DungeonManager.cs" />
     <Compile Include="Comps\World\WorldComp_HeavenTracker.cs" />
     <Compile Include="Graphic\GraphicDataWithShader.cs" />
     <Compile Include="Graphic\Graphic_MultiWithShader.cs" />
+    <Compile Include="Graphic\Graphic_SingleWithShader.cs" />
     <Compile Include="Hediff\HediffCompProperties_TorturedSoul.cs" />
     <Compile Include="Interfaces\IObstacle.cs" />
     <Compile Include="MapGen\BSP\Dungeon.cs" />
@@ -108,8 +129,6 @@
     <Compile Include="Buildings\BuildPlacement.cs" />
     <Compile Include="Comps\Comp_Grower.cs" />
     <Compile Include="Comps\CompProperties_DirectGrower.cs" />
-    <Compile Include="Comps\GrowableComp_Degen.cs" />
-    <Compile Include="Comps\GrowableComp_Regen.cs" />
     <Compile Include="Buildings\Tree_Weirwood.cs" />
     <Compile Include="Growable Structures\BuildingPartType.cs" />
     <Compile Include="Buildings\Building_PhilosophersCircle.cs" />
@@ -119,7 +138,12 @@
     <Compile Include="Growable Structures\PlaceWorker_GrowableStructure.cs" />
     <Compile Include="Growable Structures\StructureLayoutDef.cs" />
     <Compile Include="Growable Structures\StructurePreviewUtility.cs" />
-    <Compile Include="Comps\Ability\DelegateFlyer.cs" />
+    <Compile Include="MapGen\BSP\DungeonGenDef.cs" />
+    <Compile Include="MapGen\BSP\RoomType\TreasureRoom_MiningChunk.cs" />
+    <Compile Include="MapGen\GenSteps\GenStepDef_BspDungeon.cs" />
+    <Compile Include="MapGen\Modifiers\MapModifier_NeedDrain.cs" />
+    <Compile Include="MapGen\Modifiers\MapModifier_UnstableRealm.cs" />
+    <Compile Include="Util\DelegateFlyer.cs" />
     <Compile Include="Designators\Designator_ZoneExpand_AreaCapture.cs" />
     <Compile Include="Growable Structures\Dialog_StructureEditor.cs" />
     <Compile Include="Growable Structures\StructureBuilder.cs" />
@@ -129,7 +153,7 @@
     <Compile Include="Comps\ThingComps\CompProperties_Energy.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_EnergyRecharge.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_PortalEquipmentComp.cs" />
-    <Compile Include="Comps\ThingComps\CompProperties_PortalGenerator.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_Portal.cs" />
     <Compile Include="Comps\ThingComps\Comp_PowerGridRecharge.cs" />
     <Compile Include="Comps\ThingComps\Comp_SolarRecharge.cs" />
     <Compile Include="MapGen\BSP\BspUtility.cs" />
@@ -160,7 +184,7 @@
     <Compile Include="MapGen\GenSteps\GenStep_PopulateHeaven.cs" />
     <Compile Include="MapGen\Modifiers\MapModifier_Aging.cs" />
     <Compile Include="MapGen\Modifiers\MapModifier_Temperature.cs" />
-    <Compile Include="Buildings\Building_ObstacleBase.cs" />
+    <Compile Include="Buildings\Dungeon\Building_ObstacleBase.cs" />
     <Compile Include="Obstacle\Pitfall\Building_PitfallTile.cs" />
     <Compile Include="Obstacle\Pitfall\PitfallSolutionWorker.cs" />
     <Compile Include="Obstacle\ObstacleComps\SolutionWorker.cs" />
@@ -181,12 +205,11 @@
     <Compile Include="Trap\CompTrap.cs" />
     <Compile Include="Obstacle\ObstacleGenerator.cs" />
     <Compile Include="Obstacle\Workers\ObstacleWorker_KeyAndDoor.cs" />
-    <Compile Include="Buildings\Building_HiddenDoor.cs" />
+    <Compile Include="Buildings\Dungeon\Building_HiddenDoor.cs" />
     <Compile Include="MapGen\BSP\To remove\RoomConnectionRule.cs" />
     <Compile Include="MapGen\BSP\To remove\RoomConnectionRuleManager.cs" />
     <Compile Include="MapGen\BSP\RoomType\EndRoom.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_BspDungeon.cs" />
-    <Compile Include="MapGen\GenSteps\GenStep_Dungeon.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_EncloseMapWalls.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_PlaceGoldenTree.cs" />
     <Compile Include="MapGen\CustomGateAddress.cs" />
@@ -247,7 +270,7 @@
     <Compile Include="Extensions\DrawOffsetExt.cs" />
     <Compile Include="Util\EventManager.cs" />
     <Compile Include="Util\EventPatches.cs" />
-    <Compile Include="Graphic\GraphicPhilsophersRune.cs" />
+    <Compile Include="Graphic\Graphic_ColorLerpable.cs" />
     <Compile Include="Transformation\CompProperties_RevertTransform.cs" />
     <Compile Include="Transformation\CompProperties_Transform.cs" />
     <Compile Include="Transformation\Hediff_Transformation.cs" />

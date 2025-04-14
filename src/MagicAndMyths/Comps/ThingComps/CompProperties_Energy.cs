@@ -1,15 +1,12 @@
 ﻿using RimWorld.Planet;
-using RimWorld;
 using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using System.Collections.Generic;
 
 namespace MagicAndMyths
 {
-
-
-
     public class CompProperties_Energy : CompProperties
     {
         public float maxEnergy = 100f;

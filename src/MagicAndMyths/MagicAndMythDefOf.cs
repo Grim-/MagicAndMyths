@@ -9,17 +9,13 @@ namespace MagicAndMyths
         public static ThingDef MagicAndMyths_SimpleFlyer;
         public static ThingDef MagicAndMyths_MjolnirProjectile;
         public static ThingDef MagicAndMyths_DelegateFlyer;
-        public static AbilityDef MagicAndMyths_RevertTransformation;
 
+        public static AbilityDef MagicAndMyths_RevertTransformation;
 
         public static HediffDef TranquilizerEffect;
         public static HediffDef BoundWeapon;
-        //public static JobDef Thor_FormationFollow;
-       // public static JobDef Thor_BoidFormationFollow;
         public static HediffDef DeathKnight_UndeadMaster;
         public static HediffDef DeathKnight_Undead;
-
-
 
         public static HediffDef MagicAndMyths_Transformation;
         public static ThinkTreeDef MagicAndMyths_TransformationTree;
@@ -36,23 +32,15 @@ namespace MagicAndMyths
 
         public static QuestScriptDef Quest_DeathKnightStartingPath;
 
-
-
         public static ThingDef MagicAndMyths_PhilsophersStone;
-
         public static HediffDef MagicAndMyths_Phylactery;
-
-
         public static StructureLayoutDef TurretObstacleStructure;
-
-
-
 
         //portal
         public static WorldObjectDef DungeonMapParent;
-        public static ThingDef Portal_Oneway;
         public static ThingDef Portal_GateLarge;
-        public static EffecterDef Portal_Effect;
+
+        public static ThingDef MagicAndMyths_Portal;
 
         public static JobDef Portals_UsePortalJob;
         public static StatDef Portal_BioEnergyMax;
@@ -62,21 +50,15 @@ namespace MagicAndMyths
         public static ThingDef DungeonTestKey;
         public static ThingDef DungeonHiddenWallDoor;
 
-
         public static JobDef MagicAndMyths_UnlockDoor;
-
         public static MapGeneratorDef MapGenEmpty;
-
-        //public static MapGeneratorDef Portal_EmptyMap;
 
         public static ThingDef Plant_GoldenTree;
         public static ThingDef DungeonWall;
         public static ThingDef EmptyDungeonWall;
-        public static ThingDef MagicAndMythsReturnRune;
-
+        public static ThingDef MagicAndMyths_ReturnPortal;
 
         public static RoomTypeDef StartRoom;
-
         public static RoomTypeDef EndRoom;
     }
 }

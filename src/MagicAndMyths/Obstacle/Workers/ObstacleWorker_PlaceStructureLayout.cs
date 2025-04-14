@@ -9,6 +9,12 @@ namespace MagicAndMyths
             StructureLayoutDef structureLayoutDef = MagicAndMythDefOf.TurretObstacleStructure;
             IntVec3 position = Room.Center;
 
+            //too small to fit
+            if (Room.roomCellRect.Width < structureLayoutDef.MaxBuildSize.x || Room.roomCellRect.Height < structureLayoutDef.MaxBuildSize.z)
+            {
+                return false;
+            }
+
             // Get the CellRect needed for the structure
             CellRect neededRect = structureLayoutDef.GetCellRect(position);
 

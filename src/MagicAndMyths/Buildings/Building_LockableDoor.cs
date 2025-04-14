@@ -10,14 +10,14 @@ namespace MagicAndMyths
     public class Building_LockableDoor : Building_Door
     {
         private bool _IsLocked = false;
-        private Key keyReference = null;
+        private Thing_Key keyReference = null;
 
 
         private Color? pairingColor;
 
         public override Color DrawColor => pairingColor != null ? pairingColor.Value : base.DrawColor;
 
-        public void SetKeyReference(Key keyThing, Color color)
+        public void SetKeyReference(Thing_Key keyThing, Color color)
         {
             keyReference = keyThing;
             pairingColor = color;

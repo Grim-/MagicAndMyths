@@ -166,7 +166,7 @@ namespace MagicAndMyths
 
             if (leafNodes.Count > mainRoomCount)
             {
-                Log.Message($"Classifying rooms: {mainRoomCount} main rooms + up to {sideRoomCount} side rooms");
+                //Log.Message($"Classifying rooms: {mainRoomCount} main rooms + up to {sideRoomCount} side rooms");
                 leafNodes.Shuffle();
 
 
@@ -175,7 +175,7 @@ namespace MagicAndMyths
                 int actualSideRoomCount = Math.Min(sideRoomCount, leafNodes.Count - mainRoomCount);
                 var sidePathNodes = leafNodes.Skip(mainRoomCount).Take(actualSideRoomCount).ToList();
 
-                Log.Message($"Selected {mainPathNodes.Count} main rooms and {sidePathNodes.Count} side rooms");
+                //Log.Message($"Selected {mainPathNodes.Count} main rooms and {sidePathNodes.Count} side rooms");
 
                 foreach (var node in mainPathNodes)
                 {
@@ -191,7 +191,7 @@ namespace MagicAndMyths
                 PruneNonMarkedLeafNodes(rootNode);
                 leafNodes.Clear();
                 GetLeafNodes(rootNode, leafNodes);
-                Log.Message($"After classification: {leafNodes.Count} total rooms kept");
+                //Log.Message($"After classification: {leafNodes.Count} total rooms kept");
             }
             else if (leafNodes.Count < totalRooms)
             {
@@ -213,7 +213,7 @@ namespace MagicAndMyths
                         node.AddTag("side_path");
                     }
 
-                    Log.Message($"Marked {sidePathNodes.Count} excess rooms as side paths");
+                    //Log.Message($"Marked {sidePathNodes.Count} excess rooms as side paths");
                 }
             }
 
@@ -232,7 +232,7 @@ namespace MagicAndMyths
             List<BspNode> leafNodes = new List<BspNode>();
             GetLeafNodes(rootNode, leafNodes);
 
-            Log.Message($"BSP generated {leafNodes.Count} potential rooms, target: {minRooms}-{maxRooms}");
+            //Log.Message($"BSP generated {leafNodes.Count} potential rooms, target: {minRooms}-{maxRooms}");
 
             int attempts = 0;
             while (leafNodes.Count < minRooms && attempts < maxSplitAttempts)
@@ -270,7 +270,7 @@ namespace MagicAndMyths
 
             if (leafNodes.Count > maxRooms)
             {
-                Log.Message($"Too many rooms ({leafNodes.Count}), pruning to {maxRooms}");
+                //Log.Message($"Too many rooms ({leafNodes.Count}), pruning to {maxRooms}");
                 leafNodes.Shuffle();
                 var nodesToKeep = leafNodes.Take(maxRooms).ToList();
 
@@ -283,7 +283,7 @@ namespace MagicAndMyths
 
                 leafNodes.Clear();
                 GetLeafNodes(rootNode, leafNodes);
-                Log.Message($"After pruning: {leafNodes.Count} rooms");
+                //Log.Message($"After pruning: {leafNodes.Count} rooms");
             }
 
             return rootNode;
