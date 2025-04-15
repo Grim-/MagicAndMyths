@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="BaseHumanMakeableGun">
-    <defName>MagicAndMyths_DawnStaff</defName>
-    <label>staff of dawn</label>
-    <description>A dawn.</description>
+    <defName>MagicAndMyths_DayBreak</defName>
+    <label>daybreak (staff)</label>
+    <description>A staff with a name of Day Break.</description>
     <graphicData>
       <texPath>Equipment/StaffOfDawn</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
       <drawSize>2</drawSize>
     </graphicData>
     <soundInteract>Interact_SMG</soundInteract>
@@ -27,7 +28,7 @@
       <li>
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
-        <defaultProjectile>Bullet_MoonlightProjectile</defaultProjectile>
+        <defaultProjectile>Projectile_StaffDayBreakProjectile</defaultProjectile>
         <warmupTime>0.9</warmupTime>
         <range>22.9</range>
         <burstShotCount>3</burstShotCount>
@@ -52,19 +53,4 @@
       </li>
     </tools>
   </ThingDef>
-
-  <ThingDef ParentName="BaseBullet">
-    <defName>Bullet_MoonlightProjectile</defName>
-    <label>wand energy</label>
-    <graphicData>
-      <texPath>Projectiles/MagicBoltPurple</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-    </graphicData>
-    <projectile>
-      <damageDef>Bullet</damageDef>
-      <damageAmountBase>12</damageAmountBase>
-      <speed>48</speed>
-    </projectile>
-  </ThingDef>
-
 </Defs>

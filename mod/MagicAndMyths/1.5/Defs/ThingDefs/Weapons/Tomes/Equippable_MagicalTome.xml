@@ -5,6 +5,7 @@
     <label>MagicalTomeFireball</label>
     <description>MagicalTomeFireball</description>
     <thingClass>Apparel</thingClass>
+    <smeltable>false</smeltable>
     <graphicData>
       <texPath>Tomes/TomeOfTheInferno</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -22,27 +23,6 @@
     <thingSetMakerTags>
       <li>RewardStandardQualitySuper</li>
     </thingSetMakerTags>
-    <costList>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <Steel>50</Steel>
-      <Plasteel>20</Plasteel>
-    </costList>
-    <recipeMaker>
-      <unfinishedThingDef>UnfinishedBelt</unfinishedThingDef>
-      <researchPrerequisite>ShieldBelt</researchPrerequisite>
-      <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-      <workSkill>Crafting</workSkill>
-      <effectWorking>Smith</effectWorking>
-      <soundWorking>Recipe_Machining</soundWorking>
-      <recipeUsers>
-        <li>TableMachining</li>
-      </recipeUsers>
-      <useIngredientsForColor>false</useIngredientsForColor>
-      <skillRequirements>
-        <Crafting>6</Crafting>
-      </skillRequirements>
-      <displayPriority>300</displayPriority>
-    </recipeMaker>
     <thingCategories>
       <li>ApparelUtility</li>
     </thingCategories>
@@ -63,7 +43,7 @@
     <comps>
       <li Class="MagicAndMyths.CompProperties_MagicalTome">
         <abilityDefs>
-          <li>MagicAndMyths_Fly</li>
+          <li>MagicAndMyths_Fireball</li>
         </abilityDefs>
       </li>
     </comps>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="BaseBullet">
+      <defName>Projectile_Fireball</defName>
+      <label>wand energy</label>
+      <graphicData>
+        <texPath>Projectiles/Projectile_Fireball</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <projectile>
+        <damageDef>Bullet</damageDef>
+        <damageAmountBase>12</damageAmountBase>
+        <speed>48</speed>
+      </projectile>
+    </ThingDef>
+</Defs>

@@ -101,7 +101,19 @@
     <Compile Include="Comps\ExtendedMapParent.cs" />
     <Compile Include="Buildings\Building_Portal.cs" />
     <Compile Include="Comps\ThingComps\CausticsOverlay.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_BiocodableBinding.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_PawnActions.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_PortalGenerator.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_PyreRuby.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_SelectiveBiocodable.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\CompProperties_Throwable.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableExplodeOnImpact.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowablePyreRubyDetonate.cs" />
+    <Compile Include="Comps\ThingComps\Comp_PawnActionBase.cs" />
+    <Compile Include="Interfaces\IThrowableThing.cs" />
+    <Compile Include="AI\JobDriver_PickupAndThrow.cs" />
+    <Compile Include="Util\StatParts\StrengthStatPart_CarryingCapacity.cs" />
+    <Compile Include="Util\ThrowUtility.cs" />
     <Compile Include="Comps\ThingComps\Use Effects\CompProperties_TargetablePosition.cs" />
     <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectChangeWeather.cs" />
     <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectCooldown.cs" />
@@ -143,6 +155,7 @@
     <Compile Include="MapGen\GenSteps\GenStepDef_BspDungeon.cs" />
     <Compile Include="MapGen\Modifiers\MapModifier_NeedDrain.cs" />
     <Compile Include="MapGen\Modifiers\MapModifier_UnstableRealm.cs" />
+    <Compile Include="Projectile\ThingFlyer.cs" />
     <Compile Include="Util\DelegateFlyer.cs" />
     <Compile Include="Designators\Designator_ZoneExpand_AreaCapture.cs" />
     <Compile Include="Growable Structures\Dialog_StructureEditor.cs" />
@@ -310,7 +323,7 @@
     <Compile Include="Comps\Ability\CompProperties_ChainLightning.cs" />
     <Compile Include="Comps\Ability\CompProperties_Fly.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_LightningRing.cs" />
-    <Compile Include="Comps\ThingComps\CompProperties_MagicalTome.cs" />
+    <Compile Include="Comps\ThingComps\Tome\CompProperties_MagicalTome.cs" />
     <Compile Include="Comps\Ability\CompProperties_WeaponThrow.cs" />
     <Compile Include="Damage\DamageDef_Tranquilizer.cs" />
     <Compile Include="Damage\DamageWorker_Tranquilizer.cs" />

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <StatDef>
-    <defName>MagicAndMyths_Mana</defName>
+    <defName>Stat_Mana</defName>
     <label>Mana</label>
     <category>PawnMisc</category>
-    <description>The mutable energy that is present throughout existenace.</description>
+    <description>The mutable energy that is present throughout.</description>
     <defaultBaseValue>150</defaultBaseValue>
     <minValue>1</minValue>
     <maxValue>100000</maxValue>

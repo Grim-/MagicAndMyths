@@ -6,104 +6,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class CompProperties_MagicalTome : CompProperties
-    {
-        public List<AbilityDef> abilityDefs;
-
-        public CompProperties_MagicalTome()
-        {
-            this.compClass = typeof(Comp_MagicalTome);
-        }
-    }
-
-    public class Comp_MagicalTome : ThingComp
-    {
-        private List<Ability> abilities = new List<Ability>();
-
-        private CompProperties_MagicalTome Props
-        {
-            get
-            {
-                return this.props as CompProperties_MagicalTome;
-            }
-        }
-        protected Pawn Holder
-        {
-            get
-            {
-                ThingWithComps parent = this.parent;
-                Pawn_EquipmentTracker pawn_EquipmentTracker = ((parent != null) ? parent.ParentHolder : null) as Pawn_EquipmentTracker;
-                if (pawn_EquipmentTracker == null)
-                {
-                    return null;
-                }
-                return pawn_EquipmentTracker.pawn;
-            }
-        }
-        public List<Ability> AbilitiesForReading
-        {
-            get
-            {
-                if (this.abilities.NullOrEmpty())
-                {
-                    this.abilities = new List<Ability>();
-                    foreach (AbilityDef abilityDef in Props.abilityDefs)
-                    {
-                        this.abilities.Add(AbilityUtility.MakeAbility(abilityDef, Holder));
-                    }
-                }
-                return this.abilities;
-            }
-        }
-
-        public override void Initialize(CompProperties props)
-        {
-            base.Initialize(props);
-            if (Holder != null)
-            {
-                foreach (Ability ability in AbilitiesForReading)
-                {
-                    ability.pawn = Holder;
-                    ability.verb.caster = Holder;
-                }
-            }
-        }
-
-        public virtual void UsedOnce()
-        {
-        }
-
-        public override void Notify_Equipped(Pawn pawn)
-        {
-            foreach (Ability ability in AbilitiesForReading)
-            {
-                ability.pawn = pawn;
-                ability.verb.caster = pawn;
-            }
-            pawn.abilities.Notify_TemporaryAbilitiesChanged();
-        }
-
-        public override void Notify_Unequipped(Pawn pawn)
-        {
-            pawn.abilities.Notify_TemporaryAbilitiesChanged();
-        }
-
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
-            Scribe_Collections.Look(ref abilities, "abilities", LookMode.Deep);
-
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && Holder != null)
-            {
-                foreach (Ability ability in AbilitiesForReading)
-                {
-                    ability.pawn = Holder;
-                    ability.verb.caster = Holder;
-                }
-            }
-        }
-    }
-
     public class CompProperties_SelectiveBiocodable : CompProperties_Biocodable
     {
         public List<RequiredSkillLevel> requiredSkills;
@@ -124,7 +26,6 @@ namespace MagicAndMyths
             compClass = typeof(CompSelectiveBiocodable);
         }
     }
-
 
     public class RequiredSkillLevel
     {
@@ -301,71 +202,6 @@ namespace MagicAndMyths
                         "Research project required to biocode this item.", 1001);
                 }
             }
-        }
-    }
-    public class CompProperties_BiocodableBinding : CompProperties_SelectiveBiocodable
-    {
-        public bool automaticallyBind = true;
-        public bool removeBindingWhenUnbiocoded = true;
-
-        public CompProperties_BiocodableBinding()
-        {
-            compClass = typeof(CompBiocodableBinding);
-        }
-    }
-
-    public class CompBiocodableBinding : CompSelectiveBiocodable
-    {
-        public CompProperties_BiocodableBinding BindingProps => (CompProperties_BiocodableBinding)props;
-
-        public override void CodeFor(Pawn p)
-        {
-            base.CodeFor(p);
-
-            if (Biocoded && BindingProps.automaticallyBind)
-            {
-                BindToPawn(p);
-            }
-        }
-
-        public override void UnCode()
-        {
-            if (BindingProps.removeBindingWhenUnbiocoded)
-            {
-                UnbindFromPawn(CodedPawn);
-            }
-
-            base.UnCode();
-        }
-
-        private void BindToPawn(Pawn pawn)
-        {
-            if (pawn == null || !Biocoded || CodedPawn != pawn) return;
-
-            pawn.BindWeaponTo(parent);
-        }
-
-        private void UnbindFromPawn(Pawn pawn)
-        {
-            if (pawn == null) return;
-
-            pawn.UnbindWeapon();
-        }
-
-        public override string CompInspectStringExtra()
-        {
-            var baseString = base.CompInspectStringExtra();
-
-            if (Biocoded && CodedPawn != null)
-            {
-                var boundWeapon = CodedPawn.GetBoundWeapon();
-                if (boundWeapon == parent)
-                {
-                    return baseString + "\nBound to " + CodedPawn.LabelShort;
-                }
-            }
-
-            return baseString;
         }
     }
 }

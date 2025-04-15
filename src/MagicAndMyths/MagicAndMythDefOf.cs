@@ -7,6 +7,7 @@ namespace MagicAndMyths
     public static class MagicAndMythDefOf
     {
         public static ThingDef MagicAndMyths_SimpleFlyer;
+        public static ThingDef MagicAndMyths_ThingFlyer;
         public static ThingDef MagicAndMyths_MjolnirProjectile;
         public static ThingDef MagicAndMyths_DelegateFlyer;
 
@@ -29,6 +30,7 @@ namespace MagicAndMyths
 
         public static JobDef MagicAndMyths_JumpOverObstacle;
         public static JobDef GotoAndTalk;
+        public static JobDef MagicAndMyths_PickupAndThrow;
 
         public static QuestScriptDef Quest_DeathKnightStartingPath;
 
@@ -60,5 +62,13 @@ namespace MagicAndMyths
 
         public static RoomTypeDef StartRoom;
         public static RoomTypeDef EndRoom;
+
+
+        public static StatDef Stat_Strength;
+        public static StatDef Stat_Dexterity;
+        public static StatDef Stat_Constitution;
+        public static StatDef Stat_Intelligence;
+        public static StatDef Stat_Wisdom;
+        public static StatDef Stat_Charisma;
     }
 }

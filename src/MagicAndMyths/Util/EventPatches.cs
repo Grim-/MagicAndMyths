@@ -74,7 +74,14 @@ namespace MagicAndMyths
             {
                 if (__instance is Pawn pawn && !pawn.Dead)
                 {
-                    EventManager.RaiseDamageTaken(pawn, dinfo);
+                    EventManager.RaisePawnDamageTaken(pawn, dinfo);
+                }
+                else
+                {
+                    if (!__instance.Destroyed)
+                    {
+                        EventManager.RaiseThingDamageTaken(__instance, dinfo);
+                    }                
                 }
             }
         }

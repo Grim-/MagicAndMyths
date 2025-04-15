@@ -5,7 +5,7 @@
     <label>captured star in a bottle</label>
     <description>An a star frozen in a single moment in time, when it's command word is invoked this artifact can clear any adverse weather conditions, this dims its light, after which it takes 3 months to restore.</description>
     <graphicData>
-      <texPath>Artifacts/StarInABottle</texPath>
+      <texPath>Artifacts/Artifact_ContainedStar</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>1</drawSize>
     </graphicData>

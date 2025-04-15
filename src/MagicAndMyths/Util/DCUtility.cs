@@ -24,6 +24,9 @@ namespace MagicAndMyths
         private static SimpleCurve capacityCurve = null;
         private static SimpleCurve statCurve = null;
 
+        public static FloatRange Strength_CarryCapacityRange = new FloatRange(0, 3f);
+        public static float Strength_CarryCapacityModifier = 0.5f;
+
         public static void Initialize()
         {
             if (skillCurve == null)
@@ -109,6 +112,28 @@ namespace MagicAndMyths
 
             float capacityValue = pawn.health.capacities.GetLevel(capacity);
             return Mathf.RoundToInt(capacityCurve.Evaluate(capacityValue));
+        }
+
+        //returns true if contestor rolls or meets targets stat
+        public static bool ContestedStatCheck(Pawn contestor, Pawn target, StatDef StatToContest)
+        {
+            float contestorStat = contestor.GetStatValue(StatToContest);
+            float targetStat = target.GetStatValue(StatToContest);
+            bool result = contestorStat >= targetStat;
+
+            MoteMaker.ThrowText(contestor.DrawPos, contestor.Map, $"Rolled {StatToContest.label} - {contestorStat}");
+            MoteMaker.ThrowText(target.DrawPos, target.Map, $"Rolled {StatToContest.label} - {targetStat}");
+
+            if (result)
+            {
+                MoteMaker.ThrowText(contestor.DrawPos, contestor.Map, $"Rolled {StatToContest.label} - {contestorStat} - Wins!");
+            }
+            else
+            {
+                MoteMaker.ThrowText(target.DrawPos, target.Map, $"Rolled {StatToContest.label} - {targetStat} - Wins!");
+            }
+        
+            return result;
         }
 
    
