@@ -95,6 +95,7 @@
     <Compile Include="Buildings\Building_LockableDoor.cs" />
     <Compile Include="Buildings\Thing_Key.cs" />
     <Compile Include="Comps\Ability\CompProperties_EquippableAbility.cs" />
+    <Compile Include="Comps\Ability\CompProperties_FlyTargetThing.cs" />
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
     <Compile Include="Comps\Ability\CompProperties_TeleportPawnToHomeMap.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
@@ -112,7 +113,10 @@
     <Compile Include="Comps\ThingComps\Comp_PawnActionBase.cs" />
     <Compile Include="Interfaces\IThrowableThing.cs" />
     <Compile Include="AI\JobDriver_PickupAndThrow.cs" />
-    <Compile Include="Util\StatParts\StrengthStatPart_CarryingCapacity.cs" />
+    <Compile Include="Util\BonusComponent.cs" />
+    <Compile Include="Util\Roll\ContestedOutcome.cs" />
+    <Compile Include="Util\StatParts\StatPart_DnDStatBase.cs" />
+    <Compile Include="Util\StatParts\StatPart_Strength.cs" />
     <Compile Include="Util\ThrowUtility.cs" />
     <Compile Include="Comps\ThingComps\Use Effects\CompProperties_TargetablePosition.cs" />
     <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectChangeWeather.cs" />
@@ -208,7 +212,7 @@
     <Compile Include="Obstacle\Workers\ObstacleWorker_PlaceStructureLayout.cs" />
     <Compile Include="Obstacle\Workers\ObstacleWorker_PlaceThing.cs" />
     <Compile Include="Util\CurveDefMagicMyths.cs" />
-    <Compile Include="Util\DCOutcome.cs" />
+    <Compile Include="Util\Roll\RollCheckOutcome.cs" />
     <Compile Include="Util\DungeonUtil.cs" />
     <Compile Include="MapGen\GenSteps\GenStep_StampStructure.cs" />
     <Compile Include="MapGen\BSP\MspUtility.cs" />
@@ -262,7 +266,7 @@
     <Compile Include="MapGen\StoredSiteData.cs" />
     <Compile Include="UI\Window_PortalUI.cs" />
     <Compile Include="Comps\World\WorldComp_SiteManager.cs" />
-    <Compile Include="Util\DCUtility.cs" />
+    <Compile Include="Util\Roll\DCUtility.cs" />
     <Compile Include="Designators\Zone_AreaCapture.cs" />
     <Compile Include="Graphic\AssetBundleShaderManager.cs" />
     <Compile Include="Buildings\Building_GrowableStructure.cs" />
@@ -278,7 +282,7 @@
     <Compile Include="Comps\Ability\CompProperties_AbilityLaunchProjectileReloadable.cs" />
     <Compile Include="AI\JobDriver_GoToAndTalk.cs" />
     <Compile Include="Buildings\Building_Phylactery.cs" />
-    <Compile Include="Util\GrowableStructurePatches.cs" />
+    <Compile Include="Patch\GrowableStructurePatches.cs" />
     <Compile Include="Util\MagicUtil.cs" />
     <Compile Include="Extensions\DrawOffsetExt.cs" />
     <Compile Include="Util\EventManager.cs" />

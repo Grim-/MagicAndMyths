@@ -12,13 +12,13 @@ namespace MagicAndMyths
 
     public class Comp_ThrowablePyreRubyDetonate : Comp_Throwable
     {
-        public override void OnLanded(IntVec3 position, Map map, Pawn throwingPawn)
+        public override void OnRespawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
         {
-            base.OnLanded(position, map, throwingPawn);
+            base.OnRespawn(position, thing, map, throwingPawn);
 
-
-            if (this.parent.TryGetComp<Comp_PyreRuby>(out Comp_PyreRuby pyreRuby))
+            if (this.parent.TryGetComp(out Comp_PyreRuby pyreRuby))
             {
+                Log.Message("Pyreruby detonate");
                 pyreRuby.ReleaseStoredFires();
             }
         }

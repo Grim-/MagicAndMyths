@@ -19,7 +19,7 @@ namespace MagicAndMyths
 
             if (currentWorkAmount >= def.workTicks)
             {
-                CompleteSolution(pawn, RollCheck(pawn, obstacle));
+                CompleteSolution(pawn, RollCheck(pawn, 5, obstacle, out RollCheckOutcome rollCheckOutcome));
                 return true;
             }
             return false;

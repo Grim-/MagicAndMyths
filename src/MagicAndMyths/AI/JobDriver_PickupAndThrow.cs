@@ -21,33 +21,38 @@ namespace MagicAndMyths
             this.FailOnDestroyedOrNull(TargetIndex.A);
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
 
-            Toil pickupToil = new Toil();
+            Toil rollCheckToil = new Toil();
+            rollCheckToil.defaultCompleteMode = ToilCompleteMode.Instant;
+
+            rollCheckToil.initAction = delegate
+            {
+                if (ThingToThrow == null)
+                {
+                    Log.Message("nothing to throw");
+                    this.EndJobWith(JobCondition.Incompletable);
+                }
+
+                if (ThingToThrow is Pawn targetPawn)
+                {
+                    //failed to throw because didnt meet or beat other pawns strength roll
+                    if (!DCUtility.ContestedStatCheck(pawn, targetPawn, MagicAndMythDefOf.Stat_Strength, out ContestedOutcome outcome))
+                    {
+                        Messages.Message(outcome.ToString(), MessageTypeDefOf.NegativeEvent);
+                        Log.Message("failed strength check");
+                        this.EndJobWith(JobCondition.Incompletable);
+                    }
+                }
+
+            };
+
+            yield return rollCheckToil;
+
+           Toil pickupToil = new Toil();
             pickupToil.initAction = delegate
             {
                 pawn.carryTracker.TryStartCarry(ThingToThrow, 1);
             };
             yield return pickupToil;
-
-
-
-            this.FailOn(() =>
-            {
-                Thing thingToThrow = pawn.carryTracker.CarriedThing;
-                if (thingToThrow == null)
-                {
-                    return false;
-                }
-
-                if (thingToThrow is Pawn targetPawn)
-                {
-                    if (!DCUtility.ContestedStatCheck(pawn, targetPawn, MagicAndMythDefOf.Stat_Strength))
-                    {
-                        Messages.Message($"{pawn.LabelShort} failed contested strength check to throw {targetPawn}", MessageTypeDefOf.NegativeEvent);
-                        return false;
-                    }
-                }
-                return true;
-            });
 
 
             Toil throwToil = new Toil();
@@ -79,15 +84,15 @@ namespace MagicAndMyths
                     {
                         ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(
                             MagicAndMythDefOf.MagicAndMyths_ThingFlyer,
-                            droppedThing,
-                            DestinationCell,
-                            pawn.Map,
-                            null,
-                            null,
-                            pawn,
-                            pawn.DrawPos);
+                            thing: droppedThing,
+                            destCell :DestinationCell,
+                            map : pawn.Map,
+                            flightEffecterDef: null,
+                            landingSound: null,
+                            throwerPawn: pawn,
+                            overrideStartVec: pawn.DrawPos);
 
-                        GenSpawn.Spawn(thingFlyer, pawn.Position, pawn.Map);
+                        ThingFlyer.LaunchFlyer(thingFlyer, droppedThing, pawn.Position, DestinationCell, pawn.Map);
                     }
                 }
             });

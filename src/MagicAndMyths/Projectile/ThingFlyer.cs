@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -11,13 +12,14 @@ namespace MagicAndMyths
 	{
 		private ThingOwner<Thing> innerContainer;
 		protected Vector3 startVec;
+
+		protected TargetInfo target;
 		private IntVec3 destCell;
 		private float flightDistance;
 		protected int ticksFlightTime = 120;
 		protected int ticksFlying;
 		protected EffecterDef flightEffecterDef;
 		protected SoundDef soundLanding;
-		private LocalTargetInfo target;
 		private Effecter flightEffecter;
 		private int positionLastComputedTick = -1;
 		private Vector3 groundPos;
@@ -25,8 +27,8 @@ namespace MagicAndMyths
 		private float effectiveHeight;
 
 		protected Pawn throwingPawn = null;
-		public event Action<IntVec3, Pawn> OnLanded;
-		public event Action<IntVec3, Thing, Pawn> OnImpactedThing;
+		public event Action<IntVec3, Pawn> OnBeforeRespawn;
+		public event Action<IntVec3, Thing, Pawn> OnRespawn;
 		protected Thing FlyingThing
 		{
 			get
@@ -43,12 +45,7 @@ namespace MagicAndMyths
 		{
 			get
 			{
-				Thing flyingThing = this.FlyingThing;
-				if (flyingThing == null)
-				{
-					return this.destCell.ToVector3Shifted();
-				}
-				return GenThing.TrueCenter(this.destCell, flyingThing.Rotation, flyingThing.def.size, flyingThing.def.Altitude);
+				return this.destCell.ToVector3Shifted();
 			}
 		}
 		public override Vector3 DrawPos
@@ -133,31 +130,10 @@ namespace MagicAndMyths
 				return;
 			}
 
-			this.innerContainer.TryDrop(flyingThing, this.destCell, map, ThingPlaceMode.Direct, out Thing thing, null, null, false);
-
-			this.Position = this.destCell;
-
-			if (this.throwingPawn != null)
-			{
-				OnLanded?.Invoke(this.Position, this.throwingPawn);
-			}
-
-			List<Thing> thingList = map.thingGrid.ThingsListAtFast(this.Position);
-			if (thingList != null)
-			{
-				foreach (Thing th in thingList)
-				{
-					if (th != null && th != flyingThing && th != this)
-					{
-						if (this.throwingPawn != null)
-						{
-							OnImpactedThing?.Invoke(this.Position, th, this.throwingPawn);
-						}
-						break;
-					}
-				}
-			}
-		}
+			OnBeforeRespawn?.Invoke(this.destCell, this.throwingPawn);
+			this.innerContainer.TryDrop(flyingThing, this.destCell, map, ThingPlaceMode.Near, out Thing thing, null, null, false);
+			OnRespawn?.Invoke(this.destCell, flyingThing, this.throwingPawn);
+        }
 
 
 		public override void Tick()
@@ -178,7 +154,7 @@ namespace MagicAndMyths
 			if (this.ticksFlying >= this.ticksFlightTime)
 			{
 				this.RespawnThing();
-				this.Destroy(DestroyMode.Vanish);
+				this.Destroy(DestroyMode.KillFinalize);
 			}
 			else
 			{
@@ -236,28 +212,31 @@ namespace MagicAndMyths
 			Graphics.DrawMesh(MeshPool.plane10, matrix, shadowMaterial, 0);
 		}
 
+
+		/// <summary>
+		/// Creates and set up new a ThingFlyer, does not spawn nor start the flyer, see ThingFlyer.LaunchFlyer
+		/// </summary>
+		/// <param name="flyingDef"></param>
+		/// <param name="thing"></param>
+		/// <param name="destCell"></param>
+		/// <param name="map"></param>
+		/// <param name="flightEffecterDef"></param>
+		/// <param name="landingSound"></param>
+		/// <param name="throwerPawn"></param>
+		/// <param name="overrideStartVec"></param>
+		/// <param name="target"></param>
+		/// <returns></returns>
 		public static ThingFlyer MakeFlyer(ThingDef flyingDef, Thing thing, IntVec3 destCell, Map map, EffecterDef flightEffecterDef, SoundDef landingSound, Pawn throwerPawn, Vector3? overrideStartVec = null, LocalTargetInfo target = default(LocalTargetInfo))
 		{
 			ThingFlyer thingFlyer = (ThingFlyer)ThingMaker.MakeThing(flyingDef, null);
-			thingFlyer.startVec = (overrideStartVec ?? thing.TrueCenter());
+			Vector3 startVec = overrideStartVec ?? (throwerPawn?.TrueCenter() ?? thing.TrueCenter());
+			thingFlyer.startVec = startVec;
+			thingFlyer.flightDistance = startVec.ToIntVec3().DistanceTo(destCell);
 			thingFlyer.Rotation = thing.Rotation;
-			thingFlyer.flightDistance = thing.Position.DistanceTo(destCell);
 			thingFlyer.destCell = destCell;
 			thingFlyer.flightEffecterDef = flightEffecterDef;
 			thingFlyer.soundLanding = landingSound;
-			thingFlyer.target = target;
 			thingFlyer.SetThrowingPawn(throwerPawn);
-
-			if (thing.Spawned)
-			{
-				thing.DeSpawn(DestroyMode.WillReplace);
-			}
-
-			if (!thingFlyer.innerContainer.TryAdd(thing, true))
-			{
-				Log.Error("Could not add " + thing.ToStringSafe<Thing>() + " to a flyer.");
-				thing.Destroy(DestroyMode.Vanish);
-			}
 
             Comp_Throwable throwableComp = thing.TryGetComp<Comp_Throwable>();
             if (throwableComp != null)
@@ -265,11 +244,11 @@ namespace MagicAndMyths
                 throwableComp.OnThrown(throwerPawn.Position, map, throwerPawn);
             }
 
-            thingFlyer.OnLanded += (IntVec3 position, Pawn throwingPawn) =>
+            thingFlyer.OnBeforeRespawn += (IntVec3 position, Pawn throwingPawn) =>
             {
                 if (throwableComp != null)
                 {
-                    throwableComp.OnLanded(position, map, throwerPawn);
+                    throwableComp.OnBeforeRespawn(position, map, throwerPawn);
                 }
                 else
                 {
@@ -277,25 +256,58 @@ namespace MagicAndMyths
                 }
             };
 
-            thingFlyer.OnImpactedThing += (IntVec3 position, Thing impactedThing, Pawn throwingPawn) =>
-            {
+
+			thingFlyer.OnRespawn += (IntVec3 position, Thing flyingThing, Pawn throwingPawn) =>
+			{
                 if (throwableComp != null)
                 {
-                    throwableComp.OnImpactedThing(position, map, throwingPawn, impactedThing);
-                }
-                else
-                {
-                    ThrowUtility.ApplyDefaultThrowImpactThingBehavior(throwingPawn, thing, position, map, impactedThing);
+                    throwableComp.OnRespawn(position, flyingThing, map, throwingPawn);
                 }
             };
 
-            if (throwerPawn != null)
-            {
-				thingFlyer.SetThrowingPawn(throwerPawn);
-            }
+            //thingFlyer.OnImpactedThing += (IntVec3 position, Thing impactedThing, Pawn throwingPawn) =>
+            //{
+            //    if (throwableComp != null)
+            //    {
+            //        throwableComp.OnImpactedThing(position, map, throwingPawn, impactedThing);
+            //    }
+            //    else
+            //    {
+            //        ThrowUtility.ApplyDefaultThrowImpactThingBehavior(throwingPawn, thing, position, map, impactedThing);
+            //    }
+            //};
+
 
             return thingFlyer;
 		}
+
+
+		/// <summary>
+		/// Actually triggers the flyer to move, despawns the thing if not already
+		/// </summary>
+		/// <param name="Flyer"></param>
+		/// <param name="thing"></param>
+		/// <param name="spawnCell"></param>
+		/// <param name="destCell"></param>
+		/// <param name="map"></param>
+		/// <returns></returns>
+		public static ThingFlyer LaunchFlyer(ThingFlyer Flyer, Thing thing, IntVec3 spawnCell, IntVec3 destCell, Map map)
+        {
+			if (thing.Spawned)
+			{
+				thing.DeSpawn(DestroyMode.Vanish);
+			}
+
+			if (!Flyer.innerContainer.TryAdd(thing, true))
+			{
+				//failed to add
+			}
+
+
+			GenSpawn.Spawn(Flyer, spawnCell, map);
+			return Flyer;
+		}
+
 		public override void ExposeData()
 		{
 			base.ExposeData();
@@ -311,7 +323,6 @@ namespace MagicAndMyths
 			{
 				this
 			});
-			Scribe_TargetInfo.Look(ref this.target, "target");
 		}
 	}
 }

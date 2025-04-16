@@ -47,16 +47,15 @@ namespace MagicAndMyths
 
         }
 
-        public virtual void OnLanded(IntVec3 position, Map map, Pawn throwingPawn)
+        public virtual void OnBeforeRespawn(IntVec3 position, Map map, Pawn throwingPawn)
         {
             MakeImpactEffect(position, map, Color.white);
         }
 
-        public virtual void OnImpactedThing(IntVec3 position, Map map, Pawn throwingPawn, Thing impactedThing)
+        public virtual void OnRespawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
         {
-            ThrowUtility.ApplyDefaultThrowImpactThingBehavior(throwingPawn, parent, position, map, impactedThing);
+            
         }
-
 
         protected void MakeImpactEffect(IntVec3 position, Map map, Color? color = null)
         {

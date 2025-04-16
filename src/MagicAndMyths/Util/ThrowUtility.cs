@@ -12,32 +12,31 @@ namespace MagicAndMyths
         {
             if (map == null || thrownThing == null || impactedThing.Destroyed)
                 return;
-            ApplyBaseImpactDamage(thrower, thrownThing, position, map, impactedThing);
+            //ApplyBaseImpactDamage(thrower, thrownThing, position, map);
         }
 
         public static void ApplyDefaultThrowBehavior(Pawn thrower, Thing thrownThing,  IntVec3 position, Map map)
         {
             if (map == null || thrownThing == null)
                 return;
+
+            ApplyBaseImpactDamage(thrower, thrownThing, position, map);
         }
 
-        private static void ApplyBaseImpactDamage(Pawn thrower, Thing thrownThing, IntVec3 position, Map map, Thing impactedThing = null)
+        private static void ApplyBaseImpactDamage(Pawn thrower, Thing thrownThing, IntVec3 position, Map map)
         {
-            List<Thing> pawnsInCell = position.GetThingList(map)
-                .OfType<Thing>()
+            List<Thing> thingsInImpactRadius = position.GetThingList(map)
+                .Where(x => x != thrownThing && !x.def.IsNonDeconstructibleAttackableBuilding && x.def.selectable)
                 .ToList();
 
-            if (pawnsInCell.Count > 0)
+            if (thingsInImpactRadius.Count > 0)
             {      
-                foreach (Thing victim in pawnsInCell)
+                foreach (Thing victim in thingsInImpactRadius)
                 {
-                    if (victim == thrower || victim == thrownThing || !victim.def.useHitPoints) 
-                        continue;
-
                     DamageInfo damageInfo = new DamageInfo(
                         GetImpactDamageDefFor(thrownThing),
-                        CalculateImpactDamage(thrower, thrownThing),
-                        0f,
+                        CalculateImpactDamage(thrownThing),
+                        1f,
                         -1f,
                         thrower);
 
@@ -105,22 +104,14 @@ namespace MagicAndMyths
         }
 
 
-        public static float CalculateImpactDamage(Pawn thrower, Thing thrownThing)
+        public static float CalculateImpactDamage(Thing thrownThing)
         {
             float finalDamage = 1f;
             float baseDamage = CalcMassDamage(thrownThing, 2.5f);
             float weaponDamage = 10f;
-            float throwerBonus = 1.0f;
-
-            if (thrower != null)
-            {
-                float manipulationFactor = thrower.health.capacities.GetLevel(PawnCapacityDefOf.Manipulation);
-                throwerBonus = Mathf.Lerp(1f, 2.0f, manipulationFactor);
-            }
 
             if (thrownThing.def.IsMeleeWeapon)
             {
-                // Get first tool and its first capacity
                 if (thrownThing.def.tools != null && thrownThing.def.tools.Any())
                 {
                     Tool firstTool = thrownThing.def.tools.First();
@@ -138,7 +129,6 @@ namespace MagicAndMyths
 
             finalDamage = baseDamage;
             finalDamage += weaponDamage;
-            finalDamage *= throwerBonus;
             return finalDamage;
         }
 

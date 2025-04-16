@@ -7,7 +7,7 @@ namespace MagicAndMyths
     {
         public override int GetPawnBonus(Pawn pawn)
         {
-            return DCUtility.GetSkillBonus(pawn, SkillDefOf.Crafting);
+            return DCUtility.CalculateSkillBonus(pawn, SkillDefOf.Crafting);
         }
 
         public override void OnFailure(Pawn pawn, Building_ObstacleBase pitfallTile)
@@ -25,7 +25,7 @@ namespace MagicAndMyths
             currentWorkAmount++;
             if (currentWorkAmount >= def.workTicks)
             {
-                CompleteSolution(pawn, RollCheck(pawn, obstacle));
+                CompleteSolution(pawn, RollCheck(pawn, 5, obstacle, out RollCheckOutcome outcome));
                 return true;
             }
 

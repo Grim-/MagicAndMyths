@@ -43,7 +43,7 @@
     <comps>
       <li Class="MagicAndMyths.CompProperties_MagicalTome">
         <abilityDefs>
-          <li>MagicAndMyths_Fireball</li>
+          <li>MagicAndMyths_SoveriegnsHandThrow</li>
         </abilityDefs>
       </li>
     </comps>

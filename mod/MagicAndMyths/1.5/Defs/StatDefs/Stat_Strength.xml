@@ -2,9 +2,9 @@
 <Defs>
   <StatDef Abstract="true" Name="BaseDnDStat">
     <category>BasicsPawn</category>
-    <defaultBaseValue>1</defaultBaseValue>
+    <defaultBaseValue>10</defaultBaseValue>
     <minValue>-10</minValue>
-    <maxValue>10</maxValue>
+    <maxValue>20</maxValue>
     <toStringStyle>Integer</toStringStyle>
     <showOnPawns>true</showOnPawns>
   </StatDef>
@@ -14,11 +14,15 @@
     <label>strength</label>
     <description>Physical power and muscle strength. Affects melee damage, and certain physical actions.</description>
     <parts>
-      <li Class="MagicAndMyths.StrengthStatPart_CarryingCapacity" />
+      <li Class="MagicAndMyths.StatPart_Strength" />
     </parts>
     <capacityFactors>
       <li>
         <capacity>Manipulation</capacity>
+        <weight>1.0</weight>
+      </li>
+      <li>
+        <capacity>Moving</capacity>
         <weight>1.0</weight>
       </li>
     </capacityFactors>

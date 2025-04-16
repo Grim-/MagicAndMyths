@@ -76,7 +76,6 @@ namespace MagicAndMyths
                         {0.5f, 0f},   // 50% = +0
                         {0.75f, 2f},  // 75% = +2
                         {1f, 4f},      // 100% = +4
-                        {1.2f, 5f}
                     };
                 }
             }
@@ -88,10 +87,22 @@ namespace MagicAndMyths
             return def?.curve;
         }
 
-        public static int GetSkillBonus(Pawn pawn, SkillDef skill)
-        {
-            if (skillCurve == null) Initialize();
 
+        public static int CalculateCapacityBonus(Pawn pawn, PawnCapacityDef capacity, int minBonus, int maxBonus)
+        {
+            if (pawn.health == null || pawn.health.capacities == null)
+            {
+                return 0;
+            }
+
+            float capacityLevel = pawn.health.capacities.GetLevel(capacity);
+            int bonus = Mathf.FloorToInt(capacityLevel - 1f);
+            return Mathf.Clamp(bonus, minBonus, maxBonus);
+        }
+
+
+        public static int CalculateSkillBonus(Pawn pawn, SkillDef skill)
+        {
             if (pawn?.skills == null) 
                 return -1;
 
@@ -99,44 +110,36 @@ namespace MagicAndMyths
             if (skillRecord == null) 
                 return -1;
 
+
             float level = skillRecord.Level;
             return Mathf.RoundToInt(skillCurve.Evaluate(level));
         }
 
-        public static int GetCapacityBonus(Pawn pawn, PawnCapacityDef capacity)
+
+        public static bool ContestedStatCheck(Pawn contestor, Pawn target, StatDef stat, out ContestedOutcome outCome)
         {
-            if (capacityCurve == null) Initialize();
+            outCome = default;
 
-            if (pawn?.health?.capacities == null) 
-                return -3;
+            int contestorBonus = GetStatBonus(contestor, stat);
+            int targetBonus = GetStatBonus(target, stat);
 
-            float capacityValue = pawn.health.capacities.GetLevel(capacity);
-            return Mathf.RoundToInt(capacityCurve.Evaluate(capacityValue));
+            RollCheckOutcome contestorRoll = RollAgainstDC(contestorBonus);
+            RollCheckOutcome targetRoll = RollAgainstDC(targetBonus);
+
+            bool success = contestorRoll.Total >= targetRoll.Total;
+
+            outCome = new ContestedOutcome(
+                contestor,
+                target,
+                stat,
+                contestorRoll,
+                targetRoll
+            );
+
+            return success;
         }
 
-        //returns true if contestor rolls or meets targets stat
-        public static bool ContestedStatCheck(Pawn contestor, Pawn target, StatDef StatToContest)
-        {
-            float contestorStat = contestor.GetStatValue(StatToContest);
-            float targetStat = target.GetStatValue(StatToContest);
-            bool result = contestorStat >= targetStat;
 
-            MoteMaker.ThrowText(contestor.DrawPos, contestor.Map, $"Rolled {StatToContest.label} - {contestorStat}");
-            MoteMaker.ThrowText(target.DrawPos, target.Map, $"Rolled {StatToContest.label} - {targetStat}");
-
-            if (result)
-            {
-                MoteMaker.ThrowText(contestor.DrawPos, contestor.Map, $"Rolled {StatToContest.label} - {contestorStat} - Wins!");
-            }
-            else
-            {
-                MoteMaker.ThrowText(target.DrawPos, target.Map, $"Rolled {StatToContest.label} - {targetStat} - Wins!");
-            }
-        
-            return result;
-        }
-
-   
         public static int GetStatBonus(Pawn pawn, StatDef stat)
         {
             if (statCurve == null) Initialize();
@@ -151,22 +154,9 @@ namespace MagicAndMyths
             return Mathf.RoundToInt(statCurve.Evaluate(percentage));
         }
 
-        // Calculate success chance from DC and bonus (for internal use)
-        public static float CalculateSuccessChance(int dc, int bonus)
+        public static RollCheckOutcome RollAgainstDC(float bonus)
         {
-            // In D&D, you need to roll dc or higher on d20
-            // So success chance is (21 - (dc - bonus)) / 20
-            float successChance = (21f - dc + bonus) / 20f;
-            return Mathf.Clamp(successChance, 0.05f, 0.95f);
-        }
-
-        // Roll a d20 and check against DC (for visual logging)
-        public static DCOutcome RollAgainstDC(int dc, int bonus)
-        {
-            int roll = Rand.RangeInclusive(1, 20);
-            int total = roll + bonus;
-            bool success = total >= dc;
-            return new DCOutcome(success, roll, total);
+            return new RollCheckOutcome((int)bonus);
         }
 
         public static string FormatDCCheck(int dc, int bonus)

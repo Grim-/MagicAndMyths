@@ -27,28 +27,54 @@ namespace MagicAndMyths
         private Pawn Pawn => parent as Pawn;
         public CompProperties_PawnActions Props => (CompProperties_PawnActions)props;
 
-
         protected int LastThrowAttemptTick = -1;
-        protected int ThrowCooldownTicks = 1250;
-
-
-        protected bool IsThrowOffCooldown
+        protected TargetingParameters ThrowTargetLocationParams = new TargetingParameters
         {
-            get
-            {
-                if (LastThrowAttemptTick <= 0)
-                {
-                    return true;
-                }
+            canTargetLocations = true,
+            canTargetHumans = true,
+            canTargetAnimals = true,
+            canTargetCorpses = true,
+            canTargetFires = true,
+            canTargetItems = true,
+            canTargetMechs = true,
+            canTargetMutants = true,
+            canTargetBloodfeeders = true,
+            canTargetSelf = false,
+            canTargetPlants = true,
+            canTargetPawns = true,
+            canTargetBuildings = true,
+        };
+        protected TargetingParameters ThrowTargetSelectionParams = new TargetingParameters
+        {
+            canTargetLocations = true,
+            canTargetHumans = true,
+            canTargetAnimals = true,
+            canTargetCorpses = true,
+            canTargetFires = true,
+            canTargetItems = true,
+            canTargetMechs = true,
+            canTargetMutants = true,
+            canTargetBloodfeeders = true,
+            canTargetSelf = false,
+            canTargetPlants = true,
+            canTargetPawns = true,
+            canTargetBuildings = true
+        };
 
-                return Current.Game.tickManager.TicksGame >= LastThrowAttemptTick + ThrowCooldownTicks;
-            }
+
+
+        public int ThrowRangeCells
+        {
+            //3 cells for every + 1
+            get => DCUtility.GetStatBonus(Pawn, MagicAndMythDefOf.Stat_Strength) * 3;
         }
+
 
         public override bool CanPerformAction(Pawn pawn)
         {
             return pawn.health.hediffSet.GetNotMissingParts().Any(limb => limb.def.tags.Contains(BodyPartTagDefOf.ManipulationLimbCore)) && base.CanPerformAction(pawn);
         }
+
         private bool CanThrowThing(Thing thing)
         {
             if (thing == null || Pawn == null)
@@ -84,6 +110,7 @@ namespace MagicAndMyths
 
         private void BeginThrowTarget()
         {
+            //Select the target to throw
             Find.Targeter.BeginTargeting(new TargetingParameters
             {
                 canTargetItems = true,
@@ -100,30 +127,33 @@ namespace MagicAndMyths
             {
                 if (target.Thing != null)
                 {
-                    StartPickUpAndThrow(target.Thing);
-                    LastThrowAttemptTick = Current.Game.tickManager.TicksGame;
+                    Find.Targeter.BeginTargeting(new TargetingParameters
+                    {
+                        canTargetLocations = true,
+                        canTargetHumans = true,
+                        canTargetAnimals = true,
+                        canTargetCorpses = true,
+                        canTargetFires = true,
+                        canTargetItems = true,
+                        canTargetMechs = true,
+                        canTargetMutants = true,
+                        canTargetBloodfeeders = true,
+                        canTargetSelf = false,
+                        canTargetPlants = true,
+                        canTargetPawns = true,
+                        canTargetBuildings = true,
+                        validator = (x) => x.Cell.InHorDistOf(this.parent.Position, ThrowRangeCells)
+                    },
+                     (LocalTargetInfo throwTargetLocation) =>
+                     {
+                         Job job = JobMaker.MakeJob(MagicAndMythDefOf.MagicAndMyths_PickupAndThrow, target.Thing, throwTargetLocation);
+                         job.count = Math.Min(target.Thing.def.stackLimit, target.Thing.stackCount);
+                         Pawn.jobs.TryTakeOrderedJob(job);
+                     });
                 }
             },
             null, null);
         }
- 
-        private List<Thing> GetThrowableEquipment()
-        {
-            List<Thing> thingsToThrow = new List<Thing>();
-
-            if (Pawn?.inventory?.innerContainer != null)
-            {
-                thingsToThrow.AddRange(Pawn.inventory.innerContainer.Where(x=> IsAbleToThrow(x)).ToList());
-            }
-
-            if (Pawn?.equipment?.AllEquipmentListForReading != null)
-            {
-                thingsToThrow.AddRange(Pawn.equipment.AllEquipmentListForReading.Where(x=> IsAbleToThrow(x)).ToList());
-            }
-             
-            return thingsToThrow;
-        }
-
         private void BeginThrowFromInventory(Thing itemToThrow)
         {
             Find.Targeter.BeginTargeting(new TargetingParameters
@@ -141,65 +171,47 @@ namespace MagicAndMyths
                 canTargetPlants = true,
                 canTargetPawns = true,
                 canTargetBuildings = true,
+                validator = (x) => x.Cell.InHorDistOf(this.parent.Position, ThrowRangeCells)
             },
             delegate (LocalTargetInfo target)
             {
-                ExecuteThrowFromInventory(itemToThrow, target);
+                if (Pawn.inventory.innerContainer.Contains(itemToThrow))
+                {
+                    Pawn.inventory.innerContainer.Remove(itemToThrow);
+                }
+                else if (Pawn.equipment.AllEquipmentListForReading.Any(x => x.thingIDNumber == itemToThrow.thingIDNumber))
+                {
+                    Pawn.equipment.Remove((ThingWithComps)itemToThrow);
+                }
+
+                ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(
+                    MagicAndMythDefOf.MagicAndMyths_ThingFlyer,
+                    thing: itemToThrow,
+                    destCell: target.Cell,
+                    map: this.Pawn.Map,
+                    flightEffecterDef: null,
+                    landingSound: null,
+                    throwerPawn: Pawn,
+                    overrideStartVec: Pawn.DrawPos);
+
+                //Log.Message($"BeginThrowFromInventory Created ThingFlyer for {itemToThrow.LabelShort} to Destionation {target.Cell}, thrown by {Pawn}");
+                ThingFlyer.LaunchFlyer(thingFlyer, itemToThrow, Pawn.Position, target.Cell, Pawn.Map);
+
+                LastThrowAttemptTick = Current.Game.tickManager.TicksGame;
             });
         }
-        private void ExecuteThrowFromInventory(Thing itemToThrow, LocalTargetInfo target)
+        private List<Thing> GetThrowableEquipment()
         {
-            if (Pawn.inventory.innerContainer.Contains(itemToThrow))
+            List<Thing> thingsToThrow = new List<Thing>();
+            if (Pawn?.inventory?.innerContainer != null)
             {
-                Pawn.inventory.innerContainer.Remove(itemToThrow);
+                thingsToThrow.AddRange(Pawn.inventory.innerContainer.Where(x=> IsAbleToThrow(x)).ToList());
             }
-            else if(Pawn.equipment.AllEquipmentListForReading.Any(x=> x.thingIDNumber == itemToThrow.thingIDNumber))
+            if (Pawn?.equipment?.AllEquipmentListForReading != null)
             {
-                Pawn.equipment.Remove((ThingWithComps)itemToThrow);
-            }
-
-            ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(
-                MagicAndMythDefOf.MagicAndMyths_ThingFlyer,
-                thing: itemToThrow,
-                destCell: target.Cell,
-                map: this.Pawn.Map,
-                flightEffecterDef : null,
-                landingSound : null,
-                throwerPawn: Pawn,
-                overrideStartVec: Pawn.DrawPos);
-
-            GenSpawn.Spawn(thingFlyer, Pawn.Position, Pawn.Map);
-
-            LastThrowAttemptTick = Current.Game.tickManager.TicksGame;
-        }
-        private void StartPickUpAndThrow(Thing thingToThrow)
-        {
-            if (thingToThrow == null || !thingToThrow.Spawned) 
-                return;
-
-            Find.Targeter.BeginTargeting(new TargetingParameters
-            {
-                canTargetLocations = true,
-                canTargetHumans = true,
-                canTargetAnimals = true,
-                canTargetCorpses = true,
-                canTargetFires = true,
-                canTargetItems = true, 
-                canTargetMechs = true,
-                canTargetMutants = true,
-                canTargetBloodfeeders = true,
-                canTargetSelf = false,
-                canTargetPlants = true,
-                canTargetPawns = true,
-                canTargetBuildings = true
-            },
-            (LocalTargetInfo target) =>
-            {
-                Job job = JobMaker.MakeJob(MagicAndMythDefOf.MagicAndMyths_PickupAndThrow, thingToThrow, target);
-                job.count = Math.Min(thingToThrow.def.stackLimit, thingToThrow.stackCount);
-                Pawn.jobs.TryTakeOrderedJob(job);
-            },
-            null);
+                thingsToThrow.AddRange(Pawn.equipment.AllEquipmentListForReading.Where(x=> IsAbleToThrow(x)).ToList());
+            }            
+            return thingsToThrow;
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -209,7 +221,7 @@ namespace MagicAndMyths
 
             yield return new Command_ActionWithCooldown
             {
-                defaultLabel = "Throw Item",
+                defaultLabel = $"Throw Item upto {ThrowRangeCells} cells away.",
                 defaultDesc = "Throw an item from your inventory at a target location.",
                 icon = defaultIcon,
                 action = delegate
@@ -237,7 +249,7 @@ namespace MagicAndMyths
 
             yield return new Command_Action
             {
-                defaultLabel = "Throw Target",
+                defaultLabel = $"Throw Target upto {ThrowRangeCells} cells away.",
                 defaultDesc = "Pick up and throw an object from the environment.",
                 icon = defaultIcon,
                 action = BeginThrowTarget,
@@ -251,6 +263,5 @@ namespace MagicAndMyths
             base.PostExposeData();
             Scribe_Values.Look(ref LastThrowAttemptTick, "LastThrowAttemptTick", -1);
         }
-
     }
 }

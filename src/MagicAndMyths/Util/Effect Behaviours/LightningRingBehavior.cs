@@ -14,8 +14,6 @@ namespace MagicAndMyths
         private float explosionRadius = 1.9f;
         private IntVec3 center;
         private Map map;
-        private static Material LightningMat = MaterialPool.MatFrom("Weather/LightningBolt", ShaderDatabase.MoteGlow);
-        private Mesh boltMesh;
 
         public LightningRingBehavior(List<LightningRingConfig> rings, IntVec3 center, Map map, int delayTicks)
             : base(delayTicks, null, null, true, rings.Count)
@@ -23,7 +21,6 @@ namespace MagicAndMyths
             this.rings = rings;
             this.center = center;
             this.map = map;
-            this.boltMesh = LightningBoltMeshPool.RandomBoltMesh;
             _OnTick = DoLightningRing;
         }
 
@@ -48,7 +45,7 @@ namespace MagicAndMyths
                 float angle = i * angleStep + Rand.Range(-10f, 10f);
                 float rad = ring.Radius + Rand.Range(-0.5f, 0.5f);
                 IntVec3 strikePos = center + GetStrikeOffset(angle, rad);
-                LightningStrike.GenerateLightningStrike(map, strikePos, ref boltMesh, ref LightningMat, explosionRadius);
+                LightningStrike.GenerateLightningStrike(map, strikePos, explosionRadius, out IEnumerable<IntVec3> affectedCells);
             }
             currentRing++;
         }

@@ -20,24 +20,21 @@ namespace MagicAndMyths
     {
         CompProperties_ThrowableExplodeOnImpact Props => (CompProperties_ThrowableExplodeOnImpact)props;
 
-
-        public override void OnLanded(IntVec3 position, Map map, Pawn throwingPawn)
+        public override void OnRespawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
         {
-            base.OnLanded(position, map, throwingPawn);
-
+            base.OnRespawn(position, thing, map, throwingPawn);
             GenExplosion.DoExplosion(
-                position,
-                map,
-                Props.explosionRadius,
-                Props.damageDef != null ? Props.damageDef : DamageDefOf.Bomb,
-                throwingPawn,
-                Mathf.RoundToInt(Props.damageAmount.RandomInRange));
+            position,
+            map,
+            Props.explosionRadius,
+            Props.damageDef != null ? Props.damageDef : DamageDefOf.Bomb,
+            throwingPawn,
+            Mathf.RoundToInt(Props.damageAmount.RandomInRange));
 
             if (Props.destroyOnImpact)
             {
                 this.parent.Destroy();
             }
-
         }
     }
 

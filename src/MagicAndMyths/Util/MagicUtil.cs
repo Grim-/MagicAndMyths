@@ -1,5 +1,7 @@
 ﻿using LudeonTK;
 using RimWorld;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
@@ -28,7 +30,52 @@ namespace MagicAndMyths
 
 
         }
+        [DebugAction("Magic And Myths", "Test Transmute Lightning", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void FireTransmutationLightning()
+        {
+            Find.Targeter.BeginTargeting(new TargetingParameters()
+            {
+                canTargetLocations = true
+            },
+            (LocalTargetInfo target) =>
+            {
+                if (target.Cell.IsValid && target.Cell.InBounds(Find.CurrentMap))
+                {
+                    LightningStrike.GenerateLightningStrike(Find.CurrentMap, target.Cell, 5, out IEnumerable<IntVec3> affectedCells);
+                    TerrainDef goldTile = DefDatabase<TerrainDef>.AllDefs.RandomElement();
 
+
+                    List<ThingDef> naturalRockDefs = DefDatabase<ThingDef>.AllDefsListForReading.Where(x => x.building.isNaturalRock).ToList();
+
+                    foreach (var item in affectedCells)
+                    {
+                        Find.CurrentMap.terrainGrid.SetTerrain(item, goldTile);
+
+
+
+                        foreach (var thing in item.GetThingList(Find.CurrentMap))
+                        {
+                            if (thing.def.building != null && thing.def.building.isNaturalRock)
+                            {
+                                IntVec3 position = thing.Position;
+
+                                thing.Destroy();
+
+                                Thing replacementRock = ThingMaker.MakeThing(naturalRockDefs.RandomElement());
+                                GenSpawn.Spawn(replacementRock, position, Find.CurrentMap);
+
+
+                            }
+
+                        }
+                    }
+
+                }
+            }
+            );
+
+
+        }
         [DebugAction("Magic And Myth", "Test Spawn Meteor", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void SpawnMeteor()
         {

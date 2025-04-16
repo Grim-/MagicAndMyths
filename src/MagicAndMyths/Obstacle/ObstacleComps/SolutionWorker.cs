@@ -27,7 +27,7 @@ namespace MagicAndMyths
             currentWorkAmount++;
             if (currentWorkAmount >= def.workTicks)
             {
-                bool success = RollCheck(pawn, obstacle);
+                bool success = RollCheck(pawn, this.def.difficultyLevel, obstacle, out RollCheckOutcome outCome);
                 CompleteSolution(pawn, success);
                 return true;
             }
@@ -68,15 +68,18 @@ namespace MagicAndMyths
             return $"{pawn.LabelShort} failed to complete a challenge.";
         }
 
-        protected bool RollCheck(Pawn pawn, Building_ObstacleBase obstacle)
-        {
-            int dc = def.difficultyLevel;
-            int bonus = GetPawnBonus(pawn);
-            var DCOutcome = DCUtility.RollAgainstDC(dc, bonus);
 
-            Messages.Message($"{GetRelevantSkillName()} check roll: {DCOutcome.roll} + {bonus} = {DCOutcome.total} vs DC {dc}: {(DCOutcome.Success ? "Success!" : "Failure!")}",
-                DCOutcome.Success ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.NegativeEvent);
-            return DCOutcome.Success;
+        /// <summary>
+        /// Returns success if RollOutCome meets or beats DC
+        /// </summary>
+        /// <param name="pawn"></param>
+        /// <param name="obstacle"></param>
+        /// <returns></returns>
+        protected bool RollCheck(Pawn pawn, int dc, Building_ObstacleBase obstacle, out RollCheckOutcome rollOutcome)
+        {
+            int bonus = GetPawnBonus(pawn);
+            rollOutcome = DCUtility.RollAgainstDC(bonus);
+            return rollOutcome.LastRoll >= dc;
         }
 
         public virtual void Reset()
