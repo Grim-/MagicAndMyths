@@ -24,7 +24,6 @@ namespace MagicAndMyths
             }
         }
 
-        // Call this to allow a specific room's pawns to leave
         public void SetRoomPawnsCanLeave(int roomID, bool canLeave)
         {
             if (dungeonLords.TryGetValue(roomID, out Lord lord))

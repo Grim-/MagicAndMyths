@@ -32,6 +32,7 @@
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <constructEffect>ConstructMetal</constructEffect>
     <building>
+      <ai_chillDestination>false</ai_chillDestination>
       <isEdifice>false</isEdifice>
       <canPlaceOverWall>false</canPlaceOverWall>
     </building>

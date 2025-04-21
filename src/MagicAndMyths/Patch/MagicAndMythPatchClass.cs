@@ -17,8 +17,124 @@ namespace MagicAndMyths
     {
         static MagicAndMythPatchClass()
         {
+            foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs)
+            {
+                if (!def.IsWithinCategory(ThingCategoryDefOf.Chunks))
+                {
+                    if (def.comps != null)
+                    {
+                        def.comps.Add(new CompProperties_ThingProperties());
+                    }
+                }
+            }
+
             var harmony = new Harmony("com.emo.magicandmyths");
             harmony.PatchAll();
+        }
+
+        [HarmonyPatch(typeof(ThingSelectionUtility))]
+        [HarmonyPatch("SelectableByHotkey")]
+        [HarmonyPatch(new[] { typeof(Thing) })]
+        public static class Patch_ThingSelectionUtility_SelectableByHotkey
+        {
+            public static bool Prefix(Thing t, ref bool __result)
+            {
+                if (t.IsInvisible())
+                {
+                    __result = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(ThingSelectionUtility))]
+        [HarmonyPatch("SelectableByMapClick")]
+        [HarmonyPatch(new[] { typeof(Thing) })]
+        public static class Patch_ThingSelectionUtility_SelectableByMapClick
+        {
+            public static bool Prefix(Thing t, ref bool __result)
+            {
+                if (t.IsInvisible())
+                {
+                    __result = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(Graphic_Single))]
+        [HarmonyPatch("MatAt")]
+        [HarmonyPatch(new[] { typeof(Rot4), typeof(Thing) })]
+        public static class Patch_Graphic_Single_MatAt
+        {
+
+            public static Dictionary<Material, Material> InvisMaterialCache = new Dictionary<Material, Material>();
+
+            public static bool Prefix(Graphic_Single __instance, ref Material __result, Rot4 rot, Thing thing)
+            {
+                if (__instance == null)
+                    return true;
+
+                if (thing != null && thing.Spawned && thing.IsInvisible())
+                {
+
+                    if (InvisMaterialCache.ContainsKey(__result))
+                    {
+                        __result = InvisMaterialCache[__result];
+                        return false;
+                    }
+                    else
+                    {
+                        Material originalMaterial = __result;
+                        Material invisMat = new Material(ShaderDatabase.Invisible);
+                        if (thing.def.graphicData != null && thing.def.graphicData.shaderParameters != null)
+                        {
+                            foreach (var item in thing.def.graphicData.shaderParameters)
+                            {
+                                if (item != null)
+                                {
+                                    item.Apply(invisMat);
+                                }
+                            }
+                        }
+
+                        Texture2D graphicMainTex = ContentFinder<Texture2D>.Get(thing.def.graphicData.texPath);
+
+                        if (graphicMainTex != null)
+                        {
+                            invisMat.SetTexture("_MainTex", graphicMainTex);
+                        }
+
+                        if (TexGame.InvisDistortion != null)
+                        {
+                            invisMat.SetTexture("_NoiseTex", TexGame.InvisDistortion);
+                        }
+
+                        invisMat.color = new Color(0.75f, 0.93f, 0.98f, 0.5f);
+
+                        InvisMaterialCache.Add(originalMaterial, invisMat);
+                        __result = invisMat;
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAiming")]
+        public static class Patch_PawnRenderUtility_DrawEquipmentAiming
+        {
+            [HarmonyPrefix]
+            public static void Prefix(Thing eq, ref Vector3 drawLoc, float aimAngle)
+            {
+                if (eq != null && eq.def != null && eq.def.HasModExtension<DrawOffsetExt>())
+                {
+                    drawLoc += eq.def.GetModExtension<DrawOffsetExt>().offset;
+                }
+            }
         }
 
 
@@ -76,36 +192,6 @@ namespace MagicAndMyths
                 }
             }
         }
-
-
-        //[HarmonyPatch(typeof(ShaderDatabase))]
-        //[HarmonyPatch("LoadShader")]
-        //public static class ShaderDatabase_LoadShader_Patch
-        //{
-        //    [HarmonyPrefix]
-        //    public static bool Prefix(string shaderPath, ref Shader __result)
-        //    {
-        //        Shader customShader = AssetBundleShaderManager.GetShaderByAssetName(shaderPath);
-        //        if (customShader != null)
-        //        {
-        //            __result = customShader;
-        //            return false;
-        //        }
-        //        return true;
-        //    }
-        //}
-
-        //[HarmonyPatch(typeof(Root_Entry))]
-        //[HarmonyPatch("Start")]
-        //public static class Root_Entrye_Start_Patch
-        //{
-        //    [HarmonyPostfix]
-        //    public static void Postfix()
-        //    {
-        //        AssetBundleShaderManager.CacheAllLoadedShaders();
-        //    }
-        //}
-
 
         [HarmonyPatch(typeof(ApparelGraphicRecordGetter))]
         [HarmonyPatch("TryGetGraphicApparel")]

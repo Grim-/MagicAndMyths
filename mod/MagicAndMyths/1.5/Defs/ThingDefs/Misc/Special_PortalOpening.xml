@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MagicAndMyths_Portal</defName>
+    <label>portal</label>
+    <thingClass>MagicAndMyths.Portal</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <passability>PassThroughOnly</passability>
+    <useHitPoints>false</useHitPoints>
+    <graphicData>
+      <texPath>Animations/portal_single</texPath>
+      <graphicClass>Graphic_Single_SquashNStretch</graphicClass>
+      <drawSize>2</drawSize>
+      <color>(0.004, 0.843, 1)</color>
+      <shaderType>MoteGlowDistorted</shaderType>
+      <shaderParameters>
+        <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
+        <_distortionScale>0.1</_distortionScale>
+        <_distortionIntensity>0.14</_distortionIntensity>
+        <_brightnessMultiplier>1.1</_brightnessMultiplier>
+        <_pulseSpeed>50</_pulseSpeed>
+      </shaderParameters>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Beauty>1</Beauty>
+    </statBases>
+    <selectable>true</selectable>
+    <canOverlapZones>false</canOverlapZones>
+    <mineable>false</mineable>
+    <building>
+      <isInert>true</isInert>
+      <repairable>false</repairable>
+      <claimable>false</claimable>
+      <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+      <deconstructible>false</deconstructible>
+      <isTargetable>false</isTargetable>
+      <supportsWallAttachments>false</supportsWallAttachments>
+    </building>
+  </ThingDef>
+</Defs>

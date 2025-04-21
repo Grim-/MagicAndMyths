@@ -166,7 +166,6 @@ namespace MagicAndMyths
         }
         private IntVec3 FindItemDropLocation(Map map, Zone_Stockpile zone)
         {
-            // Get all cells in the zone
             var zoneCells = zone.Cells.ToList();
 
             zoneCells = zoneCells.InRandomOrder().ToList();
@@ -175,7 +174,6 @@ namespace MagicAndMyths
             {
                 if (cell.Standable(map) && !cell.Filled(map))
                 {
-                    // Check if there's already an item at this position
                     bool cellOccupied = map.thingGrid.ThingsListAt(cell)
                         .Any(thing => thing.def.category == ThingCategory.Item);
 

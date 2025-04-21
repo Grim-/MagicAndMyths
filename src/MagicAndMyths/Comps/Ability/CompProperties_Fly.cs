@@ -22,10 +22,13 @@ namespace MagicAndMyths
             base.Apply(target, dest);
             if (parent.pawn?.Map == null)
                 return;
+
+            IntVec3 spawnPosition = parent.pawn.Position;
+            IntVec3 tagetPosition = target.Cell;
 			Map map = parent.pawn.Map;
 
-			PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_SimpleFlyer, parent.pawn, target.Cell, null, null);
-            GenSpawn.Spawn(pawnFlyer, parent.pawn.Position, map);
+			PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_SimpleFlyer, parent.pawn, tagetPosition, null, null);
+            GenSpawn.Spawn(pawnFlyer, spawnPosition, map);
         }
     }
 

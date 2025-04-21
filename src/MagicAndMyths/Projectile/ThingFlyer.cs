@@ -67,6 +67,28 @@ namespace MagicAndMyths
 			return this.innerContainer;
 		}
 
+		public override void SpawnSetup(Map map, bool respawningAfterLoad)
+		{
+			base.SpawnSetup(map, respawningAfterLoad);
+			if (!respawningAfterLoad)
+			{
+				float num = Mathf.Max(this.flightDistance, 1f) / this.def.pawnFlyer.flightSpeed;
+				num = Mathf.Max(num, this.def.pawnFlyer.flightDurationMin);
+				this.ticksFlightTime = num.SecondsToTicks();
+				this.ticksFlying = 0;
+			}
+		}
+
+		public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+		{
+			Effecter effecter = this.flightEffecter;
+			if (effecter != null)
+			{
+				effecter.Cleanup();
+			}
+			base.Destroy(mode);
+		}
+
 		private void RecomputePosition()
 		{
 			if (this.positionLastComputedTick == this.ticksFlying)
@@ -89,27 +111,6 @@ namespace MagicAndMyths
 			this.throwingPawn = pawn;
         }
 
-		public override void SpawnSetup(Map map, bool respawningAfterLoad)
-		{
-			base.SpawnSetup(map, respawningAfterLoad);
-			if (!respawningAfterLoad)
-			{
-				float num = Mathf.Max(this.flightDistance, 1f) / this.def.pawnFlyer.flightSpeed;
-				num = Mathf.Max(num, this.def.pawnFlyer.flightDurationMin);
-				this.ticksFlightTime = num.SecondsToTicks();
-				this.ticksFlying = 0;
-			}
-		}
-
-		public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-		{
-			Effecter effecter = this.flightEffecter;
-			if (effecter != null)
-			{
-				effecter.Cleanup();
-			}
-			base.Destroy(mode);
-		}
 
 		public void GetChildHolders(List<IThingHolder> outChildren)
 		{
@@ -264,19 +265,6 @@ namespace MagicAndMyths
                     throwableComp.OnRespawn(position, flyingThing, map, throwingPawn);
                 }
             };
-
-            //thingFlyer.OnImpactedThing += (IntVec3 position, Thing impactedThing, Pawn throwingPawn) =>
-            //{
-            //    if (throwableComp != null)
-            //    {
-            //        throwableComp.OnImpactedThing(position, map, throwingPawn, impactedThing);
-            //    }
-            //    else
-            //    {
-            //        ThrowUtility.ApplyDefaultThrowImpactThingBehavior(throwingPawn, thing, position, map, impactedThing);
-            //    }
-            //};
-
 
             return thingFlyer;
 		}

@@ -9,7 +9,7 @@
     <graphicData>
       <texPath>Maul</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>1.6</drawSize>
+      <drawSize>2.2</drawSize>
     </graphicData>
     <drawerType>MapMeshAndRealTime</drawerType>
     <equipmentType>Primary</equipmentType>
@@ -43,8 +43,6 @@
       </li>
     </tools>
     <comps>
-      <li Class="Materia.CompProperties_DrawFireOverlay">
-      </li>
       <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
         <biocodeOnEquip>true</biocodeOnEquip>
       </li>
@@ -73,6 +71,11 @@
         </materiaSlots>
       </li>
     </comps>
+    <modExtensions>
+    <li Class="MagicAndMyths.DrawOffsetExt">
+      <offset>(-0.03, 0, 0.05)</offset>
+    </li>
+  </modExtensions>
   </ThingDef>
 
 </Defs>

@@ -11,7 +11,6 @@
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>1.1</drawSize>
     </graphicData>
-        <drawerType>MapMeshAndRealTime</drawerType>
     <equipmentType>Primary</equipmentType>
     <costList>
       <Steel>1000</Steel>
@@ -81,21 +80,6 @@
             <slotIsLocked>false</slotIsLocked>
           </li>
         </materiaSlots>
-      </li>
-      <li Class="MagicAndMyths.CompProperties_Overlay">
-        <overlayGraphic Class="MagicAndMyths.GraphicDataWithShader">
-          <drawSize>1.1</drawSize>
-          <texPath>PyreRuby</texPath>
-          <graphicClass>MagicAndMyths.Graphic_SingleWithShader</graphicClass>
-          <customShaderName>Shader Forge/FireEnchant</customShaderName>
-          <shaderParameters>
-            <_Overlay>/noise/Noise84</_Overlay>
-            <_FireColor>(1, 0, 0)</_FireColor>
-            <_Opacity>0.5</_Opacity>
-            <_PanSpeedX>0.11</_PanSpeedX>
-            <_PanSpeedY>0.01</_PanSpeedY>
-          </shaderParameters>
-        </overlayGraphic>
       </li>
     </comps>
   </ThingDef>

@@ -33,7 +33,7 @@
     <passability>Impassable</passability>
     <blockWind>true</blockWind>
     <castEdgeShadows>true</castEdgeShadows>
-    <fillPercent>1</fillPercent>
+    <fillPercent>0.2</fillPercent>
     <coversFloor>true</coversFloor>
     <holdsRoof>true</holdsRoof>
     <staticSunShadowHeight>1.0</staticSunShadowHeight>

@@ -66,7 +66,7 @@ namespace MagicAndMyths
         public int ThrowRangeCells
         {
             //3 cells for every + 1
-            get => DCUtility.GetStatBonus(Pawn, MagicAndMythDefOf.Stat_Strength) * 3;
+            get => Mathf.Max(1, DCUtility.GetStatBonus(Pawn, MagicAndMythDefOf.Stat_Strength)) * 4;
         }
 
 
@@ -264,4 +264,6 @@ namespace MagicAndMyths
             Scribe_Values.Look(ref LastThrowAttemptTick, "LastThrowAttemptTick", -1);
         }
     }
+
+
 }

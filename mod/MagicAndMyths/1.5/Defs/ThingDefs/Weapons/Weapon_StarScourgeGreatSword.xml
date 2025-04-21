@@ -9,9 +9,9 @@
     <graphicData>
       <texPath>Starscourgedual</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>2</drawSize>
-      <drawOffset>(0, 0, 0)</drawOffset>
+      <drawSize>3</drawSize>
     </graphicData>
+    <drawerType>MapMeshAndRealTime</drawerType>
     <recipeMaker>
     </recipeMaker>
     <equipmentType>Primary</equipmentType>
@@ -85,7 +85,7 @@
     </comps>
     <modExtensions>
     <li Class="MagicAndMyths.DrawOffsetExt">
-      <offset>(0, 0, 0)</offset>
+      <offset>(0, 0, 0.15)</offset>
     </li>
   </modExtensions>
   </ThingDef>

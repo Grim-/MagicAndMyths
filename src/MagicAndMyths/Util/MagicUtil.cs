@@ -8,6 +8,64 @@ namespace MagicAndMyths
 {
     public static class MagicUtil
     {
+        public static bool IsInvisible(this Thing t)
+        {
+            if (t is ThingWithComps withComps)
+            {
+                if (withComps.TryGetComp(out Comp_ThingProperties thingProperties))
+                {
+                    InvisiblePropertyWorker invisiblePropertyWorker = (InvisiblePropertyWorker)thingProperties.GetProperty(MagicAndMythDefOf.ThingProp_Invisible);
+
+                    if (invisiblePropertyWorker != null)
+                    {
+                        return invisiblePropertyWorker.IsInvisible(t);
+                    }
+                }
+            }
+            return false;
+        }
+
+        [DebugAction("Magic And Myths", "Add Thing Property", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void AddThingProperty()
+        {
+            Find.Targeter.BeginTargeting(new TargetingParameters()
+            {
+                canTargetPawns = true,
+                canTargetAnimals = true,
+                canTargetBuildings = true,
+                canTargetCorpses = true, 
+                canTargetHumans = true,
+                canTargetItems = true,
+                mustBeSelectable = true,
+            },
+            (LocalTargetInfo target) =>
+            {
+                if (target.Thing != null && target.Thing is ThingWithComps withComps)
+                {
+                    List<FloatMenuOption> Options = new List<FloatMenuOption>();
+
+                    foreach (var item in DefDatabase<ThingPropertyDef>.AllDefs)
+                    {
+                        Options.Add(new FloatMenuOption($"Add {item.label} Property to {target.Thing.Label}", () =>
+                        {
+                            if (withComps.TryGetComp(out Comp_ThingProperties _ThingProperties))
+                            {
+                                Log.Message("Adding prop to thing");
+                                _ThingProperties.AddProperty(item);
+                            }
+                            else
+                            {
+                                Log.Message("thing has no comp_thingproperties");
+                            }
+                        }));
+                    }
+
+                    Find.WindowStack.Add(new FloatMenu(Options));
+                }
+            }
+            );
+        }
+
 
         [DebugAction("Magic And Myths", "Test Spawn Orbital Laser", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void SpawnOrbitalLaser()
@@ -27,9 +85,9 @@ namespace MagicAndMyths
                 }
             }
             );
-
-
         }
+
+
         [DebugAction("Magic And Myths", "Test Transmute Lightning", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void FireTransmutationLightning()
         {

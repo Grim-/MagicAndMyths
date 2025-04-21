@@ -31,6 +31,7 @@ namespace MagicAndMyths
         public static JobDef MagicAndMyths_JumpOverObstacle;
         public static JobDef GotoAndTalk;
         public static JobDef MagicAndMyths_PickupAndThrow;
+        public static JobDef MagicAndMyths_Jump;
 
         public static QuestScriptDef Quest_DeathKnightStartingPath;
 
@@ -70,5 +71,8 @@ namespace MagicAndMyths
         public static StatDef Stat_Intelligence;
         public static StatDef Stat_Wisdom;
         public static StatDef Stat_Charisma;
+
+
+        public static ThingPropertyDef ThingProp_Invisible;
     }
 }

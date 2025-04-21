@@ -4,6 +4,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
     public class HediffCompProperties_BioShield : HediffCompProperties_EnergyComp
     {
         public float energyCostPerDamage = 2f;

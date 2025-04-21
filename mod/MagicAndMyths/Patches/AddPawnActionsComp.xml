@@ -7,4 +7,11 @@
         </li>
     </value>
   </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Human"]/comps</xpath>
+    <value>
+      <li Class="MagicAndMyths.CompProperties_PawnJumpActions">
+        </li>
+    </value>
+  </Operation>
 </Patch>

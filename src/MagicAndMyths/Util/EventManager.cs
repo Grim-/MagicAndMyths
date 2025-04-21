@@ -11,21 +11,6 @@ namespace MagicAndMyths
         private static EventManager instance;
         public static EventManager Instance => instance;
 
-        //private struct QueuedEvent
-        //{
-        //    public Action Action { get; }
-        //    public int Frame { get; }
-
-        //    public QueuedEvent(Action action, int frame)
-        //    {
-        //        Action = action;
-        //        Frame = frame;
-        //    }
-        //}
-
-        //private Queue<QueuedEvent> eventQueue = new Queue<QueuedEvent>();
-        //private readonly object queueLock = new object();
-
         // Combat events
         public static event Func<Thing, Thing, DamageInfo, DamageWorker.DamageResult, DamageWorker.DamageResult> OnDamageDealt;
         public static event Action<Pawn, DamageInfo> OnPawnDamageTaken;
@@ -56,13 +41,6 @@ namespace MagicAndMyths
         {
             instance = this;
         }
-
-        public override void GameComponentTick()
-        {
-            base.GameComponentTick();
-            //ProcessEvents();
-        }
-
 
         public static DamageWorker.DamageResult RaiseDamageDealt(Thing target, Thing attacker, DamageInfo dinfo, DamageWorker.DamageResult baseResult)
         {
