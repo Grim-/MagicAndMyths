@@ -9,7 +9,6 @@ namespace MagicAndMyths
         public float explosionRadius = 3f;
         public FloatRange healAmount = new FloatRange(10, 10);
         public int maxTargets = 4;
-        public bool destroyOnImpact = true;
 
         public CompProperties_ThrowableHealAOEOnImpact()
         {
@@ -42,13 +41,6 @@ namespace MagicAndMyths
 
                 item.QuickHeal(Props.healAmount.RandomInRange);
                 targetcount++;
-            }
-
-
-
-            if (Props.destroyOnImpact)
-            {
-                this.parent.Destroy();
             }
         }
     }

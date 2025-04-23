@@ -3,7 +3,7 @@
   <ThingDef ParentName="ApparelBase">
     <defName>Apparel_WristSheathesOfEndlessDaggers</defName>
     <label>Wrist Sheaths of Endless Daggers</label>
-    <description>A pair of decorative bracers worn on the forearms.</description>
+    <description>A pair of decorative bracers, once worn by a servant of the raven queen.</description>
     <techLevel>Medieval</techLevel>
     <graphicData>
       <texPath>Jewelry/RunedBracer</texPath>
@@ -22,20 +22,6 @@
     <equippedStatOffsets>
       <MeleeDodgeChance>0.05</MeleeDodgeChance>
     </equippedStatOffsets>
-    <costList>
-      <Steel>30</Steel>
-      <Silver>20</Silver>
-    </costList>
-    <recipeMaker>
-      <researchPrerequisite>Smithing</researchPrerequisite>
-      <skillRequirements>
-        <Crafting>7</Crafting>
-      </skillRequirements>
-      <recipeUsers>
-        <li>FueledSmithy</li>
-        <li>ElectricSmithy</li>
-      </recipeUsers>
-    </recipeMaker>
     <thingCategories>
       <li>Apparel</li>
     </thingCategories>
@@ -47,6 +33,11 @@
         <li>Skin</li>
       </layers>
     </apparel>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+        <abilityDef>MagicAndMyths_DaggerDaggerDagger</abilityDef>
+      </li>
+    </comps>
   </ThingDef>
 
 </Defs>

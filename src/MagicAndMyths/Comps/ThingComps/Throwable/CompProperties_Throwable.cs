@@ -16,6 +16,8 @@ namespace MagicAndMyths
         public bool spawnImpactMote = false;
 
 
+        public bool destroyOnThrow = true;
+
         public FloatRange baseImpactDamage = new FloatRange(1, 1);
         public DamageDef impactDamageDef;
 
@@ -52,9 +54,27 @@ namespace MagicAndMyths
             MakeImpactEffect(position, map, Color.white);
         }
 
+
+        public void Respawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
+        {
+            OnRespawn(position, thing, map, throwingPawn);
+            PostRespawn();
+        }
+
         public virtual void OnRespawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
         {
             
+        }
+
+        public virtual void PostRespawn()
+        {
+            if (Props.destroyOnThrow)
+            {
+                if (!this.parent.Destroyed)
+                {
+                    this.parent.Destroy();
+                }
+            }
         }
 
         protected void MakeImpactEffect(IntVec3 position, Map map, Color? color = null)

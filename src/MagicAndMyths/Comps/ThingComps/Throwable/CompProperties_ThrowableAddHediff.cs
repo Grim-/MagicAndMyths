@@ -1,12 +1,54 @@
-﻿using Verse;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Verse;
 
 namespace MagicAndMyths
 {
-    public class CompProperties_ThrowableAddHediff : CompProperties_ThrowableAffectPawns
+    public class CompProperties_ThrowableStoredPawn : CompProperties_Throwable
+    {
+        public CompProperties_ThrowableStoredPawn()
+        {
+            compClass = typeof(Comp_ThrowableStoredPawn);
+        }
+    }
+
+    public class Comp_ThrowableStoredPawn : Comp_Throwable
+    {
+        public CompProperties_ThrowableStoredPawn Props => (CompProperties_ThrowableStoredPawn)props;
+
+        public override void OnRespawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
+        {
+            Pawn singlePawn = position.GetFirstPawn(map);
+            Comp_PawnStorage pawnStorage = this.parent.GetComp<Comp_PawnStorage>();
+            if (pawnStorage != null)
+            {
+                if (pawnStorage.HasStored)
+                {
+                    //release
+                    pawnStorage.ReleasePawn(position, map);
+                }
+                else
+                {
+                    if (singlePawn != null)
+                    {
+                        pawnStorage.StorePawn(singlePawn);
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    public class CompProperties_ThrowableAddHediff : CompProperties_Throwable
     {
         public HediffDef hediffDef;
         public float severity = 1.0f;
         public BodyPartDef bodyPartDef = null;
+        public bool applyInRadius = true;
+        public float applyRadius = 3f;
+        public bool splitSeverityAmongTargets = true;
+        public bool firstTargetOnly = false;
 
         public CompProperties_ThrowableAddHediff()
         {
@@ -14,18 +56,74 @@ namespace MagicAndMyths
         }
     }
 
-    public class Comp_ThrowableAddHediff : Comp_ThrowableAffectPawns
+    public class Comp_ThrowableAddHediff : Comp_Throwable
     {
-        new public CompProperties_ThrowableAddHediff Props => (CompProperties_ThrowableAddHediff)props;
+        public CompProperties_ThrowableAddHediff Props => (CompProperties_ThrowableAddHediff)props;
 
-        protected override void AffectThing(Thing thing, Pawn throwingPawn)
+        public override void OnRespawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
         {
-            Pawn pawn = thing as Pawn;
-            if (pawn == null || Props.hediffDef == null)
+            if (Props.hediffDef == null)
+            {
                 return;
+            }
 
-            pawn.health.AddHediff(Props.hediffDef, null, null, null);
+
+
+            Pawn singlePawn = position.GetFirstPawn(map);
+
+
+            if (Props.firstTargetOnly && singlePawn != null)
+            {
+                ApplyHediffToPawn(singlePawn, Props.severity);
+            }
+            else
+            {
+                List<Pawn> affectedPawns = new List<Pawn>();
+
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, Props.applyRadius, true))
+                {
+                    if (cell.InBounds(map))
+                    {
+                        foreach (Thing t in cell.GetThingList(map))
+                        {
+                            if (t is Pawn p)
+                            {
+                                affectedPawns.Add(p);
+                            }
+                        }
+                    }
+                }
+
+                float appliedSeverity = Props.severity;
+                if (Props.splitSeverityAmongTargets && affectedPawns.Count > 0)
+                {
+                    appliedSeverity = Props.severity / affectedPawns.Count;
+                }
+
+                foreach (Pawn p in affectedPawns)
+                {
+                    ApplyHediffToPawn(p, appliedSeverity);
+                }
+            }
+        }
+
+        private void ApplyHediffToPawn(Pawn pawn, float severity)
+        {
+            BodyPartRecord targetPart = null;
+            if (Props.bodyPartDef != null)
+            {
+                targetPart = pawn.health.hediffSet.GetNotMissingParts()
+                    .FirstOrDefault(x => x.def == Props.bodyPartDef);
+            }
+
+            Hediff hediff = HediffMaker.MakeHediff(Props.hediffDef, pawn, targetPart);
+
+            if (hediff.def.initialSeverity > 0)
+            {
+                hediff.Severity = severity;
+            }
+
+            pawn.health.AddHediff(hediff, targetPart);
         }
     }
-
 }

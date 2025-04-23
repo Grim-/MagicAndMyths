@@ -15,7 +15,6 @@ namespace MagicAndMyths
         public static readonly Color DessicatedColorInsect = new Color(0.8f, 0.8f, 0.8f);
         private static readonly Vector3 BaseCarriedOffset = new Vector3(0f, 0f, -0.1f);
 
-        // Dictionary to cache property blocks per overlay
         private static readonly Dictionary<HediffComp_Overlay, MaterialPropertyBlock> propertyBlockCache =
             new Dictionary<HediffComp_Overlay, MaterialPropertyBlock>();
 

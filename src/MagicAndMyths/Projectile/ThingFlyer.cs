@@ -262,7 +262,7 @@ namespace MagicAndMyths
 			{
                 if (throwableComp != null)
                 {
-                    throwableComp.OnRespawn(position, flyingThing, map, throwingPawn);
+                    throwableComp.Respawn(position, flyingThing, map, throwingPawn);
                 }
             };
 

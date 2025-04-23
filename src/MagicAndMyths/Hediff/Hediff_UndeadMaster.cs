@@ -108,7 +108,7 @@ namespace MagicAndMyths
             }
             else
             {
-                SummonPatches.TrainPawn(pawn, this.pawn);
+                MagicUtil.TrainPawn(pawn, this.pawn);
             }
 
             if (pawn.playerSettings != null)

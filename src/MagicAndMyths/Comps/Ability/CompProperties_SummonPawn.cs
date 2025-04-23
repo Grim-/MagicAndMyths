@@ -44,7 +44,7 @@ namespace MagicAndMyths
 
                 if (!SummonedPawn.RaceProps.Humanlike)
                 {
-                    SummonPatches.TrainPawn(SummonedPawn, parent.pawn);
+                    MagicUtil.TrainPawn(SummonedPawn, parent.pawn);
                 }
 
                 if (SummonedPawn != null)

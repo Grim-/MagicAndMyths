@@ -8,6 +8,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
     public class MaskNodeProperties : PawnRenderNodeProperties
     {
         public Color maskColor = Color.white;
@@ -29,7 +30,6 @@ namespace MagicAndMyths
         }
     }
 
-    // Custom node for mask rendering
     public class MaskRenderNode : PawnRenderNode
     {
         public new MaskNodeProperties Props;
@@ -55,7 +55,6 @@ namespace MagicAndMyths
         }
     }
 
-    // Worker class that handles the actual rendering
     public class MaskNodeWorker : PawnRenderNodeWorker
     {
         public override void AppendDrawRequests(PawnRenderNode node, PawnDrawParms parms, List<PawnGraphicDrawRequest> requests)

@@ -4,5 +4,8 @@
     <defName>Artifact</defName>
     <label>artifact</label>
   </OrderedTakeGroupDef>
-
+  <OrderedTakeGroupDef>
+    <defName>Potion</defName>
+    <label>potion</label>
+  </OrderedTakeGroupDef>
 </Defs>

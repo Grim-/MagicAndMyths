@@ -13,6 +13,14 @@
     <Publicize Include="Assembly-CSharp:RimWorld.ColonistBarColonistDrawer.ColonistBar" />
     <Publicize Include="Assembly-CSharp:Verse.ShaderDatabase.lookup" />
     <Publicize Include="Assembly-CSharp:Verse.ZoneManager.AddZoneGridCell" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindLifeThreateningHediff" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindMostBleedingHediff" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindPermanentInjury" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindBiggestMissingBodyPart" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindInjury" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindImmunizableHediffWhichCanKill" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindNonInjuryMiscBadHediff" />
+    <Publicize Include="Assembly-CSharp:Verse.HealthUtility.FindAddiction" />
   </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -101,6 +109,10 @@
     <Compile Include="Comps\Ability\CompProperties_TeleportPawnToHomeMap.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
     <Compile Include="Comps\Map\MapComp_PerceptionManager.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectHeal.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectStoredPawn.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_PawnStorage.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\Comp_BaseAritfactEffect.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAddGene.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAddHediff.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAffectPawns.cs" />
@@ -108,6 +120,10 @@
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableHealAOEOnImpact.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableSpawnGasOrFilth.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableSpawnThing.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_Artifact.cs" />
+    <Compile Include="AI\JobDriver_UseArtifact.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddHediff.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectChangeWeather.cs" />
     <Compile Include="Comps\ThingProperties\BatteryCharger_PhotovolaticPropertyWorker.cs" />
     <Compile Include="Comps\ThingProperties\DurableComponentDef.cs" />
     <Compile Include="Comps\ExtendedMapParent.cs" />
@@ -139,16 +155,12 @@
     <Compile Include="AI\JobDriver_PickupAndThrow.cs" />
     <Compile Include="Comps\ThingProperties\Comp_ThingProperties.cs" />
     <Compile Include="Comps\ThingProperties\ThingPropertyWorker.cs" />
+    <Compile Include="PawnRender\PawnOverlayNodeProperties.cs" />
     <Compile Include="Util\BonusComponent.cs" />
     <Compile Include="Util\Roll\ContestedOutcome.cs" />
     <Compile Include="Util\StatParts\StatPart_DnDStatBase.cs" />
     <Compile Include="Util\StatParts\StatPart_Strength.cs" />
     <Compile Include="Util\ThrowUtility.cs" />
-    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_TargetablePosition.cs" />
-    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectChangeWeather.cs" />
-    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectCooldown.cs" />
-    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectDestroyAfterCount.cs" />
-    <Compile Include="Comps\ThingComps\Use Effects\CompProperties_UseEffectVFX.cs" />
     <Compile Include="Comps\ThingComps\Trap\CompProperties_ApplyHediff.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_MapWideApplyHediff.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_MapWideEffect.cs" />
@@ -389,6 +401,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Comps\ThingComps\Use Effects\" />
     <Folder Include="MapGen\BSP\AI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

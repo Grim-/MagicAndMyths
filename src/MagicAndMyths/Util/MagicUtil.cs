@@ -1,5 +1,6 @@
 ﻿using LudeonTK;
 using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -154,6 +155,157 @@ namespace MagicAndMyths
             );
 
 
+        }
+
+
+        public static void TrainPawn(Pawn PawnToTrain, Pawn Trainer = null)
+        {
+            if (PawnToTrain.training != null)
+            {
+                foreach (var item in DefDatabase<TrainableDef>.AllDefsListForReading)
+                {
+                    PawnToTrain.training.SetWantedRecursive(item, true);
+                    PawnToTrain.training.Train(item, Trainer, true);
+                }
+
+
+                if (PawnToTrain.playerSettings != null)
+                {
+                    PawnToTrain.playerSettings.followDrafted = true;
+                }
+            }
+        }
+
+        public static bool TryMakeSummonOf(this Pawn pawn, Pawn Master)
+        {
+            Hediff_UndeadMaster master = (Hediff_UndeadMaster)Master.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
+            Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
+            if (master != null && undeadSummon != null)
+            {
+                undeadSummon.SetSquadLeader(Master);
+                return true;
+            }
+
+            return false;
+        }
+
+        public static Hediff_UndeadMaster GetUndeadMaster(this Pawn pawn)
+        {
+            Hediff_UndeadMaster undeadMaster = (Hediff_UndeadMaster)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster);
+            return undeadMaster;
+        }
+
+
+        public static bool TryGetWorstInjury(Pawn pawn, out Hediff hediff, out BodyPartRecord part, Func<Hediff, bool> filter = null, params HediffDef[] exclude)
+        {
+            part = null;
+            hediff = null;
+
+
+            filter = filter ?? (h => h.def.injuryProps != null);
+
+            Hediff lifeThreateningHediff = HealthUtility.FindLifeThreateningHediff(pawn, exclude);
+            if (lifeThreateningHediff != null && filter(lifeThreateningHediff))
+            {
+                hediff = lifeThreateningHediff;
+                return true;
+            }
+
+
+            if (HealthUtility.TicksUntilDeathDueToBloodLoss(pawn) < 2500)
+            {
+                Hediff bleedingHediff = HealthUtility.FindMostBleedingHediff(pawn, exclude);
+                if (bleedingHediff != null && filter(bleedingHediff))
+                {
+                    hediff = bleedingHediff;
+                    return true;
+                }
+            }
+
+            if (pawn.health.hediffSet.GetBrain() != null)
+            {
+                Hediff brainInjury = HealthUtility.FindPermanentInjury(
+                    pawn,
+                    Gen.YieldSingle<BodyPartRecord>(pawn.health.hediffSet.GetBrain()),
+                    exclude);
+
+                if (brainInjury != null && filter(brainInjury))
+                {
+                    hediff = brainInjury;
+                    return true;
+                }
+
+                // Any brain injury
+                brainInjury = HealthUtility.FindInjury(
+                    pawn,
+                    Gen.YieldSingle<BodyPartRecord>(pawn.health.hediffSet.GetBrain()),
+                    exclude);
+
+                if (brainInjury != null && filter(brainInjury))
+                {
+                    hediff = brainInjury;
+                    return true;
+                }
+            }
+
+            float significantCoverage = ThingDefOf.Human.race.body.GetPartsWithDef(BodyPartDefOf.Hand).First<BodyPartRecord>().coverageAbsWithChildren;
+            part = HealthUtility.FindBiggestMissingBodyPart(pawn, significantCoverage);
+            if (part != null)
+            {
+                return true;
+            }
+
+            Hediff eyeInjury = HealthUtility.FindPermanentInjury(
+                pawn,
+                from x in pawn.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined, null, null)
+                where x.def == BodyPartDefOf.Eye
+                select x,
+                exclude);
+
+            if (eyeInjury != null && filter(eyeInjury))
+            {
+                hediff = eyeInjury;
+                return true;
+            }
+
+
+            part = HealthUtility.FindBiggestMissingBodyPart(pawn, 0f);
+            if (part != null)
+            {
+                return true;
+            }
+
+            Hediff permanentInjury = HealthUtility.FindPermanentInjury(pawn, null, exclude);
+            if (permanentInjury != null && filter(permanentInjury))
+            {
+                hediff = permanentInjury;
+                return true;
+            }
+
+            Hediff anyInjury = HealthUtility.FindInjury(pawn, null, exclude);
+            if (anyInjury != null && filter(anyInjury))
+            {
+                hediff = anyInjury;
+                return true;
+            }
+
+            return false;
+        }
+        public static void QuickHeal(this Pawn pawn, float healAmount)
+        {
+            if (TryGetWorstInjury(pawn, out Hediff hediff, out BodyPartRecord part, null))
+            {
+                if (hediff == null || hediff.def == null)
+                {
+                    return;
+                }
+
+                HealthUtility.AdjustSeverity(pawn, hediff.def, -healAmount);
+            }
+        }
+        public static bool IsControlledSummon(this Pawn pawn)
+        {
+            return pawn.health.hediffSet.HasHediff<Hediff_Undead>();
         }
     }
 }

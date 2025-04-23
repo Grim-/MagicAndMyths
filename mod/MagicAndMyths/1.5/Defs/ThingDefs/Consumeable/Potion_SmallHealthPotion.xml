@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ArtifactBase">
+    <defName>MagicAndMyths_SmallHealthPotion</defName>
+    <label>health potion (small)</label>
+    <description>A small potion that cures wounds, but not illnesses or addictions.</description>
+    <graphicData>
+      <texPath>Potions/SmallHealthPotion</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>5</stackLimit>
+    <orderedTakeGroup>Potion</orderedTakeGroup>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>600</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <relicChance>0</relicChance>
+    <comps Inherit="false">
+      <!--- what happens when used -->
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Drink {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>true</destroyOnUse>
+        <cooldownTickRange>2400~2400</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
+        <charges>1</charges>
+        <targetSelf>true</targetSelf>
+        <requiresTarget>true</requiresTarget>
+        <moveToTarget>true</moveToTarget>
+        <targetParams>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ArtifactEffectHeal">
+        <healAmount>30</healAmount>
+        <onlyLifeThreatening>false</onlyLifeThreatening>
+        <onlyBleeding>false</onlyBleeding>
+        <onlyPermanent>false</onlyPermanent>
+      </li>
+      <!--- what happens when thrown -->
+      <li Class="MagicAndMyths.CompProperties_ThrowableHealAOEOnImpact">
+        <explosionRadius>3</explosionRadius>
+        <healAmount>30</healAmount>
+        <maxTargets>4</maxTargets>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -73,6 +73,9 @@ namespace MagicAndMyths
         public static StatDef Stat_Charisma;
 
 
+
+        public static JobDef UseArtifact;
+
         public static ThingPropertyDef ThingProp_Invisible;
     }
 }
