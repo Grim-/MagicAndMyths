@@ -34,6 +34,11 @@ namespace MagicAndMyths
                 return false;
             }
 
+            if (pawn.Rotation == Rot4.North)
+            {
+                return false;
+            }
+
             List<HediffComp_Overlay> overlays = GetValidOverlayHediffs(pawn);
             if (overlays.Count == 0)
             {
@@ -185,7 +190,7 @@ namespace MagicAndMyths
             Vector3 weaponOffset = Vector3.zero;
             if (weapon.def.HasModExtension<DrawOffsetExt>())
             {
-                weaponOffset = weapon.def.GetModExtension<DrawOffsetExt>().offset * TWEAK_OFFSET;
+                weaponOffset = weapon.def.GetModExtension<DrawOffsetExt>().GetOffsetForRot(parms.pawn.Rotation) * TWEAK_OFFSET;
             }
 
             // Draw all valid overlays

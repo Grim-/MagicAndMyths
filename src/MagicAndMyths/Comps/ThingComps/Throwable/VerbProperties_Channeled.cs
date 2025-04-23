@@ -9,7 +9,7 @@ namespace MagicAndMyths
         public JobDef channelJobDef;
     }
 
-    public abstract class Verb_Channeled : Verb
+    public abstract class Verb_Channeled : Verb_ShootBeam
     {
        protected VerbProperties_Channeled Props => (VerbProperties_Channeled)verbProps;
 

@@ -13,7 +13,6 @@ namespace MagicAndMyths
         protected ThingWithComps TargetThing => (ThingWithComps)this.job.GetTarget(TargetIndex.A);
         protected Comp_Artifact ArtifactComp => TargetThing.TryGetComp<Comp_Artifact>();
 
-
         public override void Notify_Starting()
         {
             base.Notify_Starting();
@@ -32,6 +31,25 @@ namespace MagicAndMyths
             this.FailOn(() => !ArtifactComp.CanBeUsedNow(this.pawn));
 
             yield return Toils_Goto.GotoThing(TargetIndex.A, base.TargetThingA.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch);
+
+            Toil takeSingleItem = ToilMaker.MakeToil("TakeSingleItem");
+            takeSingleItem.initAction = delegate ()
+            {
+                Thing targetThing = takeSingleItem.actor.CurJob.targetA.Thing;
+                if (targetThing.stackCount > 1)
+                {
+                    Thing singleItem = targetThing.SplitOff(1);
+                    IntVec3 spawnCell = targetThing.Position + GenAdj.CardinalDirections.RandomElement();
+                    if (!spawnCell.InBounds(targetThing.Map) || spawnCell.Impassable(targetThing.Map))
+                    {
+                        spawnCell = CellFinder.StandableCellNear(targetThing.Position, targetThing.Map, 1);
+                    }
+
+                    GenSpawn.Spawn(singleItem, spawnCell, targetThing.Map);
+                    takeSingleItem.actor.CurJob.SetTarget(TargetIndex.A, singleItem);
+                }
+            };
+            yield return takeSingleItem;
 
             if (ArtifactComp.Props.moveToTarget && this.job.targetB.IsValid)
             {
@@ -99,9 +117,9 @@ namespace MagicAndMyths
                 Thing item = actor.CurJob.targetA.Thing;
                 LocalTargetInfo target = actor.CurJob.targetB;
 
-                if (ArtifactComp != null)
+                if (item != null && item.TryGetComp<Comp_Artifact>() is Comp_Artifact comp)
                 {
-                    ArtifactComp.UseEffects(actor, target);
+                    comp.UseEffects(actor, target);
                 }
             };
             use.defaultCompleteMode = ToilCompleteMode.Instant;

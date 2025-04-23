@@ -111,6 +111,7 @@
     <Compile Include="Comps\Map\MapComp_PerceptionManager.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectHeal.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectStoredPawn.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectTriggerIncident.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_PawnStorage.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\Comp_BaseAritfactEffect.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAddGene.cs" />

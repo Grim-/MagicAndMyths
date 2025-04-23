@@ -128,15 +128,74 @@ namespace MagicAndMyths
         public static class Patch_PawnRenderUtility_DrawEquipmentAiming
         {
             [HarmonyPrefix]
-            public static void Prefix(Thing eq, ref Vector3 drawLoc, float aimAngle)
+            public static void Prefix(Thing eq, ref Vector3 drawLoc, ref float aimAngle)
             {
                 if (eq != null && eq.def != null && eq.def.HasModExtension<DrawOffsetExt>())
                 {
-                    drawLoc += eq.def.GetModExtension<DrawOffsetExt>().offset;
+                    drawLoc += eq.def.GetModExtension<DrawOffsetExt>().GetOffsetForRot(eq.Rotation);
+                    //aimAngle = 270f;
                 }
             }
         }
 
+
+        //[HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAiming")]
+        //public static class Fix_WeaponFlipping_When_Equipped
+        //{
+        //    [HarmonyPrefix]
+        //    public static bool Prefix(Thing eq, Vector3 drawLoc, float aimAngle)
+        //    {
+        //        float num = aimAngle - 90f;
+        //        Mesh mesh = MeshPool.plane10;
+
+        //        if (aimAngle > 200f && aimAngle < 340f)
+        //        {
+        //            num -= 180f;
+        //            num -= eq.def.equippedAngleOffset;
+        //        }
+        //        else
+        //        {
+        //            num += eq.def.equippedAngleOffset;
+        //        }
+
+        //        num %= 360f;
+
+        //        CompEquippable compEquippable = eq.TryGetComp<CompEquippable>();
+        //        if (compEquippable != null)
+        //        {
+        //            Vector3 b;
+        //            float num2;
+        //            EquipmentUtility.Recoil(eq.def, EquipmentUtility.GetRecoilVerb(compEquippable.AllVerbs), out b, out num2, aimAngle);
+        //            drawLoc += b;
+        //            num += num2;
+        //        }
+        //        drawLoc += eq.def.GetModExtension<DrawOffsetExt>().GetOffsetForRot(eq.Rotation);
+        //        Material material = eq.Graphic.MatSingleFor(eq);
+        //        Vector3 s = new Vector3(eq.Graphic.drawSize.x, 0f, eq.Graphic.drawSize.y);
+        //        Matrix4x4 matrix = Matrix4x4.TRS(drawLoc, Quaternion.AngleAxis(num, Vector3.up), s);
+        //        Graphics.DrawMesh(mesh, matrix, material, 0);
+
+        //        return false;
+        //    }
+        //}
+
+        //[HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAndApparelExtras")]
+        //public class PawnRenderUtility_Patch
+        //{
+        //    [HarmonyPrefix]
+        //    static void Prefix(Pawn pawn, ref Vector3 drawPos, Rot4 facing, PawnRenderFlags flags)
+        //    {
+        //        if (pawn != null && pawn.equipment != null)
+        //        {
+        //            Thing primary = pawn.equipment.Primary;
+
+        //            if (primary != null && primary.def.HasModExtension<DrawOffsetExt>())
+        //            {
+        //                drawPos += primary.def.GetModExtension<DrawOffsetExt>().GetOffsetForRot(pawn.Rotation);
+        //            }
+        //        }
+        //    }
+        //}
 
         [HarmonyPatch(typeof(Pawn_PathFollower), "SetupMoveIntoNextCell")]
         public static class Patch_Pawn_PathFollower_SetupMoveIntoNextCell
@@ -253,22 +312,7 @@ namespace MagicAndMyths
 
 
 
-        [HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAndApparelExtras")]
-        public class PawnRenderUtility_Patch
-        {
-            static void Prefix(Pawn pawn, Vector3 drawPos, Rot4 facing, PawnRenderFlags flags)
-            {          
-                if (pawn != null && pawn.equipment != null)
-                {
-                    Thing primary = pawn.equipment.Primary;
 
-                    if (primary != null && primary.def.HasModExtension<DrawOffsetExt>())
-                    {
-                        drawPos += primary.def.GetModExtension<DrawOffsetExt>().offset;
-                    }
-                }
-            }
-        }
 
         [HarmonyPatch(typeof(Pawn_EquipmentTracker), "EquipmentTrackerTick")]
         public class CompEquippable_BowModeSwitcher_Tick_Patch

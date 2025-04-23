@@ -45,6 +45,18 @@
         <cooldownTime>1.1</cooldownTime>
       </li>
     </tools>
+    <verbs>
+     <li Class="MagicAndMyths.VerbProperties_Channeled">
+       <channelDurationTicks>300</channelDurationTicks>
+       <channelJobDef>MagicAndMyths_ChannelVerb</channelJobDef>
+       <verbClass>MagicAndMyths.Verb_LaserBeam</verbClass>
+       <hasStandardCommand>true</hasStandardCommand>
+       <warmupTime>1</warmupTime>
+       <range>24</range>
+       <muzzleFlashScale>0</muzzleFlashScale>
+       <label>laser beam</label>
+     </li>
+   </verbs>
     <comps>
       <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
         <biocodeOnEquip>true</biocodeOnEquip>
