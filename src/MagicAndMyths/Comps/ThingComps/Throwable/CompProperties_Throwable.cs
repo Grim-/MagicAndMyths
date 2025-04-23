@@ -5,6 +5,8 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
+
     public class CompProperties_Throwable : CompProperties
     {
         public FleckDef impactFleck;

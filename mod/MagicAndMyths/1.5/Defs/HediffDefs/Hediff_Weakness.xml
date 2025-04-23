@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
-  <HediffDef Name="NegativePotionEffectBase" Abstract="True">
-    <hediffClass>HediffWithComps</hediffClass>
-    <defaultLabelColor>(0.6, 0.4, 0.7)</defaultLabelColor>
-    <initialSeverity>0.001</initialSeverity>
-    <isInfection>true</isInfection>
-    <removeOnRedressChanceByDaysCurve>
-      <points>
-        <li>(0, 0)</li>
-        <li>(2, 0)</li>
-        <li>(7, 0.5)</li>
-        <li>(20, 1)</li>
-      </points>
-    </removeOnRedressChanceByDaysCurve>
-  </HediffDef>
-
 <HediffDef ParentName="NegativePotionEffectBase">
   <defName>MnMWeakness</defName>
   <label>Weakness</label>

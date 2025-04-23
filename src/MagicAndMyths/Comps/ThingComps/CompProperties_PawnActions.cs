@@ -175,18 +175,28 @@ namespace MagicAndMyths
             },
             delegate (LocalTargetInfo target)
             {
-                if (Pawn.inventory.innerContainer.Contains(itemToThrow))
+                Thing thingToThrow;
+
+                if (itemToThrow.stackCount > 1)
                 {
-                    Pawn.inventory.innerContainer.Remove(itemToThrow);
+                    thingToThrow = itemToThrow.SplitOff(1);
                 }
-                else if (Pawn.equipment.AllEquipmentListForReading.Any(x => x.thingIDNumber == itemToThrow.thingIDNumber))
+                else
                 {
-                    Pawn.equipment.Remove((ThingWithComps)itemToThrow);
+                    thingToThrow = itemToThrow;
+                    if (Pawn.inventory.innerContainer.Contains(itemToThrow))
+                    {
+                        Pawn.inventory.innerContainer.Remove(itemToThrow);
+                    }
+                    else if (Pawn.equipment.AllEquipmentListForReading.Any(x => x.thingIDNumber == itemToThrow.thingIDNumber))
+                    {
+                        Pawn.equipment.Remove((ThingWithComps)itemToThrow);
+                    }
                 }
 
                 ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(
                     MagicAndMythDefOf.MagicAndMyths_ThingFlyer,
-                    thing: itemToThrow,
+                    thing: thingToThrow,
                     destCell: target.Cell,
                     map: this.Pawn.Map,
                     flightEffecterDef: null,
@@ -194,8 +204,7 @@ namespace MagicAndMyths
                     throwerPawn: Pawn,
                     overrideStartVec: Pawn.DrawPos);
 
-                //Log.Message($"BeginThrowFromInventory Created ThingFlyer for {itemToThrow.LabelShort} to Destionation {target.Cell}, thrown by {Pawn}");
-                ThingFlyer.LaunchFlyer(thingFlyer, itemToThrow, Pawn.Position, target.Cell, Pawn.Map);
+                ThingFlyer.LaunchFlyer(thingFlyer, thingToThrow, Pawn.Position, target.Cell, Pawn.Map);
 
                 LastThrowAttemptTick = Current.Game.tickManager.TicksGame;
             });

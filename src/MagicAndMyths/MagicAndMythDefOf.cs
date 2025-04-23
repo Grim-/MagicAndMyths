@@ -75,6 +75,7 @@ namespace MagicAndMyths
 
 
         public static JobDef UseArtifact;
+        public static JobDef MagicAndMyths_CastLaserBeam;
 
         public static ThingPropertyDef ThingProp_Invisible;
     }

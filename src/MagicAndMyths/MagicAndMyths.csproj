@@ -124,6 +124,10 @@
     <Compile Include="AI\JobDriver_UseArtifact.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddHediff.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectChangeWeather.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableStoredPawn.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\JobDriver_ChannelVerb.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\VerbProperties_Channeled.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\Verb_LaserBeam.cs" />
     <Compile Include="Comps\ThingProperties\BatteryCharger_PhotovolaticPropertyWorker.cs" />
     <Compile Include="Comps\ThingProperties\DurableComponentDef.cs" />
     <Compile Include="Comps\ExtendedMapParent.cs" />
@@ -157,6 +161,7 @@
     <Compile Include="Comps\ThingProperties\ThingPropertyWorker.cs" />
     <Compile Include="PawnRender\PawnOverlayNodeProperties.cs" />
     <Compile Include="Util\BonusComponent.cs" />
+    <Compile Include="Util\Effect Behaviours\LaserBeamEffect.cs" />
     <Compile Include="Util\Roll\ContestedOutcome.cs" />
     <Compile Include="Util\StatParts\StatPart_DnDStatBase.cs" />
     <Compile Include="Util\StatParts\StatPart_Strength.cs" />

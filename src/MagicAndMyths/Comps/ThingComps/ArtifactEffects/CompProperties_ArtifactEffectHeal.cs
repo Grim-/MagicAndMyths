@@ -6,9 +6,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
-
-
     public class CompProperties_ArtifactEffectHeal : CompProperties
     {
         public bool onlyLifeThreatening = false;

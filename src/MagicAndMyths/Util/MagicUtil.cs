@@ -158,6 +158,19 @@ namespace MagicAndMyths
         }
 
 
+
+        public static bool HasCooldownByTick(int LastTriggerTick, int CooldownTicks)
+        {
+
+            if (LastTriggerTick <= 0)
+            {
+                return false;
+            }
+
+            return Current.Game.tickManager.TicksGame <= LastTriggerTick + CooldownTicks;
+        }
+
+
         public static void TrainPawn(Pawn PawnToTrain, Pawn Trainer = null)
         {
             if (PawnToTrain.training != null)

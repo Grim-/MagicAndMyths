@@ -35,7 +35,6 @@ namespace MagicAndMyths
             }
         }
 
-
         public void StorePawn(Pawn pawn)
         {
             if (HasStored)
@@ -63,10 +62,6 @@ namespace MagicAndMyths
                 Log.Message("Failed to store pawn, respawning");
             }
         }
-
-
-
-
 
         public void ReleasePawn(IntVec3 position, Map map)
         {

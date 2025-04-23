@@ -42,7 +42,7 @@ namespace MagicAndMyths
                 {
                     return false;
                 }
-                return Current.Game.tickManager.TicksGame <= LastTriggerTick + CooldownTicks;
+                return MagicUtil.HasCooldownByTick(LastTriggerTick, CooldownTicks);
             }
         }
         public override void PostSpawnSetup(bool respawningAfterLoad)

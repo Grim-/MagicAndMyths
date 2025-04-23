@@ -17,7 +17,7 @@
       <MarketValue>600</MarketValue>
       <MaxHitPoints>80</MaxHitPoints>
     </statBases>
-    <drawGUIOverlay>false</drawGUIOverlay>
+    <drawGUIOverlay>true</drawGUIOverlay>
     <relicChance>0</relicChance>
     <comps Inherit="false">
       <!--- what happens when used -->
