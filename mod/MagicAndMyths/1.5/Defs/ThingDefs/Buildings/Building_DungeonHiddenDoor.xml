@@ -29,6 +29,7 @@
         <edgeRight>Damage/Edge</edgeRight>
       </damageData>
     </graphicData>
+    <useStuffTerrainAffordance>false</useStuffTerrainAffordance>
     <uiIconPath>Things/Building/Door/DoorSimple_MenuIcon</uiIconPath>
     <stuffCategories Inherit="false">
     </stuffCategories>

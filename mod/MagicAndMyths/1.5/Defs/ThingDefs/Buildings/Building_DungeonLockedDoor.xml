@@ -22,6 +22,7 @@
     </costList>
     <stuffCategories Inherit="false" />
     <designationHotKey>Misc1</designationHotKey>
+    <useStuffTerrainAffordance>false</useStuffTerrainAffordance>
     <building>
       <isInert>true</isInert>
       <repairable>false</repairable>

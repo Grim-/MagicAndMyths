@@ -263,7 +263,7 @@
     <Compile Include="Mechanisms\CompMechanism.cs" />
     <Compile Include="Obstacle\ObstacleComps\Obstacle.cs" />
     <Compile Include="Mechanisms\CompProperties_UnlockDoorMechanism.cs" />
-    <Compile Include="Trap\CompTrap.cs" />
+    <Compile Include="Comps\Trap\CompTrap.cs" />
     <Compile Include="Obstacle\ObstacleGenerator.cs" />
     <Compile Include="Obstacle\Workers\ObstacleWorker_KeyAndDoor.cs" />
     <Compile Include="Buildings\Dungeon\Building_HiddenDoor.cs" />

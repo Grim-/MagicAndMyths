@@ -13,7 +13,7 @@
           <graphicClass>MagicAndMyths.Graphic_SingleWithShader</graphicClass>
           <customShaderName>Shader Forge/EnchantShader_Additive</customShaderName>
           <shaderParameters>
-            <_OverlayTex>/noise/Noise94</_OverlayTex>
+            <_OverlayTex>/noise/PerlinNoise_7</_OverlayTex>
             <!-- <_OverlayMask></_OverlayMask> -->
             <_FireColor>(0.737, 0.976, 1, 0.46)</_FireColor>
             <_Opacity>1</_Opacity>

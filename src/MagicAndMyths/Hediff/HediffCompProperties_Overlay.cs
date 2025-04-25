@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
-
     public class HediffCompProperties_Overlay : HediffCompProperties
     {
         public bool overlayPawn = false;
@@ -54,6 +54,7 @@ namespace MagicAndMyths
         {
             return ContentFinder<Texture2D>.Get(Thing.def.graphicData.texPath);
         }
+
 
         public override IEnumerable<Gizmo> CompGetGizmos()
         {

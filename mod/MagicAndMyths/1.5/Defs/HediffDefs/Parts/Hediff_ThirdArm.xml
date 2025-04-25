@@ -2,6 +2,7 @@
 <Defs>
   <HediffDef>
       <defName>MagicAndMyths_Thirdarm</defName>
+      <hediffClass>HediffWithComps</hediffClass>
       <label>extra arm</label>
       <labelNoun>an extra arm</labelNoun>
       <description>An additional functional arm.</description>
@@ -20,7 +21,6 @@
           <solid>true</solid>
           <partEfficiency>1.0</partEfficiency>
       </addedPartProps>
-      <spawnThingOnRemoved>null</spawnThingOnRemoved>
       <comps>
           <li Class="HediffCompProperties_VerbGiver">
               <tools>

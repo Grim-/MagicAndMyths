@@ -9,6 +9,7 @@
       <texPath>Jewelry/RunedBracer</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
+    <smeltable>false</smeltable>
     <statBases>
       <MaxHitPoints>120</MaxHitPoints>
       <WorkToMake>5000</WorkToMake>
@@ -30,7 +31,7 @@
         <li>Arms</li>
       </bodyPartGroups>
       <layers>
-        <li>Skin</li>
+        <li>Shell</li>
       </layers>
     </apparel>
     <comps>
