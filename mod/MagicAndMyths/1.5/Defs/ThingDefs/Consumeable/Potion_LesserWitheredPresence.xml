@@ -39,12 +39,12 @@
         </targetParams>
       </li>
       <li Class="MagicAndMyths.CompProperties_ArtifactEffectAddHediff">
-        <hediff>MnMWitheredPresence</hediff>
+        <hediff>MagicAndMyths_WitheredPresence</hediff>
         <severity>1</severity>
       </li>
       <!--- what happens when thrown -->
       <li Class="MagicAndMyths.CompProperties_ThrowableAddHediff">
-        <hediffDef>MnMWitheredPresence</hediffDef>
+        <hediffDef>MagicAndMyths_WitheredPresence</hediffDef>
         <severity>1</severity>
         <applyInRadius>true</applyInRadius>
         <applyRadius>3</applyRadius>

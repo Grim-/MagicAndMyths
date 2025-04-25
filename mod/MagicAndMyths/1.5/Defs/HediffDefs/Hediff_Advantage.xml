@@ -2,15 +2,19 @@
 <Defs>
 
 <HediffDef ParentName="PotionEffectBase">
-  <defName>MnMSilverTongue</defName>
-  <label>SilverTongue</label>
+  <defName>MagicAndMyths_Advantage</defName>
+  <label>Advantage</label>
   <description>I will come up with this just testing stuff.</description>
   <hediffClass>HediffWithComps</hediffClass>
   <stages>
     <li>
       <capMods>
         <li>
-          <capacity>Talking</capacity>
+          <capacity>Manipulation</capacity>
+          <offset>+0.3</offset>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
           <offset>+0.3</offset>
         </li>
       </capMods>

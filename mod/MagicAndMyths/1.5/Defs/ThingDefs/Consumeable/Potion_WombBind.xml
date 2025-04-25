@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="ArtifactBase">
-    <defName>MagicAndMyths_LesserFrailtyPotion</defName>
-    <label>lesser Frailty Potion</label>
-    <description>I will come up with this just testing stuff.</description>
+    <defName>MagicAndMyths_MutagenWombBindPotion</defName>
+    <label>mutagen "Womb Bind" potion</label>
+    <description>A potion that when drank causes magical mutations to occour</description>
     <graphicData>
-      <texPath>Potions/Alchemy_16_shadow_potion</texPath>
+      <texPath>Potions/MutagenPotion</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
@@ -39,17 +39,17 @@
         </targetParams>
       </li>
       <li Class="MagicAndMyths.CompProperties_ArtifactEffectAddHediff">
-        <hediff>MagicAndMyths_Frailty</hediff>
-        <severity>1</severity>
+        <hediff>PregnantHuman</hediff>
+        <severity>.05</severity>
       </li>
       <!--- what happens when thrown -->
       <li Class="MagicAndMyths.CompProperties_ThrowableAddHediff">
-        <hediffDef>MagicAndMyths_Frailty</hediffDef>
-        <severity>1</severity>
+        <hediffDef>PregnantHuman</hediffDef>
+        <severity>.05</severity>
         <applyInRadius>true</applyInRadius>
         <applyRadius>3</applyRadius>
-        <splitSeverityAmongTargets>true</splitSeverityAmongTargets>
-        <firstTargetOnly>false</firstTargetOnly>
+        <splitSeverityAmongTargets>false</splitSeverityAmongTargets>
+        <firstTargetOnly>true</firstTargetOnly>
       </li>
     </comps>
   </ThingDef>

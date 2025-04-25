@@ -2,8 +2,8 @@
 <Defs>
 
 <HediffDef ParentName="PotionEffectBase">
-  <defName>MnMEnlightenment</defName>
-  <label>Enlightenment</label>
+  <defName>MagicAndMyths_SacredPerception</defName>
+  <label>Sacred Perception</label>
   <description>I will come up with this just testing stuff.</description>
   <hediffClass>HediffWithComps</hediffClass>
   <stages>
@@ -11,6 +11,14 @@
       <capMods>
         <li>
           <capacity>Consciousness</capacity>
+          <offset>+0.3</offset>
+        </li>
+        <li>
+          <capacity>Hearing</capacity>
+          <offset>+0.3</offset>
+        </li>
+        <li>
+          <capacity>Sight</capacity>
           <offset>+0.3</offset>
         </li>
       </capMods>

@@ -39,12 +39,12 @@
         </targetParams>
       </li>
       <li Class="MagicAndMyths.CompProperties_ArtifactEffectAddHediff">
-        <hediff>MnMCloudedJudgment</hediff>
+        <hediff>MagicAndMyths_CloudedJudgment</hediff>
         <severity>1</severity>
       </li>
       <!--- what happens when thrown -->
       <li Class="MagicAndMyths.CompProperties_ThrowableAddHediff">
-        <hediffDef>MnMCloudedJudgment</hediffDef>
+        <hediffDef>MagicAndMyths_CloudedJudgment</hediffDef>
         <severity>1</severity>
         <applyInRadius>true</applyInRadius>
         <applyRadius>3</applyRadius>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 <HediffDef ParentName="NegativePotionEffectBase">
-  <defName>MnMWeakness</defName>
+  <defName>MagicAndMyths_Weakness</defName>
   <label>Weakness</label>
   <description>I will come up with this just testing stuff.</description>
   <hediffClass>HediffWithComps</hediffClass>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef ParentName="NegativePotionEffectBase">
+    <defName>MagicAndMyths_LeadArms</defName>
+    <label>Lead Arms</label>
+    <description>I will come up with this just testing stuff.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <initialSeverity>0.5</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <alwaysShowSeverity>true</alwaysShowSeverity>
+    <stages>
+      <li>
+        <statOffsets>
+          <MeleeArmorPenetration>-3</MeleeArmorPenetration>
+          <MeleeHitChance>-0.10</MeleeHitChance>
+          <MeleeDodgeChance>-0.10</MeleeDodgeChance>
+          <MeleeDamageFactor>-0.10</MeleeDamageFactor>
+          <MeleeDPS>-0.10</MeleeDPS>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

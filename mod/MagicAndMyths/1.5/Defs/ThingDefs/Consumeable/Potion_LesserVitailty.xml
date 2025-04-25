@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="ArtifactBase">
-    <defName>MagicAndMyths_LesserFrailtyPotion</defName>
-    <label>lesser Frailty Potion</label>
+    <defName>MagicAndMyths_LesserVitalityPotion</defName>
+    <label>lesser Vitality Potion</label>
     <description>I will come up with this just testing stuff.</description>
     <graphicData>
-      <texPath>Potions/Alchemy_16_shadow_potion</texPath>
+      <texPath>Potions/Alchemy_15_reactive_potion</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
@@ -39,12 +39,12 @@
         </targetParams>
       </li>
       <li Class="MagicAndMyths.CompProperties_ArtifactEffectAddHediff">
-        <hediff>MagicAndMyths_Frailty</hediff>
+        <hediff>MagicAndMyths_Vitality</hediff>
         <severity>1</severity>
       </li>
       <!--- what happens when thrown -->
       <li Class="MagicAndMyths.CompProperties_ThrowableAddHediff">
-        <hediffDef>MagicAndMyths_Frailty</hediffDef>
+        <hediffDef>MagicAndMyths_Vitality</hediffDef>
         <severity>1</severity>
         <applyInRadius>true</applyInRadius>
         <applyRadius>3</applyRadius>
