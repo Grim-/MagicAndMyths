@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef Name="MMArtifactBase" ParentName="ArtifactBase" Abstract="true">
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>1</stackLimit>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <relicChance>0</relicChance>
+  </ThingDef>
+
+</Defs>
