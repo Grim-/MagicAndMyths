@@ -2,23 +2,23 @@
 <Defs>
 
 <HediffDef ParentName="PotionEffectBase">
-  <defName>MnMSacredPerception</defName>
-  <label>Sacred Perception</label>
+  <defName>MagicAndMyths_Heroism</defName>
+  <label>Heroism</label>
   <description>I will come up with this just testing stuff.</description>
   <hediffClass>HediffWithComps</hediffClass>
   <stages>
     <li>
       <capMods>
         <li>
-          <capacity>Consciousness</capacity>
+          <capacity>BloodFiltration</capacity>
           <offset>+0.3</offset>
         </li>
         <li>
-          <capacity>Hearing</capacity>
+          <capacity>BloodPumping</capacity>
           <offset>+0.3</offset>
         </li>
         <li>
-          <capacity>Sight</capacity>
+          <capacity>Breathing</capacity>
           <offset>+0.3</offset>
         </li>
       </capMods>

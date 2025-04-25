@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef ParentName="NegativePotionEffectBase">
+    <defName>MagicAndMyths_HazeyEyes</defName>
+    <label>Hazey Eyes</label>
+    <description>I will come up with this just testing stuff.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <initialSeverity>0.5</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <alwaysShowSeverity>true</alwaysShowSeverity>
+    <stages>
+      <li>
+        <statOffsets>
+          <MaxHitPoints>-3</MaxHitPoints>
+          <MeleeHitChance>-0.10</MeleeHitChance>
+          <MeleeDodgeChance>-0.10</MeleeDodgeChance>
+          <ShootingAccuracyPawn>-0.10</ShootingAccuracyPawn>
+          <AimingDelayFactor>+0.10</AimingDelayFactor>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

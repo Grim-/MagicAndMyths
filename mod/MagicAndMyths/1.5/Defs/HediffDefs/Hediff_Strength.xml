@@ -2,19 +2,23 @@
 <Defs>
 
 <HediffDef ParentName="PotionEffectBase">
-  <defName>MnMAdvantage</defName>
-  <label>Advantage</label>
+  <defName>MagicAndMyths_Strength</defName>
+  <label>Strength</label>
   <description>I will come up with this just testing stuff.</description>
   <hediffClass>HediffWithComps</hediffClass>
   <stages>
     <li>
       <capMods>
         <li>
-          <capacity>Manipulation</capacity>
+          <capacity>Consciousness</capacity>
           <offset>+0.3</offset>
         </li>
         <li>
-          <capacity>Moving</capacity>
+          <capacity>Hearing</capacity>
+          <offset>+0.3</offset>
+        </li>
+        <li>
+          <capacity>Sight</capacity>
           <offset>+0.3</offset>
         </li>
       </capMods>
