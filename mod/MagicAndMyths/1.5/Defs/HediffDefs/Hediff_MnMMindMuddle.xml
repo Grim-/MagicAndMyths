@@ -2,8 +2,8 @@
 <Defs>
 
   <HediffDef ParentName="NegativePotionEffectBase">
-    <defName>MagicAndMyths_WitheredPresence</defName>
-    <label>Withered Presence</label>
+    <defName>MnMMindMuddle</defName>
+    <label>Mind Muddle</label>
     <description>I will come up with this just testing stuff.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <makesSickThought>true</makesSickThought>
@@ -15,7 +15,7 @@
         </statOffsets>
         <capMods>
           <li>
-            <capacity>Talking</capacity>
+            <capacity>Consciousness</capacity>
             <offset>-0.3</offset>
           </li>
         </capMods>

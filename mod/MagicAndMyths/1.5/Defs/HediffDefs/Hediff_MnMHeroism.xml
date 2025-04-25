@@ -2,15 +2,23 @@
 <Defs>
 
 <HediffDef ParentName="PotionEffectBase">
-  <defName>MagicAndMyths_Enlightenment</defName>
-  <label>Enlightenment</label>
+  <defName>MnMHeroism</defName>
+  <label>Heroism</label>
   <description>I will come up with this just testing stuff.</description>
   <hediffClass>HediffWithComps</hediffClass>
   <stages>
     <li>
       <capMods>
         <li>
-          <capacity>Consciousness</capacity>
+          <capacity>BloodFiltration</capacity>
+          <offset>+0.3</offset>
+        </li>
+        <li>
+          <capacity>BloodPumping</capacity>
+          <offset>+0.3</offset>
+        </li>
+        <li>
+          <capacity>Breathing</capacity>
           <offset>+0.3</offset>
         </li>
       </capMods>

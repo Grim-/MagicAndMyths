@@ -2,8 +2,8 @@
 <Defs>
 
   <HediffDef ParentName="NegativePotionEffectBase">
-    <defName>MagicAndMyths_Frailty</defName>
-    <label>Frailty</label>
+    <defName>MnMCloudedJudgment</defName>
+    <label>CloudedJudgment</label>
     <description>I will come up with this just testing stuff.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <makesSickThought>true</makesSickThought>
@@ -15,15 +15,15 @@
         </statOffsets>
         <capMods>
           <li>
-            <capacity>BloodFiltration</capacity>
+            <capacity>Consciousness</capacity>
             <offset>-0.3</offset>
           </li>
           <li>
-            <capacity>BloodPumping</capacity>
+            <capacity>Hearing</capacity>
             <offset>-0.3</offset>
           </li>
           <li>
-            <capacity>Breathing</capacity>
+            <capacity>Sight</capacity>
             <offset>-0.3</offset>
           </li>
         </capMods>

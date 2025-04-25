@@ -2,8 +2,8 @@
 <Defs>
 
   <HediffDef ParentName="NegativePotionEffectBase">
-    <defName>MagicAndMyths_ClumsyGrip</defName>
-    <label>Clumsy Grip</label>
+    <defName>MnMWitheredPresence</defName>
+    <label>Withered Presence</label>
     <description>I will come up with this just testing stuff.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <makesSickThought>true</makesSickThought>
@@ -15,11 +15,7 @@
         </statOffsets>
         <capMods>
           <li>
-            <capacity>Manipulation</capacity>
-            <offset>-0.3</offset>
-          </li>
-          <li>
-            <capacity>Moving</capacity>
+            <capacity>Talking</capacity>
             <offset>-0.3</offset>
           </li>
         </capMods>
