@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>MagicAndMyths_TrollsBloodRegeneration</defName>
+    <label>Trolls Blood Regeneration (Permament)</label>
+    <description>This pawn is constantly regenerating.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <duplicationAllowed>false</duplicationAllowed>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_Regeneration">
+        <healPerRegenTick>0.1</healPerRegenTick>
+        <disruptingDamageTypes>
+            <li>Flame</li>
+            <li>Burn</li>
+            <li>AcidBurn</li>
+        </disruptingDamageTypes>
+      </li>
+      <li Class="HediffCompProperties_DisappearsOnDeath">
+      </li>
+    </comps>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>MagicAndMyths_TrollsBloodRegenerationTemp</defName>
+    <label>Trolls Blood Regeneration</label>
+    <description>This pawn is constantly regenerating.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <duplicationAllowed>false</duplicationAllowed>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_Regeneration">
+        <healPerRegenTick>0.1</healPerRegenTick>
+        <disruptingDamageTypes>
+        </disruptingDamageTypes>
+      </li>
+      <li Class="HediffCompProperties_DisappearsOnDeath">
+      </li>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>12600</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>

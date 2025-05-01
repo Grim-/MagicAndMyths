@@ -11,18 +11,30 @@
     <statBases>
       <DeteriorationRate>0.25</DeteriorationRate>
       <MarketValue>30000</MarketValue>
-      <Mass>0.7</Mass>
+      <Mass>0.1</Mass>
       <WorkToMake>450000</WorkToMake>
-      <Nutrition>2</Nutrition>
+      <Nutrition>200</Nutrition>
       <Beauty>10</Beauty>
     </statBases>
-    <ingestible>
-      <preferability>MealSimple</preferability>
-      <optimalityOffsetHumanlikes>-5</optimalityOffsetHumanlikes>
-      <optimalityOffsetFeedingAnimals>-10</optimalityOffsetFeedingAnimals>
-      <ingestEffect>EatVegetarian</ingestEffect>
-      <ingestSound>Meal_Eat</ingestSound>
-    </ingestible>
-    <allowedArchonexusCount>40</allowedArchonexusCount>
+    <allowedArchonexusCount>1</allowedArchonexusCount>
+    <comps Inherit="false">
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Eat {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>true</destroyOnUse>
+        <cooldownTickRange>60000</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
+        <charges>1</charges>
+        <targetSelf>true</targetSelf>
+        <requiresTarget>false</requiresTarget>
+        <moveToTarget>false</moveToTarget>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ArtifactEffectAddHediff">
+        <hediff>MagicAndMyths_TorturedSoul</hediff>
+        <severity>1</severity>
+      </li>
+    </comps>
   </ThingDef>
 </Defs>

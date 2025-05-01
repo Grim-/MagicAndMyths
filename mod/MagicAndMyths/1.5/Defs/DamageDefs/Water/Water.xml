@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageDef>
+    <defName>Water</defName>
+    <label>water</label>
+    <externalViolence>true</externalViolence>
+    <deathMessage>{0} has been drown to death.</deathMessage>
+    <hediff>MagicAndMyths_Wet</hediff>
+    <hediffSkin>MagicAndMyths_Wet</hediffSkin>
+    <hediffSolid>MagicAndMyths_Wet</hediffSolid>
+    <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+    <impactSoundType>Slice</impactSoundType>
+    <armorCategory>Blunt</armorCategory>
+    <overkillPctToDestroyPart>0~0.1</overkillPctToDestroyPart>
+  </DamageDef>
+
+</Defs>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="ArtifactBase">
-    <defName>MagicAndMyths_LesserMind MuddlePotion</defName>
+    <defName>MagicAndMyths_LesserMindMuddlePotion</defName>
     <label>lesser Mind Muddle Potion</label>
     <description>I will come up with this just testing stuff.</description>
     <graphicData>
@@ -39,12 +39,12 @@
         </targetParams>
       </li>
       <li Class="MagicAndMyths.CompProperties_ArtifactEffectAddHediff">
-        <hediff>MagicAndMyths_MindMuddle</hediff>
+        <hediff>MnMMindMuddle</hediff>
         <severity>1</severity>
       </li>
       <!--- what happens when thrown -->
       <li Class="MagicAndMyths.CompProperties_ThrowableAddHediff">
-        <hediffDef>MagicAndMyths_MindMuddle</hediffDef>
+        <hediffDef>MnMMindMuddle</hediffDef>
         <severity>1</severity>
         <applyInRadius>true</applyInRadius>
         <applyRadius>3</applyRadius>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<HediffDef ParentName="PotionEffectBase">
+  <defName>MnMEnlightenment</defName>
+  <label>Enlightenment</label>
+  <description>I will come up with this just testing stuff.</description>
+  <hediffClass>HediffWithComps</hediffClass>
+  <stages>
+    <li>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <offset>+0.3</offset>
+        </li>
+      </capMods>
+    </li>
+  </stages>
+</HediffDef>
+
+
+</Defs>

@@ -86,6 +86,36 @@ namespace MagicAndMyths
             }
         }
 
+        [HarmonyPatch(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.AddHediff), new[] { typeof(Hediff), typeof(BodyPartRecord), typeof(DamageInfo), typeof(DamageWorker.DamageResult) })]
+        public static class Patch_Pawn_HediffAdded
+        {
+            public static void Prefix(Pawn_HealthTracker __instance, Hediff hediff, Pawn ___pawn, BodyPartRecord part = null, DamageInfo? dinfo = null, DamageWorker.DamageResult result = null)
+            {
+                if (__instance == null || hediff == null || ___pawn == null)
+                {
+                    return;
+                }
+
+                EventManager.RaiseOnPawnHediffGained(___pawn, dinfo, hediff);
+            }
+        }
+
+
+        [HarmonyPatch(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.RemoveHediff))]
+        public static class Patch_Pawn_HediffRemoved
+        {
+            public static void Prefix(Pawn_HealthTracker __instance, Hediff hediff, Pawn ___pawn)
+            {
+                if (__instance == null || hediff == null || ___pawn == null)
+                {
+                    return;
+                }
+
+                EventManager.RaiseOnPawnHediffRemoved(___pawn, hediff);
+            }
+        }
+
+
         [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
         public static class Patch_Pawn_Kill
         {

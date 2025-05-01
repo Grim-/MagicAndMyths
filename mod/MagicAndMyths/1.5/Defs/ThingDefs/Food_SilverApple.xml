@@ -3,7 +3,7 @@
   <ThingDef ParentName="MealBase">
     <defName>MagicAndMyths_SilverApple</defName>
     <label>silver apple</label>
-    <description>A beautiful apple with a skin of brilliant silver.</description>
+    <description>A beautiful apple with a skin of brilliant silver, it produces a slight euphoric affect when eaten.</description>
     <graphicData>
       <texPath>Resources/Apple</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -22,6 +22,13 @@
       <optimalityOffsetFeedingAnimals>-10</optimalityOffsetFeedingAnimals>
       <ingestEffect>EatVegetarian</ingestEffect>
       <ingestSound>Meal_Eat</ingestSound>
+      <specialThoughtDirect>MagicAndMyths_SilverAppleEuphoria</specialThoughtDirect>
+      <outcomeDoers>
+        <!-- <li Class="MagicAndMyths.IngestionOutcomeDoer_GiveHediff">
+            <hediffDef></hediffDef>
+            <severity>1</severity>
+        </li> -->
+      </outcomeDoers>
     </ingestible>
     <allowedArchonexusCount>40</allowedArchonexusCount>
   </ThingDef>

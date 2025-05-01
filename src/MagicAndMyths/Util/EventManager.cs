@@ -14,6 +14,8 @@ namespace MagicAndMyths
         // Combat events
         public static event Func<Thing, Thing, DamageInfo, DamageWorker.DamageResult, DamageWorker.DamageResult> OnDamageDealt;
         public static event Action<Pawn, DamageInfo> OnPawnDamageTaken;
+        public static event Action<Pawn, DamageInfo?, Hediff> OnPawnHediffGained;
+        public static event Action<Pawn, Hediff> OnPawnHediffRemoved;
         public static event Action<Thing, DamageInfo> OnThingDamageTaken;
         public static event Action<Pawn, DamageInfo, Hediff> OnThingKilled;
 
@@ -57,6 +59,15 @@ namespace MagicAndMyths
             OnPawnDamageTaken?.Invoke(target, info);
         }
 
+        public static void RaiseOnPawnHediffGained(Pawn target, DamageInfo? info, Hediff hediff)
+        {
+            OnPawnHediffGained?.Invoke(target, info, hediff);
+        }
+
+        public static void RaiseOnPawnHediffRemoved(Pawn target, Hediff hediff)
+        {
+            OnPawnHediffRemoved?.Invoke(target, hediff);
+        }
         public static void RaiseOnKilled(Pawn target, DamageInfo info, Hediff culprit = null)
         {
             OnThingKilled?.Invoke(target, info, culprit);

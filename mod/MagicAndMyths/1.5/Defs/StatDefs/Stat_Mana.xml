@@ -12,4 +12,40 @@
     <showOnPawns>true</showOnPawns>
   </StatDef>
 
+  <StatDef>
+    <defName>Stat_ManaUseMult</defName>
+    <label>Mana Cost Multiplier</label>
+    <category>PawnMisc</category>
+    <description>The mutable energy that is present throughout.</description>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0</minValue>
+    <maxValue>100</maxValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+
+  <StatDef>
+    <defName>Stat_ManaRegen</defName>
+    <label>mana regen</label>
+    <category>PawnMisc</category>
+    <description>The amount of mana regenerated per hour</description>
+    <defaultBaseValue>15</defaultBaseValue>
+    <minValue>0</minValue>
+    <maxValue>1000</maxValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+
+  <StatDef>
+    <defName>Stat_ManaRegenSpeedMult</defName>
+    <label>mana regen speed multiplier</label>
+    <category>PawnMisc</category>
+    <description>Mana is regenerated per hour (2400 ticks).</description>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0</minValue>
+    <maxValue>100</maxValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+
 </Defs>

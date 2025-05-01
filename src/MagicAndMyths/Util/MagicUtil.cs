@@ -208,27 +208,24 @@ namespace MagicAndMyths
             return undeadMaster;
         }
 
-
         public static bool TryGetWorstInjury(Pawn pawn, out Hediff hediff, out BodyPartRecord part, Func<Hediff, bool> filter = null, params HediffDef[] exclude)
         {
             part = null;
             hediff = null;
 
-
-            filter = filter ?? (h => h.def.injuryProps != null);
+            bool PassesFilter(Hediff h) => filter == null || filter(h);
 
             Hediff lifeThreateningHediff = HealthUtility.FindLifeThreateningHediff(pawn, exclude);
-            if (lifeThreateningHediff != null && filter(lifeThreateningHediff))
+            if (lifeThreateningHediff != null && PassesFilter(lifeThreateningHediff))
             {
                 hediff = lifeThreateningHediff;
                 return true;
             }
 
-
             if (HealthUtility.TicksUntilDeathDueToBloodLoss(pawn) < 2500)
             {
                 Hediff bleedingHediff = HealthUtility.FindMostBleedingHediff(pawn, exclude);
-                if (bleedingHediff != null && filter(bleedingHediff))
+                if (bleedingHediff != null && PassesFilter(bleedingHediff))
                 {
                     hediff = bleedingHediff;
                     return true;
@@ -237,31 +234,22 @@ namespace MagicAndMyths
 
             if (pawn.health.hediffSet.GetBrain() != null)
             {
-                Hediff brainInjury = HealthUtility.FindPermanentInjury(
-                    pawn,
-                    Gen.YieldSingle<BodyPartRecord>(pawn.health.hediffSet.GetBrain()),
-                    exclude);
-
-                if (brainInjury != null && filter(brainInjury))
+                var brain = pawn.health.hediffSet.GetBrain();
+                Hediff brainInjury = HealthUtility.FindPermanentInjury(pawn, Gen.YieldSingle(brain), exclude);
+                if (brainInjury != null && PassesFilter(brainInjury))
                 {
                     hediff = brainInjury;
                     return true;
                 }
-
-                // Any brain injury
-                brainInjury = HealthUtility.FindInjury(
-                    pawn,
-                    Gen.YieldSingle<BodyPartRecord>(pawn.health.hediffSet.GetBrain()),
-                    exclude);
-
-                if (brainInjury != null && filter(brainInjury))
+                brainInjury = HealthUtility.FindInjury(pawn, Gen.YieldSingle(brain), exclude);
+                if (brainInjury != null && PassesFilter(brainInjury))
                 {
                     hediff = brainInjury;
                     return true;
                 }
             }
 
-            float significantCoverage = ThingDefOf.Human.race.body.GetPartsWithDef(BodyPartDefOf.Hand).First<BodyPartRecord>().coverageAbsWithChildren;
+            float significantCoverage = ThingDefOf.Human.race.body.GetPartsWithDef(BodyPartDefOf.Hand).First().coverageAbsWithChildren;
             part = HealthUtility.FindBiggestMissingBodyPart(pawn, significantCoverage);
             if (part != null)
             {
@@ -274,13 +262,11 @@ namespace MagicAndMyths
                 where x.def == BodyPartDefOf.Eye
                 select x,
                 exclude);
-
-            if (eyeInjury != null && filter(eyeInjury))
+            if (eyeInjury != null && PassesFilter(eyeInjury))
             {
                 hediff = eyeInjury;
                 return true;
             }
-
 
             part = HealthUtility.FindBiggestMissingBodyPart(pawn, 0f);
             if (part != null)
@@ -289,14 +275,14 @@ namespace MagicAndMyths
             }
 
             Hediff permanentInjury = HealthUtility.FindPermanentInjury(pawn, null, exclude);
-            if (permanentInjury != null && filter(permanentInjury))
+            if (permanentInjury != null && PassesFilter(permanentInjury))
             {
                 hediff = permanentInjury;
                 return true;
             }
 
             Hediff anyInjury = HealthUtility.FindInjury(pawn, null, exclude);
-            if (anyInjury != null && filter(anyInjury))
+            if (anyInjury != null && PassesFilter(anyInjury))
             {
                 hediff = anyInjury;
                 return true;

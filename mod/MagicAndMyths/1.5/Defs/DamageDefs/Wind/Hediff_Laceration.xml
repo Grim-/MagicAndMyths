@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef ParentName="DebuffBase">
+    <defName>MagicAndMyths_Laceration</defName>
+    <label>lacerated</label>
+    <description>This pawn has been deeply cut.</description>
+    <duplicationAllowed>true</duplicationAllowed>
+    <tendable>true</tendable>
+    <injuryProps>
+      <painPerSeverity>0.2</painPerSeverity>
+      <bleedRate>0.12</bleedRate>
+      <canMerge>false</canMerge>
+      <destroyedLabel>Cut off</destroyedLabel>
+      <destroyedOutLabel>Cut out</destroyedOutLabel>
+    </injuryProps>
+    <stages>
+      <li>
+        <painFactor>1.1</painFactor>
+        <statFactors>
+          <Flammability>0</Flammability>
+        </statFactors>
+      </li>
+    </stages>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_RemoveAfterTicks">
+        <ticks>6800</ticks>
+      </li>
+      <li Class="HediffCompProperties_GetsPermanent">
+        <permanentLabel>laceration scar</permanentLabel>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>

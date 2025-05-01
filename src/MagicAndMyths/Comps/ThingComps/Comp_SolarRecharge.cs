@@ -1,5 +1,10 @@
-﻿namespace MagicAndMyths
+﻿using RimWorld;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace MagicAndMyths
 {
+
 
     public class CompProperties_SolarRecharge : CompProperties_EnergyRecharge
     {
