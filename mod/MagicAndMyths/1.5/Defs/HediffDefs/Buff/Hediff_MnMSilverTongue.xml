@@ -11,11 +11,17 @@
       <capMods>
         <li>
           <capacity>Talking</capacity>
-          <offset>+0.3</offset>
+          <offset>0.3</offset>
         </li>
       </capMods>
     </li>
   </stages>
+  <comps>
+    <li Class="HediffCompProperties_Disappears">
+      <disappearsAfterTicks>6000</disappearsAfterTicks>
+       <showRemainingTime>true</showRemainingTime>
+    </li>
+  </comps>
 </HediffDef>
 
 

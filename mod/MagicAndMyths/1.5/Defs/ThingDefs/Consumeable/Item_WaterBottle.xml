@@ -20,6 +20,27 @@
     <drawGUIOverlay>true</drawGUIOverlay>
     <relicChance>0</relicChance>
     <comps Inherit="false">
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Drink {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>true</destroyOnUse>
+        <cooldownTickRange>2400~2400</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
+        <charges>1</charges>
+        <targetSelf>true</targetSelf>
+        <requiresTarget>true</requiresTarget>
+        <moveToTarget>true</moveToTarget>
+        <targetParams>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ArtifactEffectModifyNeeds">
+        <need>Rest</need>
+        <amount>0.1</amount>
+      </li>
       <!--- what happens when thrown -->
       <li Class="MagicAndMyths.CompProperties_ThrowableAddHediff">
         <hediffDef>MagicAndMyths_Wet</hediffDef>

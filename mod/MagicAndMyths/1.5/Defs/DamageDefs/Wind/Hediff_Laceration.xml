@@ -22,8 +22,9 @@
       </li>
     </stages>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_RemoveAfterTicks">
-        <ticks>6800</ticks>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>6000</disappearsAfterTicks>
+         <showRemainingTime>true</showRemainingTime>
       </li>
       <li Class="HediffCompProperties_GetsPermanent">
         <permanentLabel>laceration scar</permanentLabel>

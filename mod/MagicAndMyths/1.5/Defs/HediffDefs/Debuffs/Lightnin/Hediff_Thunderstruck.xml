@@ -4,11 +4,6 @@
     <defName>MagicAndMyths_ThunderStruck</defName>
     <label>thunder struck</label>
     <description>This pawn has been struck by lightning. And has briefly been rendered unconscious.</description>
-    <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_RemoveAfterTicks">
-        <ticks>2200</ticks>
-      </li>
-    </comps>
     <stages>
       <li>
         <capMods>
@@ -19,5 +14,11 @@
         </capMods>
       </li>
     </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>2000</disappearsAfterTicks>
+                <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
   </HediffDef>
 </Defs>

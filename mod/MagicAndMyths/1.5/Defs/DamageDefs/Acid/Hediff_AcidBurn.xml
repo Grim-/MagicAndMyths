@@ -21,6 +21,10 @@
       <li Class="MagicAndMyths.HediffCompProperties_EquipmentDamagePerInterval">
         <damageAmount>0.1~0.34</damageAmount>
       </li>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>2000</disappearsAfterTicks>
+         <showRemainingTime>true</showRemainingTime>
+      </li>
     </comps>
   </HediffDef>
 </Defs>

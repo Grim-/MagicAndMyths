@@ -54,8 +54,9 @@
           </li>
         </damageReactions>
       </li>
-      <li Class="MagicAndMyths.HediffCompProperties_RemoveAfterTicks">
-        <ticks>6800</ticks>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>6000</disappearsAfterTicks>
+                <showRemainingTime>true</showRemainingTime>
       </li>
     </comps>
   </HediffDef>

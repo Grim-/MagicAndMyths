@@ -55,8 +55,9 @@
       </li>
     </stages>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_RemoveAfterTicks">
-        <ticks>8900</ticks>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>2000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
       </li>
     </comps>
   </HediffDef>
