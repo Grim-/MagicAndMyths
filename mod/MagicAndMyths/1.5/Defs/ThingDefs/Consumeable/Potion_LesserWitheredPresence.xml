@@ -47,7 +47,7 @@
         <hediffDef>MnMWitheredPresence</hediffDef>
         <severity>1</severity>
         <applyInRadius>true</applyInRadius>
-        <applyRadius>3</applyRadius>
+        <radius>3</radius>
         <splitSeverityAmongTargets>true</splitSeverityAmongTargets>
         <firstTargetOnly>false</firstTargetOnly>
       </li>

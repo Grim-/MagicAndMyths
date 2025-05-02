@@ -10,7 +10,6 @@ namespace MagicAndMyths
         public float severity = 1.0f;
         public BodyPartDef bodyPartDef = null;
         public bool applyInRadius = true;
-        public float applyRadius = 3f;
         public bool splitSeverityAmongTargets = true;
         public bool firstTargetOnly = false;
 
@@ -44,7 +43,7 @@ namespace MagicAndMyths
             {
                 List<Pawn> affectedPawns = new List<Pawn>();
 
-                foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, Props.applyRadius, true))
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, Props.radius, true))
                 {
                     if (cell.InBounds(map))
                     {

@@ -14,6 +14,11 @@
       <range>20</range>
       <warmupTime>0.5</warmupTime>
       <soundCast>PiercingSpine_Launch</soundCast>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>true</canTargetItems>
+      </targetParams>
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">

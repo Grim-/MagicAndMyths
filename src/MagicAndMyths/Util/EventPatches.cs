@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
+using System.Collections.Generic;
 using Verse;
 using Verse.AI;
 
@@ -9,25 +10,6 @@ namespace MagicAndMyths
     [StaticConstructorOnStartup]
     public static class EventPatches
     {
-        static EventPatches()
-        {
-            var harmony = new Harmony("com.talented.events");
-            harmony.PatchAll();
-        }
-
-        [HarmonyPatch(typeof(DamageWorker_AddInjury), "ApplyToPawn")]
-        public static class Patch_DamageWorker_AddInjury_ApplyToPawn
-        {
-            public static DamageWorker.DamageResult Postfix(DamageWorker.DamageResult __result, DamageInfo dinfo, Pawn pawn)
-            {
-                if (Current.ProgramState != ProgramState.Playing) return __result;
-                //DebugDamage(__result, dinfo, pawn);
-                return EventManager.RaiseDamageDealt(pawn, dinfo.Instigator, dinfo, __result);
-            }
-        }
-
-
-
         //# Combat and Defense
         //- Successful melee attacks(Melee skill)
         //- Successful ranged attacks(Shooting skill)
@@ -67,6 +49,18 @@ namespace MagicAndMyths
         //- Mining completion(Mining skill)
 
 
+        [HarmonyPatch(typeof(DamageWorker_AddInjury), "ApplyToPawn")]
+        public static class Patch_DamageWorker_AddInjury_ApplyToPawn
+        {
+            public static DamageWorker.DamageResult Postfix(DamageWorker.DamageResult __result, DamageInfo dinfo, Pawn pawn)
+            {
+                if (Current.ProgramState != ProgramState.Playing) return __result;
+                //DebugDamage(__result, dinfo, pawn);
+                return EventManager.Instance.RaiseDamageDealt(pawn, dinfo.Instigator, dinfo, __result);
+            }
+        }
+
+
         [HarmonyPatch(typeof(Thing), nameof(Thing.TakeDamage))]
         public static class Patch_Thing_TakeDamage
         {
@@ -74,13 +68,13 @@ namespace MagicAndMyths
             {
                 if (__instance is Pawn pawn && !pawn.Dead)
                 {
-                    EventManager.RaisePawnDamageTaken(pawn, dinfo);
+                    EventManager.Instance.RaisePawnDamageTaken(pawn, dinfo);
                 }
                 else
                 {
                     if (!__instance.Destroyed)
                     {
-                        EventManager.RaiseThingDamageTaken(__instance, dinfo);
+                        EventManager.Instance.RaiseThingDamageTaken(__instance, dinfo);
                     }                
                 }
             }
@@ -96,7 +90,7 @@ namespace MagicAndMyths
                     return;
                 }
 
-                EventManager.RaiseOnPawnHediffGained(___pawn, dinfo, hediff);
+                EventManager.Instance.RaiseOnPawnHediffGained(___pawn, dinfo, hediff);
             }
         }
 
@@ -111,7 +105,7 @@ namespace MagicAndMyths
                     return;
                 }
 
-                EventManager.RaiseOnPawnHediffRemoved(___pawn, hediff);
+                EventManager.Instance.RaiseOnPawnHediffRemoved(___pawn, hediff);
             }
         }
 
@@ -121,10 +115,20 @@ namespace MagicAndMyths
         {
             public static void Prefix(Pawn __instance, DamageInfo dinfo, Hediff exactCulprit)
             {
-                EventManager.RaiseOnKilled(__instance, dinfo, exactCulprit);
+                EventManager.Instance.RaiseOnKilled(__instance, dinfo, exactCulprit);
             }
         }
-
+        [HarmonyPatch(typeof(Pawn_PathFollower), "SetupMoveIntoNextCell")]
+        public static class Patch_Pawn_PathFollower_SetupMoveIntoNextCell
+        {
+            public static void Postfix(Pawn_PathFollower __instance, ref IntVec3 ___nextCell, Pawn ___pawn)
+            {
+                if (___pawn != null)
+                {
+                    EventManager.Instance.PawnArrivedAtPathDestination(___pawn, ___nextCell);
+                }
+            }
+        }
         [HarmonyPatch(typeof(Pawn_JobTracker), nameof(Pawn_JobTracker.StartJob))]
         public static class Patch_StartJob
         {
@@ -135,7 +139,7 @@ namespace MagicAndMyths
                     Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
                     if (pawn != null)
                     {
-                        EventManager.RaiseJobStarted(pawn, newJob);
+                        EventManager.Instance.RaiseJobStarted(pawn, newJob);
                     }
                 }
             }
@@ -151,7 +155,7 @@ namespace MagicAndMyths
                     Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
                     if (pawn != null)
                     {
-                        EventManager.RaiseJobEnded(pawn, __instance?.curJob, condition);
+                        EventManager.Instance.RaiseJobEnded(pawn, __instance?.curJob, condition);
                     }
                 }
             }
@@ -168,7 +172,7 @@ namespace MagicAndMyths
                     Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
                     if (pawn != null)
                     {
-                        EventManager.RaiseJobCleanedUp(pawn, __instance?.curJob, condition);
+                        EventManager.Instance.RaiseJobCleanedUp(pawn, __instance?.curJob, condition);
                     }
                 }
             }
@@ -181,46 +185,26 @@ namespace MagicAndMyths
             {
                 if (direct && __instance?.Pawn != null)
                 {
-                    EventManager.RaiseSkillGained(__instance.Pawn, __instance.def, xp);
+                    EventManager.Instance.RaiseSkillGained(__instance.Pawn, __instance.def, xp);
                 }
             }
         }
-        [HarmonyPatch(typeof(Ability), nameof(Ability.Activate), new[] { typeof(LocalTargetInfo), typeof(LocalTargetInfo) })]
+
+
+
+        [HarmonyPatch(typeof(Verb_CastAbility), "TryCastShot")]
         public static class Patch_Ability_Activate
         {
-            public static void Prefix(Ability __instance)
+            public static void Postfix(Verb_CastAbility __instance, int ___burstShotsLeft, bool __result)
             {
-                if (__instance?.pawn != null)
+                if (__result && ___burstShotsLeft == 1)
                 {
-                    EventManager.RaiseAbilityCast(__instance.pawn, __instance);
+                    EventManager.Instance.RaiseAbilityCompleted(__instance.Ability.pawn, __instance.Ability);
                 }
             }
         }
 
-        [HarmonyPatch(typeof(Ability), nameof(Ability.Activate), new[] { typeof(GlobalTargetInfo) })]
-        public static class Patch_Ability_Activate_Global
-        {
-            public static void Prefix(Ability __instance)
-            {
-                if (__instance?.pawn != null)
-                {
-                    EventManager.RaiseAbilityCast(__instance.pawn, __instance);
-                }
-            }
-        }
 
-        // Patch PreActivate to catch completion
-        [HarmonyPatch(typeof(Ability), "PreActivate")]
-        public static class Patch_Ability_PreActivate
-        {
-            public static void Postfix(Ability __instance)
-            {
-                if (__instance?.pawn != null)
-                {
-                    EventManager.RaiseAbilityCompleted(__instance.pawn, __instance);
-                }
-            }
-        }
 
         [HarmonyPatch(typeof(Pawn))]
         [HarmonyPatch("Notify_UsedVerb")]
@@ -230,7 +214,7 @@ namespace MagicAndMyths
             {
                 if (pawn != null && verb != null)
                 {
-                    EventManager.RaiseVerbUsed(pawn, verb);
+                    EventManager.Instance.RaiseVerbUsed(pawn, verb);
                 }
             }
         }

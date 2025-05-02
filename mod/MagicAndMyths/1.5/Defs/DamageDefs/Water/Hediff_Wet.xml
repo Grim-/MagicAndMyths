@@ -6,7 +6,6 @@
     <description>This pawn is soaking wet, they will tire more easily and are more susceptible to lightning attacks.</description>
     <stages>
       <li>
-        <painFactor>0.6</painFactor>
         <capMods>
           <li>
             <capacity>Manipulation</capacity>

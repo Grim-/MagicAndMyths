@@ -2,15 +2,17 @@
 <Defs>
     <ThingDef ParentName="BaseBullet">
       <defName>Projectile_Fireball</defName>
-      <label>wand energy</label>
+      <label>fireball</label>
+      <thingClass>Projectile_Explosive</thingClass>
       <graphicData>
         <texPath>Projectiles/Projectile_Fireball</texPath>
         <graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <projectile>
-        <damageDef>Bullet</damageDef>
-        <damageAmountBase>12</damageAmountBase>
-        <speed>48</speed>
+        <damageDef>Burn</damageDef>
+        <damageAmountBase>15</damageAmountBase>
+        <explosionRadius>3.9</explosionRadius>
+        <speed>50</speed>
       </projectile>
     </ThingDef>
 </Defs>

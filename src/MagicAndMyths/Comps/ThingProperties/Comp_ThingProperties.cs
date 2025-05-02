@@ -149,50 +149,48 @@ namespace MagicAndMyths
 
         private void RegisterEventHandlers()
         {
-            EventManager.OnDamageDealt += HandleDamageDealt;
-            EventManager.OnThingDamageTaken += HandleThingDamageTaken;
+            //EventManager.Instance.OnDamageDealt += HandleDamageDealt;
+           // EventManager.Instance.OnThingDamageTaken += HandleThingDamageTaken;
 
-            if (parent is Pawn)
-            {
-                EventManager.OnPawnDamageTaken += HandlePawnDamageTaken;
-                EventManager.OnThingKilled += HandleThingKilled;
-                EventManager.OnWorkCompleted += HandleWorkCompleted;
-                EventManager.OnSkillGained += HandleSkillGained;
-                EventManager.OnVerbUsed += HandleVerbUsed;
-                EventManager.OnAbilityCast += HandleAbilityCast;
-                EventManager.OnAbilityCompleted += HandleAbilityCompleted;
-                EventManager.OnJobStarted += HandleJobStarted;
-                EventManager.OnJobProgress += HandleJobProgress;
-                EventManager.OnJobEnded += HandleJobEnded;
-                EventManager.OnJobCleanedUp += HandleJobCleanedUp;
-                EventManager.OnCellEntered += HandleCellEntered;
-                EventManager.OnPawnMoved += HandlePawnMoved;
-                EventManager.OnPerceptionCheck += HandlePerceptionCheck;
-            }
+            //if (parent is Pawn)
+            //{
+            //    EventManager.Instance.OnPawnDamageTaken += HandlePawnDamageTaken;
+            //    EventManager.Instance.OnThingKilled += HandleThingKilled;
+            //    EventManager.Instance.OnWorkCompleted += HandleWorkCompleted;
+            //    EventManager.Instance.OnSkillGained += HandleSkillGained;
+            //    EventManager.Instance.OnVerbUsed += HandleVerbUsed;
+            //    EventManager.Instance.OnAbilityCompleted += HandleAbilityCompleted;
+            //    EventManager.Instance.OnJobStarted += HandleJobStarted;
+            //    EventManager.Instance.OnJobProgress += HandleJobProgress;
+            //    EventManager.Instance.OnJobEnded += HandleJobEnded;
+            //    EventManager.Instance.OnJobCleanedUp += HandleJobCleanedUp;
+            //    EventManager.Instance.OnCellEntered += HandleCellEntered;
+            //    EventManager.Instance.OnPawnMoved += HandlePawnMoved;
+            //    EventManager.Instance.OnPerceptionCheck += HandlePerceptionCheck;
+            //}
         }
 
         private void UnregisterEventHandlers()
         {
 
-            EventManager.OnDamageDealt -= HandleDamageDealt;
-            EventManager.OnThingDamageTaken -= HandleThingDamageTaken;
-            if (parent is Pawn)
-            {
-                EventManager.OnPawnDamageTaken -= HandlePawnDamageTaken;
-                EventManager.OnThingKilled -= HandleThingKilled;
-                EventManager.OnWorkCompleted -= HandleWorkCompleted;
-                EventManager.OnSkillGained -= HandleSkillGained;
-                EventManager.OnVerbUsed -= HandleVerbUsed;
-                EventManager.OnAbilityCast -= HandleAbilityCast;
-                EventManager.OnAbilityCompleted -= HandleAbilityCompleted;
-                EventManager.OnJobStarted -= HandleJobStarted;
-                EventManager.OnJobProgress -= HandleJobProgress;
-                EventManager.OnJobEnded -= HandleJobEnded;
-                EventManager.OnJobCleanedUp -= HandleJobCleanedUp;
-                EventManager.OnCellEntered -= HandleCellEntered;
-                EventManager.OnPawnMoved -= HandlePawnMoved;
-                EventManager.OnPerceptionCheck -= HandlePerceptionCheck;
-            }
+            //EventManager.Instance.OnDamageDealt -= HandleDamageDealt;
+            //EventManager.Instance.OnThingDamageTaken -= HandleThingDamageTaken;
+            //if (parent is Pawn)
+            //{
+            //    EventManager.Instance.OnPawnDamageTaken -= HandlePawnDamageTaken;
+            //    EventManager.Instance.OnThingKilled -= HandleThingKilled;
+            //    EventManager.Instance.OnWorkCompleted -= HandleWorkCompleted;
+            //    EventManager.Instance.OnSkillGained -= HandleSkillGained;
+            //    EventManager.Instance.OnVerbUsed -= HandleVerbUsed;
+            //    EventManager.Instance.OnAbilityCompleted -= HandleAbilityCompleted;
+            //    EventManager.Instance.OnJobStarted -= HandleJobStarted;
+            //    EventManager.Instance.OnJobProgress -= HandleJobProgress;
+            //    EventManager.Instance.OnJobEnded -= HandleJobEnded;
+            //    EventManager.Instance.OnJobCleanedUp -= HandleJobCleanedUp;
+            //    EventManager.Instance.OnCellEntered -= HandleCellEntered;
+            //    EventManager.Instance.OnPawnMoved -= HandlePawnMoved;
+            //    EventManager.Instance.OnPerceptionCheck -= HandlePerceptionCheck;
+            //}
         }
 
         // Event Handlers

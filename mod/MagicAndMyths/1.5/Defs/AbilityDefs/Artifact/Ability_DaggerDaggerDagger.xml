@@ -2,7 +2,7 @@
 <Defs>
   <AbilityDef>
     <defName>MagicAndMyths_DaggerDaggerDagger</defName>
-    <label>Fireball</label>
+    <label>Dagger Dagger Dagger</label>
     <description>Use your bracers to conjure a set of daggers you throw at the target, the bracers hold upto 10 charges regenerating 1 charge every 6 hours.</description>
     <iconPath>Things/Item/Equipment/WeaponMelee/Knife</iconPath>
     <cooldownTicksRange>6000</cooldownTicksRange>

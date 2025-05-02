@@ -122,7 +122,9 @@
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAddHediff.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAffectPawns.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableApplyDamage.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableExtinguishFireOnImpact.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableHealAOEOnImpact.cs" />
+    <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableIncreaseSoilQualityOnImpact.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableSpawnGasOrFilth.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableSpawnThing.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_Artifact.cs" />
@@ -154,7 +156,10 @@
     <Compile Include="Hediff\Combo\ComboReactionWorker_AddHediff.cs" />
     <Compile Include="Hediff\Combo\ComboReactionWorker_DealDamage.cs" />
     <Compile Include="Hediff\Combo\ComboReactionWorker_IncreaseParentSeverity.cs" />
+    <Compile Include="Hediff\Combo\ComboReactionWorker_Stun.cs" />
     <Compile Include="Hediff\Combo\HediffCompProperties_ComboReactor.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_IncreaseSeverityOnAbilityUse.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_Propagate.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_RemoveAfterTicks.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_TimedExplosion.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_AddHediffAOEPerInterval.cs" />
@@ -174,7 +179,7 @@
     <Compile Include="Comps\ThingComps\Comp_PawnActionBase.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_Regeneration.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_SeverityPerInterval.cs" />
-    <Compile Include="Hediff\HediffUtil.cs" />
+    <Compile Include="Hediff\AOEUtil.cs" />
     <Compile Include="Interfaces\IThrowableThing.cs" />
     <Compile Include="AI\JobDriver_PickupAndThrow.cs" />
     <Compile Include="Comps\ThingProperties\Comp_ThingProperties.cs" />
@@ -323,7 +328,6 @@
     <Compile Include="MapGen\Modifiers\MapModifier_FoodDrain.cs" />
     <Compile Include="MapGen\Modifiers\MapModifier_RandomFires.cs" />
     <Compile Include="MapGen\PortalMode.cs" />
-    <Compile Include="Patch\PortalPatches.cs" />
     <Compile Include="Util\PawnUtility_Duplicator.cs" />
     <Compile Include="Util\PortalUtils.cs" />
     <Compile Include="MapGen\StoredSiteData.cs" />

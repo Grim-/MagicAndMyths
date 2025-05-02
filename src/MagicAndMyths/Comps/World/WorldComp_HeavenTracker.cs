@@ -11,7 +11,7 @@ namespace MagicAndMyths
 
         public WorldComp_HeavenTracker(World world) : base(world)
         {
-            EventManager.OnThingKilled += TrackDeadColonist;
+            EventManager.Instance.OnThingKilled += TrackDeadColonist;
         }
 
         private void TrackDeadColonist(Pawn pawn, DamageInfo info, Hediff culprit)

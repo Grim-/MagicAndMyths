@@ -139,75 +139,6 @@ namespace MagicAndMyths
         }
 
 
-        //[HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAiming")]
-        //public static class Fix_WeaponFlipping_When_Equipped
-        //{
-        //    [HarmonyPrefix]
-        //    public static bool Prefix(Thing eq, Vector3 drawLoc, float aimAngle)
-        //    {
-        //        float num = aimAngle - 90f;
-        //        Mesh mesh = MeshPool.plane10;
-
-        //        if (aimAngle > 200f && aimAngle < 340f)
-        //        {
-        //            num -= 180f;
-        //            num -= eq.def.equippedAngleOffset;
-        //        }
-        //        else
-        //        {
-        //            num += eq.def.equippedAngleOffset;
-        //        }
-
-        //        num %= 360f;
-
-        //        CompEquippable compEquippable = eq.TryGetComp<CompEquippable>();
-        //        if (compEquippable != null)
-        //        {
-        //            Vector3 b;
-        //            float num2;
-        //            EquipmentUtility.Recoil(eq.def, EquipmentUtility.GetRecoilVerb(compEquippable.AllVerbs), out b, out num2, aimAngle);
-        //            drawLoc += b;
-        //            num += num2;
-        //        }
-        //        drawLoc += eq.def.GetModExtension<DrawOffsetExt>().GetOffsetForRot(eq.Rotation);
-        //        Material material = eq.Graphic.MatSingleFor(eq);
-        //        Vector3 s = new Vector3(eq.Graphic.drawSize.x, 0f, eq.Graphic.drawSize.y);
-        //        Matrix4x4 matrix = Matrix4x4.TRS(drawLoc, Quaternion.AngleAxis(num, Vector3.up), s);
-        //        Graphics.DrawMesh(mesh, matrix, material, 0);
-
-        //        return false;
-        //    }
-        //}
-
-        //[HarmonyPatch(typeof(PawnRenderUtility), "DrawEquipmentAndApparelExtras")]
-        //public class PawnRenderUtility_Patch
-        //{
-        //    [HarmonyPrefix]
-        //    static void Prefix(Pawn pawn, ref Vector3 drawPos, Rot4 facing, PawnRenderFlags flags)
-        //    {
-        //        if (pawn != null && pawn.equipment != null)
-        //        {
-        //            Thing primary = pawn.equipment.Primary;
-
-        //            if (primary != null && primary.def.HasModExtension<DrawOffsetExt>())
-        //            {
-        //                drawPos += primary.def.GetModExtension<DrawOffsetExt>().GetOffsetForRot(pawn.Rotation);
-        //            }
-        //        }
-        //    }
-        //}
-
-        [HarmonyPatch(typeof(Pawn_PathFollower), "SetupMoveIntoNextCell")]
-        public static class Patch_Pawn_PathFollower_SetupMoveIntoNextCell
-        {
-            public static void Postfix(Pawn_PathFollower __instance, ref IntVec3 ___nextCell, Pawn ___pawn)
-            {
-                if (___pawn != null)
-                {
-                    EventManager.PawnArrivedAtPathDestination(___pawn, ___nextCell);
-                }
-            }
-        }
 
         [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
         [HarmonyPatch("HandleGroupFrameClicks")]
@@ -264,6 +195,35 @@ namespace MagicAndMyths
                     Graphic_MultiWithShader graphic = (Graphic_MultiWithShader)GraphicDatabase.Get<Graphic_MultiWithShader>(graphicDataWithShader.texPath, AssetBundleShaderManager.GetShaderByAssetName(graphicDataWithShader.customShaderName), apparel.def.graphicData.drawSize, apparel.DrawColor, apparel.DrawColor, graphicDataWithShader);
                     rec = new ApparelGraphicRecord(graphic, apparel);
   
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Thing), "TakeDamage")]
+        public static class Thing_TakeDamage_Patch
+        {
+            public static void Prefix(Thing __instance, ref DamageInfo dinfo)
+            {
+                if (__instance is Pawn pawnTakingDamage && !pawnTakingDamage.Dead)
+                {
+                    List<HediffComp_BioShield> bioShield = pawnTakingDamage.health.hediffSet.GetHediffComps<HediffComp_BioShield>().ToList();
+                    foreach (var item in bioShield)
+                    {
+                        if (!item.CanMitigate(dinfo))
+                        {
+                            continue;
+                        }
+
+                        float mitigatedAmount = item.MitigateDamage(dinfo);
+                        float cost = item.EnergyCost(mitigatedAmount);
+                        if (item.HasEnough(cost))
+                        {
+                            Log.Message($"Mitigated {mitigatedAmount} cost {cost} - {item.Props.energyCostPerDamage} per damage point");
+                            dinfo.SetAmount(dinfo.Amount - mitigatedAmount);
+                            item.TryUseEnergy(cost);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -355,44 +315,24 @@ namespace MagicAndMyths
             }
         }
 
-        public class Patch_EquipmentUtility_CanEquip
-        {
-            public static bool Prefix(Thing thing, Pawn pawn, ref string cantReason, bool checkBonded, ref bool __result)
-            {
-                CompSelectiveBiocodable compSelective = thing.TryGetComp<CompSelectiveBiocodable>();
+        //public class Patch_EquipmentUtility_CanEquip
+        //{
+        //    public static bool Prefix(Thing thing, Pawn pawn, ref string cantReason, bool checkBonded, ref bool __result)
+        //    {
+        //        CompSelectiveBiocodable compSelective = thing.TryGetComp<CompSelectiveBiocodable>();
 
-                if (compSelective != null)
-                {
-                    if (!compSelective.CanBeBiocodedFor(pawn))
-                    {
-                        cantReason = "You cannot equip this, dont meet requirements";
-                        __result = false;
-                        return false;
-                    }
-                }
+        //        if (compSelective != null)
+        //        {
+        //            if (!compSelective.CanBeBiocodedFor(pawn))
+        //            {
+        //                cantReason = "You cannot equip this, dont meet requirements";
+        //                __result = false;
+        //                return false;
+        //            }
+        //        }
 
-                return true;
-            }
-        }
-    }
-
-    public class Patch_EquipmentUtility_CanEquip
-    {
-        public static bool Prefix(Thing thing, Pawn pawn, ref string cantReason, bool checkBonded, ref bool __result)
-        {
-            CompSelectiveBiocodable compSelective = thing.TryGetComp<CompSelectiveBiocodable>();
-
-            if (compSelective != null)
-            {
-                if (!compSelective.CanBeBiocodedFor(pawn))
-                {
-                    cantReason = "You cannot equip this, dont meet requirements";
-                    __result = false;
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        //        return true;
+        //    }
+        //}
     }
 }

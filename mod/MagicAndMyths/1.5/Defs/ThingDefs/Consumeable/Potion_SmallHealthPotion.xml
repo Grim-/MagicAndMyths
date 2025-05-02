@@ -46,7 +46,8 @@
       </li>
       <!--- what happens when thrown -->
       <li Class="MagicAndMyths.CompProperties_ThrowableHealAOEOnImpact">
-        <explosionRadius>3</explosionRadius>
+        <radius>3</radius>
+        <impactEffectDef>MagicAndMyths_HealingGeneric</impactEffectDef>
         <healAmount>30</healAmount>
         <maxTargets>4</maxTargets>
       </li>

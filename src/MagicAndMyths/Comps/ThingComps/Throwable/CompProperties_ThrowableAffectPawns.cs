@@ -6,7 +6,6 @@ namespace MagicAndMyths
 {
     public class CompProperties_ThrowableAffectPawns : CompProperties_Throwable
     {
-        public float radius = 3f;
         public bool destroyOnImpact = true;
 
         public CompProperties_ThrowableAffectPawns()

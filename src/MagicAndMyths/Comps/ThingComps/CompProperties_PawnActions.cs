@@ -65,8 +65,7 @@ namespace MagicAndMyths
 
         public int ThrowRangeCells
         {
-            //3 cells for every + 1
-            get => Mathf.Max(1, DCUtility.GetStatBonus(Pawn, MagicAndMythDefOf.Stat_Strength)) * 4;
+            get => Mathf.Max(1, 6 + DCUtility.GetStatBonus(Pawn, MagicAndMythDefOf.Stat_Strength) * 2);
         }
 
 
@@ -149,6 +148,10 @@ namespace MagicAndMyths
                          Job job = JobMaker.MakeJob(MagicAndMythDefOf.MagicAndMyths_PickupAndThrow, target.Thing, throwTargetLocation);
                          job.count = Math.Min(target.Thing.def.stackLimit, target.Thing.stackCount);
                          Pawn.jobs.TryTakeOrderedJob(job);
+                     }, null, null, null, null, null, true, null, 
+                     (LocalTargetInfo throwTargetLocation) =>
+                     {
+
                      });
                 }
             },
@@ -207,6 +210,23 @@ namespace MagicAndMyths
                 ThingFlyer.LaunchFlyer(thingFlyer, thingToThrow, Pawn.Position, target.Cell, Pawn.Map);
 
                 LastThrowAttemptTick = Current.Game.tickManager.TicksGame;
+            }, 
+            (LocalTargetInfo target) =>
+            {
+
+            },
+            (x) => x.Cell.InHorDistOf(this.parent.Position, ThrowRangeCells),
+            null, 
+            null,
+            null, 
+            true, 
+            null,
+            (LocalTargetInfo target) =>
+            {
+                if (itemToThrow.TryGetComp(out Comp_Throwable comp_Throwable))
+                {
+                    GenDraw.DrawRadiusRing(target.Cell, comp_Throwable.Props.radius);
+                }              
             });
         }
         private List<Thing> GetThrowableEquipment()

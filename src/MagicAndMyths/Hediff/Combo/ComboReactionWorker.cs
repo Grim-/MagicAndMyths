@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using RimWorld;
+using Verse;
 
 namespace MagicAndMyths
 {
@@ -14,6 +15,11 @@ namespace MagicAndMyths
             {
                 this.Def.reactionEffecter.Spawn(Pawn.Position, Pawn.Map, 2f);
             }
+
+            MoteMaker.ThrowText(Pawn.DrawPos, Pawn.Map, $"{this.GetType()} Reaction triggered!", 3f);
         }
+
+
+        public abstract string GetExplanation(Pawn Pawn);
     }
 }

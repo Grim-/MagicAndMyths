@@ -23,13 +23,13 @@ namespace MagicAndMyths
 
             if (!respawningAfterLoad)
             {
-                EventManager.OnCellEntered += EventManager_OnCellEntered;
+                EventManager.Instance.OnCellEntered += EventManager_OnCellEntered;
             }
         }
 
         public override void PostDestroy(DestroyMode mode, Map previousMap)
         {
-            EventManager.OnCellEntered -= EventManager_OnCellEntered;
+            EventManager.Instance.OnCellEntered -= EventManager_OnCellEntered;
             base.PostDestroy(mode, previousMap);
         }
 

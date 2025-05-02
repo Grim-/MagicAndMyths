@@ -7,7 +7,6 @@ namespace MagicAndMyths
     public class CompProperties_ThrowableSpawnGasOrFilth : CompProperties_Throwable
     {
         public ThingDef filthDef;
-        public float radius = 3f;
         public IntRange filthCount = new IntRange(5, 10);
         public bool gasSpawn = false;
         public GasType gasType = GasType.BlindSmoke;

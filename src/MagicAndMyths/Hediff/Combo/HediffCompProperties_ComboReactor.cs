@@ -55,43 +55,43 @@ namespace MagicAndMyths
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
             base.CompPostPostAdd(dinfo);
-            EventManager.OnPawnHediffGained += EventManager_OnPawnHediffGained;
+            //EventManager.OnPawnHediffGained += EventManager_OnPawnHediffGained;
         }
 
         public override void CompPostPostRemoved()
         {
             base.CompPostPostRemoved();
-            EventManager.OnPawnHediffGained -= EventManager_OnPawnHediffGained;
+            //EventManager.OnPawnHediffGained -= EventManager_OnPawnHediffGained;
         }
 
 
         //reaction to another hediff
-        private void EventManager_OnPawnHediffGained(Pawn arg1, DamageInfo? arg2, Hediff arg3)
-        {
-            if (Props.hediffReactions != null && arg3 != null)
-            {
-                if (Props.HasReaction(arg3.def))
-                {
-                    List<ComboReaction> comboReactionDef = Props.GetHediffReactions(arg3.def);
-                    bool shouldRemove = false;
-                    foreach (var item in comboReactionDef)
-                    {
-                        item.ExecuteWorker(this.Pawn, this);
-                        if (item.removeOnReact)
-                        {
-                            shouldRemove = true;
-                        }
-                    }
+        //private void EventManager_OnPawnHediffGained(Pawn arg1, DamageInfo? arg2, Hediff arg3)
+        //{
+        //    if (Props.hediffReactions != null && arg3 != null)
+        //    {
+        //        if (Props.HasReaction(arg3.def))
+        //        {
+        //            List<ComboReaction> comboReactionDef = Props.GetHediffReactions(arg3.def);
+        //            bool shouldRemove = false;
+        //            foreach (var item in comboReactionDef)
+        //            {
+        //                item.ExecuteWorker(this.Pawn, this);
+        //                if (item.removeOnReact)
+        //                {
+        //                    shouldRemove = true;
+        //                }
+        //            }
 
 
-                    if (shouldRemove)
-                    {
-                        Pawn.health.RemoveHediff(this.parent);
-                    }
-                }
-            }
+        //            if (shouldRemove)
+        //            {
+        //                Pawn.health.RemoveHediff(this.parent);
+        //            }
+        //        }
+        //    }
 
-        }
+        //}
 
 
         //damage based reaction
@@ -133,11 +133,31 @@ namespace MagicAndMyths
             {
                 string reactionExplanations = base.CompDescriptionExtra;
 
-                if (Props.damageReactions != null)
+                if (Props.damageReactions != null && Props.damageReactions.Count > 0)
                 {
+                    reactionExplanations += "\r\n\r\nDamage Reactions:";
                     foreach (var item in Props.damageReactions)
                     {
-                        reactionExplanations += $"\r\nRecieving DAMAGE will trigger ---"; 
+                        reactionExplanations += $"\r\n- {string.Join(", ", item.reactionDamageType.ConvertAll(d => d.LabelCap))}: ";
+                        reactionExplanations += item.Worker.GetExplanation(this.Pawn);
+                        if (item.removeOnReact)
+                        {
+                            reactionExplanations += " (Consumes effect)";
+                        }
+                    }
+                }
+
+                if (Props.hediffReactions != null && Props.hediffReactions.Count > 0)
+                {
+                    reactionExplanations += "\r\n\r\nHediff Reactions:";
+                    foreach (var item in Props.hediffReactions)
+                    {
+                        reactionExplanations += $"\r\n- {string.Join(", ", item.reactionHediff.ConvertAll(h => h.LabelCap))}: ";
+                        reactionExplanations += item.Worker.GetExplanation(this.Pawn);
+                        if (item.removeOnReact)
+                        {
+                            reactionExplanations += " (Consumes effect)";
+                        }
                     }
                 }
 

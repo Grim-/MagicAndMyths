@@ -32,14 +32,14 @@ namespace MagicAndMyths
         {
             base.PostSpawnSetup(respawningAfterLoad);
 
-            EventManager.OnThingDamageTaken += EventManager_OnDamageTaken;
+            EventManager.Instance.OnThingDamageTaken += EventManager_OnDamageTaken;
         }
 
         public override void PostDeSpawn(Map map)
         {
             base.PostDeSpawn(map);
 
-            EventManager.OnThingDamageTaken -= EventManager_OnDamageTaken;
+            EventManager.Instance.OnThingDamageTaken -= EventManager_OnDamageTaken;
         }
 
         private void EventManager_OnDamageTaken(Thing arg1, DamageInfo arg2)

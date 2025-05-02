@@ -11,12 +11,12 @@ namespace MagicAndMyths
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
-            EventManager.OnThingKilled += EventManager_OnThingKilled;
+            EventManager.Instance.OnThingKilled += EventManager_OnThingKilled;
         }
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            EventManager.OnThingKilled -= EventManager_OnThingKilled;
+            EventManager.Instance.OnThingKilled -= EventManager_OnThingKilled;
             base.DeSpawn(mode);
         }
 

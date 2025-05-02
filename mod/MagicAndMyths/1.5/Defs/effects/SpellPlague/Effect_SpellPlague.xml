@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_SpellPlague</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerContinuous</subEffecterClass>
+        <scale>0.3~0.7</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0.6</positionLerpFactor>
+        <positionRadius>0.6</positionRadius>
+        <moteDef>MagicAndMyths_MoteFloatingSkulls</moteDef>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_MoteFloatingSkulls</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_Mote</graphicClass>
+        <shaderType>MoteGlow</shaderType>
+        <texPath>Rune1</texPath>
+      </graphicData>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
+      <mote>
+        <fadeInTime>0.1</fadeInTime>
+        <solidTime>1</solidTime>
+        <fadeOutTime>0.1</fadeOutTime>
+        <growthRate>0</growthRate>
+      </mote>
+    </ThingDef>
+</Defs>

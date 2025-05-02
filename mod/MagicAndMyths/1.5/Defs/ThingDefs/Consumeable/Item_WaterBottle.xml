@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ArtifactBase">
+    <defName>MagicAndMyths_WaterBottle</defName>
+    <label>bottle of water</label>
+    <description>A bottle of water that will apply the wet condition when destroyed or thrown.</description>
+    <graphicData>
+      <texPath>Potions/ElixirGreen</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>5</stackLimit>
+    <orderedTakeGroup>Potion</orderedTakeGroup>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>600</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <relicChance>0</relicChance>
+    <comps Inherit="false">
+      <!--- what happens when thrown -->
+      <li Class="MagicAndMyths.CompProperties_ThrowableAddHediff">
+        <hediffDef>MagicAndMyths_Wet</hediffDef>
+        <splitSeverityAmongTargets>false</splitSeverityAmongTargets>
+        <radius>5</radius>
+        <impactEffectDef>PawnEmergeFromWater</impactEffectDef>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ThrowableExtinguishFireOnImpact">
+        <radius>5</radius>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

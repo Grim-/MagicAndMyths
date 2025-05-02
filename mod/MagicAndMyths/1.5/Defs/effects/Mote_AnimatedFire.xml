@@ -7,7 +7,7 @@
       <graphicData>
         <graphicClass>Graphic_FleckPulse</graphicClass>
         <shaderType>TransparentAnimated</shaderType>
-        <texPath>FireFlipbook</texPath>
+        <texPath>Animations/FireFlipbook</texPath>
         <shaderParameters>
           <_NumFrames>10</_NumFrames>
           <_FramesPerSec>10</_FramesPerSec>

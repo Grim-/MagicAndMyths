@@ -8,7 +8,7 @@
     <tattooType>Body</tattooType>
     <category>Minimal</category>
     <noGraphic>false</noGraphic>
-    <tattooScale>0.1</tattooScale>
+    <tattooScale>1</tattooScale>
     <styleTags>
       <li>MagicTattoo</li>
     </styleTags>

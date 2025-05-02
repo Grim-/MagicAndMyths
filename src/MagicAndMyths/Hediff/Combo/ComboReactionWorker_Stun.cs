@@ -21,5 +21,19 @@ namespace MagicAndMyths
                 }
             }
         }
+
+        public override string GetExplanation(Pawn Pawn)
+        {
+            string explanation = string.Empty;
+
+            if (this.Def.reactionProperties != null && this.Def.reactionProperties is StunReactionProperties hediffProperties)
+            {
+
+                string aoe = hediffProperties.isAOE ? $"In a {hediffProperties.radius} radius." : "";
+                explanation += $"Stuns for {hediffProperties.stunTicks.RandomInRange.ToStringSecondsFromTicks()} {aoe}";
+            }
+
+            return explanation;
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace MagicAndMyths
             if (Props.hediff == null)
                 return;
 
+
             if (target.Thing != null)
             {
                 if (target.Thing is Pawn targetPawn)

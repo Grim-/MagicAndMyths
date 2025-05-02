@@ -19,7 +19,7 @@ namespace MagicAndMyths
 
                 if (hediffProperties.isAOE)
                 {
-                    HediffUtil.ApplyHediffInRadius(hediffProperties.hediff,
+                    AOEUtil.ApplyHediffInRadius(hediffProperties.hediff,
                         Pawn.Position,
                         Pawn.Map,
                         hediffProperties.radius,
@@ -38,6 +38,20 @@ namespace MagicAndMyths
                 }
 
             }
+        }
+
+        public override string GetExplanation(Pawn Pawn)
+        {
+            string explanation = string.Empty;
+
+            if (this.Def.reactionProperties != null && this.Def.reactionProperties is AddHediffReactionProperties hediffProperties)
+            {
+
+                string aoe = hediffProperties.isAOE ? $"In a {hediffProperties.radius} radius." : "";
+                explanation += $"Applies {hediffProperties.hediff.LabelCap} {aoe}";
+            }
+
+            return explanation;
         }
     }
 }

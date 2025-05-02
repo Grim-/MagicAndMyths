@@ -32,7 +32,7 @@ namespace MagicAndMyths
                     SummonedPawn.Destroy(DestroyMode.KillFinalize);
                 }
 
-                EventManager.OnThingKilled -= EventManager_OnThingKilled;
+                EventManager.Instance.OnThingKilled -= EventManager_OnThingKilled;
                 SummonedPawn = null;
             }
             else
@@ -55,7 +55,7 @@ namespace MagicAndMyths
                     }
 
 
-                    EventManager.OnThingKilled += EventManager_OnThingKilled;
+                    EventManager.Instance.OnThingKilled += EventManager_OnThingKilled;
                 }
 
 
@@ -66,7 +66,7 @@ namespace MagicAndMyths
         {
             if (SummonedPawn != null && arg1 == SummonedPawn)
             {
-                EventManager.OnThingKilled -= EventManager_OnThingKilled;
+                EventManager.Instance.OnThingKilled -= EventManager_OnThingKilled;
                 if (!SummonedPawn.Destroyed)
                 {
                     SummonedPawn.Destroy(DestroyMode.KillFinalize);

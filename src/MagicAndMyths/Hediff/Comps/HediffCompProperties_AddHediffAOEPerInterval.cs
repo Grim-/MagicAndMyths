@@ -25,7 +25,7 @@ namespace MagicAndMyths
             base.OnInterval();
             if (Props.hediff != null)
             {
-                HediffUtil.ApplyHediffInRadius(Props.hediff,
+                AOEUtil.ApplyHediffInRadius(Props.hediff,
                     Pawn.Position,
                     Pawn.Map,
                     Props.radius,

@@ -34,14 +34,14 @@ namespace MagicAndMyths
 
             if (!respawningAfterLoad)
             {
-                EventManager.OnThingKilled += EventManager_OnThingKilled;
+                EventManager.Instance.OnThingKilled += EventManager_OnThingKilled;
             }
         }
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             base.Destroy(mode);
 
-            EventManager.OnThingKilled -= EventManager_OnThingKilled;
+            EventManager.Instance.OnThingKilled -= EventManager_OnThingKilled;
         }
 
         public override void DrawExtraSelectionOverlays()

@@ -8,10 +8,8 @@ namespace MagicAndMyths
 {
     public class CompProperties_ThrowableExplodeOnImpact : CompProperties_Throwable
     {
-        public float explosionRadius = 3f;
         public DamageDef damageDef;
         public FloatRange damageAmount = new FloatRange(10, 10);
-        public bool destroyOnImpact = true;
 
         public CompProperties_ThrowableExplodeOnImpact()
         {
@@ -28,15 +26,10 @@ namespace MagicAndMyths
             GenExplosion.DoExplosion(
             position,
             map,
-            Props.explosionRadius,
+            Props.radius,
             Props.damageDef != null ? Props.damageDef : DamageDefOf.Bomb,
             throwingPawn,
             Mathf.RoundToInt(Props.damageAmount.RandomInRange));
-
-            if (Props.destroyOnImpact)
-            {
-                this.parent.Destroy();
-            }
         }
     }
 

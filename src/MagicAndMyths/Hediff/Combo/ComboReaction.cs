@@ -14,13 +14,30 @@ namespace MagicAndMyths
         public bool removeOnReact = true;
         public EffecterDef reactionEffecter;
 
+
+
+        private ComboReactionWorker worker = null;
+        public ComboReactionWorker Worker
+        {
+            get
+            {
+                if (worker == null)
+                {
+                    worker = (ComboReactionWorker)Activator.CreateInstance(workerClass);
+                    worker.Def = this;
+                }
+
+                return worker;
+            }
+        }
+
+
         public ComboReactionWorker ExecuteWorker(Pawn pawn, HediffComp_ComboReactor parent)
         {
-            ComboReactionWorker worker = (ComboReactionWorker)Activator.CreateInstance(workerClass);
-            worker.Def = this;
-            worker.Comp = parent;
-            worker.pawn = pawn;
-            worker.DoReaction(pawn);
+            Worker.Def = this;
+            Worker.Comp = parent;
+            Worker.pawn = pawn;
+            Worker.DoReaction(pawn);
             return worker;
         }
     }

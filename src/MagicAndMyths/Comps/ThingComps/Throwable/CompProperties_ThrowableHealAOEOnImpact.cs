@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
+
+
     public class CompProperties_ThrowableHealAOEOnImpact : CompProperties_Throwable
     {
-        public float explosionRadius = 3f;
         public FloatRange healAmount = new FloatRange(10, 10);
         public int maxTargets = 4;
-
+        public bool splitHealAmountBetweenTargets = true;
         public CompProperties_ThrowableHealAOEOnImpact()
         {
             compClass = typeof(Comp_ThrowableHealAOEOnImpact);
@@ -24,23 +27,34 @@ namespace MagicAndMyths
         {
             base.OnRespawn(position, thing, map, throwingPawn);
 
-            List<Pawn> pawnsInRange = GenRadial.RadialDistinctThingsAround(position, map, Props.explosionRadius, true).Where(x => x is Pawn).Cast<Pawn>().ToList();
+            List<Thing> pawnsInRange = GenRadial.RadialDistinctThingsAround(position, map, Props.radius, true).ToList();
             int targetcount = 0;
+            float heal = Props.healAmount.RandomInRange;
+
+            //if (Props.splitHealAmountBetweenTargets)
+            //{
+            //    heal = heal / 
+            //}
 
             foreach (var item in pawnsInRange)
             {
-                if (!item.Spawned || item.Dead)
+                if (item is Pawn pawn)
                 {
-                    continue;
-                }
+                    if (!pawn.Spawned || pawn.Dead)
+                    {
+                        continue;
+                    }
 
-                if (targetcount >= Props.maxTargets)
-                {
-                    break;
-                }
+                    if (targetcount >= Props.maxTargets)
+                    {
+                        break;
+                    }
 
-                item.QuickHeal(Props.healAmount.RandomInRange);
-                targetcount++;
+                    pawn.QuickHeal(heal);
+                    MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"Healed +{heal}", Color.green, 3f);
+                    targetcount++;
+                }
+                else continue;
             }
         }
     }

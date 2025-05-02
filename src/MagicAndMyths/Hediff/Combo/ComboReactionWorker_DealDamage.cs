@@ -12,7 +12,7 @@ namespace MagicAndMyths
             {
                 if (Def.reactionProperties.isAOE)
                 {
-                    HediffUtil.ApplyDamageInRadius(Def.reactionProperties.damageDef, 
+                    AOEUtil.ApplyDamageInRadius(Def.reactionProperties.damageDef, 
                         Def.reactionProperties.damageRange.RandomInRange, 
                         Def.reactionProperties.armourpenRange.RandomInRange,
                         Pawn.Position, 
@@ -30,6 +30,19 @@ namespace MagicAndMyths
                     Pawn.TakeDamage(new DamageInfo(Def.reactionProperties.damageDef, Def.reactionProperties.damageRange.RandomInRange, Def.reactionProperties.armourpenRange.RandomInRange));
                 }           
             }
+        }
+
+        public override string GetExplanation(Pawn Pawn)
+        {
+            string explanation = string.Empty;
+
+            if (this.Def.reactionProperties != null)
+            {
+                string aoe = Def.reactionProperties.isAOE ? $"In a {Def.reactionProperties.radius} radius." : "";
+                explanation += $"Deals {Def.reactionProperties.damageRange.min} -{Def.reactionProperties.damageRange.max} {Def.reactionProperties.damageDef.LabelCap} damage {aoe}";
+            }
+
+            return explanation;
         }
     }
 }
