@@ -239,34 +239,54 @@ namespace MagicAndMyths
 			thingFlyer.soundLanding = landingSound;
 			thingFlyer.SetThrowingPawn(throwerPawn);
 
-            Comp_Throwable throwableComp = thing.TryGetComp<Comp_Throwable>();
-            if (throwableComp != null)
-            {
-                throwableComp.OnThrown(throwerPawn.Position, map, throwerPawn);
-            }
+			// Get all throwable comps and call OnThrown on each of them
+			if (thing is ThingWithComps withComps)
+			{
+				foreach (var comp in withComps.AllComps)
+				{
+					if (comp is Comp_Throwable throwableComp)
+					{
+						throwableComp.OnThrown(throwerPawn.Position, map, throwerPawn);
+					}
+				}
+			}
 
-            thingFlyer.OnBeforeRespawn += (IntVec3 position, Pawn throwingPawn) =>
-            {
-                if (throwableComp != null)
-                {
-                    throwableComp.OnBeforeRespawn(position, map, throwerPawn);
-                }
-                else
-                {
-                    ThrowUtility.ApplyDefaultThrowBehavior(throwerPawn, thing, position, map);
-                }
-            };
+			thingFlyer.OnBeforeRespawn += (IntVec3 position, Pawn throwingPawn) =>
+			{
+				bool handledByComp = false;
 
+				if (thing is ThingWithComps respawnWithComps)
+				{
+					foreach (var comp in respawnWithComps.AllComps)
+					{
+						if (comp is Comp_Throwable throwableComp)
+						{
+							throwableComp.OnBeforeRespawn(position, map, throwingPawn);
+							handledByComp = true;
+						}
+					}
+				}
+				if (!handledByComp)
+				{
+					ThrowUtility.ApplyDefaultThrowBehavior(throwerPawn, thing, position, map);
+				}
+			};
 
 			thingFlyer.OnRespawn += (IntVec3 position, Thing flyingThing, Pawn throwingPawn) =>
 			{
-                if (throwableComp != null)
-                {
-                    throwableComp.Respawn(position, flyingThing, map, throwingPawn);
-                }
-            };
+				if (flyingThing is ThingWithComps flyingwithComps)
+				{
+					foreach (var comp in flyingwithComps.AllComps)
+					{
+						if (comp is Comp_Throwable throwableComp)
+						{
+							throwableComp.Respawn(position, flyingThing, map, throwingPawn);
+						}
+					}
+				}
+			};
 
-            return thingFlyer;
+			return thingFlyer;
 		}
 
 

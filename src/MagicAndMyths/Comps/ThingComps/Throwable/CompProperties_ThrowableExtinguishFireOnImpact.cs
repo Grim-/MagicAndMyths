@@ -24,7 +24,6 @@ namespace MagicAndMyths
         public override void OnRespawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
         {
             base.OnRespawn(position, thing, map, throwingPawn);
-
             List<Thing> fires = new List<Thing>();
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, Props.radius, true))
             {
@@ -40,7 +39,6 @@ namespace MagicAndMyths
                     }
                 }
             }
-
             // Apply extinguish effect
             if (Props.extinguishEffect != null)
             {
@@ -59,7 +57,7 @@ namespace MagicAndMyths
                 if (fire != null)
                 {
                     if (Props.completelyExtinguish)
-                    {
+                    {;
                         fire.Destroy();
                     }
                     else
@@ -74,17 +72,13 @@ namespace MagicAndMyths
                             fire.Destroy();
                         }
                     }
+
+                    if (fire.Position.InBounds(map))
+                    {
+                        FleckMaker.WaterSplash(fire.Position.ToVector3Shifted(), map, 1f, 2f);
+                    }
                 }
             }
-
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, Props.radius, true))
-            {
-                if (cell.InBounds(map))
-                {
-                    FleckMaker.WaterSplash(cell.ToVector3Shifted(), map, 1f, 2f);
-                }
-            }
-
         }
     }
 }

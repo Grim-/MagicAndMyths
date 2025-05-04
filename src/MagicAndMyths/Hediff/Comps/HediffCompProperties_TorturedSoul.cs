@@ -39,7 +39,7 @@ namespace MagicAndMyths
         {
             base.CompPostPostRemoved();
 
-            if (Pawn.ideo != null)
+            if (Pawn.ideo != null && TargetIdeo != null)
             {
                 Pawn.ideo.SetIdeo(TargetIdeo);
             }

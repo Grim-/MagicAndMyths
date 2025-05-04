@@ -1,5 +1,4 @@
-﻿using RimWorld;
-using System;
+﻿using System;
 using Verse;
 
 namespace MagicAndMyths

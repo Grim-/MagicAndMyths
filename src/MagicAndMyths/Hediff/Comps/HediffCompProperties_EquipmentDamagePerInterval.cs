@@ -20,9 +20,13 @@ namespace MagicAndMyths
         protected override void OnInterval()
         {
             base.OnInterval();
-            foreach (var item in this.Pawn.EquippedWornOrInventoryThings)
+
+            if (this.Pawn != null && this.Pawn.EquippedWornOrInventoryThings.EnumerableCount() > 0)
             {
-                item.TakeDamage(new DamageInfo(DamageDefOf.Blunt, Props.damageAmount.RandomInRange));
+                foreach (var item in this.Pawn.EquippedWornOrInventoryThings)
+                {
+                    item.TakeDamage(new DamageInfo(DamageDefOf.Blunt, Props.damageAmount.RandomInRange));
+                }
             }
         }
     }

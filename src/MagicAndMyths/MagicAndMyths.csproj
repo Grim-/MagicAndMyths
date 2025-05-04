@@ -113,6 +113,8 @@
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddThought.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddTrait.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectHeal.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectModifyNeeds.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectModifyPower.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectStoredPawn.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectTriggerIncident.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_PawnStorage.cs" />
@@ -158,8 +160,11 @@
     <Compile Include="Hediff\Combo\ComboReactionWorker_IncreaseParentSeverity.cs" />
     <Compile Include="Hediff\Combo\ComboReactionWorker_Stun.cs" />
     <Compile Include="Hediff\Combo\HediffCompProperties_ComboReactor.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_AbilityEffect.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_DealDamageOnAbilityUse.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_IncreaseSeverityOnAbilityUse.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_Propagate.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_ReduceAbilityCooldown.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_RemoveAfterTicks.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_TimedExplosion.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_AddHediffAOEPerInterval.cs" />
