@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.MateriaCategoryDef>
+    <defName>MateriaCategory_Universal</defName>
+    <label>Universal</label>
+    <description>Can be equipped on any type of equipment.</description>
+  </MagicAndMyths.MateriaCategoryDef>
+
+  <MagicAndMyths.MateriaCategoryDef>
+    <defName>MateriaCategory_Melee</defName>
+    <label>Melee Weapons</label>
+    <description>Can only be equipped on melee weapons.</description>
+  </MagicAndMyths.MateriaCategoryDef>
+
+  <MagicAndMyths.MateriaCategoryDef>
+    <defName>MateriaCategory_Ranged</defName>
+    <label>Ranged Weapons</label>
+    <description>Can only be equipped on ranged weapons.</description>
+  </MagicAndMyths.MateriaCategoryDef>
+
+  <MagicAndMyths.MateriaCategoryDef>
+    <defName>MateriaCategory_Armor</defName>
+    <label>Armor</label>
+    <description>Can only be equipped on armor pieces.</description>
+  </MagicAndMyths.MateriaCategoryDef>
+
+</Defs>

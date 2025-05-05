@@ -46,30 +46,6 @@
       <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
         <biocodeOnEquip>true</biocodeOnEquip>
       </li>
-      <li MayRequire="emo.com.materia" Class="Materia.CompProperties_Materia">
-        <materiaSlots>
-          <li>
-            <slotType>PurpleMateriaSlot</slotType>
-            <slotLevel>4</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-          <li>
-            <slotType>PurpleMateriaSlot</slotType>
-            <slotLevel>3</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-          <li>
-            <slotType>RedMateriaSlot</slotType>
-            <slotLevel>2</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-          <li>
-            <slotType>GreenMateriaSlot</slotType>
-            <slotLevel>3</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-        </materiaSlots>
-      </li>
     </comps>
     <modExtensions>
     <li Class="MagicAndMyths.DrawOffsetExt">

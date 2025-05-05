@@ -79,4 +79,15 @@ namespace MagicAndMyths
 
         public static ThingPropertyDef ThingProp_Invisible;
     }
+
+    [DefOf]
+    public static class MateriaDefOf
+    {
+        public static MateriaCategoryDef MateriaCategory_Universal;
+        public static MateriaCategoryDef MateriaCategory_Melee;
+        public static MateriaCategoryDef MateriaCategory_Ranged;
+        public static MateriaCategoryDef MateriaCategory_Armor;
+
+        public static MateriaGenerationConfigDef MateriaGenerationConfig;
+    }
 }

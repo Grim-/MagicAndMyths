@@ -69,29 +69,14 @@
         <requiredTraits>
         </requiredTraits>
       </li>
-      <li MayRequire="emo.com.materia" Class="Materia.CompProperties_Materia">
-        <materiaSlots>
+      <li Class="MagicAndMyths.CompProperties_Enchant">
+        <maxEnchantsAllowed>3</maxEnchantsAllowed>
+        <enchantmentSlots>
           <li>
-            <slotType>PurpleMateriaSlot</slotType>
-            <slotLevel>4</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-          <li>
-            <slotType>PurpleMateriaSlot</slotType>
             <slotLevel>3</slotLevel>
             <slotIsLocked>false</slotIsLocked>
           </li>
-          <li>
-            <slotType>RedMateriaSlot</slotType>
-            <slotLevel>2</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-          <li>
-            <slotType>GreenMateriaSlot</slotType>
-            <slotLevel>3</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-        </materiaSlots>
+        </enchantmentSlots>
       </li>
     </comps>
   </ThingDef>
