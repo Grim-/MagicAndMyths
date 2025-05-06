@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MealBase">
+    <defName>MagicAndMyths_GlassApple</defName>
+    <label>glass apple</label>
+    <description>A translucent apple that bends the light through it, not only the skin but the entire fruit is glass like in appearance despite being edible..</description>
+    <graphicData>
+      <texPath>Resources/Apple</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <DeteriorationRate>0.25</DeteriorationRate>
+      <MarketValue>3000</MarketValue>
+      <Mass>0.7</Mass>
+      <WorkToMake>450</WorkToMake>
+      <Nutrition>1</Nutrition>
+      <Beauty>20</Beauty>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <optimalityOffsetHumanlikes>-5</optimalityOffsetHumanlikes>
+      <optimalityOffsetFeedingAnimals>-10</optimalityOffsetFeedingAnimals>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <allowedArchonexusCount>40</allowedArchonexusCount>
+  </ThingDef>
+</Defs>

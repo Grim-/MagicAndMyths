@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_PortalBarrage</defName>
+    <label>Portal Barrage</label>
+    <description>Summon arcane portals around the caster that fire projectiles at the target.</description>
+    <iconPath>UI/Abilities/PortalBarrage</iconPath>
+    <statBases>
+      <Ability_CooldownTime>240</Ability_CooldownTime>
+    </statBases>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <drawAimPie>true</drawAimPie>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_PortalBarrage">
+        <portalDef>MagicAndMyths_ProjectilePortal</portalDef>
+        <projectileDef>Projectile_Fireball</projectileDef>
+        <portalCount>5</portalCount>
+        <portalDistance>2</portalDistance>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

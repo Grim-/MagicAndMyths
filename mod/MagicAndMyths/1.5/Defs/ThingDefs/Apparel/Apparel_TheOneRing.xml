@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ApparelBase">
+     <defName>Ring_TheOneRing</defName>
+     <label>example ring</label>
+     <description>A simple ring that can be worn on a finger.</description>
+     <techLevel>Medieval</techLevel>
+     <graphicData>
+       <texPath>Jewelry/Goldring</texPath>
+       <graphicClass>Graphic_Single</graphicClass>
+       <drawSize>0.45</drawSize>
+     </graphicData>
+     <statBases>
+       <MaxHitPoints>100</MaxHitPoints>
+       <WorkToMake>4000</WorkToMake>
+       <Mass>0.01</Mass>
+       <Flammability>0.4</Flammability>
+       <Beauty>6</Beauty>
+       <MarketValue>160</MarketValue>
+     </statBases>
+     <equippedStatOffsets>
+       <SocialImpact>0.10</SocialImpact>
+     </equippedStatOffsets>
+     <costList>
+       <Silver>40</Silver>
+     </costList>
+     <recipeMaker>
+       <researchPrerequisite>Smithing</researchPrerequisite>
+       <skillRequirements>
+         <Crafting>6</Crafting>
+       </skillRequirements>
+       <recipeUsers>
+         <li>FueledSmithy</li>
+         <li>ElectricSmithy</li>
+       </recipeUsers>
+     </recipeMaker>
+     <thingCategories>
+       <li>Apparel</li>
+     </thingCategories>
+     <apparel>
+       <bodyPartGroups>
+         <li>Hands</li>
+       </bodyPartGroups>
+       <layers>
+         <li>Belt</li>
+       </layers>
+       <tags>
+         <li>Jewelry</li>
+       </tags>
+       <wornGraphicPath>Things/Apparel/Ring/Ring</wornGraphicPath>
+     </apparel>
+     <comps>
+       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+         <abilityDef>MagicAndMyths_Invisibility</abilityDef>
+       </li>
+     </comps>
+   </ThingDef>
+
+</Defs>

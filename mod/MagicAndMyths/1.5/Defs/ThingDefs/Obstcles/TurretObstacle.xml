@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ObstacleDef>
+       <defName>TurretStructurePlacement</defName>
+       <label>places turret in room</label>
+       <description>A door that requires a key from elsewhere in the dungeon.</description>
+       <commonality>0.2</commonality>
+       <minDistanceFromStart>2</minDistanceFromStart>
+       <workerClass>MagicAndMyths.ObstacleWorker_PlaceStructureLayout</workerClass>
+   </MagicAndMyths.ObstacleDef>
+
+</Defs>

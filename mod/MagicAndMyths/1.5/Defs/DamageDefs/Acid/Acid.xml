@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageDef>
+    <defName>Acid</defName>
+    <label>acid</label>
+    <armorCategory>Sharp</armorCategory>
+    <deathMessage>{0} has been horribly burnt to death.</deathMessage>
+    <hediff>MagicAndMyths_AcidBurn</hediff>
+    <hediffSkin>MagicAndMyths_AcidBurn</hediffSkin>
+    <hediffSolid>MagicAndMyths_AcidBurn</hediffSolid>
+    <scaleDamageToBuildingsBasedOnFlammability>false</scaleDamageToBuildingsBasedOnFlammability>
+  </DamageDef>
+</Defs>

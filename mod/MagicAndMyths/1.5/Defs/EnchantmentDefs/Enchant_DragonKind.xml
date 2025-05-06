@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_DragonKind</defName>
+    <label>Enchantment of Dragonkind</label>
+    <description>An ancient magic infused with the essence of dragon scales. When applied, it hardens the wearer's skin to resist cutting blows and grants complete immunity to flames. The enchantment radiates a comforting warmth and sometimes emits a faint sound like distant draconic breathing.</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatOffset">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatOffset</workerClass>
+        <statToAffect>ArmorRating_Sharp</statToAffect>
+        <statOffset>0.1</statOffset>
+      </li>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatFactor">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatFactor</workerClass>
+        <statToAffect>Flammability</statToAffect>
+        <statFactor>0</statFactor>
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+  </MagicAndMyths.EnchantDef>
+
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_Sunlight</defName>
+    <label>Enchantment of Sunlight</label>
+    <description>A blessing drawn from celestial energies that shifts with the passage of day and night. During daylight hours, it creates a shimmering golden aura that disperses heat, allowing the bearer to walk unharmed through the most scorching environments. As darkness falls, its power wanes until dawn renews its strength.</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatFactorDaylight">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatFactor</workerClass>
+        <statToAffect>ArmorRating_Heat</statToAffect>
+        <minFactor>0</minFactor>
+        <maxFactor>10</maxFactor>
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+  </MagicAndMyths.EnchantDef>
+
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_VolatileEnergies</defName>
+    <label>Enchantment of Volatile Energies</label>
+    <description>A dangerous arcane formula developed by vindictive battle-mages. This enchantment surrounds the bearer with unstable energies that violently rebound upon attackers. When struck, these energies flare with brilliant purple light, sending a portion of the force back to its source. Even successful attackers find themselves unexpectedly wounded by their own blows.</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_DamageReflection">
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+  </MagicAndMyths.EnchantDef>
+</Defs>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>Thor_Mjolnir</defName>
+    <label>Mjolnir</label>
+    <description>Mjolnir</description>
+    <possessionCount>1</possessionCount>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Mjolnir</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.1</drawSize>
+    </graphicData>
+    <equipmentType>Primary</equipmentType>
+    <costList>
+      <Steel>1000</Steel>
+      <Plasteel>50</Plasteel>
+    </costList>
+    <thingCategories>
+      <li>Weapons</li>
+    </thingCategories>
+    <techLevel>Spacer</techLevel>
+    <costStuffCount>120</costStuffCount>
+    <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
+    <statBases>
+      <WorkToMake>25000</WorkToMake>
+      <Mass>1.5</Mass>
+    </statBases>
+    <equippedAngleOffset>-130</equippedAngleOffset>
+    <tools>
+      <li>
+        <label>hammer head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>14</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>
+      <li>
+        <label>hammer head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>40</power>
+        <cooldownTime>1.1</cooldownTime>
+      </li>
+    </tools>
+    <verbs>
+     <li Class="MagicAndMyths.VerbProperties_Channeled">
+       <channelDurationTicks>300</channelDurationTicks>
+       <channelJobDef>MagicAndMyths_ChannelVerb</channelJobDef>
+       <verbClass>MagicAndMyths.Verb_LaserBeam</verbClass>
+       <hasStandardCommand>true</hasStandardCommand>
+       <warmupTime>1</warmupTime>
+       <range>24</range>
+       <muzzleFlashScale>0</muzzleFlashScale>
+       <label>laser beam</label>
+     </li>
+   </verbs>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
+        <biocodeOnEquip>true</biocodeOnEquip>
+        <requiredSkills>
+          <!-- <li>
+            <skill>Melee</skill>
+            <minLevel>15</minLevel>
+          </li> -->
+        </requiredSkills>
+        <requiredTraits>
+        </requiredTraits>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_Enchant">
+        <maxEnchantsAllowed>3</maxEnchantsAllowed>
+        <enchantmentSlots>
+          <li>
+            <slotLevel>3</slotLevel>
+            <slotIsLocked>false</slotIsLocked>
+          </li>
+        </enchantmentSlots>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BasePawn">
+    <defName>MagicAndMyths_Abomination</defName>
+    <label>abomination</label>
+    <description>An abomination.</description>
+    <hiddenWhileUndiscovered>true</hiddenWhileUndiscovered>
+    <statBases>
+      <MoveSpeed>3.25</MoveSpeed>
+      <ComfyTemperatureMin>-40</ComfyTemperatureMin>
+      <ComfyTemperatureMax>60</ComfyTemperatureMax>
+      <PsychicSensitivity>2</PsychicSensitivity>
+      <MinimumContainmentStrength>60</MinimumContainmentStrength>
+      <LeatherAmount>20</LeatherAmount>
+      <MeatAmount>70</MeatAmount>
+    </statBases>
+    <tradeability>None</tradeability>
+    <race>
+      <body>Gorehulk</body>
+      <thinkTreeMain>Gorehulk</thinkTreeMain>
+      <thinkTreeConstant>GorehulkConstant</thinkTreeConstant>
+      <overrideShouldHaveAbilityTracker>true</overrideShouldHaveAbilityTracker>
+      <alwaysViolent>true</alwaysViolent>
+      <baseBodySize>2</baseBodySize>
+      <baseHealthScale>1.25</baseHealthScale>
+      <intelligence>ToolUser</intelligence>
+      <needsRest>false</needsRest>
+      <bloodDef>Filth_DarkBlood</bloodDef>
+      <bleedRateFactor>0.5</bleedRateFactor>
+      <fleshType>EntityFlesh</fleshType>
+      <isImmuneToInfections>true</isImmuneToInfections>
+      <specificMeatDef>Meat_Twisted</specificMeatDef>
+      <leatherDef>Leather_Human</leatherDef>
+      <hasGenders>false</hasGenders>
+      <foodType>None</foodType>
+      <lifeExpectancy>25</lifeExpectancy>
+      <soundMeleeHitPawn>Pawn_Melee_SmallScratch_HitPawn</soundMeleeHitPawn>
+      <soundMeleeHitBuilding>Pawn_Melee_SmallScratch_HitBuilding</soundMeleeHitBuilding>
+      <soundMeleeMiss>Pawn_Melee_SmallScratch_Miss</soundMeleeMiss>
+      <soundMeleeDodge>Pawn_MeleeDodge</soundMeleeDodge>
+      <disableIgniteVerb>true</disableIgniteVerb>
+      <trainability>None</trainability>
+      <canBecomeShambler>false</canBecomeShambler>
+      <lifeStageAges>
+        <li>
+          <def>EntityFullyFormed</def>
+          <soundCall>Pawn_Gorehulk_Call</soundCall>
+          <soundWounded>Pawn_Gorehulk_Wounded</soundWounded>
+          <soundAttack>Pawn_Gorehulk_Attack</soundAttack>
+          <soundDeath>Pawn_Gorehulk_Death</soundDeath>
+        </li>
+      </lifeStageAges>
+      <hediffGiverSets>
+      </hediffGiverSets>
+      <corpseHiddenWhileUndiscovered>true</corpseHiddenWhileUndiscovered>
+    </race>
+    <comps>
+    </comps>
+    <tools>
+      <li>
+        <label>left flesh club</label>
+        <labelNoLocation>flesh club</labelNoLocation>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>3</power>
+        <cooldownTime>1.5</cooldownTime>
+        <linkedBodyPartsGroup>LeftFleshClub</linkedBodyPartsGroup>
+        <alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
+      </li>
+      <li>
+        <label>right flesh club</label>
+        <labelNoLocation>flesh club</labelNoLocation>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>3</power>
+        <cooldownTime>1.5</cooldownTime>
+        <linkedBodyPartsGroup>RightFleshClub</linkedBodyPartsGroup>
+        <alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
+      </li>
+      <li>
+        <label>head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>3</power>
+        <cooldownTime>2</cooldownTime>
+        <linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+        <ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+        <chanceFactor>0.1</chanceFactor>
+      </li>
+    </tools>
+  </ThingDef>
+</Defs>

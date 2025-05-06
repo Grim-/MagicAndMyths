@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <TraitDef>
+
+    <defName>MagicAndMyths_Strength</defName>
+    <degreeDatas>
+      <li>
+        <label>Feeble</label>
+        <description>{PAWN_nameDef} isnt very strong. {PAWN_possessive} is naturally weaker than most things.</description>
+        <statOffsets>
+          <Stat_Strength>-3</Stat_Strength>
+        </statOffsets>
+        <degree>0</degree>
+        <commonality>0.1</commonality>
+      </li>
+
+      <li>
+        <label>Weak</label>
+        <description>{PAWN_nameDef} is weak. {PAWN_possessive} is naturally weaker than the average pawn.</description>
+        <statOffsets>
+          <Stat_Strength>-2</Stat_Strength>
+        </statOffsets>
+        <degree>1</degree>
+        <commonality>0.4</commonality>
+      </li>
+
+      <li>
+        <label>Strong</label>
+        <description>{PAWN_nameDef} is strong. {PAWN_possessive} is naturally stronger than the average pawn.</description>
+        <statOffsets>
+          <Stat_Strength>2</Stat_Strength>
+        </statOffsets>
+        <degree>2</degree>
+        <commonality>0.4</commonality>
+      </li>
+
+      <li>
+        <label>Herculean</label>
+        <description>{PAWN_nameDef} is very strong. {PAWN_possessive} is naturally stronger than most things.</description>
+        <statOffsets>
+          <Stat_Strength>3</Stat_Strength>
+        </statOffsets>
+        <degree>3</degree>
+        <commonality>0.1</commonality>
+      </li>
+
+    </degreeDatas>
+  </TraitDef>
+</Defs>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <MagicAndMyths.GateSymbolDef>
+        <defName>PortalSymbol_Alpha</defName>
+        <label>Alpha</label>
+        <description>Portal gate symbol representing Alpha.</description>
+        <texPath>Symbols/Symbol_1</texPath>
+        <symbolIndex>0</symbolIndex>
+    </MagicAndMyths.GateSymbolDef>
+
+    <MagicAndMyths.GateSymbolDef>
+        <defName>PortalSymbol_Beta</defName>
+        <label>Beta</label>
+        <description>Portal gate symbol representing Beta.</description>
+        <texPath>Symbols/Symbol_2</texPath>
+        <symbolIndex>1</symbolIndex>
+    </MagicAndMyths.GateSymbolDef>
+
+    <MagicAndMyths.GateSymbolDef>
+        <defName>PortalSymbol_Gamma</defName>
+        <label>Gamma</label>
+        <description>Portal gate symbol representing Gamma.</description>
+        <texPath>Symbols/Symbol_3</texPath>
+        <symbolIndex>2</symbolIndex>
+    </MagicAndMyths.GateSymbolDef>
+
+    <MagicAndMyths.GateSymbolDef>
+        <defName>PortalSymbol_Delta</defName>
+        <label>Delta</label>
+        <description>Portal gate symbol representing Delta.</description>
+        <texPath>Symbols/Symbol_4</texPath>
+        <symbolIndex>3</symbolIndex>
+    </MagicAndMyths.GateSymbolDef>
+</Defs>

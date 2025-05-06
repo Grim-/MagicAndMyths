@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.UndeadDef>
+    <defName>ElementalSkull</defName>
+    <hediff>DeathKnight_UndeadSekeleton</hediff>
+    <kind>Skull</kind>
+    <childhoodBackstories>
+      <li>MagicAndMyths_LesserUndead</li>
+    </childhoodBackstories>
+    <adulthoodBackstories>
+      <li>MagicAndMyths_LesserUndead</li>
+    </adulthoodBackstories>
+  </MagicAndMyths.UndeadDef>
+  
+  <PawnKindDef>
+    <defName>Skull</defName>
+    <label>jibbering skull</label>
+    <race>Race_Skull</race>
+    <combatPower>1</combatPower>
+    <canArriveManhunter>false</canArriveManhunter>
+    <aiAvoidCover>true</aiAvoidCover>
+    <fleeHealthThresholdRange>0~0</fleeHealthThresholdRange>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Humanlike/Heads/None_Average_Skull</texPath>
+          <drawSize>1</drawSize>
+          <color>(199, 77, 12)</color>
+          <shaderType>CutoutComplex</shaderType>
+          <shadowData>
+            <volume>(0.32, 0.35, 0.32)</volume>
+            <offset>(0,0,0)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Humanlike/Heads/None_Average_Skull</texPath>
+          <drawSize>1</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>Race_Skull</defName>
+    <label>Race_Skull</label>
+    <description>Race_Skull</description>
+    <statBases>
+      <MoveSpeed>4.5</MoveSpeed>
+      <ComfyTemperatureMin>-150</ComfyTemperatureMin>
+      <ComfyTemperatureMax>150</ComfyTemperatureMax>
+      <MarketValue>2000</MarketValue>
+      <PsychicSensitivity>1.5</PsychicSensitivity>
+      <Flammability>0</Flammability>
+    </statBases>
+    <tools>
+      <li>
+        <label>Head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>1</power>
+        <cooldownTime>2</cooldownTime>
+        <ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+        <chanceFactor>1</chanceFactor>
+      </li>
+    </tools>
+    <race>
+      <body>SkullBody</body>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <wildness>0</wildness>
+      <canReleaseToWild>false</canReleaseToWild>
+      <needsRest>false</needsRest>
+      <hasGenders>false</hasGenders>
+      <baseBodySize>20</baseBodySize>
+      <baseHungerRate>0</baseHungerRate>
+      <baseHealthScale>5.0</baseHealthScale>
+      <foodType>None</foodType>
+      <trainability>Advanced</trainability>
+      <petness>0</petness>
+      <lifeExpectancy>1000</lifeExpectancy>
+      <lifeStageAges>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+          <soundWounded>Pawn_BigCat_Wounded</soundWounded>
+          <soundDeath>Pawn_BigCat_Death</soundDeath>
+          <soundCall>Pawn_BigCat_Call</soundCall>
+          <soundAngry>Pawn_BigCat_Angry</soundAngry>
+        </li>
+      </lifeStageAges>
+      <soundMeleeHitPawn>Pawn_Melee_BigBash_HitPawn</soundMeleeHitPawn>
+      <soundMeleeHitBuilding>Pawn_Melee_BigBash_HitBuilding</soundMeleeHitBuilding>
+      <soundMeleeMiss>Pawn_Melee_BigBash_Miss</soundMeleeMiss>
+    </race>
+    <butcherProducts />
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_JibberingSkull">
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

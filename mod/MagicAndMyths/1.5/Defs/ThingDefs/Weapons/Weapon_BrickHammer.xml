@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>Thor_BrickHammer</defName>
+    <label>Brick Hammer</label>
+    <description>Brick Hammer</description>
+    <possessionCount>1</possessionCount>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Maul</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>2.2</drawSize>
+    </graphicData>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <equipmentType>Primary</equipmentType>
+    <costList>
+      <Steel>400</Steel>
+    </costList>
+    <techLevel>Spacer</techLevel>
+    <costStuffCount>120</costStuffCount>
+    <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
+    <statBases>
+      <WorkToMake>25000</WorkToMake>
+      <Mass>1.5</Mass>
+    </statBases>
+    <equippedAngleOffset>-130</equippedAngleOffset>
+    <tools>
+      <li>
+        <label>hammer head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>14</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>
+      <li>
+        <label>hammer head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>20</power>
+        <cooldownTime>3</cooldownTime>
+      </li>
+    </tools>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
+        <biocodeOnEquip>true</biocodeOnEquip>
+      </li>
+    </comps>
+    <modExtensions>
+    <li Class="MagicAndMyths.DrawOffsetExt">
+      <offset>(-0.03, 0, 0.05)</offset>
+    </li>
+  </modExtensions>
+  </ThingDef>
+
+</Defs>

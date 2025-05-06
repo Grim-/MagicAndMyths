@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_PlaceHealingTotem</defName>
+    <label>place totem : healing</label>
+    <description>place totem : healing</description>
+    <iconPath>Skills/Fly</iconPath>
+    <hostile>false</hostile>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>45</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilitySpawnTotem">
+        <totemDef>MM_HealingTotem</totemDef>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

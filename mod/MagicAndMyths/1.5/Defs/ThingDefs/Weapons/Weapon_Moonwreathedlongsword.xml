@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>MagicAndMyths_MoonWreathedLongsword</defName>
+    <label>Moon Wreathed Longsword</label>
+    <description>Moon Wreathed Longsword</description>
+    <possessionCount>1</possessionCount>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Equipment/Sword_29</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>2.5</drawSize>
+      <allowFlip>false</allowFlip>
+    </graphicData>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <equipmentType>Primary</equipmentType>
+    <costList>
+      <Steel>400</Steel>
+    </costList>
+    <techLevel>Spacer</techLevel>
+    <costStuffCount>120</costStuffCount>
+    <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
+    <statBases>
+      <WorkToMake>25000</WorkToMake>
+      <Mass>1.5</Mass>
+    </statBases>
+    <equippedAngleOffset>0</equippedAngleOffset>
+    <tools>
+      <li>
+        <label>hammer head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>14</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>
+      <li>
+        <label>hammer head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>20</power>
+        <cooldownTime>3</cooldownTime>
+      </li>
+    </tools>
+    <comps>
+    </comps>
+    <modExtensions>
+    <li Class="MagicAndMyths.DrawOffsetExt">
+      <offset>(-0.2, 0, 0.05)</offset>
+    </li>
+  </modExtensions>
+  </ThingDef>
+
+</Defs>

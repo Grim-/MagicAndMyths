@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MagicAndMyths_SimpleBomb</defName>
+    <label>simple bomb</label>
+    <description>A simple bomb, you throw it, it goes boom, you hit it - it goes boom, it gets too hot - it goes bo- you get it.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Item_Bomb</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>500</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ThrowableExplodeOnImpact">
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

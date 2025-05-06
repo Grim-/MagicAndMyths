@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_TransformationBear</defName>
+    <label>Transform : Bear</label>
+    <description>Transform : Bear</description>
+    <hostile>false</hostile>
+    <targetRequired>false</targetRequired>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>-1</range>
+      <warmupTime>0</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetable>False</targetable>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_Transform">
+        <kindDef>Bear_DireGrizzly</kindDef>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

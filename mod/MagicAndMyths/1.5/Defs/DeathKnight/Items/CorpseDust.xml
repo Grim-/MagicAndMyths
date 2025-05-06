@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+      <defName>MagicAndMyths_CorpseDust</defName>
+      <label>corpse dust</label>
+      <description>A dust used to help raise the dead without a corpse present.</description>
+      <graphicData>
+        <texPath>CorpseDust</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <resourceReadoutPriority>Middle</resourceReadoutPriority>
+      <soundInteract>Standard_Drop</soundInteract>
+      <soundDrop>Standard_Drop</soundDrop>
+      <statBases>
+        <MaxHitPoints>50</MaxHitPoints>
+        <Mass>0.3</Mass>
+        <Flammability>0.5</Flammability>
+        <DeteriorationRate>0.5</DeteriorationRate>
+      </statBases>
+      <thingCategories>
+        <li>Items</li>
+      </thingCategories>
+      <comps>
+      </comps>
+    </ThingDef>
+
+</Defs>
