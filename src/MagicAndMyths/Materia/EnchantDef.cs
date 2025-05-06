@@ -56,13 +56,6 @@ namespace MagicAndMyths
         }
     }
 
-    public class MateriaMinableData
-    {
-        public ThingDef mineable;
-        public FloatRange dropChance = new FloatRange(0f, 0.2f);
-        public IntRange dropAmount = new IntRange(1, 1);
-    }
-
     public class MateriaLinkData
     {
         public MateriaTypeDef type;

@@ -35,6 +35,25 @@ namespace MagicAndMyths
                 }
             }
         }
+
+        public override bool CanApply(Pawn user, LocalTargetInfo target, Thing item, ref string reason)
+        {
+            if (target.Thing is Pawn targetPawn)
+            {
+                if (targetPawn.HostileTo(user))
+                {
+                    reason = "Target must be friendly";
+                    return false;
+                }
+            }
+            else
+            {
+                reason = "Target must be a pawn";
+                return false;
+            }
+
+            return base.CanApply(user, target, item, ref reason);
+        }
     }
 
 

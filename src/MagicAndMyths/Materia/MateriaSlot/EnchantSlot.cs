@@ -54,7 +54,7 @@ namespace MagicAndMyths
                     return -1;
                 }
 
-                return MateriaComp.MateriaSlots.IndexOf(this);
+                return MateriaComp.ActiveEnchants.IndexOf(this);
             }
         }
 

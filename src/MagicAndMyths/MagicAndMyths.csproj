@@ -103,12 +103,15 @@
     <Compile Include="Buildings\Dungeon\Building_FakeWall.cs" />
     <Compile Include="Buildings\Building_LockableDoor.cs" />
     <Compile Include="Buildings\Thing_Key.cs" />
+    <Compile Include="Comps\Ability\CompProperties_AbilitySpawnTotem.cs" />
     <Compile Include="Comps\Ability\CompProperties_EquippableAbility.cs" />
     <Compile Include="Comps\Ability\CompProperties_FlyTargetThing.cs" />
+    <Compile Include="Comps\Ability\CompProperties_PortalBarrage.cs" />
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
     <Compile Include="Comps\Ability\CompProperties_TeleportPawnToHomeMap.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
     <Compile Include="Comps\Map\MapComp_PerceptionManager.cs" />
+    <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddEnchant.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddGene.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddThought.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddTrait.cs" />
@@ -137,6 +140,9 @@
     <Compile Include="Comps\ThingComps\Throwable\JobDriver_ChannelVerb.cs" />
     <Compile Include="Comps\ThingComps\Throwable\VerbProperties_Channeled.cs" />
     <Compile Include="Comps\ThingComps\Throwable\Verb_LaserBeam.cs" />
+    <Compile Include="Comps\ThingComps\Totem\CompProperties_BaseTotem.cs" />
+    <Compile Include="Comps\ThingComps\Totem\CompProperties_TotemApplyHediff.cs" />
+    <Compile Include="Comps\ThingComps\Totem\CompProperties_TotemManager.cs" />
     <Compile Include="Comps\ThingProperties\BatteryCharger_PhotovolaticPropertyWorker.cs" />
     <Compile Include="Comps\ThingProperties\DurableComponentDef.cs" />
     <Compile Include="Comps\ExtendedMapParent.cs" />
@@ -210,6 +216,7 @@
     <Compile Include="Materia\Materia Effects\EnchantEffectDef_ChainLightningOnHit.cs" />
     <Compile Include="Materia\Materia Effects\EnchantEffectDef_DamageTracker.cs" />
     <Compile Include="Materia\Materia Effects\EnchantWorker.cs" />
+    <Compile Include="Materia\Materia Effects\OnDamageTaken\EnchantEffectDef_DamageReflection.cs" />
     <Compile Include="Materia\Materia Effects\OnDamageTaken\EnchantEffectDef_DamageShield.cs" />
     <Compile Include="Materia\Materia Effects\OnDamageTaken\EnchantEffectDef_OnDamageTaken.cs" />
     <Compile Include="Materia\Materia Effects\OnDeath\EnchantEffectDef_Revival.cs" />
@@ -225,6 +232,8 @@
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_EquipmentStat.cs" />
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStat.cs" />
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactor.cs" />
+    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactorDaylight.cs" />
+    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactorLerp.cs" />
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatOffset.cs" />
     <Compile Include="Materia\MateriaBreakdownMaterials.cs" />
     <Compile Include="Materia\MateriaCategoryDef.cs" />
@@ -257,7 +266,9 @@
     <Compile Include="Materia\UI\Window_MateriaSelection.cs" />
     <Compile Include="PawnRender\PawnOverlayNodeProperties.cs" />
     <Compile Include="Util\BonusComponent.cs" />
+    <Compile Include="Comps\ThingComps\Totem\Building_Totem.cs" />
     <Compile Include="Util\Effect Behaviours\LaserBeamEffect.cs" />
+    <Compile Include="Util\ProjectileProxy.cs" />
     <Compile Include="Util\Roll\ContestedOutcome.cs" />
     <Compile Include="Util\StatParts\StatPart_DnDStatBase.cs" />
     <Compile Include="Util\StatParts\StatPart_Strength.cs" />

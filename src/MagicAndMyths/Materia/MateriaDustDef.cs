@@ -6,7 +6,5 @@ namespace MagicAndMyths
     public class MateriaDustDef : ThingDef
     {
         public MateriaSlotTypeDef createsSlotType;
-
-        public List<MateriaMinableData> mineableData;
     }
 }

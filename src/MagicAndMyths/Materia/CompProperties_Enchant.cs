@@ -22,7 +22,7 @@ namespace MagicAndMyths
     public class Comp_Enchant : ThingComp, IStatProvider, IDrawEquippedGizmos
     {
         private List<EnchantSlot> activeEnchants = new List<EnchantSlot>();
-        public List<EnchantSlot> MateriaSlots => activeEnchants.ToList();
+        public List<EnchantSlot> ActiveEnchants => activeEnchants.ToList();
 
         private bool initializedSlots = false;
         private CompProperties_Enchant Props => (CompProperties_Enchant)props;
@@ -38,10 +38,10 @@ namespace MagicAndMyths
 
         public bool HasMaximumSlotsAllowed => OccupiedSlotsCount >= SlotCount;
 
-        public int OccupiedSlotsCount => this.MateriaSlots.Where(x => x.IsOccupied).Count();
-        public int EmptySlots => this.MateriaSlots.Where(x => !x.IsOccupied).Count();
+        public int OccupiedSlotsCount => this.ActiveEnchants.Where(x => x.IsOccupied).Count();
+        public int EmptySlots => this.ActiveEnchants.Where(x => !x.IsOccupied).Count();
 
-        public int SlotCount => this.MateriaSlots.Count;
+        public int SlotCount => this.ActiveEnchants.Count;
 
 
 
@@ -53,15 +53,14 @@ namespace MagicAndMyths
             {
                 if (!initializedSlots)
                 {
-                    //if (Props.materiaSlots == null || Props.materiaSlots.Count == 0)
-                    //{
-                    //   GenerateMateriaSlots();
-                    //}
-                    //else
-                    //{
-                    //    CreateMateriaSlots();
-                    //}
-                    GenerateMateriaSlots();
+                    if (Props.enchantmentSlots == null || Props.enchantmentSlots.Count == 0)
+                    {
+                        GenerateMateriaSlots();
+                    }
+                    else
+                    {
+                        CreateMateriaSlots();
+                    }
                     initializedSlots = true;
                     Log.Message("Generated slots");
                 }
@@ -73,17 +72,10 @@ namespace MagicAndMyths
             for (int i = 0; i < Props.maxEnchantsAllowed; i++)
             {
                 EnchantSlot enchantSlot = AddMateriaSlot(1);
-
-                if (enchantSlot != null)
-                {
-                    EnchantDef enchantDef = DefDatabase<EnchantDef>.AllDefs.RandomElement();
-                    if (enchantDef.isUnique && !HasActive(enchantDef) || !enchantDef.isUnique)
-                    {
-                        enchantSlot.EquipMateria(enchantDef);
-                    }                 
-                }
             }
         }
+
+
         protected void CreateMateriaSlots()
         {
             if (activeEnchants == null || activeEnchants.Count == 0)
@@ -133,7 +125,7 @@ namespace MagicAndMyths
         {
             if (_EquippedPawn != null)
             {
-                foreach (var item in MateriaSlots)
+                foreach (var item in ActiveEnchants)
                 {
                     if (item.SlottedMateria != null)
                     {
@@ -188,7 +180,7 @@ namespace MagicAndMyths
         {
             base.PostPreApplyDamage(ref dinfo, out absorbed);
 
-            var allMateria = MateriaSlots;
+            var allMateria = ActiveEnchants;
 
             bool isAbsorbed = absorbed;
 
@@ -228,7 +220,7 @@ namespace MagicAndMyths
         {
             DamageWorker.DamageResult damageResult = new DamageWorker.DamageResult();
 
-            foreach (var item in MateriaSlots)
+            foreach (var item in ActiveEnchants)
             {
                 if (item.SlottedMateria != null)
                 {
@@ -287,7 +279,7 @@ namespace MagicAndMyths
 
         protected virtual void DoForAllMateria(Action<EnchantSlot> actionToDo)
         {
-            foreach (var item in MateriaSlots)
+            foreach (var item in ActiveEnchants)
             {
                 if (item.SlottedMateria != null)
                 {
@@ -337,9 +329,7 @@ namespace MagicAndMyths
         }
         public void AddMateriaSlot(EnchantmentSlotConfig SlotConfig)
         {
-            EnchantSlot materiaSlot = new EnchantSlot(this.parent, this, SlotConfig.slotLevel);
-  
-            activeEnchants.Add(materiaSlot);
+            EnchantSlot materiaSlot = AddMateriaSlot(SlotConfig.slotLevel);
 
             if (SlotConfig.enchantToAutoSlot != null)
             {
@@ -354,15 +344,15 @@ namespace MagicAndMyths
         }
         public int GetSlotCount()
         {
-            return MateriaSlots.Count;
+            return ActiveEnchants.Count;
         }
         public int GetOccupiedSlotCount()
         {
-            return MateriaSlots.Where(x => x.IsOccupied).Count();
+            return ActiveEnchants.Where(x => x.IsOccupied).Count();
         }
         public int GetSlotsOfLevelCount(int Level)
         {
-            return MateriaSlots.Where(x => x.SlotLevel == Level).Count();
+            return ActiveEnchants.Where(x => x.SlotLevel == Level).Count();
         }
 
         #endregion
@@ -583,7 +573,7 @@ namespace MagicAndMyths
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
 
-            if (this.MateriaSlots.Count > 0)
+            if (this.ActiveEnchants.Count > 0)
             {
                 yield return new Command_Action()
                 {
@@ -621,11 +611,6 @@ namespace MagicAndMyths
         public override string GetDescriptionPart()
         {
             string equippedMateriaString = GetEquippedMateriaInfo(true);
-            if (Prefs.DevMode)
-            {
-                var thing = this.parent;
-                return equippedMateriaString + "\n" + ScoringUtil.GetScoreString(thing);
-            }
             return equippedMateriaString;
         }
         public override void PostExposeData()

@@ -66,7 +66,7 @@ namespace MagicAndMyths
 
             foreach (var comp in materiaComps)
             {
-                foreach (var slot in comp.MateriaSlots)
+                foreach (var slot in comp.ActiveEnchants)
                 {
                     if (slot.IsOccupied && slot.SlottedMateria != null)
                     {

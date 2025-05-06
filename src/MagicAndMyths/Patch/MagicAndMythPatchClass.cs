@@ -17,17 +17,6 @@ namespace MagicAndMyths
     {
         static MagicAndMythPatchClass()
         {
-            foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs)
-            {
-                if (!def.IsWithinCategory(ThingCategoryDefOf.Chunks))
-                {
-                    if (def.comps != null)
-                    {
-                        def.comps.Add(new CompProperties_ThingProperties());
-                    }
-                }
-            }
-
             var harmony = new Harmony("com.emo.magicandmyths");
             harmony.PatchAll();
         }

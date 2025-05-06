@@ -8,5 +8,18 @@ namespace MagicAndMyths
         {
 
         }
+
+
+        public virtual bool ValidateTarget(LocalTargetInfo TargetInfo)
+        {
+            return true;
+        }
+
+
+        public virtual bool CanApply(Pawn user, LocalTargetInfo target, Thing item, ref string reason)
+        {
+            reason = string.Empty;
+            return true;
+        }
     }
 }

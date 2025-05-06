@@ -66,7 +66,7 @@ namespace MagicAndMyths
             }
         }
 
-        private static bool ShouldTarget(Faction targetFaction, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
+        public static bool ShouldTarget(Faction targetFaction, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
         {
             if (targetFaction == null)
                 return true;

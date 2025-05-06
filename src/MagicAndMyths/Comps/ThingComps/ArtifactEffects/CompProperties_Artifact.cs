@@ -22,6 +22,8 @@ namespace MagicAndMyths
         public bool requiresTarget = false;
         public bool targetSelf = false;
 
+        public bool useCompTargetValidator = false;
+
         //charges
         public int charges = -1;
         public bool destroyOnChargesDepleted = true;
@@ -32,6 +34,13 @@ namespace MagicAndMyths
         public bool cooldownRestoresCharges = false;
         public IntRange chargesRestoredPerCooldown = new IntRange(1, 1);
 
+
+        public EffecterDef targetEffectDef = null;
+        public EffecterDef userEffectDef = null;
+
+
+        public ThoughtDef userUsedThought;
+        public ThoughtDef targetUsedThought;
         public CompProperties_Artifact()
         {
             compClass = typeof(Comp_Artifact);
@@ -90,8 +99,24 @@ namespace MagicAndMyths
                 if (NeedsTargeting())
                 {
                     Find.Targeter.BeginTargeting(Props.targetParams,
-                   (LocalTargetInfo target) => StartJob(selPawn, target),
-                   null, null, null);
+                        (LocalTargetInfo target) =>
+                        {
+                            StartJob(selPawn, target);
+                        },
+                         null, (LocalTargetInfo targetInfo) =>
+                         {
+                             if (Props.useCompTargetValidator)
+                             {
+                                 bool isValid = true;
+                                 foreach (var effect in this.parent.GetComps<Comp_BaseAritfactEffect>())
+                                 {
+                                     isValid = effect.ValidateTarget(targetInfo);
+                                 }
+
+                                 return isValid;
+                             }
+                             else return true;
+                         }, null);
                 }
                 else
                 {
@@ -108,9 +133,25 @@ namespace MagicAndMyths
 
         private void StartJob(Pawn user, LocalTargetInfo target)
         {
-            Job job = JobMaker.MakeJob(Props.useJob, parent, target);
-            job.count = 1;
-            user.jobs.TryTakeOrderedJob(job, JobTag.DraftedOrder);
+            bool canApply = true;
+
+            foreach (var effect in this.parent.GetComps<Comp_BaseAritfactEffect>())
+            {
+                string reason = "";
+                if (!effect.CanApply(user, target, this.parent, ref reason))
+                {
+                    canApply = false;
+                    Messages.Message(reason, MessageTypeDefOf.NegativeEvent, false);
+                    break;
+                }
+            }
+
+            if (canApply)
+            {
+                Job job = JobMaker.MakeJob(Props.useJob, parent, target);
+                job.count = 1;
+                user.jobs.TryTakeOrderedJob(job, JobTag.DraftedOrder);
+            }
         }
 
         public bool CanBeUsedNow(Pawn pawn)
@@ -127,6 +168,34 @@ namespace MagicAndMyths
             if (Props.sound != null)
             {
                 Props.sound.PlayOneShot(new TargetInfo(user.Position, user.Map));
+            }
+
+            if (Props.userUsedThought != null)
+            {
+                if (target.Thing is Pawn targetPawn)
+                {
+                    user.needs.mood.thoughts.memories.TryGainMemory(Props.userUsedThought, targetPawn);
+                }
+                else
+                {
+                    user.needs.mood.thoughts.memories.TryGainMemory(Props.userUsedThought);
+                }
+               
+            }
+
+            if (Props.targetUsedThought != null && target.Thing is Pawn pawn)
+            {
+                pawn.needs.mood.thoughts.memories.TryGainMemory(Props.targetUsedThought, user);
+            }
+
+            if (Props.userEffectDef != null)
+            {
+                Props.userEffectDef.Spawn(user.Position, user.Map, 1);
+            }
+
+            if (Props.targetEffectDef != null)
+            {
+                Props.targetEffectDef.Spawn(target.Cell, user.Map, 1);
             }
 
             foreach (var effect in this.parent.GetComps<Comp_BaseAritfactEffect>())

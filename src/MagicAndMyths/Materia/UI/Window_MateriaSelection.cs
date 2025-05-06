@@ -92,7 +92,7 @@ namespace MagicAndMyths
             DrawTitle(inRect);
 
             float totalHeight = DisplaySettings.titleHeight + DisplaySettings.topMargin;
-            var slots = materiaComp.MateriaSlots;
+            var slots = materiaComp.ActiveEnchants;
             Rect outRect = new Rect(0f, DisplaySettings.titleHeight, inRect.width, inRect.height - DisplaySettings.titleHeight - DisplaySettings.topMargin);
 
             // Use display worker to position slots
@@ -314,7 +314,7 @@ namespace MagicAndMyths
 
         private bool ShouldResizeWindow(Dictionary<EnchantSlot, Rect> slotPositions)
         {
-            if (slotPositions.Count != materiaComp.MateriaSlots.Count)
+            if (slotPositions.Count != materiaComp.ActiveEnchants.Count)
                 return true;
 
             foreach (var slotRect in slotPositions.Values)
