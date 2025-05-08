@@ -9,10 +9,23 @@ namespace MagicAndMyths
     public class EnchantWorker : IExposable
     {
         public EnchantEffectDef def;
+        public EnchantInstance parentInstance;
         public Pawn EquippingPawn;
         public ThingWithComps ParentEquipment;
-        public Comp_Enchant MateriaComp;
-        public EnchantSlot MateriaSlot;
+
+        private Comp_EnchantProvider _MateriaComp;
+        public Comp_EnchantProvider MateriaComp
+        {
+            get
+            {
+                if (_MateriaComp == null)
+                {
+                    _MateriaComp = ParentEquipment.TryGetComp<Comp_EnchantProvider>();
+                }
+
+                return _MateriaComp;
+            }
+        }
 
         private int CooldownTicks = 0;
         public int CooldownDurationTicks = 0;
@@ -20,13 +33,6 @@ namespace MagicAndMyths
         public EnchantWorker()
         {
 
-        }
-
-        public EnchantWorker(EnchantEffectDef def, Pawn equippingPawn, ThingWithComps parentEquipment)
-        {
-            this.def = def;
-            EquippingPawn = equippingPawn;
-            ParentEquipment = parentEquipment;
         }
 
         public virtual bool HasCooldown()
@@ -156,24 +162,30 @@ namespace MagicAndMyths
         {
             return 0f;
         }
+
+        public virtual string GetExplanationString()
+        {
+            return string.Empty;
+        }
+
         public virtual void ExposeData()
         {
             //Scribe_Defs.Look(ref def, "def");
             Scribe_Values.Look(ref CooldownTicks, "cooldownTicks");
+            Scribe_References.Look(ref ParentEquipment, "parentEquipment");
         }
 
 
         public virtual void DestroyParentMateria()
         {
-            if (this.MateriaComp != null && this.MateriaSlot != null)
+            if (this.MateriaComp != null)
             {
-
                 if (this.EquippingPawn != null && this.EquippingPawn.Map != null)
                 {
                     EffecterDefOf.Shield_Break.Spawn(this.EquippingPawn.Position, this.EquippingPawn.Map);
                 }
 
-                this.MateriaComp.UnequipMateria(this.MateriaSlot, false);
+                this.MateriaComp.RemoveEnchant(this.parentInstance, false);
             }
         }
 

@@ -13,22 +13,12 @@ namespace MagicAndMyths
         }
     }
 
-    public class HediffComp_PhoenixDown : HediffComp, IMateriaSlotParent
+    public class HediffComp_PhoenixDown : HediffComp
     {
-        protected EnchantSlot MateriaSlot;
-
-
         HediffCompProperties_PhoenixDown Props => (HediffCompProperties_PhoenixDown)props;
-
-        EnchantSlot IMateriaSlotParent.MateriaSlot => MateriaSlot;
-
 
         private int ressCounter = 0;
 
-        public void SetMateriaSlot(EnchantSlot materiaSlot)
-        {
-            MateriaSlot = materiaSlot;
-        }
 
         public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
         {
@@ -46,10 +36,10 @@ namespace MagicAndMyths
                         {
                             this.parent.Severity = 0;
 
-                            if (this.MateriaSlot != null)
-                            {
-                                this.MateriaSlot.MateriaComp.UnequipMateria(MateriaSlot, false);
-                            }
+                            //if (this.MateriaSlot != null)
+                            //{
+                            //    this.MateriaSlot.EnchantComp.UnequipMateria(MateriaSlot, false);
+                            //}
                         }
 
                         Messages.Message("Phoenix Down revived : " + this.Pawn.LabelCap, this.Pawn, MessageTypeDefOf.PositiveEvent);

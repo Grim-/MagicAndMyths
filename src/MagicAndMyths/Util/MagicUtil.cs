@@ -68,6 +68,47 @@ namespace MagicAndMyths
         }
 
 
+        [DebugAction("Magic And Myths", "Add Enchant To Item", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void AddEnchant()
+        {
+            Find.Targeter.BeginTargeting(new TargetingParameters()
+            {
+                canTargetPawns = false,
+                canTargetAnimals = false,
+                canTargetBuildings = false,
+                canTargetCorpses = false,
+                canTargetHumans = false,
+                canTargetItems = true,
+                mustBeSelectable = true,
+                mapObjectTargetsMustBeAutoAttackable = false
+            },
+            (LocalTargetInfo target) =>
+            {
+                if (target.Thing != null && target.Thing is ThingWithComps withComps)
+                {
+
+                    if (withComps.TryGetComp(out Comp_EnchantProvider _EnchantProvider))
+                    {
+                        List<FloatMenuOption> Options = new List<FloatMenuOption>();
+
+                        foreach (var item in DefDatabase<EnchantDef>.AllDefs)
+                        {
+                            Options.Add(new FloatMenuOption($"Add {item.label} to {target.Thing.Label}", () =>
+                            {
+                                _EnchantProvider.AddEnchant(item);
+                            }));
+                        }
+
+                        if (Options.Count > 0)
+                        {
+                            Find.WindowStack.Add(new FloatMenu(Options));
+                        }                     
+                    }         
+                }
+            }
+            );
+        }
+
         [DebugAction("Magic And Myths", "Test Spawn Orbital Laser", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void SpawnOrbitalLaser()
         {

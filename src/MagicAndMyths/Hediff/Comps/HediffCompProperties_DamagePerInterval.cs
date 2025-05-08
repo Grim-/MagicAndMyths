@@ -6,7 +6,8 @@ namespace MagicAndMyths
     public class HediffCompProperties_DamagePerInterval : HediffCompProperties_BaseInterval
     {
         public DamageDef damageDef;
-        public FloatRange damageAmount;
+        public FloatRange damageAmount = new FloatRange(10, 10);
+        public FloatRange armourPenAmount = new FloatRange(0, 1);
         public HediffCompProperties_DamagePerInterval()
         {
             compClass = typeof(HediffComp_DamagePerInterval);
@@ -23,7 +24,7 @@ namespace MagicAndMyths
             base.OnInterval();
             if (Props.damageDef != null)
             {
-                this.Pawn.TakeDamage(new DamageInfo(Props.damageDef, Props.damageAmount.RandomInRange));
+                this.Pawn.TakeDamage(new DamageInfo(Props.damageDef, Props.damageAmount.RandomInRange, Props.armourPenAmount.RandomInRange));
             }
         }
     }

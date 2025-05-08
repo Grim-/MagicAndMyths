@@ -46,8 +46,6 @@ namespace MagicAndMyths
         public static ThingDef MagicAndMyths_Portal;
 
         public static JobDef Portals_UsePortalJob;
-        public static StatDef Portal_BioEnergyMax;
-        public static StatDef Portal_BioEnergyRegen;
 
         public static ThingDef DungeonLockedDoor;
         public static ThingDef DungeonTestKey;
@@ -78,16 +76,14 @@ namespace MagicAndMyths
         //public static JobDef MagicAndMyths_CastLaserBeam;
 
         public static ThingPropertyDef ThingProp_Invisible;
-    }
 
-    [DefOf]
-    public static class MateriaDefOf
-    {
-        public static MateriaCategoryDef MateriaCategory_Universal;
-        public static MateriaCategoryDef MateriaCategory_Melee;
-        public static MateriaCategoryDef MateriaCategory_Ranged;
-        public static MateriaCategoryDef MateriaCategory_Armor;
 
-        public static MateriaGenerationConfigDef MateriaGenerationConfig;
+        public static StatDef Stat_LimbMaxHP;
+
+        public static EnchantCategoryDef EnchantCategory_Universal;
+        public static EnchantCategoryDef EnchantCategory_Melee;
+        public static EnchantCategoryDef EnchantCategory_Weapon;
+        public static EnchantCategoryDef EnchantCategory_Ranged;
+        public static EnchantCategoryDef EnchantCategory_Armor;
     }
 }

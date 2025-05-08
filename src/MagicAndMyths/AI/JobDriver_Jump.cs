@@ -60,7 +60,7 @@ namespace MagicAndMyths
                     throwerPawn: null, 
                     overrideStartVec: pawn.DrawPos);
 
-                ThingFlyer.LaunchFlyer(thingFlyer, pawn, pawn.Position, DestinationCell, pawn.Map);
+                ThingFlyer.LaunchFlyer(thingFlyer, pawn, DestinationCell, pawn.Map);
             });
             yield return jumpToil;
         }

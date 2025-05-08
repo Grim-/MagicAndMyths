@@ -103,6 +103,7 @@
     <Compile Include="Buildings\Dungeon\Building_FakeWall.cs" />
     <Compile Include="Buildings\Building_LockableDoor.cs" />
     <Compile Include="Buildings\Thing_Key.cs" />
+    <Compile Include="Comps\Ability\CompProperties_AbilityEffecterOnCaster.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilitySpawnTotem.cs" />
     <Compile Include="Comps\Ability\CompProperties_EquippableAbility.cs" />
     <Compile Include="Comps\Ability\CompProperties_FlyTargetThing.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectTriggerIncident.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_PawnStorage.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\Comp_BaseAritfactEffect.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_CursedEquip.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_TransformableEquipment.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAddGene.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableAddHediff.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Comps\ThingComps\Totem\CompProperties_BaseTotem.cs" />
     <Compile Include="Comps\ThingComps\Totem\CompProperties_TotemApplyHediff.cs" />
     <Compile Include="Comps\ThingComps\Totem\CompProperties_TotemManager.cs" />
+    <Compile Include="Comps\ThingComps\Totem\CompProperties_TotemTurret.cs" />
     <Compile Include="Comps\ThingProperties\BatteryCharger_PhotovolaticPropertyWorker.cs" />
     <Compile Include="Comps\ThingProperties\DurableComponentDef.cs" />
     <Compile Include="Comps\ExtendedMapParent.cs" />
@@ -196,6 +199,8 @@
     <Compile Include="Comps\ThingProperties\Comp_ThingProperties.cs" />
     <Compile Include="Comps\ThingProperties\ThingPropertyWorker.cs" />
     <Compile Include="Materia\CompProperties_Enchant.cs" />
+    <Compile Include="Materia\CompProperties_PawnEnchant.cs" />
+    <Compile Include="Materia\CompProperties_EnchantProvider.cs" />
     <Compile Include="Materia\CompProperties_MateriaSetBonus.cs" />
     <Compile Include="Materia\Display\CircularMateriaDisplay.cs" />
     <Compile Include="Materia\Display\GridMateriaDisplay.cs" />
@@ -235,8 +240,10 @@
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactorDaylight.cs" />
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactorLerp.cs" />
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatOffset.cs" />
+    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatOffsetDaylight.cs" />
+    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatOffsetLerp.cs" />
     <Compile Include="Materia\MateriaBreakdownMaterials.cs" />
-    <Compile Include="Materia\MateriaCategoryDef.cs" />
+    <Compile Include="Materia\EnchantCategoryDef.cs" />
     <Compile Include="Materia\EnchantDef.cs" />
     <Compile Include="Materia\MateriaDustDef.cs" />
     <Compile Include="Materia\MateriaPatchClass.cs" />

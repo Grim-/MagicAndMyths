@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using UnityEngine;
+using Verse;
 
 namespace MagicAndMyths
 {
@@ -25,14 +26,14 @@ namespace MagicAndMyths
 
     public class EnchantEffect_PawnStatFactorLerp : EnchantEffect_PawnStatFactor
     {
-        protected EnchantEffectDef_PawnStatFactorLerp LerpDef => (EnchantEffectDef_PawnStatFactorLerp)def;
+        protected EnchantEffectDef_PawnStatFactorLerp Def => (EnchantEffectDef_PawnStatFactorLerp)def;
 
         public override float GetStatFactor(StatDef stat)
         {
-            if (stat == LerpDef.statToAffect)
+            if (stat == Def.statToAffect)
             {
                 float lerpValue = GetLerpValue();
-                return Mathf.Lerp(LerpDef.minFactor, LerpDef.maxFactor, lerpValue);
+                return Mathf.Lerp(Def.minFactor, Def.maxFactor, lerpValue);
             }
             return 1f;
         }
@@ -41,6 +42,11 @@ namespace MagicAndMyths
         {
             return 0.5f;
         }
-    }
 
+
+        public override string GetExplanationString()
+        {
+            return $"x{Def.minFactor:0.##} to x{Def.maxFactor:0.##} (Current: x{GetStatFactor(Def.statToAffect):0.##})";
+        }
+    }
 }

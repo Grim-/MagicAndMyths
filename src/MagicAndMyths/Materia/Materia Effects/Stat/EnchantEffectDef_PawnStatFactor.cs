@@ -19,10 +19,7 @@ namespace MagicAndMyths
             }
         }
 
-        public override string GetExplanationString()
-        {
-            return $"x{statFactor}";
-        }
+
     }
 
     public class EnchantEffect_PawnStatFactor : EnchantWorker
@@ -36,6 +33,11 @@ namespace MagicAndMyths
                 return StatDef.statFactor;
             }
             return 1f;
+        }
+
+        public override string GetExplanationString()
+        {
+            return $"x{StatDef.statFactor:0.##}";
         }
     }
 }

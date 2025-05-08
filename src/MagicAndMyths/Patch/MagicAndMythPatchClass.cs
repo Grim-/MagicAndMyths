@@ -54,6 +54,44 @@ namespace MagicAndMyths
             }
         }
 
+
+        [HarmonyPatch(typeof(Pawn_EquipmentTracker))]
+        [HarmonyPatch("TryDropEquipment")]
+        public static class Patch_TryDropEquipment
+        {
+            [HarmonyPrefix]
+            public static bool Prefix(ThingWithComps eq)
+            {
+                var lockComp = eq.GetComp<Comp_CursedEquipment>();
+                if (lockComp != null && lockComp.IsSlotLocked)
+                {
+                    Messages.Message($"Cannot remove {eq.Label}: it is locked to the equipment slot.",
+                        MessageTypeDefOf.RejectInput, false);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        //[HarmonyPatch(typeof(Pawn_ApparelTracker))]
+        //[HarmonyPatch("TryDrop")]
+        //public static class Patch_TryDrop
+        //{
+        //    [HarmonyPrefix]
+        //    public static bool Prefix(Apparel apparel, ref bool __result)
+        //    {
+        //        var lockComp = apparel.GetComp<Comp_CursedEquipment>();
+        //        if (lockComp != null && lockComp.IsSlotLocked)
+        //        {
+        //            Messages.Message($"Cannot remove {apparel.Label}: it is locked to the apparel slot.",
+        //                MessageTypeDefOf.RejectInput, false);
+        //            __result = false;
+        //            return false;
+        //        }
+        //        return true;
+        //    }
+        //}
+
         [HarmonyPatch(typeof(Graphic_Single))]
         [HarmonyPatch("MatAt")]
         [HarmonyPatch(new[] { typeof(Rot4), typeof(Thing) })]
@@ -259,7 +297,18 @@ namespace MagicAndMyths
             }
         }
 
-
+        [HarmonyPatch(typeof(BodyPartDef), "GetMaxHealth")]
+        public class GetMaxHealth_Patch
+        {
+            [HarmonyPriority(0)]
+            private static void Postfix(BodyPartDef __instance, Pawn pawn, ref float __result)
+            {
+                if (pawn != null)
+                {
+                    __result *= pawn.GetStatValue(MagicAndMythDefOf.Stat_LimbMaxHP);
+                }
+            }
+        }
 
 
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -13,13 +14,14 @@ namespace MagicAndMyths
 
     public class Comp_TotemManager : ThingComp
     {
-        public List<Building_Totem> activeTotems;
+        public List<Building_Totem> activeTotems = new List<Building_Totem>();
 
         public Building_Totem SpawnTotem(Pawn owner, ThingDef totemDef, IntVec3 position, Map map)
         {
             Building_Totem newTotem = (Building_Totem)ThingMaker.MakeThing(totemDef);
             newTotem.InitTotem(owner);
             activeTotems.Add(newTotem);
+            newTotem.SetFaction(owner.Faction);
             GenSpawn.Spawn(newTotem, position, map);
             return newTotem;
         }

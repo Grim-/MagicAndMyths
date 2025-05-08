@@ -4,12 +4,15 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
+
+
     public class CompProperties_TotemApplyHediff : CompProperties_BaseTotem
     {
         public HediffDef hediff;
         public FloatRange severity = new FloatRange(1f, 1f);
         public bool removeOnLeaveRadius = true;
-
+        public EffecterDef onTickEffect = null;
         public CompProperties_TotemApplyHediff()
         {
             compClass = typeof(Comp_TotemApplyHediff);
@@ -43,11 +46,18 @@ namespace MagicAndMyths
 
             List<Pawn> pawnsInRange = GetPawnsInRange();
 
+            Log.Message($"Targets found {pawnsInRange.Count}");
+
             foreach (var item in pawnsInRange)
             {
                 if (!item.health.hediffSet.HasHediff(Props.hediff))
                 {
                     item.health.AddHediff(Props.hediff);
+
+                    if (Props.onTickEffect != null)
+                    {
+                        Props.onTickEffect.Spawn(item.Position, item.Map, 1);
+                    }
                 }
 
 

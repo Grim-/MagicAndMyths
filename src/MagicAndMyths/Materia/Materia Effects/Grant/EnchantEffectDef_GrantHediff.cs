@@ -34,19 +34,6 @@ namespace MagicAndMyths
             if (Def.hediff != null && !EquippingPawn.health.hediffSet.HasHediff(Def.hediff))
             {
                 hediffRef = EquippingPawn.health.AddHediff(Def.hediff);
-
-                if (hediffRef != null && hediffRef is HediffWithComps withComps)
-                {
-                    foreach (var item in withComps.comps)
-                    {
-
-                        if (item is IMateriaSlotParent slotParent)
-                        {
-                            slotParent.SetMateriaSlot(this.MateriaSlot);
-                        }
-
-                    }
-                }
             }
         }
 

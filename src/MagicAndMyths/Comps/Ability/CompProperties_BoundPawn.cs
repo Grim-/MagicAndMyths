@@ -5,6 +5,8 @@ using Verse.AI.Group;
 
 namespace MagicAndMyths
 {
+
+
     public class CompProperties_BoundPawn : CompProperties
     {
         public PawnKindDef summonedPawnKind;

@@ -11,23 +11,19 @@ namespace MagicAndMyths
         private List<EnchantWorker> activeEffects = new List<EnchantWorker>();
 
         public List<EnchantWorker> ActiveEffects => activeEffects.ToList();
-
-
-        protected EnchantSlot ParentSlot;
         protected ThingWithComps ParentThing;
-        protected Comp_Enchant ParentMateriaComp;
+        protected Comp_EnchantProvider ParentMateriaComp;
 
         public EnchantInstance()
         {
 
         }
 
-        public EnchantInstance(EnchantDef def, Comp_Enchant materiaComp, EnchantSlot parentSlot)
+        public EnchantInstance(EnchantDef def, Comp_EnchantProvider materiaComp)
         {
             this.def = def;
             this.ParentMateriaComp = materiaComp;
-            this.ParentSlot = parentSlot;
-            this.ParentThing = this.ParentSlot.ParentThing;
+            this.ParentThing = materiaComp.parent;
             InitializeEffects();
         }
 
@@ -38,7 +34,7 @@ namespace MagicAndMyths
             {
                 foreach (var effectDef in def.effects)
                 {
-                    var worker = effectDef.CreateWorker(ParentThing, ParentMateriaComp, ParentSlot);
+                    var worker = effectDef.CreateWorker(ParentThing, this, ParentMateriaComp);
                     activeEffects.Add(worker);
                     worker.Notify_MateriaEquipped();
                 }

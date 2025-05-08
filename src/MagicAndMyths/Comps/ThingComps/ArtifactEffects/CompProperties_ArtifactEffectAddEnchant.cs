@@ -24,11 +24,11 @@ namespace MagicAndMyths
 
             if (target.Thing != null)
             {
-                if (target.Thing.TryGetComp(out Comp_Enchant compEnchant))
+                if (target.Thing.TryGetComp(out Comp_EnchantProvider compEnchant))
                 {
-                    if (compEnchant.CanEquipMateria(Props.enchantDef))
+                    if (compEnchant.CanAddEnchant(Props.enchantDef))
                     {
-                        compEnchant.EquipMateria(Props.enchantDef);
+                        compEnchant.AddEnchant(Props.enchantDef);
                     }
                 }
             }

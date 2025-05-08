@@ -13,13 +13,12 @@ namespace MagicAndMyths
         public virtual string EffectDescription { get; private set; } = "";
 
 
-        public EnchantWorker CreateWorker(ThingWithComps parentEquipment, Comp_Enchant materiaComp, EnchantSlot materiaSlot)
+        public EnchantWorker CreateWorker(ThingWithComps parentEquipment, EnchantInstance instance, Comp_EnchantProvider materiaComp)
         {
             EnchantWorker newWorker = (EnchantWorker)Activator.CreateInstance(workerClass);
             newWorker.def = this;
             newWorker.ParentEquipment = parentEquipment;
-            newWorker.MateriaComp = materiaComp;
-            newWorker.MateriaSlot = materiaSlot;
+            newWorker.parentInstance = instance;
             return newWorker;
         }
     }

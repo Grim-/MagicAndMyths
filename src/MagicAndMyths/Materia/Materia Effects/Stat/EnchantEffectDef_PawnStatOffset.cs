@@ -20,10 +20,7 @@ namespace MagicAndMyths
             }
         }
 
-        public override string GetExplanationString()
-        {
-            return statOffset >= 0 ? $"+{statOffset}" : $"-{statOffset}";
-        }
+
     }
 
     public class EnchantEffect_PawnStatOffset : EnchantWorker
@@ -37,6 +34,11 @@ namespace MagicAndMyths
                 return StatDef.statOffset;
             }
             return 0f;
+        }
+        public override string GetExplanationString()
+        {
+            string sign = StatDef.statOffset >= 0 ? "+" : "";
+            return $"{sign}{StatDef.statOffset:0.##}";
         }
     }
 }

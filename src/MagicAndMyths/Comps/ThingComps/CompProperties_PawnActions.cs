@@ -207,7 +207,7 @@ namespace MagicAndMyths
                     throwerPawn: Pawn,
                     overrideStartVec: Pawn.DrawPos);
 
-                ThingFlyer.LaunchFlyer(thingFlyer, thingToThrow, Pawn.Position, target.Cell, Pawn.Map);
+                ThingFlyer.LaunchFlyer(thingFlyer, thingToThrow, target.Cell, Pawn.Map);
 
                 LastThrowAttemptTick = Current.Game.tickManager.TicksGame;
             }, 

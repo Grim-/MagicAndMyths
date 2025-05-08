@@ -20,7 +20,7 @@ namespace MagicAndMyths
         public MateriaTypeDef SlotType;
         public List<EnchantEffectDef> effects;
 
-        public List<MateriaCategoryDef> materiaCategories;
+        public List<EnchantCategoryDef> allowedCategories;
         public Color textColor = Color.white;
 
         private Texture2D _IconTex;
@@ -50,15 +50,36 @@ namespace MagicAndMyths
             return fullDescription;
         }
 
+        public bool IsValidEquipmentType(Thing thing)
+        {
+            if (allowedCategories == null ||
+                allowedCategories.Contains(MagicAndMythDefOf.EnchantCategory_Universal) ||
+                allowedCategories.Count == 0)
+            {
+                return true;
+            }
+
+            if (thing.def.IsMeleeWeapon && allowedCategories.Contains(MagicAndMythDefOf.EnchantCategory_Melee) || allowedCategories.Contains(MagicAndMythDefOf.EnchantCategory_Weapon))
+            {
+                return true;
+            }
+
+            if (thing.def.IsRangedWeapon && allowedCategories.Contains(MagicAndMythDefOf.EnchantCategory_Ranged) || allowedCategories.Contains(MagicAndMythDefOf.EnchantCategory_Weapon))
+            {
+                return true;
+            }
+
+            if (thing.def.IsApparel && allowedCategories.Contains(MagicAndMythDefOf.EnchantCategory_Armor))
+            {
+                return true;
+            }
+
+
+            return false;
+        }
         public string GetColouredLabel()
         {
             return $"<color=#{ColorUtility.ToHtmlStringRGB(textColor)}>{label}</color>";
         }
-    }
-
-    public class MateriaLinkData
-    {
-        public MateriaTypeDef type;
-        public EnchantDef specificMateria;
     }
 }

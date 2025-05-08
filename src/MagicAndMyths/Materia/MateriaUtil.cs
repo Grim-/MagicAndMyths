@@ -27,9 +27,9 @@ namespace MagicAndMyths
 
             return false;
         }
-        public static List<Comp_Enchant> GetAllEquippedOrWornMateriaComps(this Pawn pawn)
+        public static List<Comp_EnchantProvider> GetAllEquippedOrWornMateriaComps(this Pawn pawn)
         {
-            List<Comp_Enchant> materiacomps = new List<Comp_Enchant>();
+            List<Comp_EnchantProvider> materiacomps = new List<Comp_EnchantProvider>();
 
 
             if (pawn.equipment != null)
@@ -40,7 +40,7 @@ namespace MagicAndMyths
                     {
                         foreach (var item in withComps.AllComps)
                         {
-                            if (item is Comp_Enchant materia)
+                            if (item is Comp_EnchantProvider materia)
                             {
                                 materiacomps.Add(materia);
                             }
@@ -55,7 +55,7 @@ namespace MagicAndMyths
                 {
                     foreach (var item in thing.AllComps)
                     {
-                        if (item is Comp_Enchant materia)
+                        if (item is Comp_EnchantProvider materia)
                         {
                             materiacomps.Add(materia);
                         }
@@ -65,34 +65,6 @@ namespace MagicAndMyths
             }
 
             return materiacomps;
-        }
-        public static List<FloatMenuOption> GenerateMateriaOptions(Comp_Enchant materiaComp, Pawn usingPawn, EnchantSlot slot)
-        {
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
-
-            if (Prefs.DevMode)
-            {
-                foreach (EnchantDef materiaDef in DefDatabase<EnchantDef>.AllDefs)
-                {
-                    var cacheMatdef = materiaDef;
-                    if (slot.CanAccept(cacheMatdef))
-                    {
-                        options.Add(new FloatMenuOption(cacheMatdef.label, () =>
-                        {
-                            var cacheSlot = slot;
-                            materiaComp.EquipMateria(cacheMatdef, cacheSlot);
-                        }));
-                    }
-                }
-            }
-
-            if (options.Count == 0)
-            {
-                options.Add(new FloatMenuOption("No compatible materia available", null));
-            }
-
-            options.Sort((a, b) => string.Compare(a.Label, b.Label, StringComparison.OrdinalIgnoreCase));
-            return options;
         }
     }
 

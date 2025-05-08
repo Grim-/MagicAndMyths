@@ -52,7 +52,7 @@ namespace MagicAndMyths
                 if (targetLocation.Cell.IsValid)
                 {
                     ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, target.Thing, targetLocation.Cell, map, null, null, this.parent.pawn, target.Thing.DrawPos);
-                    ThingFlyer.LaunchFlyer(thingFlyer, target.Thing, spawnPosition, targetLocation.Cell, map);
+                    ThingFlyer.LaunchFlyer(thingFlyer, target.Thing, targetLocation.Cell, map);
                 }
             });
         }

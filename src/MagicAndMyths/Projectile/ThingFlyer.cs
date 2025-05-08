@@ -227,7 +227,7 @@ namespace MagicAndMyths
 		/// <param name="overrideStartVec"></param>
 		/// <param name="target"></param>
 		/// <returns></returns>
-		public static ThingFlyer MakeFlyer(ThingDef flyingDef, Thing thing, IntVec3 destCell, Map map, EffecterDef flightEffecterDef, SoundDef landingSound, Pawn throwerPawn, Vector3? overrideStartVec = null, LocalTargetInfo target = default(LocalTargetInfo))
+		public static ThingFlyer MakeFlyer(ThingDef flyingDef, Thing thing, IntVec3 destCell, Map map, EffecterDef flightEffecterDef, SoundDef landingSound, Pawn throwerPawn, Vector3? overrideStartVec = null, bool defaultThrowBehaviour = true)
 		{
 			ThingFlyer thingFlyer = (ThingFlyer)ThingMaker.MakeThing(flyingDef, null);
 			Vector3 startVec = overrideStartVec ?? (throwerPawn?.TrueCenter() ?? thing.TrueCenter());
@@ -251,40 +251,46 @@ namespace MagicAndMyths
 				}
 			}
 
-			thingFlyer.OnBeforeRespawn += (IntVec3 position, Pawn throwingPawn) =>
-			{
-				bool handledByComp = false;
 
-				if (thing is ThingWithComps respawnWithComps)
+            if (defaultThrowBehaviour)
+            {
+				thingFlyer.OnBeforeRespawn += (IntVec3 position, Pawn throwingPawn) =>
 				{
-					foreach (var comp in respawnWithComps.AllComps)
+					bool handledByComp = false;
+
+					if (thing is ThingWithComps respawnWithComps)
 					{
-						if (comp is Comp_Throwable throwableComp)
+						foreach (var comp in respawnWithComps.AllComps)
 						{
-							throwableComp.OnBeforeRespawn(position, map, throwingPawn);
-							handledByComp = true;
+							if (comp is Comp_Throwable throwableComp)
+							{
+								throwableComp.OnBeforeRespawn(position, map, throwingPawn);
+								handledByComp = true;
+							}
 						}
 					}
-				}
-				if (!handledByComp)
-				{
-					ThrowUtility.ApplyDefaultThrowBehavior(throwerPawn, thing, position, map);
-				}
-			};
-
-			thingFlyer.OnRespawn += (IntVec3 position, Thing flyingThing, Pawn throwingPawn) =>
-			{
-				if (flyingThing is ThingWithComps flyingwithComps)
-				{
-					foreach (var comp in flyingwithComps.AllComps)
+					if (!handledByComp)
 					{
-						if (comp is Comp_Throwable throwableComp)
+						ThrowUtility.ApplyDefaultThrowBehavior(throwerPawn, thing, position, map);
+					}
+				};
+
+				thingFlyer.OnRespawn += (IntVec3 position, Thing flyingThing, Pawn throwingPawn) =>
+				{
+					if (flyingThing is ThingWithComps flyingwithComps)
+					{
+						foreach (var comp in flyingwithComps.AllComps)
 						{
-							throwableComp.Respawn(position, flyingThing, map, throwingPawn);
+							if (comp is Comp_Throwable throwableComp)
+							{
+								throwableComp.Respawn(position, flyingThing, map, throwingPawn);
+							}
 						}
 					}
-				}
-			};
+				};
+			}
+
+
 
 			return thingFlyer;
 		}
@@ -299,7 +305,7 @@ namespace MagicAndMyths
 		/// <param name="destCell"></param>
 		/// <param name="map"></param>
 		/// <returns></returns>
-		public static ThingFlyer LaunchFlyer(ThingFlyer Flyer, Thing thing, IntVec3 spawnCell, IntVec3 destCell, Map map)
+		public static ThingFlyer LaunchFlyer(ThingFlyer Flyer, Thing thing, IntVec3 spawnCell, Map map)
         {
 			if (thing.Spawned)
 			{

@@ -45,8 +45,8 @@ namespace MagicAndMyths
                     continue;
 
                 ProjectileProxy portal = (ProjectileProxy)ThingMaker.MakeThing(Props.portalDef);
-                portal.Init(caster, Props.projectileDef, 90);
                 GenSpawn.Spawn(portal, portalPos, map);
+                portal.Init(caster, Props.projectileDef, 90);
                 portal.target = target;
                 portal.ticksToFire = Rand.Range(15, 60);
             }

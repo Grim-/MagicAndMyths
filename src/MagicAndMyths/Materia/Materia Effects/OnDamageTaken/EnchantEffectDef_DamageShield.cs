@@ -118,7 +118,7 @@ namespace MagicAndMyths
         {
             if (Def.destroyOnDepletion)
             {
-                Messages.Message($"{this.MateriaSlot.SlottedMateria.def.GetColouredLabel()} has shattered after expending its energy!", MessageTypeDefOf.NegativeEvent);
+                Messages.Message($"{this.parentInstance.def.GetColouredLabel()} has shattered after expending its energy!", MessageTypeDefOf.NegativeEvent);
                 DestroyParentMateria();
             }
         }

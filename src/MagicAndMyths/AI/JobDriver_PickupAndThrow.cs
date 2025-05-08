@@ -32,7 +32,7 @@ namespace MagicAndMyths
                     this.EndJobWith(JobCondition.Incompletable);
                 }
 
-                if (ThingToThrow is Pawn targetPawn)
+                if (ThingToThrow is Pawn targetPawn && targetPawn.Faction != this.pawn.Faction)
                 {
                     //failed to throw because didnt meet or beat other pawns strength roll
                     if (!DCUtility.ContestedStatCheck(pawn, targetPawn, MagicAndMythDefOf.Stat_Strength, out ContestedOutcome outcome))
@@ -92,7 +92,7 @@ namespace MagicAndMyths
                             throwerPawn: pawn,
                             overrideStartVec: pawn.DrawPos);
 
-                        ThingFlyer.LaunchFlyer(thingFlyer, droppedThing, pawn.Position, DestinationCell, pawn.Map);
+                        ThingFlyer.LaunchFlyer(thingFlyer, droppedThing, DestinationCell, pawn.Map);
                     }
                 }
             });

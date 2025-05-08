@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
-  <MagicAndMyths.RoomTypeDef>
-    <defName>StartRoom</defName>
-    <roomType>Start</roomType>
-    <roomTypeWorker>MagicAndMyths.StartRoom</roomTypeWorker>
-  </MagicAndMyths.RoomTypeDef>
-</Defs>

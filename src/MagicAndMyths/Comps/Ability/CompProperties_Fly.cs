@@ -20,15 +20,23 @@ namespace MagicAndMyths
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);
-            if (parent.pawn?.Map == null)
+
+            Pawn pawn = parent.pawn;
+            if (pawn == null)
+                return;
+            Map map = parent.pawn.Map;
+            if (map == null)
                 return;
 
-            IntVec3 spawnPosition = parent.pawn.Position;
+            IntVec3 spawnPosition = pawn.Position;
             IntVec3 tagetPosition = target.Cell;
-			Map map = parent.pawn.Map;
 
-			PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_SimpleFlyer, parent.pawn, tagetPosition, null, null);
-            GenSpawn.Spawn(pawnFlyer, spawnPosition, map);
+
+            if (tagetPosition.IsValid)
+            {
+                PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_SimpleFlyer, pawn, tagetPosition, null, null, false, null, this.parent, target);
+                GenSpawn.Spawn(pawnFlyer, spawnPosition, map);
+            }
         }
     }
 
