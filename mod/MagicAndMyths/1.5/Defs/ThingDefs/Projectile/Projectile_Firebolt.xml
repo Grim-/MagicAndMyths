@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseBullet">
+    <defName>Projectile_Firebolt</defName>
+    <label>firebolt</label>
+    <thingClass>Projectile</thingClass>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Fireball</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.8</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <explosionRadius>3.9</explosionRadius>
+      <speed>70</speed>
+      <arcHeightFactor>1.2</arcHeightFactor>
+    </projectile>
+  </ThingDef>
+
+</Defs>

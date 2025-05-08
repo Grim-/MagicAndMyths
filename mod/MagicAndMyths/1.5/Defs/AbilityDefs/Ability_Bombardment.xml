@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_FireballBarrage</defName>
+    <label>Fireball Barrage</label>
+    <description>Summon arcane portals around the caster that fire projectiles at the target.</description>
+    <iconPath>Projectiles/FireRain</iconPath>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <drawAimPie>true</drawAimPie>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_PortalBarrage">
+        <portalDef>MagicAndMyths_ProjectilePortal</portalDef>
+        <projectileDef>Projectile_Fireball</projectileDef>
+        <portalCount>5</portalCount>
+        <portalDistance>2</portalDistance>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_AbilityEffecterOnCaster">
+        <effecterDef>MagicAndMyths_CastRune</effecterDef>
+        <maintainForTicks>500</maintainForTicks>
+        <scale>1</scale>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

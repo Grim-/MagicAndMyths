@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MM_ApparelRing">
+     <defName>Ring_TheOneRing</defName>
+     <label>example ring</label>
+     <description>A simple ring that can be worn on a finger.</description>
+     <graphicData>
+       <texPath>Jewelry/Goldring</texPath>
+       <graphicClass>Graphic_Single</graphicClass>
+       <drawSize>0.45</drawSize>
+     </graphicData>
+     <apparel>
+       <wornGraphicPath>Things/Apparel/Ring/Ring</wornGraphicPath>
+     </apparel>
+     <comps>
+       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+         <abilityDef>MagicAndMyths_Invisibility</abilityDef>
+       </li>
+       <li Class="MagicAndMyths.CompProperties_CursedEquip">
+       </li>
+     </comps>
+   </ThingDef>
+</Defs>

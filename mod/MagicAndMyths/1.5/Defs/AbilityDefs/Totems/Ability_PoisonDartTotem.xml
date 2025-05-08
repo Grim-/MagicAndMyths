@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_PlacePoisonDartTotem</defName>
+    <label>totem : poison dart</label>
+    <description>Place a totem that fires poison darts inflicting toxic damage at a target in range.</description>
+    <iconPath>Skills/Fly</iconPath>
+    <hostile>false</hostile>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>45</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilitySpawnTotem">
+        <totemDef>MM_PoisonDartTotem</totemDef>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

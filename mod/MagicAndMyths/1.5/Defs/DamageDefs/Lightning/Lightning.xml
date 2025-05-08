@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageDef>
+    <defName>Lightning</defName>
+    <label>lightning</label>
+    <externalViolence>true</externalViolence>
+    <deathMessage>{0} has been electrocuted to death.</deathMessage>
+    <hediff>MagicAndMyths_Shocked</hediff>
+    <hediffSkin>MagicAndMyths_Shocked</hediffSkin>
+    <hediffSolid>MagicAndMyths_Shocked</hediffSolid>
+    <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+    <impactSoundType>Blunt</impactSoundType>
+    <armorCategory>Blunt</armorCategory>
+    <overkillPctToDestroyPart>0.9~1.2</overkillPctToDestroyPart>
+  </DamageDef>
+
+</Defs>

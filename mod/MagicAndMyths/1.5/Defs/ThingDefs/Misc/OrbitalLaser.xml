@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef>
+        <defName>MagicAndMyths_OrbitalLaser</defName>
+        <label>meteor</label>
+        <description>A large meteor falling from the sky. Will cause destruction where it lands.</description>
+        <category>Item</category>
+        <tickerType>Normal</tickerType>
+        <altitudeLayer>Skyfaller</altitudeLayer>
+        <useHitPoints>false</useHitPoints>
+        <graphicData>
+            <texPath>MagicCircles/Circle89</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>2.5</drawSize>
+            <shaderType>MoteGlow</shaderType>
+            <color>(1,1,1)</color>
+        </graphicData>
+        <thingClass>MagicAndMyths.OrbitalLaser</thingClass>
+        <drawOffscreen>true</drawOffscreen>
+    </ThingDef>
+</Defs>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageArmorCategoryDef>
+    <defName>Energy</defName>
+    <multStat>SharpDamageMultiplier</multStat>
+    <armorRatingStat>ArmorRating_Sharp</armorRatingStat>
+  </DamageArmorCategoryDef>
+</Defs>

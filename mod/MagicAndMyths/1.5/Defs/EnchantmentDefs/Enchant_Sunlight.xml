@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_Sunlight</defName>
+    <label>Enchantment of Sunlight</label>
+    <description>A blessing drawn from celestial energies that shifts with the passage of day and night. During daylight hours, it creates a shimmering golden aura that disperses heat, allowing the bearer to walk unharmed through the most scorching environments. As darkness falls, its power wanes until dawn renews its strength.</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatOffsetDaylight">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatOffsetDaylight</workerClass>
+        <statToAffect>Stat_LimbMaxHP</statToAffect>
+        <minFactor>0</minFactor>
+        <maxFactor>10</maxFactor>
+      </li>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatOffsetDaylight">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatOffsetDaylight</workerClass>
+        <statToAffect>Stat_Strength</statToAffect>
+        <minFactor>-0.4</minFactor>
+        <maxFactor>10</maxFactor>
+      </li>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatOffsetDaylight">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatOffsetDaylight</workerClass>
+        <statToAffect>ArmorRating_Sharp</statToAffect>
+        <minFactor>0</minFactor>
+        <maxFactor>10</maxFactor>
+      </li>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatOffsetDaylight">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatOffsetDaylight</workerClass>
+        <statToAffect>ArmorRating_Blunt</statToAffect>
+        <minFactor>0</minFactor>
+        <maxFactor>10</maxFactor>
+      </li>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatOffsetDaylight">
+        <workerClass>MagicAndMyths.EnchantEffect_PawnStatOffsetDaylight</workerClass>
+        <statToAffect>ArmorRating_Heat</statToAffect>
+        <minFactor>0</minFactor>
+        <maxFactor>10</maxFactor>
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+  </MagicAndMyths.EnchantDef>
+</Defs>

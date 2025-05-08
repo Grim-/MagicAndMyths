@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+     <defName>MagicAndMyths_SelectiveWall</defName>
+     <label>faction wall</label>
+     <description>A special wall that allows friendly pawns to pass through but blocks enemies.</description>
+     <thingClass>MagicAndMyths.Building_SelectiveWall</thingClass>
+     <useHitPoints>false</useHitPoints>
+     <drawerType>MapMeshAndRealTime</drawerType>
+    <designationCategory>Misc</designationCategory>
+     <uiIconPath>Things/Building/Linked/VoidMetalWall_MenuIcon</uiIconPath>
+     <graphicData>
+       <texPath>Building/ForceWall_Atlas</texPath>
+       <graphicClass>Graphic_Single</graphicClass>
+       <linkType>CornerFiller</linkType>
+       <shaderType>Transparent</shaderType>
+       <linkFlags>
+         <li>Wall</li>
+         <li>Rock</li>
+         <li>MapEdge</li>
+       </linkFlags>
+       <damageData>
+         <cornerTL>Damage/Corner</cornerTL>
+         <cornerTR>Damage/Corner</cornerTR>
+         <cornerBL>Damage/Corner</cornerBL>
+         <cornerBR>Damage/Corner</cornerBR>
+         <edgeTop>Damage/Edge</edgeTop>
+         <edgeBot>Damage/Edge</edgeBot>
+         <edgeLeft>Damage/Edge</edgeLeft>
+         <edgeRight>Damage/Edge</edgeRight>
+       </damageData>
+     </graphicData>
+     <statBases>
+       <Flammability>0</Flammability>
+     </statBases>
+     <placingDraggableDimensions>1</placingDraggableDimensions>
+     <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+     <blockWind>true</blockWind>
+     <castEdgeShadows>true</castEdgeShadows>
+     <fillPercent>1</fillPercent>
+     <coversFloor>true</coversFloor>
+     <holdsRoof>true</holdsRoof>
+     <staticSunShadowHeight>1.0</staticSunShadowHeight>
+     <blockLight>true</blockLight>
+     <rotatable>false</rotatable>
+     <selectable>true</selectable>
+     <neverMultiSelect>false</neverMultiSelect>
+     <canOverlapZones>false</canOverlapZones>
+     <mineable>false</mineable>
+     <building>
+       <ai_chillDestination>false</ai_chillDestination>
+       <isInert>true</isInert>
+       <repairable>false</repairable>
+       <claimable>false</claimable>
+       <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+       <deconstructible>false</deconstructible>
+       <isTargetable>false</isTargetable>
+       <supportsWallAttachments>true</supportsWallAttachments>
+     </building>
+   </ThingDef>
+</Defs>

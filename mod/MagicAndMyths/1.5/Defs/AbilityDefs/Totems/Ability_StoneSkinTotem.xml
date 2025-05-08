@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_PlaceStoneSkinTotem</defName>
+    <label>totem : stone skin</label>
+    <description>Place a totem that grants stone skin to friendly targets, increasing their limb health temporarily while in range.</description>
+    <iconPath>Skills/Fly</iconPath>
+    <hostile>false</hostile>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>45</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilitySpawnTotem">
+        <totemDef>MM_StoneSkin</totemDef>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

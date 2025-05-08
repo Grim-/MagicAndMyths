@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageDef>
+    <defName>Acid</defName>
+    <label>acid</label>
+    <workerClass>DamageWorker_AddInjury</workerClass>
+    <deathMessage>{0} has been horribly burnt to death.</deathMessage>
+    <hediff>MagicAndMyths_AcidBurn</hediff>
+    <hediffSkin>MagicAndMyths_AcidBurn</hediffSkin>
+    <hediffSolid>MagicAndMyths_AcidBurn</hediffSolid>
+    <defaultDamage>100</defaultDamage>
+    <scaleDamageToBuildingsBasedOnFlammability>false</scaleDamageToBuildingsBasedOnFlammability>
+  </DamageDef>
+</Defs>

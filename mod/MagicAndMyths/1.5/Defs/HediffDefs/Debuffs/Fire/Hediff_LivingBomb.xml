@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef ParentName="PotionEffectBase">
+    <defName>MagicAndMyths_LivingBomb</defName>
+    <label>living bomb</label>
+    <description>This pawn has had its molecular structure charged with explosive energy, they will detonate after a time, the damage and radius of this explosion increase with the severity.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_DamagePerInterval">
+        <damageDef>Burn</damageDef>
+        <damageAmount>0.1~0.3</damageAmount>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_TimedExplosion">
+       <ticksToDetonation>6000</ticksToDetonation>
+       <explosionRadius>4.5</explosionRadius>
+       <explosionDamage>40</explosionDamage>
+
+       <scaleDamageWithSeverity>false</scaleDamageWithSeverity>
+       <minSeverityDamageMod>1</minSeverityDamageMod>
+       <maxSeverityDamageMod>3</maxSeverityDamageMod>
+
+       <scaleRadiusWithSeverity>true</scaleRadiusWithSeverity>
+       <minSeverityRangeMod>1</minSeverityRangeMod>
+       <maxSeverityRangeMod>1.2</maxSeverityRangeMod>
+
+       <explosionDamageDef>Bomb</explosionDamageDef>
+       <damageFalloff>true</damageFalloff>
+     </li>
+    </comps>
+  </HediffDef>
+</Defs>

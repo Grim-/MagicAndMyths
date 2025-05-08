@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.TotemDef ParentName="BaseTotem">
+    <defName>MM_StoneSkin</defName>
+    <label>stone skin totem</label>
+    <description>Grants friendly units in range the stone skin buff, which increases limb maximum health points.</description>
+    <thingClass>MagicAndMyths.Building_Totem</thingClass>
+    <lifetimeTicks>-1</lifetimeTicks>
+    <effectRadius>3</effectRadius>
+    <sustainedEffecter>MagicAndMyths_TotemAreaEffect</sustainedEffecter>
+    <graphicData>
+      <texPath>Totems/TotemTribal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <shadowData>
+        <volume>(0.3, 0.3, 0.3)</volume>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <blockWind>false</blockWind>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>2</Beauty>
+    </statBases>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <rotatable>false</rotatable>
+    <designationCategory>Misc</designationCategory>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_TotemApplyHediff">
+        <hediff>MagicAndMyths_StoneSkin</hediff>
+        <severity>
+          <min>1.0</min>
+          <max>1.0</max>
+        </severity>
+        <tickInterval>500</tickInterval>
+        <canTargetHostile>false</canTargetHostile>
+        <canTargetFriendly>true</canTargetFriendly>
+        <canTargetNeutral>false</canTargetNeutral>
+        <removeOnLeaveRadius>true</removeOnLeaveRadius>
+        <onTickEffect>MagicAndMyths_HealingGeneric</onTickEffect>
+      </li>
+    </comps>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </MagicAndMyths.TotemDef>
+</Defs>

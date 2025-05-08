@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ArtifactBase">
+    <defName>MagicAndMyths_FertileFieldsElixir</defName>
+    <label>fertile fields elixir</label>
+    <description>A small vial of greenish hued liquid substance when thrown at a target location it will update the quality of the soil in its impact radius.</description>
+    <graphicData>
+      <texPath>Potions/ElixirGreen</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>5</stackLimit>
+    <orderedTakeGroup>Potion</orderedTakeGroup>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>600</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <relicChance>0</relicChance>
+    <comps Inherit="false">
+      <!--- what happens when thrown -->
+      <li Class="MagicAndMyths.CompProperties_ThrowableIncreaseSoilQualityOnImpact">
+        <radius>5</radius>
+        <healAmount>30</healAmount>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MM_ApparelRing">
+     <defName>Ring_Sovring</defName>
+     <label>sov ring</label>
+     <description>The rule of a ruler, giving you access to soverigns hand.</description>
+     <graphicData>
+       <texPath>Jewelry/RingSilver</texPath>
+       <graphicClass>Graphic_Single</graphicClass>
+       <drawSize>0.45</drawSize>
+     </graphicData>
+     <apparel>
+       <wornGraphicPath>Things/Apparel/Ring/Ring</wornGraphicPath>
+     </apparel>
+     <comps>
+       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+         <abilityDef>MagicAndMyths_SoveriegnsHandThrow</abilityDef>
+       </li>
+     </comps>
+   </ThingDef>
+</Defs>

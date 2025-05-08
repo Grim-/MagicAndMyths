@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.UndeadHediffDef Name="BaseUndead">
+    <defName>DeathKnight_Undead</defName>
+    <label>undead</label>
+    <description>This pawn is undead.</description>
+    <hediffClass>MagicAndMyths.Hediff_Undead</hediffClass>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <duplicationAllowed>false</duplicationAllowed>
+    <preventsDeath>false</preventsDeath>
+    <regenTicks>1250</regenTicks>
+    <baseHealAmount>20</baseHealAmount>
+    <disablesNeeds>
+      <li>Food</li>
+      <li>Rest</li>
+      <li>Joy</li>
+      <li>Beauty</li>
+      <li>Comfort</li>
+      <li>RoomSize</li>
+      <li>Outdoors</li>
+      <li>Learning</li>
+      <li>Play</li>
+      <li>Mood</li>
+    </disablesNeeds>
+    <stages>
+      <li>
+        <label>Lesser Dead</label>
+        <minSeverity>0</minSeverity>
+        <restFallFactor>0</restFallFactor>
+        <hungerRateFactor>0</hungerRateFactor>
+        <painFactor>0</painFactor>
+        <regeneration>30000</regeneration>
+        <showRegenerationStat>false</showRegenerationStat>
+        <blocksInspirations>true</blocksInspirations>
+        <blocksMentalBreaks>true</blocksMentalBreaks>
+        <capMods>
+          <li>
+            <capacity>Talking</capacity>
+            <setMax>0</setMax>
+          </li>
+          <li>
+            <capacity>Hearing</capacity>
+            <setMax>0</setMax>
+          </li>
+        </capMods>
+        <statOffsets>
+          <PainShockThreshold>10</PainShockThreshold>
+          <MentalBreakThreshold>-10</MentalBreakThreshold>
+          <Flammability>0.6</Flammability>
+          <StaggerDurationFactor>-1</StaggerDurationFactor>
+        </statOffsets>
+        <statFactors>
+          <ArmorRating_Heat>0.4</ArmorRating_Heat>
+        </statFactors>
+        <disabledWorkTags>
+          <li>Caring</li>
+          <li>Intellectual</li>
+          <li>Artistic</li>
+          <li>Crafting</li>
+          <li>Social</li>
+          <li>PlantWork</li>
+          <li>Hunting</li>
+          <li>Firefighting</li>
+          <li>Cooking</li>
+          <li>Animals</li>
+        </disabledWorkTags>
+      </li>
+    </stages>
+    <modExtensions>
+      <li Class="MagicAndMyths.RotDrawOverrideModDef">
+      </li>
+    </modExtensions>
+    <renderNodeProperties>
+      <li Class="PawnRenderNodeProperties_Overlay">
+        <debugLabel>Shambler wounds</debugLabel>
+        <workerClass>PawnRenderNodeWorker_OverlayShambler</workerClass>
+        <overlayLayer>Body</overlayLayer>
+        <baseLayer>20</baseLayer>
+        <pawnType>HumanlikeOnly</pawnType>
+      </li>
+      <li>
+        <debugLabel>Shambler wounds</debugLabel>
+        <nodeClass>PawnRenderNode_AnimalPart</nodeClass>
+        <workerClass>PawnRenderNodeWorker_OverlayShambler</workerClass>
+        <overlayLayer>Body</overlayLayer>
+        <baseLayer>20</baseLayer>
+        <pawnType>NonHumanlikeOnly</pawnType>
+      </li>
+    </renderNodeProperties>
+  </MagicAndMyths.UndeadHediffDef>
+
+  <MagicAndMyths.UndeadHediffDef ParentName="LesserUndead">
+    <defName>DeathKnight_UndeadSekeleton</defName>
+    <label>undead</label>
+    <description>This pawn is undead.</description>
+    <hediffClass>MagicAndMyths.Hediff_Undead</hediffClass>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <duplicationAllowed>false</duplicationAllowed>
+    <preventsDeath>false</preventsDeath>
+    <regenTicks>1250</regenTicks>
+    <baseHealAmount>20</baseHealAmount>
+    <disablesNeeds>
+      <li>Food</li>
+      <li>Rest</li>
+      <li>Joy</li>
+      <li>Beauty</li>
+      <li>Comfort</li>
+      <li>RoomSize</li>
+      <li>Outdoors</li>
+      <li>Learning</li>
+      <li>Play</li>
+    </disablesNeeds>
+    <modExtensions>
+      <li Class="MagicAndMyths.RotDrawOverrideModDef">
+        <drawMode>Dessicated</drawMode>
+      </li>
+    </modExtensions>
+  </MagicAndMyths.UndeadHediffDef>
+
+  <MagicAndMyths.UndeadHediffDef ParentName="BaseUndead" Name="LesserUndead">
+    <defName>DeathKnight_UndeadZombie</defName>
+    <label>undead</label>
+    <description>This pawn is undead.</description>
+    <hediffClass>MagicAndMyths.Hediff_Undead</hediffClass>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <duplicationAllowed>false</duplicationAllowed>
+    <preventsDeath>false</preventsDeath>
+    <regenTicks>1250</regenTicks>
+    <baseHealAmount>20</baseHealAmount>
+    <disablesNeeds>
+      <li>Food</li>
+      <li>Rest</li>
+      <li>Joy</li>
+      <li>Beauty</li>
+      <li>Comfort</li>
+      <li>RoomSize</li>
+      <li>Outdoors</li>
+      <li>Learning</li>
+      <li>Play</li>
+    </disablesNeeds>
+    <modExtensions>
+      <li Class="MagicAndMyths.RotDrawOverrideModDef">
+        <drawMode>Rotting</drawMode>
+      </li>
+    </modExtensions>
+  </MagicAndMyths.UndeadHediffDef>
+
+</Defs>

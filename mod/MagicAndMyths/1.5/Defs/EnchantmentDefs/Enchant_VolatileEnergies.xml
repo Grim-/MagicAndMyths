@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_VolatileEnergies</defName>
+    <label>Enchantment of Volatile Energies</label>
+    <description>A dangerous arcane formula developed by vindictive battle-mages. This enchantment surrounds the bearer with unstable energies that violently rebound upon attackers. When struck, these energies flare with brilliant purple light, sending a portion of the force back to its source. Even successful attackers find themselves unexpectedly wounded by their own blows.</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_DamageReflection">
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+  </MagicAndMyths.EnchantDef>
+</Defs>

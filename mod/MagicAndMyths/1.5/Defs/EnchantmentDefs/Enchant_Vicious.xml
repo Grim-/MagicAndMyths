@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_Vicious</defName>
+    <label>Enchantment: Vicious</label>
+    <description>A weapon enchantment..</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_OnHitDamage">
+        <workerClass>MagicAndMyths.EnchantEffect_OnHitDamage</workerClass>
+        <damageValue>5</damageValue>
+        <damageType>Burn</damageType>
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+    <allowedCategories>
+      <li>EnchantCategory_Melee</li>
+    </allowedCategories>
+  </MagicAndMyths.EnchantDef>
+
+</Defs>

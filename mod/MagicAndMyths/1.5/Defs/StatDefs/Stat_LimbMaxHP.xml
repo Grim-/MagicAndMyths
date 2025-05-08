@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <StatDef ParentName="BaseDnDStat">
+      <defName>Stat_LimbMaxHP</defName>
+      <label>limb max health</label>
+      <description>A Multiplier on a pawns limb health.</description>
+      <defaultBaseValue>1</defaultBaseValue>
+      <minValue>0.1</minValue>
+      <toStringStyle>PercentZero</toStringStyle>
+    </StatDef>
+</Defs>

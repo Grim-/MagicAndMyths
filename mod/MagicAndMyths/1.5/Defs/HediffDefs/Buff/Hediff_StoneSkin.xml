@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef ParentName="PotionEffectBase">
+    <defName>MagicAndMyths_StoneSkin</defName>
+    <label>stone skin</label>
+    <description>This pawns skin is as hard as stone</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <makesSickThought>false</makesSickThought>
+    <stages>
+      <li>
+        <statOffsets>
+          <Stat_LimbMaxHP>0.2</Stat_LimbMaxHP>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+
+</Defs>

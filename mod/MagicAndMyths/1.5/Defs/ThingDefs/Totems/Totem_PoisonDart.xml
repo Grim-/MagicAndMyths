@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.TotemDef ParentName="BaseTotem">
+    <defName>MM_PoisonDartTotem</defName>
+    <label>poison dart totem</label>
+    <description>Fires poison darts inflicting toxic damage at a target in range.</description>
+    <thingClass>MagicAndMyths.Building_Totem</thingClass>
+    <lifetimeTicks>2500</lifetimeTicks>
+    <effectRadius>10</effectRadius>
+    <graphicData>
+      <texPath>Totems/TotemTribal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <shadowData>
+        <volume>(0.3, 0.3, 0.3)</volume>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <blockWind>false</blockWind>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>2</Beauty>
+    </statBases>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <rotatable>false</rotatable>
+    <designationCategory>Misc</designationCategory>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_TotemTurret">
+        <projectileDef>Projectile_PoisonDart</projectileDef>
+        <turretFireEffect>Deflect_Metal</turretFireEffect>
+        <tickInterval>250</tickInterval>
+        <canTargetHostile>true</canTargetHostile>
+        <canTargetFriendly>false</canTargetFriendly>
+        <canTargetNeutral>false</canTargetNeutral>
+      </li>
+    </comps>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </MagicAndMyths.TotemDef>
+</Defs>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+<MagicAndMyths.PitfallSolutionDef>
+  <defName>PitfallVaultSolution</defName>
+  <label>Vault over</label>
+  <workerClass>MagicAndMyths.PitfallSolutionWorker_Jump</workerClass>
+  <jobDef>MagicAndMyths_JumpOverObstacle</jobDef>
+</MagicAndMyths.PitfallSolutionDef>
+
+</Defs>

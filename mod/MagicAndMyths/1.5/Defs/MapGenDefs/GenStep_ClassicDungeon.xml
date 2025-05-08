@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <MagicAndMyths.GenStepDef_BspDungeon>
+      <defName>DungeonGen</defName>
+      <order>10000</order>
+      <genStep Class="MagicAndMyths.GenStep_BspDungeon"/>
+      <dungeonGenDef>UndeadDungeon</dungeonGenDef>
+    </MagicAndMyths.GenStepDef_BspDungeon>
+
+    <MagicAndMyths.DungeonGenDef>
+      <defName>UndeadDungeon</defName>
+        <randomCorridoorAmount>1~2</randomCorridoorAmount>
+        <maxDepth>20</maxDepth>
+        <minRoomSize>8</minRoomSize>
+        <minRoomPadding>1</minRoomPadding>
+        <roomSizeFactor>1</roomSizeFactor>
+        <minSizeMultiplier>0.6</minSizeMultiplier>
+        <aspectRatioThreshold>1.1</aspectRatioThreshold>
+        <edgeMarginDivisor>1.1</edgeMarginDivisor>
+        <roomAmount>90~100</roomAmount>
+        <sideRoomCount>3~8</sideRoomCount>
+        <addRandomCorridoors>false</addRandomCorridoors>
+        <availableRoomTypes>
+          <li>StartRoom</li>
+          <li>EndRoom</li>
+          <li>TreasureRoom</li>
+          <li>EncounterRoom_Fight</li>
+        </availableRoomTypes>
+        <earlyAutomata>
+        </earlyAutomata>
+        <postGenAutomata>
+        </postGenAutomata>
+        <indestructibleWall></indestructibleWall>
+        <wall></wall>
+        <floor></floor>
+        <difficultyRange>1~1</difficultyRange>
+        <genSteps>
+          <li>ElevationFertility</li>
+          <li>Terrain</li>
+          <li>Plants</li>
+          <li>DungeonGen</li>
+        </genSteps>
+        <pocketMapProperties>
+            <biome>HiddenForest</biome>
+            <temperature>21</temperature>
+        </pocketMapProperties>
+    </MagicAndMyths.DungeonGenDef>
+</Defs>

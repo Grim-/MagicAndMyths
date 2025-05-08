@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_PyreRuby</defName>
+    <label>pyre ruby</label>
+    <description>A beautiful deep ruby red crystal, a heat can be felt emitting from it, however it is cool to the touch. The magic of this ruby can be invoked to absorb all fires in a large radius, after which it cannot be used again, the ruby will detonate releasing all stored flames at once if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Artifacts/PyreRuby</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>10000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_PyreRuby">
+        <absorptionRadius>30</absorptionRadius>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ThrowablePyreRubyDetonate">
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

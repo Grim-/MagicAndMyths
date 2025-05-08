@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <QuestScriptDef>
+    <defName>Quest_DeathKnightStartingPath</defName>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <expireDaysRange>4~8</expireDaysRange>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->[colonistToHuntName] hunting decree</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->The jibbering skull wants [colonistQuestSubjectName] to slaughter [colonistToHuntName], for the promise of power.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="QuestNode_Set">
+          <name>decreeDays</name>
+          <value>5</value>
+        </li>
+
+        <li Class="MagicAndMyths.QuestNode_GetColonistToKill">
+          <storeColonistToHuntAs>colonistToHunt</storeColonistToHuntAs>
+          <storeColonistToHuntAsName>colonistToHuntName</storeColonistToHuntAsName>
+        </li>
+
+        <li Class="QuestNode_Delay">
+          <delayTicks>$($decreeDays*60000)</delayTicks>
+          <isQuestTimeout>true</isQuestTimeout>
+        </li>
+
+        <li Class="MagicAndMyths.QuestNode_SpecificPawnKilled">
+          <pawnThingID>$colonistToHunt</pawnThingID>
+          <outSignal>colonistToHunt.SentSatisfied</outSignal>
+        </li>
+
+        <li Class="QuestNode_Signal">
+          <inSignal>colonistToHunt.SentSatisfied</inSignal>
+          <node Class="QuestNode_Sequence">
+            <nodes>
+
+              <li Class="QuestNode_End">
+                <outcome>Success</outcome>
+                <sendStandardLetter>true</sendStandardLetter>
+              </li>
+              <li Class="MagicAndMyths.QuestNode_GrantUndeath">
+                <inSignal>colonistToHunt.SentSatisfied</inSignal>
+                <colonistQuestSubject>$colonistQuestSubject</colonistQuestSubject>
+              </li>
+            </nodes>
+          </node>
+        </li>
+
+      </nodes>
+    </root>
+  </QuestScriptDef>
+  <JobDef>
+    <defName>GotoAndTalk</defName>
+    <driverClass>MagicAndMyths.JobDriver_GoToAndTalk</driverClass>
+    <reportString>talking to.</reportString>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <neverShowWeapon>true</neverShowWeapon>
+  </JobDef>
+</Defs>
