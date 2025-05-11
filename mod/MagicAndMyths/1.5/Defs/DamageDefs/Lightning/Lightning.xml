@@ -4,6 +4,7 @@
     <defName>Lightning</defName>
     <label>lightning</label>
     <externalViolence>true</externalViolence>
+        <workerClass>DamageWorker_AddInjury</workerClass>
     <deathMessage>{0} has been electrocuted to death.</deathMessage>
     <hediff>MagicAndMyths_Shocked</hediff>
     <hediffSkin>MagicAndMyths_Shocked</hediffSkin>

@@ -3,11 +3,12 @@
   <HediffDef ParentName="DebuffBase">
     <defName>MagicAndMyths_Laceration</defName>
     <label>lacerated</label>
+    <hediffClass>Hediff_Injury</hediffClass>
     <description>This pawn has been deeply cut.</description>
     <duplicationAllowed>true</duplicationAllowed>
     <tendable>true</tendable>
     <injuryProps>
-      <painPerSeverity>0.2</painPerSeverity>
+      <painPerSeverity>0.062</painPerSeverity>
       <bleedRate>0.12</bleedRate>
       <canMerge>false</canMerge>
       <destroyedLabel>Cut off</destroyedLabel>

@@ -22,5 +22,6 @@
        </tags>
        <wornGraphicPath>Things/Apparel/Ring/Ring</wornGraphicPath>
      </apparel>
+     <smeltable>false</smeltable>
    </ThingDef>
 </Defs>

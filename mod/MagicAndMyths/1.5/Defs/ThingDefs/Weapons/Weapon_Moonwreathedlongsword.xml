@@ -9,7 +9,7 @@
     <graphicData>
       <texPath>Equipment/Sword_29</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>2.5</drawSize>
+      <drawSize>1.2</drawSize>
       <allowFlip>false</allowFlip>
     </graphicData>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -24,32 +24,61 @@
       <WorkToMake>25000</WorkToMake>
       <Mass>1.5</Mass>
     </statBases>
-    <equippedAngleOffset>0</equippedAngleOffset>
+    <equippedAngleOffset>35</equippedAngleOffset>
     <tools>
       <li>
-        <label>hammer head</label>
+        <label>blade</label>
         <capacities>
-          <li>Blunt</li>
+          <li>Cut</li>
         </capacities>
         <power>14</power>
         <cooldownTime>1.8</cooldownTime>
+        <extraMeleeDamages>
+          <li>
+            <def>Frost</def>
+            <amount>5</amount>
+            <chance>0.3</chance>
+          </li>
+        </extraMeleeDamages>
       </li>
       <li>
-        <label>hammer head</label>
+        <label>blade</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>6</power>
+        <cooldownTime>1.38</cooldownTime>
+        <extraMeleeDamages>
+          <li>
+            <def>Frost</def>
+            <amount>3</amount>
+            <chance>0.3</chance>
+          </li>
+        </extraMeleeDamages>
+      </li>
+      <li>
+        <label>pommel</label>
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>20</power>
+        <power>9</power>
         <cooldownTime>3</cooldownTime>
+        <extraMeleeDamages>
+          <li>
+            <def>Frost</def>
+            <amount>2</amount>
+            <chance>0.2</chance>
+          </li>
+        </extraMeleeDamages>
       </li>
     </tools>
     <comps>
+      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+        <abilityDef>MagicAndMyths_FireMoonArc</abilityDef>
+      </li>
     </comps>
     <modExtensions>
-    <li Class="MagicAndMyths.DrawOffsetExt">
-      <offset>(-0.2, 0, 0.05)</offset>
-    </li>
-  </modExtensions>
+    </modExtensions>
   </ThingDef>
 
 </Defs>

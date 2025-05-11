@@ -3,7 +3,7 @@
   <DamageDef ParentName="CutBase">
     <defName>Wind</defName>
     <label>razor wind</label>
-    <workerClass>DamageWorker_Cut</workerClass>
+    <workerClass>DamageWorker_AddInjury</workerClass>
     <externalViolence>true</externalViolence>
     <deathMessage>{0} has been sliced to death.</deathMessage>
     <hediff>MagicAndMyths_Laceration</hediff>

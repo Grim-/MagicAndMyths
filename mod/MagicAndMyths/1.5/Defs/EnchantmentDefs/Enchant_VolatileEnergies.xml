@@ -7,8 +7,13 @@
     <commonality>1.0</commonality>
     <effects>
       <li Class="MagicAndMyths.EnchantEffectDef_DamageReflection">
+        <reflectPercentage>0.5</reflectPercentage>
+        <useOriginalDamageType>true</useOriginalDamageType>
       </li>
     </effects>
     <textColor>(0.8, 0, 0)</textColor>
+    <allowedCategories>
+      <li>EnchantCategory_Armor</li>
+    </allowedCategories>
   </MagicAndMyths.EnchantDef>
 </Defs>

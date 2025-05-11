@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MM_ApparelRing">
+     <defName>Ring_PoisonImmunity</defName>
+     <label>clasp of the viper</label>
+     <description>A green metal ring in the shape of a coiled serpent, it grants ToxicResistance and ToxicEnvironmentResistance.</description>
+     <graphicData>
+       <texPath>Jewelry/Ring_snake</texPath>
+       <graphicClass>Graphic_Single</graphicClass>
+       <drawSize>0.45</drawSize>
+     </graphicData>
+     <statBases>
+       <ToxicResistance>4</ToxicResistance>
+       <ToxicEnvironmentResistance>4</ToxicEnvironmentResistance>
+       <MarketValue>10000</MarketValue>
+     </statBases>
+     <apparel>
+       <texPath>Jewelry/Ring_snake</texPath>
+     </apparel>
+     <comps>
+     </comps>
+   </ThingDef>
+</Defs>

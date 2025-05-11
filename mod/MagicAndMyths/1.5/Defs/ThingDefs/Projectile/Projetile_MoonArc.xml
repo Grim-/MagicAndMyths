@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="BaseBullet">
+      <defName>Projectile_MoonArc</defName>
+      <label>moon arc</label>
+      <thingClass>Projectile_Explosive</thingClass>
+      <graphicData>
+        <texPath>MagicCircles/MoonArc</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+        <shaderType>MoteGlow</shaderType>
+      </graphicData>
+      <projectile>
+        <damageDef>Frost</damageDef>
+        <damageAmountBase>30</damageAmountBase>
+        <explosionRadius>3</explosionRadius>
+        <speed>20</speed>
+      </projectile>
+    </ThingDef>
+</Defs>

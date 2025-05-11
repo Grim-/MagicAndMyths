@@ -3,6 +3,7 @@
   <DamageDef>
     <defName>Water</defName>
     <label>water</label>
+        <workerClass>DamageWorker_AddInjury</workerClass>
     <externalViolence>true</externalViolence>
     <deathMessage>{0} has been drown to death.</deathMessage>
     <hediff>MagicAndMyths_Wet</hediff>

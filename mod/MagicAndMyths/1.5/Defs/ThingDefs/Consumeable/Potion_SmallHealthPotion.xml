@@ -26,10 +26,10 @@
         <useLabel>Drink {0_label}</useLabel>
         <useDuration>132</useDuration>
         <destroyOnUse>true</destroyOnUse>
-        <cooldownTickRange>2400~2400</cooldownTickRange>
+        <cooldownTickRange>100</cooldownTickRange>
         <cooldownRestoresCharges>false</cooldownRestoresCharges>
-        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
-        <charges>1</charges>
+        <chargesRestoredPerCooldown>0</chargesRestoredPerCooldown>
+        <charges>2</charges>
         <targetSelf>true</targetSelf>
         <requiresTarget>true</requiresTarget>
         <moveToTarget>true</moveToTarget>
@@ -39,7 +39,7 @@
         </targetParams>
       </li>
       <li Class="MagicAndMyths.CompProperties_ArtifactEffectHeal">
-        <healAmount>30</healAmount>
+        <healAmount>10</healAmount>
         <onlyLifeThreatening>false</onlyLifeThreatening>
         <onlyBleeding>false</onlyBleeding>
         <onlyPermanent>false</onlyPermanent>
@@ -48,7 +48,7 @@
       <li Class="MagicAndMyths.CompProperties_ThrowableHealAOEOnImpact">
         <radius>3</radius>
         <impactEffectDef>MagicAndMyths_HealingGeneric</impactEffectDef>
-        <healAmount>30</healAmount>
+        <healAmount>10</healAmount>
         <maxTargets>4</maxTargets>
       </li>
     </comps>

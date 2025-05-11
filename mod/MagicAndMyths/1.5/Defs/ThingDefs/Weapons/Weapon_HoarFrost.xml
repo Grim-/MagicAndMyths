@@ -46,13 +46,6 @@
         </li>
       </tools>
       <comps>
-        <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
-          <biocodeOnEquip>false</biocodeOnEquip>
-          <requiredSkills>
-          </requiredSkills>
-          <requiredTraits>
-          </requiredTraits>
-        </li>
       </comps>
       <modExtensions>
       <li Class="MagicAndMyths.DrawOffsetExt">

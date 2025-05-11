@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef>
+    <defName>MagicAndMyths_ElementalSkull</defName>
+    <label>elemental skull</label>
+    <race>Race_Skull</race>
+    <combatPower>1</combatPower>
+    <canArriveManhunter>false</canArriveManhunter>
+    <aiAvoidCover>true</aiAvoidCover>
+    <fleeHealthThresholdRange>0~0</fleeHealthThresholdRange>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Humanlike/Heads/None_Average_Skull</texPath>
+          <drawSize>1</drawSize>
+          <color>(199, 77, 12)</color>
+          <shaderType>CutoutComplex</shaderType>
+          <shadowData>
+            <volume>(0.32, 0.35, 0.32)</volume>
+            <offset>(0,0,0)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Humanlike/Heads/None_Average_Skull</texPath>
+          <drawSize>1</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+    <abilities>
+      <li>MagicAndMyths_Fireball</li>
+    </abilities>
+  </PawnKindDef>
+
+</Defs>

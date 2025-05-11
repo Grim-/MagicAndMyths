@@ -35,9 +35,6 @@
           <SocialImpact>0.15</SocialImpact>
           <NegotiationAbility>0.10</NegotiationAbility>
           <Beauty>1</Beauty>
-          <PlantWorkSpeed>0.15</PlantWorkSpeed>
-          <AnimalGatherYield>0.10</AnimalGatherYield>
-          <PlantHarvestYield>0.5</PlantHarvestYield>
         </statOffsets>
         <capMods>
           <li>

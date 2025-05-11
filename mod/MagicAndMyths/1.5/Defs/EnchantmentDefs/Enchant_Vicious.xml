@@ -11,6 +11,11 @@
         <damageValue>5</damageValue>
         <damageType>Burn</damageType>
       </li>
+      <li Class="MagicAndMyths.EnchantEffectDef_KillCounterStat">
+        <increasePerKill>0.1</increasePerKill>
+        <statToAffect>ArmorRating_Sharp</statToAffect>
+        <modifierType>Offset</modifierType>
+      </li>
     </effects>
     <textColor>(0.8, 0, 0)</textColor>
     <allowedCategories>

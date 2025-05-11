@@ -1,45 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <MagicAndMyths.EnchantDef>
-    <defName>Enchant_Sunlight</defName>
-    <label>Enchantment of Sunlight</label>
+    <defName>Enchant_Faetouched</defName>
+    <label>Enchantment of the fae touched</label>
     <description>A blessing drawn from celestial energies that shifts with the passage of day and night. During daylight hours, it creates a shimmering golden aura that disperses heat, allowing the bearer to walk unharmed through the most scorching environments. As darkness falls, its power wanes until dawn renews its strength.</description>
     <commonality>1.0</commonality>
     <effects>
       <li Class="MagicAndMyths.EnchantEffectDef_PawnStatDaylight">
-        <statToAffect>Stat_LimbMaxHP</statToAffect>
+        <statToAffect>MoveSpeed</statToAffect>
         <minValue>0</minValue>
-        <maxValue>10</maxValue>
+        <maxValue>2</maxValue>
         <modifierType>Offset</modifierType>
       </li>
       <li Class="MagicAndMyths.EnchantEffectDef_PawnStatDaylight">
-        <statToAffect>Stat_Strength</statToAffect>
-        <minValue>-0.4</minValue>
-        <maxValue>10</maxValue>
+        <statToAffect>TameAnimalChance</statToAffect>
+        <minValue>0.04</minValue>
+        <maxValue>1</maxValue>
         <modifierType>Offset</modifierType>
       </li>
       <li Class="MagicAndMyths.EnchantEffectDef_PawnStatDaylight">
-        <statToAffect>ArmorRating_Sharp</statToAffect>
-        <minValue>0</minValue>
-        <maxValue>10</maxValue>
+        <statToAffect>PlantHarvestYield</statToAffect>
+        <minValue>0.01</minValue>
+        <maxValue>0.04</maxValue>
         <modifierType>Offset</modifierType>
       </li>
-      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatDaylight">
-        <statToAffect>ArmorRating_Blunt</statToAffect>
-        <minValue>0</minValue>
-        <maxValue>10</maxValue>
-        <modifierType>Offset</modifierType>
-      </li>
-      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatDaylight">
-        <statToAffect>ArmorRating_Heat</statToAffect>
-        <minValue>0</minValue>
-        <maxValue>10</maxValue>
-        <modifierType>Offset</modifierType>
+      <li Class="MagicAndMyths.EnchantEffectDef_GrantHediff">
+        <workerClass>MagicAndMyths.EnchantEffect_GrantHediff</workerClass>
+        <hediff>MagicAndMyths_FairyWings</hediff>
       </li>
     </effects>
     <textColor>(0.8, 0, 0)</textColor>
-    <allowedCategories>
-      <li>EnchantCategory_Armor</li>
-    </allowedCategories>
   </MagicAndMyths.EnchantDef>
 </Defs>

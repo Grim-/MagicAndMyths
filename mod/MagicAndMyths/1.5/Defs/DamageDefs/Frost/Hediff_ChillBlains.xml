@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <HediffDef ParentName="PotionEffectBase">
+  <HediffDef ParentName="DebuffBase">
     <defName>MagicAndMyths_ChillBlains</defName>
     <label>chill blaine</label>
     <description>This pawns joints are enflamed, its skin enflamed suffering the effects of chill blaine.</description>
-    <hediffClass>HediffWithComps</hediffClass>
+    <hediffClass>Hediff_Injury</hediffClass>
+    <injuryProps>
+      <painPerSeverity>0.002</painPerSeverity>
+      <bleedRate>0</bleedRate>
+      <canMerge>false</canMerge>
+      <destroyedLabel>rotted off</destroyedLabel>
+      <destroyedOutLabel>frozen off</destroyedOutLabel>
+    </injuryProps>
     <stages>
       <li>
         <label>minor</label>
@@ -15,7 +22,7 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>0.25</offset>
+            <offset>-0.25</offset>
           </li>
         </capMods>
       </li>

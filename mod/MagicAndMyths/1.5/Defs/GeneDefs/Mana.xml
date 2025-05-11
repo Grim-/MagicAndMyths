@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <GeneDef>
+  <MagicAndMyths.BasicResourceGeneDef>
     <defName>MagicAndMyths_ManaGene</defName>
     <label>mana</label>
-    <description>Carriers of this gene mana smething.</description>
+    <resourceName>Mana</resourceName>
+    <description>All creatures have access to mana, only humans practice magic however.</description>
     <customEffectDescriptions>
-      <li>Carriers of this gene mana smething.</li>
+      <li>All creatures have access to mana, only humans practice magic however.</li>
     </customEffectDescriptions>
     <resourceGizmoThresholds>
       <li>0.25</li>
@@ -22,6 +23,10 @@
     <resourceLossPerDay>0</resourceLossPerDay>
     <biostatCpx>0</biostatCpx>
     <biostatMet>0</biostatMet>
-  </GeneDef>
+    <maxStat>Stat_Mana</maxStat>
+    <regenStat>Stat_ManaRegen</regenStat>
+    <regenSpeedStat>Stat_ManaRegenSpeedMult</regenSpeedStat>
+    <costMult>Stat_ManaUseMult</costMult>
+  </MagicAndMyths.BasicResourceGeneDef>
 
 </Defs>

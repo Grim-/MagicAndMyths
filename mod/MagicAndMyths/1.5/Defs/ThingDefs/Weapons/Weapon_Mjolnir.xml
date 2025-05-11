@@ -41,7 +41,7 @@
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>40</power>
+        <power>25</power>
         <cooldownTime>1.1</cooldownTime>
       </li>
     </tools>
@@ -58,25 +58,8 @@
      </li>
    </verbs>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_BiocodableBinding">
-        <biocodeOnEquip>true</biocodeOnEquip>
-        <requiredSkills>
-          <!-- <li>
-            <skill>Melee</skill>
-            <minLevel>15</minLevel>
-          </li> -->
-        </requiredSkills>
-        <requiredTraits>
-        </requiredTraits>
-      </li>
       <li Class="MagicAndMyths.CompProperties_EnchantProvider">
         <maxEnchantsAllowed>3</maxEnchantsAllowed>
-        <enchantmentSlots>
-          <li>
-            <slotLevel>3</slotLevel>
-            <slotIsLocked>false</slotIsLocked>
-          </li>
-        </enchantmentSlots>
       </li>
     </comps>
   </ThingDef>

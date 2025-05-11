@@ -4,6 +4,7 @@
     <defName>Frost</defName>
     <label>frost</label>
     <externalViolence>true</externalViolence>
+        <workerClass>DamageWorker_AddInjury</workerClass>
     <deathMessage>{0} has been frozen to death.</deathMessage>
     <hediff>MagicAndMyths_ChillBlains</hediff>
     <hediffSkin>MagicAndMyths_ChillBlains</hediffSkin>

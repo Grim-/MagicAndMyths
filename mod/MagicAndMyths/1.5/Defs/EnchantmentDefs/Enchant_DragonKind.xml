@@ -6,15 +6,15 @@
     <description>An ancient magic infused with the essence of dragon scales. When applied, it hardens the wearer's skin to resist cutting blows and grants complete immunity to flames. The enchantment radiates a comforting warmth and sometimes emits a faint sound like distant draconic breathing.</description>
     <commonality>1.0</commonality>
     <effects>
-      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatOffset">
-        <workerClass>MagicAndMyths.EnchantEffect_PawnStatOffset</workerClass>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStat">
         <statToAffect>ArmorRating_Sharp</statToAffect>
-        <statOffset>0.1</statOffset>
+        <modifierType>Offset</modifierType>
+        <modifierValue>0.1</modifierValue>
       </li>
-      <li Class="MagicAndMyths.EnchantEffectDef_PawnStatFactor">
-        <workerClass>MagicAndMyths.EnchantEffect_PawnStatFactor</workerClass>
+      <li Class="MagicAndMyths.EnchantEffectDef_PawnStat">
         <statToAffect>Flammability</statToAffect>
-        <statFactor>0</statFactor>
+        <modifierType>Factor</modifierType>
+        <modifierValue>0</modifierValue>
       </li>
     </effects>
     <textColor>(0.8, 0, 0)</textColor>

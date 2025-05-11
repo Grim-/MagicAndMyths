@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_ChangeWeather</defName>
+    <label>Change Weather</label>
+    <description>Allows you to change the weather, starts with 3 charges gaining one every 3 days.</description>
+    <iconPath>Skills/Fly</iconPath>
+    <hostile>false</hostile>
+    <charges>3</charges>
+    <cooldownTicksRange>36000</cooldownTicksRange>
+    <cooldownPerCharge>true</cooldownPerCharge>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>45</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilityChangeWeather">
+        <weatherOptions>
+          <li>Clear</li>
+          <li>Fog</li>
+          <li>Rain</li>
+          <li>DryThunderstorm</li>
+          <li>RainyThunderstorm</li>
+          <li>FoggyRain</li>
+          <li>SnowHard</li>
+          <li>SnowGentle</li>
+        </weatherOptions>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>
