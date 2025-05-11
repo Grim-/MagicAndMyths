@@ -67,16 +67,6 @@ namespace MagicAndMyths
                     }
                 }
             }
-
-            for (int i = 0; i < Props.maxEnchantsAllowed; i++)
-            {
-                if (HasMaximumEnchantsAllowed)
-                {
-                    break;
-                }
-
-                AddEnchant(DefDatabase<EnchantDef>.AllDefs.Where(x => x.IsValidEquipmentType(this.parent)).RandomElement());
-            }
         }
 
         public bool HasActive(EnchantDef enchantDef)
@@ -94,6 +84,16 @@ namespace MagicAndMyths
                 }
             }
             base.PostDestroy(mode, previousMap);
+        }
+
+        public override void Notify_KilledPawn(Pawn pawn)
+        {
+            base.Notify_KilledPawn(pawn);
+
+            if (this.EquippedPawn != null)
+            {
+                this.EquippedPawn.Notify_KilledPawn(pawn);
+            }
         }
 
         public override void PostDeSpawn(Map map)
@@ -143,14 +143,12 @@ namespace MagicAndMyths
             var pawnEnchantComp = pawn.GetComp<Comp_PawnEnchant>();
             if (pawnEnchantComp != null && enchants != null)
             {
-                foreach (var enchant in enchants)
-                {
-                    pawnEnchantComp.RemoveEnchant(enchant);
-                }
+                pawnEnchantComp.RemoveEnchantsFromSource(this.parent);
             }
 
             _EquippedPawn = null;
         }
+
 
         #region enchant management
         public bool CanAddEnchant(EnchantDef enchantDef)
@@ -167,6 +165,7 @@ namespace MagicAndMyths
                 return null;
 
             var enchantInstance = new EnchantInstance(enchantDef, this);
+            enchantInstance.def = enchantDef;
             enchants.Add(enchantInstance);
 
             enchantInstance.Notify_MateriaEquipped();
@@ -256,10 +255,19 @@ namespace MagicAndMyths
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                if (enchants == null)
+                foreach (var item in enchants)
                 {
-                    enchants = new List<EnchantInstance>();
-                    InitializeEnchants();
+                    item.ReInitializeEffects(this.parent);
+                    item.Notify_MateriaEquipped();
+
+                    if (HasEquipOwner)
+                    {
+                        var pawnEnchantComp = EquippedPawn.GetComp<Comp_PawnEnchant>();
+                        if (pawnEnchantComp != null)
+                        {
+                            pawnEnchantComp.AddEnchant(item, this.parent);
+                        }
+                    }
                 }
             }
         }

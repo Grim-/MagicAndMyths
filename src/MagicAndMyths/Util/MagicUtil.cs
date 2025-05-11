@@ -230,18 +230,18 @@ namespace MagicAndMyths
             }
         }
 
-        public static bool TryMakeSummonOf(this Pawn pawn, Pawn Master)
-        {
-            Hediff_UndeadMaster master = (Hediff_UndeadMaster)Master.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
-            Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
-            if (master != null && undeadSummon != null)
-            {
-                undeadSummon.SetSquadLeader(Master);
-                return true;
-            }
+        //public static bool TryMakeSummonOf(this Pawn pawn, Pawn Master)
+        //{
+        //    Hediff_UndeadMaster master = (Hediff_UndeadMaster)Master.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
+        //    Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
+        //    if (master != null && undeadSummon != null)
+        //    {
+        //        undeadSummon.SetSquadLeader(Master);
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         public static Hediff_UndeadMaster GetUndeadMaster(this Pawn pawn)
         {

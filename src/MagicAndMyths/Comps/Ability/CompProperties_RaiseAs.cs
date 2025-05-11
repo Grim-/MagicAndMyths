@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using SquadBehaviour;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -27,7 +28,7 @@ namespace MagicAndMyths
         {
             base.Apply(target, dest);
             List<Thing> thingsInRadius = GenRadial.RadialDistinctThingsAround(target.Cell, this.parent.pawn.Map, Props.radius, true).ToList();
-            master = (Hediff_UndeadMaster)this.parent.pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
+            master = this.parent.pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster) as Hediff_UndeadMaster;
 
             int count = 0;
             foreach (var thing in thingsInRadius)
@@ -94,8 +95,6 @@ namespace MagicAndMyths
             newPawn.story.Adulthood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
 
             Hediff_Undead undeadHediff = (Hediff_Undead)newPawn.health.GetOrAddHediff(Props.undeadDef.hediff);
-            undeadHediff.SetSquadLeader(this.parent.pawn);
-
             master.SummonCreature(newPawn, spawnPosition);
         }
 

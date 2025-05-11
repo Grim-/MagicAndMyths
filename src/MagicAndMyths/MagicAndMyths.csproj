@@ -111,6 +111,7 @@
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
     <Compile Include="Comps\Ability\CompProperties_TeleportPawnToHomeMap.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
+    <Compile Include="Comps\Ability\Gene_BasicResource.cs" />
     <Compile Include="Comps\Map\MapComp_PerceptionManager.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddEnchant.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddGene.cs" />
@@ -235,13 +236,10 @@
     <Compile Include="Materia\Materia Effects\OnHit\EnchantEffectDef_WeaponEnchant.cs" />
     <Compile Include="Materia\Materia Effects\OnHit\OnHitMode.cs" />
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_EquipmentStat.cs" />
+    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_KillCounterStat.cs" />
     <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStat.cs" />
-    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactor.cs" />
-    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactorDaylight.cs" />
-    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatFactorLerp.cs" />
-    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatOffset.cs" />
-    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatOffsetDaylight.cs" />
-    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatOffsetLerp.cs" />
+    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatDaylight.cs" />
+    <Compile Include="Materia\Materia Effects\Stat\EnchantEffectDef_PawnStatLerp.cs" />
     <Compile Include="Materia\MateriaBreakdownMaterials.cs" />
     <Compile Include="Materia\EnchantCategoryDef.cs" />
     <Compile Include="Materia\EnchantDef.cs" />

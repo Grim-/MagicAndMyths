@@ -33,7 +33,7 @@ namespace MagicAndMyths
         public override DamageWorker.DamageResult Notify_ApplyMeleeDamageToTarget(LocalTargetInfo target, Pawn Attacker, DamageWorker.DamageResult damageResult)
         {
 
-            if (Def.hitMode  == OnHitMode.Melee)
+            if (Def.hitMode == OnHitMode.Melee)
             {
                 if (damageResult?.totalDamageDealt > 0 && target.Thing != null)
                 {

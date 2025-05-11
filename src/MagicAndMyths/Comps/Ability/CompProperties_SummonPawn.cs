@@ -49,7 +49,7 @@ namespace MagicAndMyths
 
                 if (SummonedPawn != null)
                 {
-                    if (parent.pawn.TryGetSquadLeader(out ISquadLeader squadLeader))
+                    if (parent.pawn.TryGetSquadLeader(out Comp_PawnSquadLeader squadLeader))
                     {
                         squadLeader.AddToSquad(SummonedPawn);
                     }

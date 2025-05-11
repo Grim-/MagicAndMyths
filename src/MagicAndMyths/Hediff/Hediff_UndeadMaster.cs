@@ -10,7 +10,7 @@ using Verse.AI.Group;
 
 namespace MagicAndMyths
 {
-    public class Hediff_UndeadMaster : Hediff_SquadLeader, IThingHolder
+    public class Hediff_UndeadMaster : Hediff, IThingHolder
     {
         #region Fields and Properties
         public int WillStat => Mathf.CeilToInt(this.pawn.GetStatValue(MagicAndMythDefOf.MagicAndMyths_Will, true, 1200));
@@ -22,16 +22,13 @@ namespace MagicAndMyths
 
         public override string Description => base.Description + $"\r\nThis pawn has absorbed {storedCreature.Count} spirits.";
 
-        public List<Pawn> AllActive => _ActiveSquads.SelectMany(x=> x.Value.Members.ToList()).ToList();
-
-        public List<Pawn> AllStored => storedCreature.OfType<Pawn>().ToList();
 
         public int WillRequiredForUndead
         {
             get
             {
                 int willTotal = 0;
-                foreach (var item in AllSquadsPawns)
+                foreach (var item in SquadLeaderComp.AllSquadsPawns)
                 {
                     //pull from def later
                     willTotal += 1;
@@ -40,6 +37,11 @@ namespace MagicAndMyths
                 return willTotal;
             }
         }
+
+
+
+        public Comp_PawnSquadLeader SquadLeaderComp => this.pawn.GetComp<Comp_PawnSquadLeader>();
+
         public bool IsOverWillLimits => WillRequiredForUndead > this.WillStat;
         public IThingHolder ParentHolder => this.pawn.ParentHolder;
         #endregion
@@ -47,8 +49,7 @@ namespace MagicAndMyths
         // Constructor to initialize ThingOwner
         public Hediff_UndeadMaster()
         {
-            storedCreature = new ThingOwner<Pawn>(this, false, LookMode.Deep);
-            _ActiveSquads = new Dictionary<int, Squad>();
+            storedCreature = new ThingOwner<Pawn>(this, false, LookMode.Deep);;
         }
 
         public override void Tick()
@@ -85,14 +86,33 @@ namespace MagicAndMyths
 
         public void SetupCreature(Pawn pawn)
         {
-            if (pawn.health.hediffSet.TryGetHediff<Hediff_Undead>(out Hediff_Undead undead))
+            if (!pawn.TryGetComp(out Comp_PawnSquadMember squadMember))
             {
-                undead.SetSquadLeader(this.pawn);
+                Log.Message($"Cannot set up creature {pawn.Label} it has no squad member comp");
+                return;
             }
-            else
+
+            if (SquadLeaderComp == null)
             {
-                Log.Message($"no undead hediff found for {pawn.Label}");
+                Log.Message($"Cannot set up creature {pawn.Label} it's master {this.pawn.Label} has no squad leader comp");
+                return;
             }
+
+
+            Log.Message($"{pawn.Label} setting squad leader to {this.pawn.Label}");
+
+
+            squadMember.SetSquadLeader(this.pawn);
+
+
+
+
+            Log.Message($"{this.pawn.Label} adding {pawn.Label} to squad");
+            SquadLeaderComp.AddToSquad(pawn);
+
+
+
+            Log.Message($"Assigned Squad : {squadMember.AssignedSquad}");
 
             if (pawn.Faction != Faction.OfPlayer)
             {
@@ -126,16 +146,9 @@ namespace MagicAndMyths
         /// <returns>True if successful, false otherwise</returns>
         public bool SummonCreature(Pawn pawn, IntVec3 position)
         {
-            // Check if already active
-            if (IsPartOfAnySquad(pawn, out Squad activeSquad))
-            {
-                Log.Message($"Tried to Summon an already active creature");
-                return false;
-            }
-
             storedCreature.RemoveAll(x => x == pawn);
 
-            if (AddToSquad(pawn))
+            if (SquadLeaderComp.AddToSquad(pawn))
             {
                 Pawn summonedPawn = pawn;
                 SetupCreature(summonedPawn);
@@ -165,10 +178,6 @@ namespace MagicAndMyths
             base.ExposeData();
 
             Scribe_Deep.Look<ThingOwner>(ref storedCreature, "storedCursedSpirits", new object[] { this });
-            Scribe_Collections.Look(ref _ActiveSquads, "activeSquads", LookMode.Value, LookMode.Deep);
-            Scribe_Defs.Look(ref _FormationType, "formationType");
-            Scribe_Values.Look(ref _FollowDistance, "followDistance", 5f);
-            Scribe_Values.Look(ref InFormation, "inFormation", true);
         }
     }
 }

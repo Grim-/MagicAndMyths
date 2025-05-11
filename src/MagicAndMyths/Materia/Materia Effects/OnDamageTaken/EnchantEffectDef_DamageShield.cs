@@ -32,17 +32,11 @@ namespace MagicAndMyths
 
        public  EnchantEffectDef_DamageShield Def => (EnchantEffectDef_DamageShield)def;
 
-        public override void Notify_MateriaEquipped()
+        public EnchantEffect_DamageShield()
         {
-            base.Notify_MateriaEquipped();
-
             currentShieldHP = Def.shieldMaxCapacity;
         }
 
-        public override void Notify_MateriaUnequipped()
-        {
-            base.Notify_MateriaUnequipped();
-        }
 
         public override bool Notify_PostPreApplyDamage(ref DamageInfo dinfo)
         {
@@ -119,7 +113,7 @@ namespace MagicAndMyths
             if (Def.destroyOnDepletion)
             {
                 Messages.Message($"{this.parentInstance.def.GetColouredLabel()} has shattered after expending its energy!", MessageTypeDefOf.NegativeEvent);
-                DestroyParentMateria();
+                TryRemoveEnchant();
             }
         }
 

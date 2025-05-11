@@ -170,13 +170,14 @@ namespace MagicAndMyths
 
         public virtual void ExposeData()
         {
-            //Scribe_Defs.Look(ref def, "def");
+           // Scribe_Deep.Look(ref def, "def");
             Scribe_Values.Look(ref CooldownTicks, "cooldownTicks");
             Scribe_References.Look(ref ParentEquipment, "parentEquipment");
-        }
+            Scribe_References.Look(ref EquippingPawn, "EquippingPawn");
+    }
 
 
-        public virtual void DestroyParentMateria()
+        public virtual void TryRemoveEnchant()
         {
             if (this.MateriaComp != null)
             {

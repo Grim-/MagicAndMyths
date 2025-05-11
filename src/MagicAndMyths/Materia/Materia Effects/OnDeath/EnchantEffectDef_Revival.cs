@@ -26,7 +26,7 @@ namespace MagicAndMyths
                 if (ResurrectionUtility.TryResurrect(this.EquippingPawn.Corpse.InnerPawn))
                 {
                     Messages.Message($"{this.ParentEquipment.Label}  Revived {this.EquippingPawn.Label} and shattered.", MessageTypeDefOf.PositiveEvent);
-                    DestroyParentMateria();
+                    TryRemoveEnchant();
                 }
             }
 

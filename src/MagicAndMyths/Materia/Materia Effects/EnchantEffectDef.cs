@@ -4,7 +4,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class EnchantEffectDef
+    public class EnchantEffectDef: IExposable
     {
         public string defName = "ANAME";
         public string label = "ALABEL";
@@ -20,6 +20,11 @@ namespace MagicAndMyths
             newWorker.ParentEquipment = parentEquipment;
             newWorker.parentInstance = instance;
             return newWorker;
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref workerClass, "workerClass");
         }
     }
 }

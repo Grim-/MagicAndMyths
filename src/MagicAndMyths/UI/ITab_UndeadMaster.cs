@@ -84,13 +84,13 @@ namespace MagicAndMyths
             Rect squadButtonRect = new Rect(willBarRect.xMax + buttonMargin, rect.y, squadButtonWidth, buttonHeight);
             if (Widgets.ButtonText(squadButtonRect, "Squad"))
             {
-                Find.WindowStack.Add(new SquadManagerWindow(this.UndeadMaster));
+                Find.WindowStack.Add(new SquadManagerWindow(this.UndeadMaster.SquadLeaderComp));
             }
         }
 
         private void DrawSquadList(Rect rect)
         {
-            if (UndeadMaster.ActiveSquads == null || UndeadMaster.ActiveSquads.Count == 0)
+            if (UndeadMaster.SquadLeaderComp.ActiveSquads == null || UndeadMaster.SquadLeaderComp.ActiveSquads.Count == 0)
             {
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Widgets.Label(rect, "No active squads. Create squads in the Squad Manager.");
@@ -98,7 +98,7 @@ namespace MagicAndMyths
                 return;
             }
 
-            squadDisplay.DrawSquadsList(rect, ref scrollPosition, UndeadMaster.ActiveSquads, UndeadMaster);
+            squadDisplay.DrawSquadsList(rect, ref scrollPosition, UndeadMaster.SquadLeaderComp.ActiveSquads, this.UndeadMaster.SquadLeaderComp);
         }
     }
 }

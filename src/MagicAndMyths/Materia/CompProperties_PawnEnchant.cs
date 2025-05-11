@@ -44,17 +44,21 @@ namespace MagicAndMyths
     public class Comp_PawnEnchant : ThingComp, IStatProvider
     {
         private List<ActiveEnchantData> activeEnchants = new List<ActiveEnchantData>();
-        public List<ActiveEnchantData> ActiveEnchants => activeEnchants.ToList();
+        public List<ActiveEnchantData> ActiveEnchants => activeEnchants?.ToList() ?? new List<ActiveEnchantData>();
 
         private Pawn Pawn => (Pawn)parent;
 
         public void AddEnchant(EnchantInstance enchant, ThingWithComps source)
         {
+            if (enchant == null || source == null)
+                return;
+
             bool isActive = true;
 
-            if (enchant.def.isUnique && activeEnchants.Any(x => x.EnchantInstance.def == enchant.def && x.IsActive))
+            if (enchant.def != null && enchant.def.isUnique &&
+                activeEnchants.Any(x => x.EnchantInstance != null &&
+                x.EnchantInstance.def == enchant.def && x.IsActive))
             {
-                // Found an active one already - set this new one as inactive
                 isActive = false;
             }
 
@@ -63,19 +67,19 @@ namespace MagicAndMyths
                 var enchantData = new ActiveEnchantData(enchant, source, isActive);
                 activeEnchants.Add(enchantData);
 
-                if (isActive)
-                {
-                    enchant.Notify_Equipped(Pawn);
-                }
+                enchant.Notify_Equipped(Pawn);
             }
         }
 
         private void TryActivateNextUniqueEnchant(EnchantDef enchantDef)
         {
-            var inactiveEnchant = activeEnchants.FirstOrDefault(x =>
-                x.EnchantInstance.def == enchantDef && !x.IsActive);
+            if (enchantDef == null)
+                return;
 
-            if (inactiveEnchant != null)
+            var inactiveEnchant = activeEnchants.FirstOrDefault(x =>
+                x.EnchantInstance != null && x.EnchantInstance.def == enchantDef && !x.IsActive);
+
+            if (inactiveEnchant != null && inactiveEnchant.EnchantInstance != null)
             {
                 inactiveEnchant.IsActive = true;
                 inactiveEnchant.EnchantInstance.Notify_Equipped(Pawn);
@@ -84,52 +88,48 @@ namespace MagicAndMyths
 
         public void RemoveEnchant(EnchantInstance enchant)
         {
+            if (enchant == null)
+                return;
+
             var enchantData = activeEnchants.FirstOrDefault(data => data.EnchantInstance == enchant);
-            if (enchantData != null)
+            if (enchantData != null && enchantData.EnchantInstance != null)
             {
-                EnchantDef defToActivate = null;
-                if (enchantData.EnchantInstance.def.isUnique && enchantData.IsActive)
-                {
-                    defToActivate = enchantData.EnchantInstance.def;
-                }
-
-                if (enchantData.IsActive)
-                {
-                    enchantData.EnchantInstance.Notify_Unequipped(Pawn);
-                }
-
+                enchantData.EnchantInstance.Notify_Unequipped(Pawn);
                 activeEnchants.Remove(enchantData);
 
-                if (defToActivate != null)
-                {
-                    TryActivateNextUniqueEnchant(defToActivate);
-                }
+                TryActivateNextUniqueEnchant(enchant.def);
             }
         }
 
         public void RemoveEnchantsFromSource(ThingWithComps source)
         {
-            // Clone the list to avoid modification during iteration
+            if (source == null)
+                return;
+
             var enchantsToRemove = activeEnchants
                 .Where(data => data.EnchantSource == source)
                 .ToList();
 
             foreach (var enchantData in enchantsToRemove)
             {
-                RemoveEnchant(enchantData.EnchantInstance);
+                if (enchantData.EnchantInstance != null)
+                {
+                    RemoveEnchant(enchantData.EnchantInstance);
+                }
             }
         }
 
         public void EquipTick()
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.TickMateria(Pawn);
-                    }
+                    enchantData.EnchantInstance.TickMateria(Pawn);
                 }
             }
         }
@@ -138,42 +138,45 @@ namespace MagicAndMyths
         {
             base.Notify_KilledPawn(pawn);
 
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.Notify_KilledPawn(pawn);
-                    }
+                    enchantData.EnchantInstance.Notify_KilledPawn(pawn);
                 }
             }
         }
 
         public void Notify_OwnerKilled()
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.Notify_OwnerKilled();
-                    }
+                    enchantData.EnchantInstance.Notify_OwnerKilled();
                 }
             }
         }
 
         public void Notify_ProjectileImpact(Pawn Attacker, Thing Target, Projectile Projectile)
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.Notify_ProjectileImpact(Attacker, Target, Projectile);
-                    }
+                    enchantData.EnchantInstance.Notify_ProjectileImpact(Attacker, Target, Projectile);
                 }
             }
         }
@@ -181,14 +184,16 @@ namespace MagicAndMyths
         public bool Notify_PostPreApplyDamage(ref DamageInfo dinfo)
         {
             bool isAbsorbed = false;
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return isAbsorbed;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null &&
+                    enchantData.EnchantInstance.Notify_PostPreApplyDamage(ref dinfo))
                 {
-                    if (enchantData.IsActive && enchantData.EnchantInstance.Notify_PostPreApplyDamage(ref dinfo))
-                    {
-                        isAbsorbed = true;
-                    }
+                    isAbsorbed = true;
                 }
             }
             return isAbsorbed;
@@ -197,14 +202,15 @@ namespace MagicAndMyths
         public DamageInfo Notify_ProjectileApplyDamageToTarget(DamageInfo Damage, Pawn Attacker, Thing Target, Projectile Projectile)
         {
             DamageInfo damageInfo = new DamageInfo(Damage);
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return damageInfo;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        damageInfo = enchantData.EnchantInstance.Notify_ProjectileApplyDamageToTarget(damageInfo, Attacker, Target, Projectile);
-                    }
+                    damageInfo = enchantData.EnchantInstance.Notify_ProjectileApplyDamageToTarget(damageInfo, Attacker, Target, Projectile);
                 }
             }
             return damageInfo;
@@ -213,14 +219,15 @@ namespace MagicAndMyths
         public DamageWorker.DamageResult Notify_ApplyMeleeDamageToTarget(LocalTargetInfo target, Pawn Attacker, DamageWorker.DamageResult DamageWorkerResult)
         {
             DamageWorker.DamageResult damageResult = new DamageWorker.DamageResult();
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return damageResult;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        damageResult = enchantData.EnchantInstance.Notify_ApplyMeleeDamageToTarget(target, Attacker, DamageWorkerResult);
-                    }
+                    damageResult = enchantData.EnchantInstance.Notify_ApplyMeleeDamageToTarget(target, Attacker, DamageWorkerResult);
                 }
             }
             return damageResult;
@@ -228,72 +235,77 @@ namespace MagicAndMyths
 
         public void Notify_OwnerThoughtGained(Thought Thought, Pawn otherPawn)
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.Notify_OwnerThoughtGained(Thought, otherPawn);
-                    }
+                    enchantData.EnchantInstance.Notify_OwnerThoughtGained(Thought, otherPawn);
                 }
             }
         }
 
         public void Notify_OwnerThoughtLost(Thought Thought)
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.Notify_OwnerThoughtLost(Thought);
-                    }
+                    enchantData.EnchantInstance.Notify_OwnerThoughtLost(Thought);
                 }
             }
         }
 
         public void Notify_OwnerHediffGained(Hediff Hediff, BodyPartRecord partRecord, DamageInfo? dinfo, DamageWorker.DamageResult damageResult)
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.Notify_OwnerHediffGained(Hediff, partRecord, dinfo, damageResult);
-                    }
+                    enchantData.EnchantInstance.Notify_OwnerHediffGained(Hediff, partRecord, dinfo, damageResult);
                 }
             }
         }
 
         public void Notify_OwnerHediffRemoved(Hediff Hediff)
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                return;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
-                    {
-                        enchantData.EnchantInstance.Notify_OwnerHediffRemoved(Hediff);
-                    }
+                    enchantData.EnchantInstance.Notify_OwnerHediffRemoved(Hediff);
                 }
             }
         }
 
         public IEnumerable<Gizmo> GetGizmos()
         {
-            if (activeEnchants != null)
+            if (activeEnchants == null)
+                yield break;
+
+            foreach (var enchantData in activeEnchants)
             {
-                foreach (var enchantData in activeEnchants)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    if (enchantData.IsActive)
+                    foreach (var gizmo in enchantData.EnchantInstance.CompGetGizmosExtra())
                     {
-                        foreach (var gizmo in enchantData.EnchantInstance.CompGetGizmosExtra())
-                        {
-                            yield return gizmo;
-                        }
+                        yield return gizmo;
                     }
                 }
             }
@@ -307,13 +319,15 @@ namespace MagicAndMyths
 
             foreach (var enchantData in activeEnchants)
             {
-               
-                if (enchantData.IsActive)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    foreach (var effect in enchantData.EnchantInstance.GetEffectsOfType<EnchantEffect_PawnStatOffset>())
+                    foreach (var effect in enchantData.EnchantInstance.GetEffectsOfType<EnchantEffect_PawnStat>().Where(
+                        x => x != null && x.StatDef != null &&
+                        x.StatDef.modifierType == StatModifierType.Offset))
                     {
-                        var def = (EnchantEffectDef_PawnStatOffset)effect.def;
-                        if (def.statToAffect == stat)
+                        var def = (EnchantEffectDef_PawnStat)effect.def;
+                        if (def != null && def.statToAffect == stat)
                         {
                             yield return new StatModifier
                             {
@@ -326,50 +340,6 @@ namespace MagicAndMyths
             }
         }
 
-        public bool HasStatOffsetFor(StatDef stat)
-        {
-            if (activeEnchants == null)
-                return false;
-
-            foreach (var enchantData in activeEnchants)
-            {
-                if (enchantData.IsActive)
-                {
-                    foreach (var effect in enchantData.EnchantInstance.GetEffectsOfType<EnchantEffect_PawnStatOffset>())
-                    {
-                        var def = (EnchantEffectDef_PawnStatOffset)effect.def;
-                        if (def.statToAffect == stat)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
-        public bool HasStatFactorFor(StatDef stat)
-        {
-            if (activeEnchants == null)
-                return false;
-
-            foreach (var enchantData in activeEnchants)
-            {
-                if (enchantData.IsActive)
-                {
-                    foreach (var effect in enchantData.EnchantInstance.GetEffectsOfType<EnchantEffect_PawnStatFactor>())
-                    {
-                        var def = (EnchantEffectDef_PawnStatFactor)effect.def;
-                        if (def.statToAffect == stat)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
         public IEnumerable<StatModifier> GetStatFactors(StatDef stat)
         {
             if (activeEnchants == null)
@@ -377,12 +347,15 @@ namespace MagicAndMyths
 
             foreach (var enchantData in activeEnchants)
             {
-                if (enchantData.IsActive)
+                if (enchantData != null && enchantData.IsActive &&
+                    enchantData.EnchantInstance != null)
                 {
-                    foreach (var effect in enchantData.EnchantInstance.GetEffectsOfType<EnchantEffect_PawnStatFactor>())
+                    foreach (var effect in enchantData.EnchantInstance.GetEffectsOfType<EnchantEffect_PawnStat>().Where(
+                        x => x != null && x.StatDef != null &&
+                        x.StatDef.modifierType == StatModifierType.Factor))
                     {
-                        var def = (EnchantEffectDef_PawnStatFactor)effect.def;
-                        if (def.statToAffect == stat)
+                        var def = (EnchantEffectDef_PawnStat)effect.def;
+                        if (def != null && def.statToAffect == stat)
                         {
                             yield return new StatModifier
                             {
@@ -403,15 +376,16 @@ namespace MagicAndMyths
             {
                 foreach (var enchantData in activeEnchants)
                 {
-                    if (enchantData.IsActive)
+                    if (enchantData != null && enchantData.IsActive &&
+                        enchantData.EnchantInstance != null)
                     {
                         foreach (var effect in enchantData.EnchantInstance.ActiveEffects)
                         {
-                            if (effect.def is EnchantEffectDef_PawnStat pawnStatDef)
+                            if (effect != null && effect.def is EnchantEffectDef_PawnStat pawnStatDef)
                             {
-                                if (pawnStatDef.statToAffect == stat)
+                                if (pawnStatDef != null && pawnStatDef.statToAffect == stat)
                                 {
-                                    result.AppendLine($"   {enchantData.EnchantInstance.def.GetColouredLabel()}: ");
+                                    result.AppendLine($"   {enchantData.EnchantInstance.def?.GetColouredLabel() ?? "Unknown"}: ");
                                     result.AppendLine($"     {effect.GetExplanationString()}");
                                 }
                             }
@@ -433,20 +407,20 @@ namespace MagicAndMyths
 
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("Active enchantments:");
-
-                // First list active enchants
-                foreach (var enchantData in activeEnchants.Where(x => x.IsActive))
+                foreach (var enchantData in activeEnchants.Where(x => x != null && x.IsActive &&
+                                                                      x.EnchantInstance != null))
                 {
-                    sb.AppendLine($"[{enchantData.EnchantSource.LabelShortCap}]  [{enchantData.EnchantInstance.def.GetColouredLabel()}]");
+                    sb.AppendLine($"[{enchantData.EnchantSource?.LabelShortCap ?? "Unknown"}]  [{enchantData.EnchantInstance.def?.GetColouredLabel() ?? "Unknown"}]");
                 }
 
                 // Then list inactive ones
-                if (activeEnchants.Any(x => !x.IsActive))
+                if (activeEnchants.Any(x => x != null && !x.IsActive))
                 {
                     sb.AppendLine("Inactive enchantments:");
-                    foreach (var enchantData in activeEnchants.Where(x => !x.IsActive))
+                    foreach (var enchantData in activeEnchants.Where(x => x != null && !x.IsActive &&
+                                                                          x.EnchantInstance != null))
                     {
-                        sb.AppendLine($"[INACTIVE] - [{enchantData.EnchantSource.LabelShortCap}] [{enchantData.EnchantInstance.def.GetColouredLabel()}]");
+                        sb.AppendLine($"[INACTIVE] - [{enchantData.EnchantSource?.LabelShortCap ?? "Unknown"}] [{enchantData.EnchantInstance.def?.GetColouredLabel() ?? "Unknown"}]");
                     }
                 }
 
@@ -456,17 +430,10 @@ namespace MagicAndMyths
             return String.Empty;
         }
 
-        public override void PostExposeData()
-        {
-            Scribe_Collections.Look(ref activeEnchants, "activeEnchants", LookMode.Deep);
-
-            if (Scribe.mode == LoadSaveMode.PostLoadInit)
-            {
-                if (activeEnchants == null)
-                {
-                    activeEnchants = new List<ActiveEnchantData>();
-                }
-            }
-        }
+        //doesnt actually save them, they are reapplied on a reload by the providers
+        //public override void PostExposeData()
+        //{
+        //  //  Scribe_Collections.Look(ref activeEnchants, "activeEnchants", LookMode.Deep);
+        //}
     }
 }

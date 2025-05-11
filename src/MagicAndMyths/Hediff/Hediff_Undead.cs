@@ -7,22 +7,22 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class Hediff_Undead : Hediff_SquadMember, ISquadMember, IRotDrawOverrider
+    public class Hediff_Undead : HediffWithComps, IRotDrawOverrider
     {
         UndeadHediffDef Def => (UndeadHediffDef)def;
 
-        public Pawn Master => referencedPawn;
+        public Pawn Master => this.pawn;
         public override string Label => base.Label;
         public override string Description => base.Description + $"\nSquad Leader: {SquadLeader.SquadLeaderPawn.Name}";
 
-        public override ISquadLeader SquadLeader
+        public Comp_PawnSquadLeader SquadLeader
         {
             get
             {
 
-                if (Master != null)
+                if (Master != null && Master.TryGetComp(out Comp_PawnSquadLeader pawnSquadLeader))
                 {
-                    return Master.GetUndeadMaster();
+                    return pawnSquadLeader;
                 }
 
                 return null;
@@ -109,8 +109,8 @@ namespace MagicAndMyths
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_References.Look(ref referencedPawn, "referencedPawn");
-            Scribe_Values.Look(ref squadMemberState, "squadMemberState");
+            //Scribe_References.Look(ref referencedPawn, "referencedPawn");
+            //Scribe_Values.Look(ref squadMemberState, "squadMemberState");
         }
     }
 }

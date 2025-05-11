@@ -11,8 +11,8 @@ namespace MagicAndMyths
         private List<EnchantWorker> activeEffects = new List<EnchantWorker>();
 
         public List<EnchantWorker> ActiveEffects => activeEffects.ToList();
-        protected ThingWithComps ParentThing;
-        protected Comp_EnchantProvider ParentMateriaComp;
+        public ThingWithComps ParentThing;
+        public Comp_EnchantProvider ParentMateriaComp;
 
         public EnchantInstance()
         {
@@ -27,6 +27,20 @@ namespace MagicAndMyths
             InitializeEffects();
         }
 
+        public void ReInitializeEffects(ThingWithComps source)
+        {
+            ParentMateriaComp = source?.TryGetComp<Comp_EnchantProvider>();
+            ParentThing = source;
+
+            if (activeEffects == null)
+            {
+                activeEffects = new List<EnchantWorker>();
+            }
+
+            activeEffects.Clear();
+
+            InitializeEffects();
+        }
 
         private void InitializeEffects()
         {
@@ -36,7 +50,6 @@ namespace MagicAndMyths
                 {
                     var worker = effectDef.CreateWorker(ParentThing, this, ParentMateriaComp);
                     activeEffects.Add(worker);
-                    worker.Notify_MateriaEquipped();
                 }
             }
         }
@@ -239,14 +252,6 @@ namespace MagicAndMyths
         {
             Scribe_Defs.Look(ref def, "def");
             Scribe_Collections.Look(ref activeEffects, "activeEffects", LookMode.Deep);
-
-            if (Scribe.mode == LoadSaveMode.PostLoadInit)
-            {
-                if (activeEffects == null)
-                {
-                    InitializeEffects();
-                }
-            }
         }
     }
 

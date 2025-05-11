@@ -38,7 +38,7 @@ namespace MagicAndMyths
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Collections.Look(ref activeTotems, "activeTotems", LookMode.Reference);
+            //Scribe_Collections.Look(ref activeTotems, "activeTotems", LookMode.Reference);
         }
     }
 

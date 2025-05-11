@@ -27,7 +27,6 @@ namespace MagicAndMyths
                 prefix: new HarmonyMethod(typeof(Patch_EquipmentUtility_CanEquip), nameof(Patch_EquipmentUtility_CanEquip.Prefix))
             );
 
-            // Add EnchantProvider to all weapons and apparel
             foreach (var def in DefDatabase<ThingDef>.AllDefs.Where(d => d.IsWeapon || d.IsRangedWeapon || d.IsApparel))
             {
                 if (def.comps == null)
@@ -39,7 +38,7 @@ namespace MagicAndMyths
                 def.comps.Add(new CompProperties_EnchantProvider());
             }
 
-            // Add PawnEnchant to all humanlike pawns
+
             foreach (var def in DefDatabase<ThingDef>.AllDefs.Where(d => d.race?.Humanlike == true))
             {
                 if (def.comps == null)

@@ -43,7 +43,7 @@ namespace MagicAndMyths
 
             if (hediffRef != null && EquippingPawn.health.hediffSet.HasHediff(hediffRef.def))
             {
-                EquippingPawn.health.hediffSet.GetFirstHediffOfDef(Def.hediff);
+                EquippingPawn.health.RemoveHediff(hediffRef);
                 hediffRef = null;
             }
             base.Notify_Unequipped(pawn);
