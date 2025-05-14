@@ -53,7 +53,9 @@
     </recipeMaker>
     <comps>
       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
-        <abilityDef>MagicAndMyths_Invisibility</abilityDef>
+        <abilityDefs>
+          <li>MagicAndMyths_Invisibility</li>
+        </abilityDefs>
       </li>
     </comps>
   </ThingDef>

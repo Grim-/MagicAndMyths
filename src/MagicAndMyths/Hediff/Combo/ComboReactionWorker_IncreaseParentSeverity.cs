@@ -12,7 +12,7 @@ namespace MagicAndMyths
             {
                 if (Def.reactionProperties.isAOE)
                 {
-                    AOEUtil.ApplyHediffSeverityInRadius(hediffProperties.hediff,
+                    TargetUtil.ApplyHediffSeverityInRadius(hediffProperties.hediff,
                         Pawn.Position,
                         Pawn.Map,
                         Def.reactionProperties.radius,

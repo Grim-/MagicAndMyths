@@ -49,4 +49,6 @@ namespace MagicAndMyths
             return TargetInfo.HasThing && TargetInfo.Thing.def.IsApparel || TargetInfo.Thing.def.IsWeapon || TargetInfo.Thing.def.HasComp<CompEquippable>();
         }
     }
+
+
 }

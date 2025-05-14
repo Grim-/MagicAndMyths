@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_PierceTrail</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>6</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_PierceTrail</moteDef>
+        <spawnLocType>BetweenPositions</spawnLocType>
+        <speed>0</speed>
+        <angle>0</angle>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_PierceTrail</defName>
+      <thingClass>MoteDualAttached</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_Mote</graphicClass>
+        <shaderType>Mote</shaderType>
+        <texPath>VFX/GroundCraterVertical</texPath>
+        <color>(1,1,1)</color>
+      </graphicData>
+      <altitudeLayer>Filth</altitudeLayer>
+      <mote>
+        <fadeInTime>0</fadeInTime>
+        <solidTime>2</solidTime>
+        <fadeOutTime>0.1</fadeOutTime>
+        <growthRate>0</growthRate>
+        <rotateTowardsTarget>True</rotateTowardsTarget>
+        <scaleToConnectTargets>True</scaleToConnectTargets>
+        <linearScale>(2, 1, 1)</linearScale>
+      </mote>
+    </ThingDef>
+</Defs>

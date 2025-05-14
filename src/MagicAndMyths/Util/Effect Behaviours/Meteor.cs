@@ -8,8 +8,8 @@ namespace MagicAndMyths
     public class Meteor : Thing
     {
         // Textures
-        private static readonly Texture2D meteorTexture = ContentFinder<Texture2D>.Get("Meteor");
-        private static readonly Texture2D shadowTexture = ContentFinder<Texture2D>.Get("MeteorShadow");
+        private static readonly Texture2D meteorTexture = ContentFinder<Texture2D>.Get("Misc/Meteor");
+        private static readonly Texture2D shadowTexture = ContentFinder<Texture2D>.Get("Misc/MeteorShadow");
 
         // Animation properties
         private Vector3 startPosition;
@@ -29,8 +29,8 @@ namespace MagicAndMyths
 
 
 
-        private Vector2 startSize = new Vector2(15, 15);
-        private Vector2 finalSize = new Vector2(50f, 50f);
+        private Vector2 startSize = new Vector2(5, 5);
+        private Vector2 finalSize = new Vector2(0.5f, 0.5f);
 
         public override Vector2 DrawSize
         {
@@ -41,28 +41,27 @@ namespace MagicAndMyths
             }
         }
 
-
-        private float initialShadowSize = 0.8f;
-        private float finalShadowSize = 300f;
         private float ShadowSize
         {
             get
             {
                 float progress = Mathf.Clamp01((float)currentTick / totalDurationTicks);
-                return Mathf.Lerp(initialShadowSize, finalShadowSize, Mathf.Pow(progress, 0.5f));
+                return DrawSize.x * 1.4f;
             }
         }
 
-        private float shadowOpacityMin = 0.1f;
-        private float shadowOpacityMax = 0.8f;
-        private float ShadowOpacity
-        {
-            get
-            {
-                float progress = Mathf.Clamp01((float)currentTick / totalDurationTicks);
-                return Mathf.InverseLerp(shadowOpacityMin, shadowOpacityMax, Mathf.Pow(progress, 0.7f));
-            }
-        }
+        //private float shadowOpacityMin = 0.1f;
+        //private float shadowOpacityMax = 0.4f;
+        //private float ShadowOpacity
+        //{
+        //    get
+        //    {
+        //        float progress = Mathf.Clamp01((float)currentTick / totalDurationTicks);
+        //        return Mathf.InverseLerp(shadowOpacityMin, shadowOpacityMax, progress);
+        //    }
+        //}
+
+
         public void Launch(IntVec3 target, int ticksToImpact = 1000)
         {
             targetPosition = target.ToVector3Shifted();
@@ -71,6 +70,28 @@ namespace MagicAndMyths
             currentTick = 0;
             this.totalDurationTicks = ticksToImpact;
             Launched = true;
+        }
+
+
+        public void SetSize(Vector2 startSize, Vector2 endSize)
+        {
+            this.startSize = startSize;
+            this.finalSize = endSize;
+        }
+
+        public void SetRadius(int radius)
+        {
+            this.explosionRadius = radius;
+        }
+
+        public void SetDamageDef(DamageDef damageDef)
+        {
+            this.damageDef = damageDef;
+        }
+
+        public void SetDamage(int damage)
+        {
+            this.damageAmount = damage;
         }
 
         public override void Tick()
@@ -117,7 +138,7 @@ namespace MagicAndMyths
                     shadowPos,
                     Quaternion.identity,
                     new Vector3(shadowSize, 1f, shadowSize)),
-                FadedMaterialPool.FadedVersionOf(MaterialPool.MatFrom(shadowTexture, ShaderTypeDefOf.Transparent.Shader, Color.black), 1f),
+                FadedMaterialPool.FadedVersionOf(MaterialPool.MatFrom(shadowTexture, ShaderTypeDefOf.Transparent.Shader, new Color(0, 0, 0, 0.4f)), 1f),
                 0);
 
             float progress = Mathf.Clamp01((float)currentTick / totalDurationTicks);
@@ -133,6 +154,31 @@ namespace MagicAndMyths
                     FadedMaterialPool.FadedVersionOf(MaterialPool.MatFrom(meteorTexture), 1f),
                     0);
             }
+        }
+
+
+        public static Meteor Launch(IntVec3 position, Map map, Vector2 startSize, Vector2 endSize, int radius = 5, int ticksToImpact = 1000, DamageDef customDamageDef = null, int customDamage = -1)
+        {
+            Meteor meteor = (Meteor)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_Meteor);
+            meteor.SetSize(startSize, endSize);
+
+
+            if (customDamageDef != null)
+            {
+                meteor.SetDamageDef(customDamageDef);
+            }
+
+            meteor.SetRadius(radius);
+
+            if (customDamage > 0)
+            {
+                meteor.SetDamage(customDamage);
+            }
+
+
+            GenSpawn.Spawn(meteor, position, map);
+            meteor.Launch(position, ticksToImpact);
+            return meteor;
         }
 
         public override void ExposeData()

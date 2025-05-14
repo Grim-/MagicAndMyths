@@ -58,6 +58,10 @@ namespace MagicAndMyths
         public static ThingDef DungeonWall;
         public static ThingDef EmptyDungeonWall;
         public static ThingDef MagicAndMyths_ReturnPortal;
+        public static ThingDef MagicAndMyths_Meteor;
+        public static ThingDef MagicAndMyths_PetrifiedStatue;
+        public static ThingDef MagicAndMyths_StagedVisualEffect;
+
 
         public static RoomTypeDef StartRoom;
         public static RoomTypeDef EndRoom;

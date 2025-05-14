@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_WhirlWind</defName>
+    <label>whirlwind</label>
+    <description>Spin around dealing weapon damage to all targets in range.</description>
+    <iconPath>Projectiles/Projectile_Fireball</iconPath>
+    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>15</range>
+      <warmupTime>0.1</warmupTime>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>true</canTargetItems>
+      </targetParams>
+    </verbProperties>
+    <comps>
+    </comps>
+  </AbilityDef>
+
+</Defs>

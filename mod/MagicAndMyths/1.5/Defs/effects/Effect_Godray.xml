@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_GodrayEffect</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>1</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_MoteGodray</moteDef>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_MoteGodray</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_Mote</graphicClass>
+        <shaderType>MoteGlow</shaderType>
+        <texPath>VFX/godray</texPath>
+      </graphicData>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
+      <mote>
+        <fadeInTime>0.1</fadeInTime>
+        <solidTime>15</solidTime>
+        <fadeOutTime>0.4</fadeOutTime>
+        <growthRate>0.3</growthRate>
+      </mote>
+    </ThingDef>
+</Defs>

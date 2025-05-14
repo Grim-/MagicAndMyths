@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_MoteOilPatch</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_Mote</graphicClass>
+        <shaderType>MoteGlow</shaderType>
+        <texPath>energyball/energyball_7</texPath>
+      </graphicData>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
+      <mote>
+        <fadeInTime>0.1</fadeInTime>
+        <solidTime>999</solidTime>
+        <fadeOutTime>0.4</fadeOutTime>
+        <growthRate>0</growthRate>
+      </mote>
+    </ThingDef>
+
+</Defs>

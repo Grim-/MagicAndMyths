@@ -29,7 +29,7 @@ namespace MagicAndMyths
         {
             if (Props.isAOE)
             {
-                AOEUtil.ApplyDamageInRadius(Props.damageDef,
+                TargetUtil.ApplyDamageInRadius(Props.damageDef,
                     Props.damageRange.RandomInRange,
                     Props.armourpenRange.RandomInRange,
                     Pawn.Position,

@@ -12,7 +12,7 @@ namespace MagicAndMyths
             {
                 if (Def.reactionProperties.isAOE)
                 {
-                    AOEUtil.ApplyDamageInRadius(Def.reactionProperties.damageDef, 
+                    TargetUtil.ApplyDamageInRadius(Def.reactionProperties.damageDef, 
                         Def.reactionProperties.damageRange.RandomInRange, 
                         Def.reactionProperties.armourpenRange.RandomInRange,
                         Pawn.Position, 

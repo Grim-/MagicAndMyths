@@ -54,7 +54,9 @@
     </tools>
     <comps>
       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
-        <abilityDef>MagicAndMyths_Pyroball</abilityDef>
+        <abilityDefs>
+          <li>MagicAndMyths_Pyroball</li>
+        </abilityDefs>
       </li>
     </comps>
   </ThingDef>

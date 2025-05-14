@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_ChargeAttack</defName>
+    <label>Charge attack</label>
+    <description>Surge forward a short distance using the point of your blade, any targets between you and the destination take weapon damage with a chance to apply laceration.</description>
+    <iconPath>Projectiles/Projectile_Fireball</iconPath>
+    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>15</range>
+      <warmupTime>0.1</warmupTime>
+      <targetParams>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>false</canTargetItems>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ChargeAttack">
+        <attackEffectDef>MagicAndMyths_PierceTrail</attackEffectDef>
+        <hediffToApply>MagicAndMyths_Laceration</hediffToApply>
+        <chanceToApply>0.2~0.5</chanceToApply>
+        <length>15</length>
+        <width>2</width>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

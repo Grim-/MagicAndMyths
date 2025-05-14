@@ -47,7 +47,7 @@ namespace MagicAndMyths
         protected virtual List<Pawn> GetPawnsInRange() 
         {
             return GenRadial.RadialDistinctThingsAround(this.parent.Position, this.parent.Map, Parent.EffectRadius, true)
-                .Where(x => x is Pawn pawn && AOEUtil.ShouldTarget(pawn.Faction, Parent.owner.Faction, Props.canTargetHostile, Props.canTargetFriendly, Props.canTargetNeutral))
+                .Where(x => x is Pawn pawn && TargetUtil.ShouldTarget(pawn.Faction, Parent.owner.Faction, Props.canTargetHostile, Props.canTargetFriendly, Props.canTargetNeutral))
                 .Cast<Pawn>()
                 .ToList();
         }

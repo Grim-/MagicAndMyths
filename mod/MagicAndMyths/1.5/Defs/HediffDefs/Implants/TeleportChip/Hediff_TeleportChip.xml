@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- the chip -->
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>Implant_TeleportationChip</defName>
+    <label>teleportation chip</label>
+    <labelNoun>a teleportation chip</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <description>An advanced implant that grants the user short-range teleportation abilities. The chip interfaces directly with the nervous system through the arm to enable instantaneous spatial displacement.</description>
+    <addedPartProps>
+      <solid>true</solid>
+      <partEfficiency>1.0</partEfficiency>
+    </addedPartProps>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_Teleporter">
+        <aoeRadius>4</aoeRadius>
+        <teleportCost>50</teleportCost>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

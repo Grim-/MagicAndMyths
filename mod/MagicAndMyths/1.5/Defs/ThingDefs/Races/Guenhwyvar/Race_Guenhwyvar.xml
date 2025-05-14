@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BigCatThingBase">
+    <defName>Guenhwyvar</defName>
+    <label>Guenhwyvar</label>
+    <description>An agile and powerful big cat native to the astral plane. As solitary ambush predators, panthers are masters of taking down both large and small prey</description>
+    <statBases>
+      <ComfyTemperatureMin>-8</ComfyTemperatureMin>
+      <ComfyTemperatureMax>50</ComfyTemperatureMax>
+      <FilthRate>0</FilthRate>
+    </statBases>
+    <race>
+      <overrideShouldHaveAbilityTracker>true</overrideShouldHaveAbilityTracker>
+    </race>
+  </ThingDef>
+</Defs>

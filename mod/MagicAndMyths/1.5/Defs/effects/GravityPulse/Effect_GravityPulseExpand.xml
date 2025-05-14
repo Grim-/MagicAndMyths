@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_EffectGravityExpand</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>0.12</scale>
+        <ticksBetweenMotes>50</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <maxMoteCount>6</maxMoteCount>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_MoteGravityShockWaveExpand</moteDef>
+        <rotateTowardsMoveDirection>false</rotateTowardsMoveDirection>
+      </li>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>0.12</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_MoteGravityAuraExpand</moteDef>
+        <rotationRate>600</rotationRate>
+        <rotateTowardsMoveDirection>false</rotateTowardsMoveDirection>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_MoteGravityShockWaveExpand</defName>
+    <thingClass>MoteAttached</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <texPath>VFX/StarburstImpact</texPath>
+      <color>(0.831, 0, 0.816, 0.5)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.4</fadeInTime>
+      <solidTime>1</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>12</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_MoteGravityAuraExpand</defName>
+    <thingClass>MoteThrown</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <texPath>MagicCircles/Circle10</texPath>
+      <color>(0.831, 0, 0.816, 0.5)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.4</fadeInTime>
+      <solidTime>1</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>12</growthRate>
+    </mote>
+  </ThingDef>
+</Defs>

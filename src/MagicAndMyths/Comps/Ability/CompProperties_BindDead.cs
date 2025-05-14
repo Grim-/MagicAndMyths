@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
+
+
+
 
 
     public class CompProperties_BindDead : CompProperties_AbilityEffect

@@ -7,6 +7,7 @@
       <race>
         <wildness>0.80</wildness>
         <meatLabel>bear meat</meatLabel>
+        <overrideShouldHaveAbilityTracker>true</overrideShouldHaveAbilityTracker>
       </race>
     </ThingDef>
 </Defs>

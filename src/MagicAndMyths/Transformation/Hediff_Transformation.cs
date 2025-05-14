@@ -13,8 +13,6 @@ namespace MagicAndMyths
 
         public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
         {
-            base.Notify_PawnDied(dinfo, culprit);
-
             var transformationComp = Current.Game.GetComponent<GameComp_Transformation>();
             if (transformationComp != null)
             {
@@ -24,6 +22,7 @@ namespace MagicAndMyths
                 }
 
             }
+            base.Notify_PawnDied(dinfo, culprit);
         }
 
 

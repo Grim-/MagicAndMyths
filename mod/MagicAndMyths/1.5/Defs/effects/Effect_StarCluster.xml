@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_StarCluster</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>6</scale>
+        <burstCount>5~10</burstCount>
+        <ticksBetweenMotes>150</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>2</positionRadius>
+        <moteDef>MagicAndMyths_StarCluster</moteDef>
+        <spawnLocType>OnTarget</spawnLocType>
+        <speed>0</speed>
+        <angle>0</angle>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+        <maxMoteCount>7</maxMoteCount>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_StarCluster</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_Mote</graphicClass>
+        <shaderType>MoteGlow</shaderType>
+        <texPath>VFX/StarCluster</texPath>
+        <color>(1,1,1)</color>
+      </graphicData>
+      <altitudeLayer>Filth</altitudeLayer>
+      <mote>
+        <fadeInTime>0.5</fadeInTime>
+        <solidTime>2</solidTime>
+        <fadeOutTime>0.1</fadeOutTime>
+        <growthRate>0</growthRate>
+      </mote>
+    </ThingDef>
+</Defs>

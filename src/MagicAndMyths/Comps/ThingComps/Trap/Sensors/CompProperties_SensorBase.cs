@@ -61,7 +61,13 @@ namespace MagicAndMyths
                 return;
             }
 
-            this.parent.GetComp<Comp_TrapBase>()?.OnTrapSensorTriggered(pawn);
+            foreach (var item in this.parent.AllComps)
+            {
+                if (item is Comp_TriggerBase triggerBase)
+                {
+                    triggerBase.Trigger(pawn);
+                }
+            }
         }
 
 

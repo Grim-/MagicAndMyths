@@ -51,5 +51,8 @@
         </dessicatedBodyGraphicData>
       </li>
     </lifeStages>
+    <abilities>
+      <li>ConsumeLeap_Devourer</li>
+    </abilities>
   </PawnKindDef>
 </Defs>

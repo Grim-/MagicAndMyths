@@ -99,7 +99,10 @@ namespace MagicAndMyths
             return !IsOnCooldown;
         }
 
-        protected abstract void ApplyTo(Pawn pawn);
+        protected virtual void ApplyTo(Pawn pawn)
+        {
+
+        }
 
         protected bool CanApplyToPawn(Pawn pawn)
         {

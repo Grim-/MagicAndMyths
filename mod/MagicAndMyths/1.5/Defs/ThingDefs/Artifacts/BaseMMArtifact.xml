@@ -6,7 +6,7 @@
     <orderedTakeGroup>Artifact</orderedTakeGroup>
     <tradeNeverStack>true</tradeNeverStack>
     <useHitPoints>true</useHitPoints>
-    <drawGUIOverlay>false</drawGUIOverlay>
+    <drawGUIOverlay>true</drawGUIOverlay>
     <relicChance>0</relicChance>
   </ThingDef>
 

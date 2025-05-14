@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_HarmoniousSynergy</defName>
+    <label>Enchantment of Harmonious Synergy</label>
+    <description>While under this enchantment, the wielder will be filled with contentment.</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_ModifyNeedInterval">
+        <needDef>Mood</needDef>
+        <intervalTicks>2400</intervalTicks>
+        <amount>0.1</amount>
+      </li>
+    </effects>
+    <textColor>(1, 1, 1)</textColor>
+  </MagicAndMyths.EnchantDef>
+</Defs>

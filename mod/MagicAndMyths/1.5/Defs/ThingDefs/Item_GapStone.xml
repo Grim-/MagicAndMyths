@@ -40,7 +40,9 @@
     </apparel>
     <comps>
       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
-        <abilityDef>MagicAndMyths_ReturnHome</abilityDef>
+        <abilityDefs>
+            <li>MagicAndMyths_ReturnHome</li>
+        </abilityDefs>
       </li>
     </comps>
   </ThingDef>

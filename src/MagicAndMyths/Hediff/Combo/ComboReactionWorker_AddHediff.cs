@@ -19,7 +19,7 @@ namespace MagicAndMyths
 
                 if (hediffProperties.isAOE)
                 {
-                    AOEUtil.ApplyHediffInRadius(hediffProperties.hediff,
+                    TargetUtil.ApplyHediffInRadius(hediffProperties.hediff,
                         Pawn.Position,
                         Pawn.Map,
                         hediffProperties.radius,

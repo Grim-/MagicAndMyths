@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_LeapSlam</defName>
+    <label>leap slam</label>
+    <description>Leap to the target location slamming your weapon down dealing weapon damage in a radius around your landing location.</description>
+    <iconPath>Projectiles/Projectile_Fireball</iconPath>
+    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>15</range>
+      <warmupTime>0.1</warmupTime>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>true</canTargetItems>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_LeapAttack">
+        <slamEffecterDef>MagicAndMyths_GroundCrater</slamEffecterDef>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

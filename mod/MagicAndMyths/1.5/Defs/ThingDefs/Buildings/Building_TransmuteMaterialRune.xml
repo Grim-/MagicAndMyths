@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MagicAndMyths_TransmuteMaterialRune</defName>
+    <label>transmutation circle</label>
+    <description>.</description>
+    <thingClass>Building</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>MagicCircles/MagicCircle(3)</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Standable</passability>
+    <pathCost>0</pathCost>
+    <fillPercent>0</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <WorkToBuild>2000</WorkToBuild>
+      <MaxHitPoints>150</MaxHitPoints>
+    </statBases>
+    <size>(1,1)</size>
+    <costList>
+      <Steel>1</Steel>
+    </costList>
+    <designationCategory>Misc</designationCategory>
+    <placeWorkers>
+      <li>PlaceWorker_NotUnderRoof</li>
+    </placeWorkers>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <deconstructible>false</deconstructible>
+      <claimable>false</claimable>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ProximitySensor">
+        <sensorRadius>1</sensorRadius>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_TriggerEffectApplyHediff">
+        <hediff>Anesthetic</hediff>
+        <triggerEffecter>Impact_Toxic</triggerEffecter>
+        <triggerEffecterScale>6</triggerEffecterScale>
+        <spawnEffecterOnTarget>true</spawnEffecterOnTarget>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

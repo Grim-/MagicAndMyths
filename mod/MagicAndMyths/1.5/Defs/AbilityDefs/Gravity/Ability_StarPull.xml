@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_StarPull</defName>
+    <label>star pull</label>
+    <description>Surge forward a short distance using the point of your blade, any targets between you and the destination take weapon damage with a chance to apply laceration.</description>
+    <iconPath>Projectiles/Projectile_Fireball</iconPath>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>15</range>
+      <warmupTime>0.1</warmupTime>
+      <targetable>false</targetable>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_StarPull">
+        <effecterDef>MagicAndMyths_EffectGravityPull</effecterDef>
+        <hediffDef>MagicAndMyths_GravityRestraint</hediffDef>
+      </li>
+    </comps>
+  </AbilityDef>
+
+</Defs>

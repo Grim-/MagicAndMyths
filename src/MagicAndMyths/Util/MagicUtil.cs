@@ -3,6 +3,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -187,7 +188,7 @@ namespace MagicAndMyths
             {
                 if (target.Cell.IsValid && target.Cell.InBounds(Find.CurrentMap))
                 {
-                    Meteor meteor = (Meteor)ThingMaker.MakeThing(DefDatabase<ThingDef>.GetNamed("MagicAndMyths_Meteor"));
+                    Meteor meteor = (Meteor)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_Meteor);
                     GenSpawn.Spawn(meteor, target.Cell, Find.CurrentMap);
 
                     meteor.Launch(target.Cell);
@@ -198,7 +199,39 @@ namespace MagicAndMyths
 
         }
 
+        [DebugAction("Magic And Myth", "Petrify Pawn", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void PetrifyPawn()
+        {
+            Find.Targeter.BeginTargeting(new TargetingParameters()
+            {
+                canTargetPawns = true,
+                canTargetAnimals = true,
+                canTargetHumans = true,
+                canTargetMechs = true,
+                mapObjectTargetsMustBeAutoAttackable = false
+            },
+            (LocalTargetInfo target) =>
+            {
+                if (target.Thing != null && target.Thing is Pawn pawn)
+                {
+                    IntVec3 position = pawn.Position;
+                    PetrifiedStatue.PetrifyPawn(
+                        MagicAndMythDefOf.MagicAndMyths_PetrifiedStatue,
+                        pawn,
+                        position,
+                        Find.CurrentMap
+                    );
+                    Messages.Message("Petrified " + pawn.LabelShort, MessageTypeDefOf.NeutralEvent);
+                }
+            });
+        }
 
+
+        [DebugAction("Magic And Myth", "Test EffecterEditor", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void OpenEffecterEditor()
+        {
+            Find.WindowStack.Add(new EffecterDefEditorWindow());
+        }
 
         public static bool HasCooldownByTick(int LastTriggerTick, int CooldownTicks)
         {
@@ -243,11 +276,25 @@ namespace MagicAndMyths
         //    return false;
         //}
 
-        public static Hediff_UndeadMaster GetUndeadMaster(this Pawn pawn)
+        public static bool HasWeaponEquipped(this Pawn pawn)
         {
-            Hediff_UndeadMaster undeadMaster = (Hediff_UndeadMaster)pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster);
-            return undeadMaster;
+            return pawn.equipment != null && pawn.equipment.Primary != null && pawn.equipment.PrimaryEq != null;
         }
+        public static DamageInfo GetWeaponDamage(this CompEquippable Equippable, Pawn attacker, float damageMultiplier = 1, float overrideArmourPen = -1)
+        {
+            DamageDef damageDef = Equippable.PrimaryVerb.GetDamageDef();
+
+            float armourPen = overrideArmourPen > 0 ? overrideArmourPen : Equippable.PrimaryVerb.verbProps.AdjustedArmorPenetration(Equippable.PrimaryVerb, attacker);
+
+            return new DamageInfo(damageDef, 
+                Equippable.PrimaryVerb.verbProps.AdjustedMeleeDamageAmount(Equippable.PrimaryVerb, attacker) * Mathf.Min(1, damageMultiplier),
+                armourPen,
+                -1,
+                attacker,
+                null, 
+                Equippable.parent.def);
+        }
+
 
         public static bool TryGetWorstInjury(Pawn pawn, out Hediff hediff, out BodyPartRecord part, Func<Hediff, bool> filter = null, params HediffDef[] exclude)
         {

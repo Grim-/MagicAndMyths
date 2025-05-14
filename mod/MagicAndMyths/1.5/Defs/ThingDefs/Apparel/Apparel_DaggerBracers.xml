@@ -36,7 +36,9 @@
     </apparel>
     <comps>
       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
-        <abilityDef>MagicAndMyths_DaggerDaggerDagger</abilityDef>
+        <abilityDefs>
+          <li>MagicAndMyths_DaggerDaggerDagger</li>
+        </abilityDefs>
       </li>
     </comps>
   </ThingDef>

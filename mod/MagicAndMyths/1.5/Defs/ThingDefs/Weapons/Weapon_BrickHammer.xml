@@ -43,12 +43,23 @@
       </li>
     </tools>
     <comps>
+      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+        <abilityDefs>
+          <li>MagicAndMyths_ChargeAttack</li>
+          <li>MagicAndMyths_KnockBack</li>
+          <li>MagicAndMyths_LeapSlam</li>
+          <li>MagicAndMyths_Pierce</li>
+          <li>MagicAndMyths_Sunder</li>
+          <li>MagicAndMyths_GroundSlam</li>
+          <li>MagicAndMyths_WhirlWind</li>
+        </abilityDefs>
+      </li>
     </comps>
     <modExtensions>
-    <li Class="MagicAndMyths.DrawOffsetExt">
-      <offset>(-0.03, 0, 0.05)</offset>
-    </li>
-  </modExtensions>
+      <li Class="MagicAndMyths.DrawOffsetExt">
+        <offset>(-0.03, 0, 0.05)</offset>
+      </li>
+    </modExtensions>
   </ThingDef>
 
 </Defs>

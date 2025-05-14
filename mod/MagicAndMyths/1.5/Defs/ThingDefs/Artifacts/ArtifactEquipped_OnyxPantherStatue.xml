@@ -38,7 +38,9 @@
      <smeltable>false</smeltable>
      <comps>
        <li Class="MagicAndMyths.CompProperties_EquippableAbility">
-         <abilityDef>MagicAndMyths_SummonGuenhwyvar</abilityDef>
+         <abilityDefs>
+           <li>MagicAndMyths_SummonGuenhwyvar</li>
+         </abilityDefs>
        </li>
      </comps>
    </ThingDef>
