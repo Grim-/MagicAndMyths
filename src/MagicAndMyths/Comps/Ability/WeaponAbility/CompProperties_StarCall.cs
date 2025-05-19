@@ -15,6 +15,7 @@ namespace MagicAndMyths
         public int impactRadius = 2;
         public DamageDef overrideDamageDef = null;
         public int overrideDamageAmount = -1;
+        public EffecterDef impactEffecterDef = null;
 
         public CompProperties_StarCall()
         {
@@ -25,9 +26,6 @@ namespace MagicAndMyths
     public class CompAbilityEffect_StarCall : CompAbilityEffect
     {
         CompProperties_StarCall Props => (CompProperties_StarCall)props;
-
-        WeaponAbility WeaponAbility => this.parent as WeaponAbility;
-
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);
@@ -40,18 +38,10 @@ namespace MagicAndMyths
                     IntVec3 targetPosition = FormationUtils.GetFormationPosition(Props.formationType, target.CenterVector3, Rot4.South, i, Props.amount);
                     if (targetPosition.InBounds(this.parent.pawn.Map))
                     {
-                        Meteor meteor = Meteor.Launch(targetPosition, map, Props.meteorMaxSize, Props.meteorMinSize, Props.impactRadius, Props.ticksToImpact.RandomInRange, Props.overrideDamageDef, Props.overrideDamageAmount);
+                        Meteor meteor = Meteor.Launch(targetPosition, map, Props.meteorMaxSize, Props.meteorMinSize, Props.impactRadius, Props.ticksToImpact.RandomInRange, Props.overrideDamageDef, Props.overrideDamageAmount, Props.impactEffecterDef);
                     }           
                 }
             }
         }
-
-
-        public override void DrawEffectPreview(LocalTargetInfo target)
-        {
-            base.DrawEffectPreview(target);
-        }
-
-
     }
 }

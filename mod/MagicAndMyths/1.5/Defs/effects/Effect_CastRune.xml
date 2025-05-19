@@ -14,8 +14,39 @@
         <speed>0</speed>
         <angle>10~80</angle>
       </li>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>6</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_RuneOutline</moteDef>
+        <spawnLocType>OnSource</spawnLocType>
+        <speed>0</speed>
+        <angle>0</angle>
+        <rotation>0</rotation>
+        <rotationRate>100</rotationRate>
+      </li>
     </children>
   </EffecterDef>
+
+<ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_RuneOutline</defName>
+    <thingClass>MoteThrown</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <texPath>MagicCircles/MagicCircleRuneOutline</texPath>
+      <color>(1,0,0)</color>
+    </graphicData>
+    <altitudeLayer>Filth</altitudeLayer>
+    <mote>
+      <fadeInTime>0.5</fadeInTime>
+      <solidTime>0.2</solidTime>
+      <fadeOutTime>1</fadeOutTime>
+      <growthRate>0.3</growthRate>
+    </mote>
+  </ThingDef>
 
   <ThingDef ParentName="MoteBase">
       <defName>MagicAndMyths_MagicCircle</defName>

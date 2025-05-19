@@ -2,8 +2,9 @@
 using SquadBehaviour;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 using Verse;
+using Verse.AI;
 
 namespace MagicAndMyths
 {
@@ -17,6 +18,10 @@ namespace MagicAndMyths
 
     public class CompAbilityEffect_Fly : CompAbilityEffect
     {
+
+        private ThingFlyer flyer;
+
+
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);
@@ -28,54 +33,52 @@ namespace MagicAndMyths
             if (map == null)
                 return;
 
+
+            if (flyer != null)
+            {
+                flyer.OnFlightTick -= Flyer_OnFlightTick;
+                flyer.Destroy();
+                flyer = null;
+            }
+
             IntVec3 spawnPosition = pawn.Position;
             IntVec3 tagetPosition = target.Cell;
 
 
             if (tagetPosition.IsValid)
             {
-                PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_SimpleFlyer, pawn, tagetPosition, null, null, false, null, this.parent, target);
-                GenSpawn.Spawn(pawnFlyer, spawnPosition, map);
+
+                ThingFlyer flyer = ThingFlyer.MakeFlyer(pawn, tagetPosition, map, null, null, this.parent.pawn, this.parent.pawn.DrawPos, false);
+                flyer.OnFlightTick += Flyer_OnFlightTick;
+                ThingFlyer.LaunchFlyer(flyer, pawn, tagetPosition, map);
             }
         }
-    }
 
-    public class CompProperties_AbilityChangeWeather : CompProperties_AbilityEffect
-    {
-        public List<WeatherDef> weatherOptions;
-        public bool forceTransition = true;
-
-        public CompProperties_AbilityChangeWeather()
+        private void Flyer_OnFlightTick(int tick, IntVec3 cell, Map map, Thing arg3)
         {
-            compClass = typeof(CompAbilityEffect_ChangeWeather);
-        }
-    }
+            List<Thing> things = cell.GetThingList(map).ToList();
 
-    public class CompAbilityEffect_ChangeWeather : CompAbilityEffect
-    {
-        CompProperties_AbilityChangeWeather Props => (CompProperties_AbilityChangeWeather)props;
-
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
-        {
-            base.Apply(target, dest);
-            if (this.parent.pawn.Map != null)
+            foreach (var t in things)
             {
-                List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (var item in Props.weatherOptions)
+                if (t is Pawn || t is Building building)
                 {
-
-                    options.Add(new FloatMenuOption($"{item.LabelCap}", () =>
+                    if (t != this.parent.pawn)
                     {
-                        this.parent.pawn.Map.weatherManager.TransitionTo(item);
+                        DamageInfo damage = t.def.mineable ? new DamageInfo(DamageDefOf.Mining, 344 * 2, 1) : new DamageInfo(DamageDefOf.Blunt, 15, 1);
+                        t.TakeDamage(damage);
+                    }
 
-                    }));
                 }
 
-                if (options.Count > 0)
-                {
-                    Find.WindowStack.Add(new FloatMenu(options));
-                }
+                EffecterDefOf.ImpactSmallDustCloud.Spawn(t.Position, map);
             }
+        }
+
+
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_References.Look(ref flyer, "flyer");
         }
     }
 

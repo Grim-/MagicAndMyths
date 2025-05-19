@@ -2,52 +2,100 @@
 <Defs>
   <EffecterDef>
     <defName>MagicAndMyths_RavenExplosion</defName>
+    <maintainTicks>500</maintainTicks>
+    <randomWeight>1</randomWeight>
     <children>
       <li>
         <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <burstCount>10~15</burstCount>
+        <ticksBetweenMotes>40</ticksBetweenMotes>
+        <maxMoteCount>1000000000</maxMoteCount>
+        <initialDelayTicks>50</initialDelayTicks>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <spawnLocType>BetweenPositions</spawnLocType>
         <positionRadius>1</positionRadius>
         <moteDef>MagicAndMyths_RavenExplosionThrow</moteDef>
-        <burstCount>10~15</burstCount>
         <speed>4.8~8.4</speed>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
         <scale>0.6~1</scale>
+        <airTime>999999</airTime>
         <rotateTowardsTargetCenter>true</rotateTowardsTargetCenter>
+        <subTriggerOnSpawn>true</subTriggerOnSpawn>
+      </li>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <burstCount>10~25</burstCount>
+        <ticksBetweenMotes>40</ticksBetweenMotes>
+        <maxMoteCount>1000000000</maxMoteCount>
+        <lifespanMaxTicks>20</lifespanMaxTicks>
+        <spawnLocType>OnTarget</spawnLocType>
+        <positionRadius>0.9</positionRadius>
+        <fleckDef>MagicAndMyths_RavenExplosion</fleckDef>
+        <speed>0.2~0.1</speed>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+        <scale>0.2~0.5</scale>
+        <airTime>999999</airTime>
+        <orbitSpeed>0.8~1.2</orbitSpeed>
+        <fleckUsesAngleForVelocity>true</fleckUsesAngleForVelocity>
+        <rotateTowardsTargetCenter>true</rotateTowardsTargetCenter>
+        <orbitOrigin>true</orbitOrigin>
+        <subTriggerOnSpawn>false</subTriggerOnSpawn>
       </li>
     </children>
   </EffecterDef>
 
+
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>MagicAndMyths_RavenExplosion</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <solidTime>1</solidTime>
+    <fadeInTime>0</fadeInTime>
+    <fadeOutTime>0.1</fadeOutTime>
+    <archHeight>0</archHeight>
+    <archDuration>0</archDuration>
+    <graphicData>
+      <graphicClass>Graphic_Fleck</graphicClass>
+      <shaderType>Mote</shaderType>
+      <texPath>VFX/Raven</texPath>
+      <color>(1,1,1)</color>
+    </graphicData>
+  </FleckDef>
+
+<ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_RavenExplosion</defName>
+    <thingClass>MoteAttached</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>Mote</shaderType>
+      <texPath>VFX/Raven</texPath>
+      <color>(1,1,1)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.5</fadeInTime>
+      <solidTime>2</solidTime>
+      <fadeOutTime>0.5</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
   <ThingDef ParentName="MoteBase">
-      <defName>MagicAndMyths_RavenExplosion</defName>
-      <thingClass>MoteAttached</thingClass>
+      <defName>MagicAndMyths_RavenExplosionThrow</defName>
+      <thingClass>MoteThrown</thingClass>
       <graphicData>
         <graphicClass>Graphic_Mote</graphicClass>
         <shaderType>Mote</shaderType>
         <texPath>VFX/Raven</texPath>
         <color>(1,1,1)</color>
       </graphicData>
-      <altitudeLayer>Filth</altitudeLayer>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
-        <fadeInTime>0.5</fadeInTime>
-        <solidTime>2</solidTime>
-        <fadeOutTime>0.5</fadeOutTime>
+        <fadeInTime>0.3</fadeInTime>
+        <solidTime>0.8</solidTime>
+        <fadeOutTime>0.1</fadeOutTime>
         <growthRate>0</growthRate>
       </mote>
     </ThingDef>
-
-    <ThingDef ParentName="MoteBase">
-        <defName>MagicAndMyths_RavenExplosionThrow</defName>
-        <thingClass>MoteThrown</thingClass>
-        <graphicData>
-          <graphicClass>Graphic_Mote</graphicClass>
-          <shaderType>Mote</shaderType>
-          <texPath>VFX/Raven</texPath>
-          <color>(1,1,1)</color>
-        </graphicData>
-        <altitudeLayer>Filth</altitudeLayer>
-        <mote>
-          <fadeInTime>0.3</fadeInTime>
-          <solidTime>0.8</solidTime>
-          <fadeOutTime>0.1</fadeOutTime>
-          <growthRate>0</growthRate>
-        </mote>
-      </ThingDef>
 </Defs>

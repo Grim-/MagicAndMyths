@@ -30,7 +30,7 @@
         <texPath>VFX/StarCluster</texPath>
         <color>(1,1,1)</color>
       </graphicData>
-      <altitudeLayer>Filth</altitudeLayer>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
         <fadeInTime>0.5</fadeInTime>
         <solidTime>2</solidTime>
@@ -38,4 +38,5 @@
         <growthRate>0</growthRate>
       </mote>
     </ThingDef>
+
 </Defs>

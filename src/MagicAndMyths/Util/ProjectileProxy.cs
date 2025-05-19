@@ -7,52 +7,81 @@ namespace MagicAndMyths
         public Pawn caster;
         public LocalTargetInfo target;
         public ThingDef projectileDef;
+        public ThingDef visualOverrideDef = null;
         public float weaponDamageMultiplier = 1f;
+        public ProjectileHitFlags hitflags = ProjectileHitFlags.IntendedTarget;
+        public int amountPerBurst = 1;
+        public int amountOfShots = 1;
         public int ticksToDestroy = -1;
-        public int ticksToFire = -1;
+        public int ticksBetweenShots = 10;
         public bool followCaster = true;
         private IntVec3 offset;
 
-        public void Init(Pawn ProjectileLaunchingPawn, ThingDef ProjectileDef, int ticksToLive = -1)
+        private int shotTimer = 0;
+        private int roundsFired = 0;
+
+
+        public bool HasFiredAllShots => roundsFired >= amountOfShots;
+
+        public void Init(Pawn ProjectileLaunchingPawn, ThingDef ProjectileDef)
         {
             caster = ProjectileLaunchingPawn;
             projectileDef = ProjectileDef;
-            ticksToDestroy = ticksToLive;
             offset = this.Position - caster.Position;
         }
 
         public override void Tick()
         {
-            if (ticksToFire > 0)
+            if (!target.IsValid)
             {
-                ticksToFire--;
-                if (ticksToFire <= 0 && target.IsValid)
-                {
-                    LaunchProjectile(target);
-                }
+                return;
             }
 
-            if (ticksToDestroy > 0)
+
+            if (!HasFiredAllShots)
             {
-                ticksToDestroy--;
-                if (ticksToDestroy <= 0)
+                shotTimer++;
+
+                if (shotTimer >= ticksBetweenShots)
                 {
-                    Destroy();
-                    return;
+                    FireRound();
+                    shotTimer = 0;
                 }
             }
+            else
+            {
+                Destroy();
+                return;
+            }
+        }
+
+
+        protected void FireRound()
+        {
+            for (int i = 0; i < amountPerBurst; i++)
+            {
+                LaunchProjectile(target);
+            }
+
+            roundsFired++;
         }
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
+            Vector3 adjustedLoc = drawLoc;
+
             if (caster != null && caster.Spawned && followCaster)
             {
-                Vector3 adjustedLoc = caster.DrawPos + offset.ToVector3();
-                base.DrawAt(adjustedLoc, flip);
+                adjustedLoc = caster.DrawPos + offset.ToVector3();
+            }
+
+            if (visualOverrideDef != null)
+            {
+                visualOverrideDef.graphic.DrawFromDef(adjustedLoc, caster != null ? caster.Rotation : Rot4.South, visualOverrideDef, 0);
             }
             else
             {
-                base.DrawAt(drawLoc, flip);
+                base.DrawAt(adjustedLoc, flip);
             }
         }
 
@@ -69,7 +98,7 @@ namespace MagicAndMyths
                     this.DrawPos,
                     target,
                     target,
-                    ProjectileHitFlags.IntendedTarget);
+                    hitflags);
             }
         }
 
@@ -81,8 +110,11 @@ namespace MagicAndMyths
             Scribe_Defs.Look(ref projectileDef, "projectileDef");
             Scribe_Values.Look(ref weaponDamageMultiplier, "weaponDamageMultiplier", 1f);
             Scribe_Values.Look(ref ticksToDestroy, "ticksToDestroy", -1);
-            Scribe_Values.Look(ref ticksToFire, "ticksToFire", -1);
+            Scribe_Values.Look(ref shotTimer, "shotTimer", 0);
             Scribe_Values.Look(ref offset, "offset");
+            Scribe_Values.Look(ref roundsFired, "shotsFired");
+            Scribe_Values.Look(ref amountPerBurst, "amountPerBust");
+            Scribe_Values.Look(ref amountOfShots, "amountOfShots");
         }
     }
 }

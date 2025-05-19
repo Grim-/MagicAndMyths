@@ -5,7 +5,7 @@
     <children>
       <li>
         <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
-        <scale>1</scale>
+        <scale>0.1</scale>
         <ticksBetweenMotes>20</ticksBetweenMotes>
         <positionLerpFactor>0</positionLerpFactor>
         <positionRadius>0</positionRadius>
@@ -16,7 +16,7 @@
 
   <ThingDef ParentName="MoteBase">
       <defName>MagicAndMyths_MoteSlashArc</defName>
-      <thingClass>MoteAttached</thingClass>
+      <thingClass>MoteThrown</thingClass>
       <graphicData>
         <graphicClass>Graphic_Mote</graphicClass>
         <shaderType>MoteGlow</shaderType>
@@ -24,10 +24,10 @@
       </graphicData>
       <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
-        <fadeInTime>0.1</fadeInTime>
-        <solidTime>1</solidTime>
+        <fadeInTime>0.6</fadeInTime>
+        <solidTime>0.2</solidTime>
         <fadeOutTime>0.4</fadeOutTime>
-        <growthRate>0.1</growthRate>
+        <growthRate>15</growthRate>
       </mote>
     </ThingDef>
 </Defs>

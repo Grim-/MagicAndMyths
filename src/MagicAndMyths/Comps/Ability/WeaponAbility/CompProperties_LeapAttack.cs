@@ -56,15 +56,21 @@ namespace MagicAndMyths
 
             cells = cells.OrderBy(x => x.DistanceTo(this.parent.pawn.Position)).ToList();
 
-            cells.ForEach(x => EffecterDefOf.ImpactSmallDustCloud.Spawn(x, arg3.Map));
-
-            foreach (var pawn in TargetUtil.GetPawnsInRadius(arg1, this.parent.pawn.Map, Props.radius, this.parent.pawn.Faction, true, this.parent.pawn, true, true, true))
+            StageVisualEffect.CreateStageEffect(cells, arg3.Map, 4, (IntVec3 cell) =>
             {
+                EffecterDefOf.ImpactSmallDustCloud.Spawn(cell, arg3.Map);
+                Pawn pawn = cell.GetFirstPawn(arg3.Map);
+
                 if (pawn != null && pawn != this.parent.pawn)
                 {
+                    if (pawn.Position.DistanceTo(arg1) < 2)
+                    {
+                        pawn?.stances.stunner.StunFor(300, this.parent.pawn);
+                    }
                     pawn.TakeDamage(this.parent.pawn.equipment.PrimaryEq.GetWeaponDamage(this.parent.pawn));
                 }
-            }
+            });
+
 
             if (pawnWasDrafted)
             {

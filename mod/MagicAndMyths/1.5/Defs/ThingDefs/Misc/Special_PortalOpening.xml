@@ -8,14 +8,14 @@
     <passability>PassThroughOnly</passability>
     <useHitPoints>false</useHitPoints>
     <graphicData>
-      <texPath>Animations/portal_single</texPath>
+      <texPath>VFX/Portal</texPath>
       <graphicClass>Graphic_Single_SquashNStretch</graphicClass>
       <drawSize>2</drawSize>
       <color>(0.004, 0.843, 1)</color>
       <shaderType>MoteGlowDistorted</shaderType>
       <shaderParameters>
         <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
-        <_distortionScale>0.1</_distortionScale>
+        <_distortionScale>0.17</_distortionScale>
         <_distortionIntensity>0.14</_distortionIntensity>
         <_brightnessMultiplier>1.1</_brightnessMultiplier>
         <_pulseSpeed>50</_pulseSpeed>

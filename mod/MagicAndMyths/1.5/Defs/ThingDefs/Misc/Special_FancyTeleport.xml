@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef>
+      <defName>MagicAndMyths_FancyTeleport</defName>
+      <label>fancy teleport thing</label>
+      <description>A large meteor falling from the sky. Will cause destruction where it lands.</description>
+      <category>Item</category>
+      <tickerType>Normal</tickerType>
+      <altitudeLayer>Skyfaller</altitudeLayer>
+      <useHitPoints>false</useHitPoints>
+      <thingClass>MagicAndMyths.FancyTeleporter</thingClass>
+      <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+
+</Defs>

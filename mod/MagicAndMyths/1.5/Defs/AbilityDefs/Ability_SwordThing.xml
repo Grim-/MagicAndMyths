@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_SwordThing</defName>
+    <label>sword barrage</label>
+    <description>Summon arcane portals around the caster that fire projectiles at the target.</description>
+    <iconPath>Projectiles/FireRain</iconPath>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <drawAimPie>true</drawAimPie>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_SpawnProjectileProxy">
+        <portalDef>MagicAndMyths_ProjectilePortal</portalDef>
+        <projectileDef>Projectile_Longsword</projectileDef>
+        <portalCount>1</portalCount>
+        <portalDistance>1</portalDistance>
+        <shotsPerBurst>1</shotsPerBurst>
+        <ticksBetweenShots>20</ticksBetweenShots>
+        <timesToShoot>8</timesToShoot>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_AbilityEffecterOnCaster">
+        <effecterDef>MagicAndMyths_CastRune</effecterDef>
+        <maintainForTicks>500</maintainForTicks>
+        <scale>1</scale>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

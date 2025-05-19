@@ -61,7 +61,7 @@ namespace MagicAndMyths
         public static ThingDef MagicAndMyths_Meteor;
         public static ThingDef MagicAndMyths_PetrifiedStatue;
         public static ThingDef MagicAndMyths_StagedVisualEffect;
-
+        public static ThingDef MagicAndMyths_FancyTeleport;
 
         public static RoomTypeDef StartRoom;
         public static RoomTypeDef EndRoom;
@@ -73,7 +73,7 @@ namespace MagicAndMyths
         public static StatDef Stat_Intelligence;
         public static StatDef Stat_Wisdom;
         public static StatDef Stat_Charisma;
-
+        public static StatDef Stat_LimbMaxHP;
 
 
         public static JobDef UseArtifact;
@@ -82,7 +82,7 @@ namespace MagicAndMyths
         public static ThingPropertyDef ThingProp_Invisible;
 
 
-        public static StatDef Stat_LimbMaxHP;
+       
 
         public static EnchantCategoryDef EnchantCategory_Universal;
         public static EnchantCategoryDef EnchantCategory_Melee;

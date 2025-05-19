@@ -23,7 +23,7 @@
         <minTilesToPush>1</minTilesToPush>
         <maxTilesToPush>5</maxTilesToPush>
         <radius>15</radius>
-        <effecterDef>MagicAndMyths_EffectGravityPull</effecterDef>
+        <effecterDef>MagicAndMyths_EffectGravityExpand</effecterDef>
       </li>
     </comps>
   </AbilityDef>

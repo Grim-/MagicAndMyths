@@ -21,21 +21,9 @@ namespace MagicAndMyths
             this.cells = new List<IntVec3>(cells);
             this.map = map;
             this.totalSections = sections;
-            this.effecterDef = effecterDef;
             this.forCellAction = ForCellAction;
             this.ticksPerSection = ticksPerSection;
             this.ticksRemaining = ticksPerSection;
-        }
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_Collections.Look(ref cells, "cells", LookMode.Value);
-            Scribe_Values.Look(ref totalSections, "totalSections");
-            Scribe_Values.Look(ref currentSection, "currentSection");
-            Scribe_Values.Look(ref ticksPerSection, "ticksPerSection");
-            Scribe_Values.Look(ref ticksRemaining, "ticksRemaining");
-            Scribe_Defs.Look(ref effecterDef, "effecterDef");
         }
 
         public override void Tick()
@@ -68,11 +56,11 @@ namespace MagicAndMyths
                 IntVec3 cell = cells[i];
                 if (cell.InBounds(Map))
                 {
-                    forCellAction?.Invoke(cell);
-               
+                    forCellAction?.Invoke(cell);         
                 }
             }
         }
+
         public static StageVisualEffect CreateStageEffect(List<IntVec3> cells, Map map, int sections, Action<IntVec3> ForCellAction, int ticksPerSection = 8)
         {
             if (cells.NullOrEmpty())
@@ -103,6 +91,17 @@ namespace MagicAndMyths
 
             GenSpawn.Spawn(effect, cells[0], map);
             return effect;
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Collections.Look(ref cells, "cells", LookMode.Value);
+            Scribe_Values.Look(ref totalSections, "totalSections");
+            Scribe_Values.Look(ref currentSection, "currentSection");
+            Scribe_Values.Look(ref ticksPerSection, "ticksPerSection");
+            Scribe_Values.Look(ref ticksRemaining, "ticksRemaining");
+            Scribe_Defs.Look(ref effecterDef, "effecterDef");
         }
     }
 }

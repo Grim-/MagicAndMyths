@@ -2,11 +2,11 @@
 
 namespace MagicAndMyths
 {
-    public class Hediff_Phylactery : Hediff
+
+
+    public class Hediff_Phylactery : HediffWithComps
     {
         private Building_Phylactery Phylactery;
-
-
 
         public void SetBuildingReference(Building_Phylactery building)
         {

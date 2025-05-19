@@ -8,10 +8,6 @@ using Verse;
 namespace MagicAndMyths
 {
 
-
-
-
-
     public class CompProperties_BindDead : CompProperties_AbilityEffect
     {
         public CompProperties_BindDead()

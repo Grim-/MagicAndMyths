@@ -2,77 +2,131 @@
 <Defs>
   <EffecterDef>
     <defName>MagicAndMyths_SunVFX</defName>
+    <maintainTicks>1000</maintainTicks>
+    <randomWeight>1</randomWeight>
     <children>
       <li>
         <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
-        <scale>2</scale>
-        <burstCount>1</burstCount>
         <ticksBetweenMotes>150</ticksBetweenMotes>
-        <positionLerpFactor>0</positionLerpFactor>
-        <positionRadius>0</positionRadius>
-        <moteDef>MagicAndMyths_SunVFXGlow</moteDef>
+        <maxMoteCount>10</maxMoteCount>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
         <spawnLocType>OnTarget</spawnLocType>
+        <moteDef>MagicAndMyths_SunVFXGlow</moteDef>
+        <color>(1,0.467,0,0.706)</color>
         <speed>0</speed>
-        <angle>0</angle>
         <rotation>0</rotation>
         <rotationRate>0</rotationRate>
-        <maxMoteCount>1</maxMoteCount>
-        <color>(238, 255, 0, 255)</color>
-        <rotateTowardsTargetCenter>false</rotateTowardsTargetCenter>
+        <scale>2</scale>
+        <airTime>999999</airTime>
+        <subTriggerOnSpawn>true</subTriggerOnSpawn>
       </li>
       <li>
         <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
-        <scale>1.7</scale>
-        <burstCount>1</burstCount>
         <ticksBetweenMotes>150</ticksBetweenMotes>
-        <positionLerpFactor>0</positionLerpFactor>
-        <positionRadius>0</positionRadius>
-        <moteDef>MagicAndMyths_SunVFXGlowAura</moteDef>
-        <spawnLocType>OnTarget</spawnLocType>
-        <speed>0</speed>
-        <angle>0</angle>
-        <rotation>0</rotation>
-        <rotationRate>390</rotationRate>
         <maxMoteCount>1</maxMoteCount>
-        <color>(238, 255, 0, 160)</color>
-        <rotateTowardsTargetCenter>false</rotateTowardsTargetCenter>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <spawnLocType>OnTarget</spawnLocType>
+        <moteDef>MagicAndMyths_SunVFXGlowAura</moteDef>
+        <color>(1,0.984,0,0.314)</color>
+        <angle>0~360</angle>
+        <speed>0</speed>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+        <scale>3</scale>
+        <airTime>999999</airTime>
+        <subTriggerOnSpawn>false</subTriggerOnSpawn>
+      </li>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <ticksBetweenMotes>150</ticksBetweenMotes>
+        <maxMoteCount>2</maxMoteCount>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <spawnLocType>OnTarget</spawnLocType>
+        <moteDef>MagicAndMyths_SunVFXShockWave</moteDef>
+        <color>(1,0.851,0,0.392)</color>
+        <angle>0~360</angle>
+        <speed>0</speed>
+        <rotation>0</rotation>
+        <rotationRate>1</rotationRate>
+        <scale>3</scale>
+        <airTime>999999</airTime>
+        <subTriggerOnSpawn>false</subTriggerOnSpawn>
       </li>
     </children>
   </EffecterDef>
 
   <ThingDef ParentName="MoteBase">
-      <defName>MagicAndMyths_SunVFXGlow</defName>
-      <thingClass>MoteAttached</thingClass>
-      <graphicData>
-        <graphicClass>Graphic_Mote</graphicClass>
-        <shaderType>MoteGlow</shaderType>
-        <texPath>VFX/Circle/CircleFireball</texPath>
-        <color>(1,1,1, 1)</color>
-      </graphicData>
-      <altitudeLayer>Filth</altitudeLayer>
-      <mote>
-        <fadeInTime>0.5</fadeInTime>
-        <solidTime>20</solidTime>
-        <fadeOutTime>0.1</fadeOutTime>
-        <growthRate>0</growthRate>
-      </mote>
-    </ThingDef>
+    <defName>MagicAndMyths_SunVFXGlow</defName>
+    <thingClass>MoteAttached</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>VFX/Circle/CircleFireball</texPath>
+      <color>(1,1,1, 1)</color>
+      <shaderType>MoteGlowDistorted</shaderType>
+      <shaderParameters>
+        <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
+        <_distortionScale>0.17</_distortionScale>
+        <_distortionIntensity>0.14</_distortionIntensity>
+        <_brightnessMultiplier>1.1</_brightnessMultiplier>
+        <_pulseSpeed>50</_pulseSpeed>
+      </shaderParameters>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.5</fadeInTime>
+      <solidTime>20</solidTime>
+      <fadeOutTime>0.1</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
 
-    <ThingDef ParentName="MoteBase">
-        <defName>MagicAndMyths_SunVFXGlowAura</defName>
-        <thingClass>MoteThrown</thingClass>
-        <graphicData>
-          <graphicClass>Graphic_Mote</graphicClass>
-          <shaderType>MoteGlow</shaderType>
-          <texPath>VFX/ArcaneRing</texPath>
-          <color>(1,1,1,1)</color>
-        </graphicData>
-        <altitudeLayer>Filth</altitudeLayer>
-        <mote>
-          <fadeInTime>0.5</fadeInTime>
-          <solidTime>20</solidTime>
-          <fadeOutTime>0.1</fadeOutTime>
-          <growthRate>0</growthRate>
-        </mote>
-      </ThingDef>
+  <ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_SunVFXShockWave</defName>
+    <thingClass>MoteThrown</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>MoteGlowDistorted</shaderType>
+      <shaderParameters>
+        <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
+        <_distortionScale>0.17</_distortionScale>
+        <_distortionIntensity>0.14</_distortionIntensity>
+        <_brightnessMultiplier>1.1</_brightnessMultiplier>
+        <_pulseSpeed>50</_pulseSpeed>
+      </shaderParameters>
+      <texPath>VFX/T_VFX_Shockwave_01</texPath>
+      <color>(1,1,1,1)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.5</fadeInTime>
+      <solidTime>20</solidTime>
+      <fadeOutTime>0.1</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_SunVFXGlowAura</defName>
+    <thingClass>MoteThrown</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>MoteGlowDistorted</shaderType>
+      <shaderParameters>
+        <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
+        <_distortionScale>0.17</_distortionScale>
+        <_distortionIntensity>0.14</_distortionIntensity>
+        <_brightnessMultiplier>1.1</_brightnessMultiplier>
+        <_pulseSpeed>50</_pulseSpeed>
+      </shaderParameters>
+      <texPath>VFX/ArcaneRing</texPath>
+      <color>(1,1,1,1)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.5</fadeInTime>
+      <solidTime>20</solidTime>
+      <fadeOutTime>0.1</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
 </Defs>

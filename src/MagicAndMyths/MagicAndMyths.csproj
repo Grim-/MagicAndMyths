@@ -103,12 +103,17 @@
     <Compile Include="Buildings\Dungeon\Building_FakeWall.cs" />
     <Compile Include="Buildings\Building_LockableDoor.cs" />
     <Compile Include="Buildings\Thing_Key.cs" />
+    <Compile Include="Comps\Ability\CompProperties_AbilityChangeWeather.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilityEffecterOnCaster.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilitySpawnTotem.cs" />
+    <Compile Include="Comps\Ability\CompProperties_AbilityTeleport.cs" />
+    <Compile Include="Comps\Ability\Singularity.cs" />
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_BaseWeaponAbility.cs" />
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_DealWeaponDamage.cs" />
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_LeapAttack.cs" />
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_StarPush.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_Petrification.cs" />
+    <Compile Include="Hediff\Hediff_Petrification.cs" />
     <Compile Include="UI\ColorWidgets.cs" />
     <Compile Include="UI\EffecterDefEditorWindow.cs" />
     <Compile Include="UI\MoteEditorWindow.cs" />
@@ -122,7 +127,7 @@
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_SweepingStrike.cs" />
     <Compile Include="Comps\ThingComps\Equippable\CompProperties_EquippableAbility.cs" />
     <Compile Include="Comps\Ability\CompProperties_FlyTargetThing.cs" />
-    <Compile Include="Comps\Ability\CompProperties_PortalBarrage.cs" />
+    <Compile Include="Comps\Ability\CompProperties_SpawnProjectileProxy.cs" />
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
     <Compile Include="Comps\Ability\CompProperties_TeleportPawnToHomeMap.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
@@ -211,7 +216,8 @@
     <Compile Include="Comps\ThingComps\Pawn\Comp_PawnActionBase.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_Regeneration.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_SeverityPerInterval.cs" />
-    <Compile Include="Projectile\PetrifiedStatue.cs" />
+    <Compile Include="Buildings\PetrifiedStatue.cs" />
+    <Compile Include="Util\Effect Behaviours\FancyTeleporter.cs" />
     <Compile Include="Util\TargetUtil.cs" />
     <Compile Include="Interfaces\IThrowableThing.cs" />
     <Compile Include="AI\JobDriver_PickupAndThrow.cs" />
@@ -487,7 +493,7 @@
     <Compile Include="Magic Tatoo\MagicTattooDef.cs" />
     <Compile Include="Recipe\Recipe_ApplyTattooo.cs" />
     <Compile Include="Util\Effect Behaviours\ChainLightningVisualEffect.cs" />
-    <Compile Include="Comps\Ability\CompProperties_BoundPawn.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_BoundPawn.cs" />
     <Compile Include="Comps\High Tek Bow\CompProperties_BowModeSwitcher.cs" />
     <Compile Include="Extensions\GeneExtension_PawnPartMaxHealth.cs" />
     <Compile Include="Gizmo\Gizmo_BowModeSelector.cs" />

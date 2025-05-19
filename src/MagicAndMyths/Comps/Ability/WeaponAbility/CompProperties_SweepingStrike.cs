@@ -29,20 +29,23 @@ namespace MagicAndMyths
             List<IntVec3> cells = TargetUtil.GetCellsInCone(this.parent.pawn.Position, target.Cell, (int)this.parent.verb.EffectiveRange, Props.angle);
             cells = cells.OrderBy(x => x.DistanceTo(this.parent.pawn.Position)).ToList();
 
-            StageVisualEffect.CreateStageEffect(cells, map, Random.Range(3, 5), EffecterDefOf.ImpactSmallDustCloud);
-            foreach (var item in TargetUtil.GetPawnsInCells(cells, map))
+            StageVisualEffect.CreateStageEffect(cells, map, Random.Range(3, 5), (IntVec3 cell) =>
             {
-                if (item == this.parent.pawn)
+                Pawn attacker = this.parent.pawn;
+                EffecterDefOf.ImpactSmallDustCloud.Spawn(cell, map);
+
+                Pawn pawn = cell.GetFirstPawn(map);
+
+                if (pawn != null && pawn != attacker)
                 {
-                    continue;
+                    DamageInfo damage = new DamageInfo(DamageDefOf.Flame, 10, 1);
+                    if (this.parent.pawn.HasWeaponEquipped())
+                    {
+                        damage = this.GetWeaponDamage(attacker, pawn);
+                    }
+                    pawn.TakeDamage(damage);
                 }
-                DamageInfo damage = new DamageInfo(DamageDefOf.Flame, 10, 1);
-                if (this.parent.pawn.HasWeaponEquipped())
-                {
-                    damage = this.GetWeaponDamage(this.parent.pawn, item);
-                }
-                item.TakeDamage(damage);
-            }
+            });
         }
 
         public override void DrawEffectPreview(LocalTargetInfo target)

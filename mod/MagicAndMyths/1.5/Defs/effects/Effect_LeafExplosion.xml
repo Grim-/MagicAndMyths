@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <EffecterDef>
+      <defName>MagicAndMyths_LeafExplosion</defName>
+      <children>
+        <li>
+          <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+          <positionRadius>0.2</positionRadius>
+          <burstCount>10~15</burstCount>
+          <speed>4.8~8.4</speed>
+          <scale>0.4~0.6</scale>
+          <moteDef>MagicAndMyths_LeafExplosion</moteDef>
+        </li>
+      </children>
+    </EffecterDef>
+
+    <ThingDef ParentName="MoteBase">
+        <defName>MagicAndMyths_LeafExplosion</defName>
+        <thingClass>MoteThrown</thingClass>
+        <graphicData>
+          <graphicClass>Graphic_Mote</graphicClass>
+          <shaderType>MoteGlow</shaderType>
+          <texPath>VFX/Leave9</texPath>
+          <color>(0, 0.5, 0, 1)</color>
+        </graphicData>
+        <altitudeLayer>MoteOverhead</altitudeLayer>
+        <mote>
+          <fadeInTime>0.1</fadeInTime>
+          <solidTime>1</solidTime>
+          <fadeOutTime>0.4</fadeOutTime>
+          <growthRate>0.1</growthRate>
+        </mote>
+      </ThingDef>
+</Defs>

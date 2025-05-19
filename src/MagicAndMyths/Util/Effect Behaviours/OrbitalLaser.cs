@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -8,7 +9,6 @@ namespace MagicAndMyths
     [StaticConstructorOnStartup]
     public class OrbitalLaser : Thing
     {
-        // Core properties
         private Vector3 originPosition;
         private Vector3 targetPosition;
         private int currentTick = 0;
@@ -16,34 +16,69 @@ namespace MagicAndMyths
         private bool hasImpacted = false;
         private bool isFired = false;
 
-        // Animation timing
         private int growingPhaseTicks = 120;
         private int shrinkingPhaseTicks = 60;
         private int impactTick;
 
-        // Visual effect parameters
-        private float maxWidth = 15f;
+
+        private float maxWidth = 4f;
         private float initialWidth = 0.5f;
         private float currentWidth = 0.5f;
 
-        // Damage properties
+
         private int explosionRadius = 8;
         private int damageAmount = 150;
         private DamageDef damageDef = DamageDefOf.Bomb;
 
-        // The actual mote effect that represents the laser beam
         private MoteDualAttached laserMote;
-        private static readonly ThingDef LaserMoteDef = DefDatabase<ThingDef>.GetNamed("mote_LightningStrike");
 
-        // Visual elements
-        private Vector2 startSize = new Vector2(0.5f, 0.5f);
-        private Vector2 finalSize = new Vector2(15f, 15f);
+        public ThingDef OverrideMoteDef = null;
+        private static readonly ThingDef DefaultLaserMote = DefDatabase<ThingDef>.GetNamed("MagicAndMyths_MoteMoonBeam");
 
-        public override Vector2 DrawSize
+        protected ThingDef ActualLaserMoteDef => OverrideMoteDef != null ? OverrideMoteDef : DefaultLaserMote;
+
+        private Vector3 skyOffset = new Vector3(0f, 0f, 100f);
+        private Vector3 groundOffset = Vector3.zero;
+
+
+        private SimpleCurve WidthOverLife = new SimpleCurve(new List<CurvePoint> 
+        { 
+            new CurvePoint(0, 0),
+            new CurvePoint(0.05f, 0.5f),
+            new CurvePoint(1, 4f)
+        });
+
+        private float progress => (float)currentTick / growingPhaseTicks;
+
+        private float adjustedProgress
         {
             get
             {
-                return new Vector2(maxWidth * 2, maxWidth * 2);
+                float adjustedProgress;
+                if (progress < 0.8f)
+                {
+                    adjustedProgress = progress * 0.5f;
+                }
+                else
+                {
+                    adjustedProgress = 0.4f + ((progress - 0.8f) * 3f);
+                }
+
+                return adjustedProgress;
+            }
+        }
+
+        private List<IntVec3> _impactCells;
+        private List<IntVec3> impactCells
+        {
+            get
+            {
+                if (_impactCells == null || _impactCells.Count == 0)
+                {
+                    _impactCells = GenRadial.RadialCellsAround(Position, explosionRadius, true).ToList();
+                }
+
+                return _impactCells;
             }
         }
 
@@ -56,46 +91,33 @@ namespace MagicAndMyths
             hasImpacted = false;
             currentWidth = initialWidth;
             isFired = true;
-
-            // Create the mote effect
             CreateLaserBeam();
         }
 
         private void CreateLaserBeam()
         {
-            if (LaserMoteDef == null)
+            if (ActualLaserMoteDef == null)
             {
-                Log.Error("OrbitalLaser: Mote_GraserBeamBase def not found");
+                Log.Error("OrbitalLaser: No mote Thingdef found");
                 return;
             }
 
-            // Create TargetInfo objects for ground positions
             TargetInfo sourceTarget = new TargetInfo(targetPosition.ToIntVec3(), Map, false);
             TargetInfo destTarget = new TargetInfo(targetPosition.ToIntVec3(), Map, false);
-
-            Vector3 skyOffset = new Vector3(0f, 0f, 100f); 
-            Vector3 groundOffset = Vector3.zero;
-
-            // Create the dual attached mote
+            
             laserMote = MoteMaker.MakeInteractionOverlay(
-                LaserMoteDef,
+                DefaultLaserMote,
                 sourceTarget,
                 destTarget);
 
             if (laserMote != null)
             {
-                // Set initial width
-                laserMote.Scale = currentWidth;
-
-                // IMMEDIATELY update the targets with proper offsets
                 laserMote.UpdateTargets(
                     sourceTarget,
                     destTarget,
-                    skyOffset,  // This adds the height to the source
+                    skyOffset,
                     groundOffset
                 );
-
-                // Make sure the mote stays visible
                 laserMote.solidTimeOverride = totalDurationTicks;
             }
         }
@@ -107,95 +129,71 @@ namespace MagicAndMyths
 
             currentTick++;
 
-            // Growing phase
             if (currentTick <= growingPhaseTicks)
             {
-                float progress = (float)currentTick / growingPhaseTicks;
-
-                // Akira laser starts thin and slowly grows
-                // Then suddenly expands near the impact moment
-                float adjustedProgress;
-                if (progress < 0.8f)
-                {
-                    // Slow growth for first 80%
-                    adjustedProgress = progress * 0.5f;
-                }
-                else
-                {
-                    // Fast expansion for last 20%
-                    adjustedProgress = 0.4f + ((progress - 0.8f) * 3f);
-                }
-
                 currentWidth = Mathf.Lerp(initialWidth, maxWidth, adjustedProgress);
 
-                // Check for impact
                 if (currentTick >= impactTick && !hasImpacted)
                 {
                     Impact();
                 }
             }
-            // Shrinking phase
             else if (currentTick <= totalDurationTicks)
             {
                 float shrinkProgress = (float)(currentTick - growingPhaseTicks) / shrinkingPhaseTicks;
-                currentWidth = Mathf.Lerp(maxWidth, 0f, shrinkProgress * shrinkProgress); // Ease out quad
+                currentWidth = Mathf.Lerp(maxWidth, 0f, shrinkProgress * shrinkProgress);
             }
-            // End
             else
             {
                 CleanupAndDespawn();
             }
 
-            // Update mote properties
             UpdateMote();
 
-            // Add visual effects based on current phase
             AddVisualEffects();
         }
+
         private void UpdateMote()
         {
             if (laserMote == null || laserMote.Destroyed)
                 return;
 
-            // Update mote scale based on current width
-            laserMote.Scale = currentWidth;
-
-            // Maintain the mote so it doesn't fade
+            laserMote.linearScale = new Vector3(currentWidth, 1f, (laserMote.link1.LastDrawPos - laserMote.link1.Target.CenterVector3).MagnitudeHorizontal());
             laserMote.Maintain();
 
-            // Create TargetInfo objects for the ground positions
             TargetInfo sourceTarget = new TargetInfo(targetPosition.ToIntVec3(), Map, false);
             TargetInfo destTarget = new TargetInfo(targetPosition.ToIntVec3(), Map, false);
 
             Vector3 skyOffset = new Vector3(0f, 0f, 100f);
             Vector3 groundOffset = Vector3.zero;
 
-            // Update the targets with offsets
             laserMote.UpdateTargets(
                 sourceTarget,
                 destTarget,
-                skyOffset,  // This adds the height to the source
+                skyOffset,
                 groundOffset
             );
         }
 
         private void AddVisualEffects()
         {
-            // Growing phase effects
+            if (currentTick % 30 == 0)
+            {
+                Vector3 effectPos = targetPosition;
+                FleckMaker.ThrowMicroSparks(effectPos, Map);
+            }
+
             if (currentTick <= growingPhaseTicks)
             {
-                // Occasional smaller flashes along beam
                 if (currentTick % 5 == 0)
                 {
-                    Vector3 effectPos = targetPosition + new Vector3(0, Rand.Range(10f, 50f), 0);
+                    Vector3 effectPos = targetPosition + new Vector3(0, 0, Rand.Range(10f, 50f));
                     FleckMaker.ThrowLightningGlow(effectPos, Map, Rand.Range(0.5f, currentWidth * 0.4f));
                 }
             }
 
-            // Near impact effects
             if (currentTick >= impactTick - 10 && currentTick <= impactTick + 30)
             {
-                // Energy build-up on ground
                 if (currentTick % 3 == 0)
                 {
                     float radius = (currentWidth * 0.7f) * Rand.Range(0.5f, 1.1f);
@@ -210,35 +208,39 @@ namespace MagicAndMyths
         {
             hasImpacted = true;
 
-            GenExplosion.DoExplosion(
-                Position,
-                Map,
-                explosionRadius,
-                damageDef,
-                this,
-                damageAmount);
-
-            // Visual effects for impact
-            FleckMaker.Static(Position, Map, FleckDefOf.ExplosionFlash, 12f);
-
-            // Akira-style expanding ring effect
-            for (int i = 0; i < 18; i++)
+            StageVisualEffect.CreateStageEffect(impactCells, Map, Random.Range(3, 5), (IntVec3 cell) =>
             {
-                float angle = (float)i / 18f * 360f;
-                float distance = Rand.Range(3f, 8f);
-                Vector3 ringPos = targetPosition + new Vector3(
-                    Mathf.Cos(angle * Mathf.Deg2Rad) * distance,
-                    0f,
-                    Mathf.Sin(angle * Mathf.Deg2Rad) * distance
-                );
+                EffecterDefOf.ImpactSmallDustCloud.Spawn(cell, Map);
 
-                FleckMaker.ThrowHeatGlow(ringPos.ToIntVec3(), Map, Rand.Range(2f, 4f));
-            }
+                List<Thing> things = cell.GetThingList(Map).ToList();
+
+                foreach (var t in things)
+                {
+                    if (t is Pawn || t is Building building)
+                    {
+                        DamageInfo damage = t.def.mineable ? new DamageInfo(DamageDefOf.Mining, damageAmount * 2, 1) : new DamageInfo(damageDef, damageAmount, 1);
+                        t.TakeDamage(damage);
+                    }
+                }
+
+                if (cell.GetTerrain(Map) == TerrainDefOf.WaterDeep || cell.GetTerrain(Map) == TerrainDefOf.WaterShallow)
+                {
+                    Map.terrainGrid.SetTerrain(cell, TerrainDefOf.Soil);
+                }
+                else
+                {
+                    Map.terrainGrid.SetTerrain(cell, TerrainDefOf.Sand);
+                }
+
+                if (Rand.Bool)
+                {
+                    FireUtility.TryStartFireIn(cell, Map, Rand.Value, this);
+                }
+            });
         }
 
         private void CleanupAndDespawn()
         {
-            // Clean up the mote
             if (laserMote != null && !laserMote.Destroyed)
             {
                 laserMote.Destroy();
@@ -249,7 +251,6 @@ namespace MagicAndMyths
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            // Make sure we clean up the mote when despawned
             if (laserMote != null && !laserMote.Destroyed)
             {
                 laserMote.Destroy();

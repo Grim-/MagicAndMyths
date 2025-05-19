@@ -3,6 +3,7 @@
   <HediffDef ParentName="DebuffBase">
     <defName>MagicAndMyths_ThunderStruck</defName>
     <label>thunder struck</label>
+    <hediffClass>HediffWithComps</hediffClass>
     <description>This pawn has been struck by lightning. And has briefly been rendered unconscious.</description>
     <stages>
       <li>
@@ -17,8 +18,15 @@
     <comps>
       <li Class="HediffCompProperties_Disappears">
         <disappearsAfterTicks>2000</disappearsAfterTicks>
-                <showRemainingTime>true</showRemainingTime>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+      <li Class="HediffCompProperties_Effecter">
+        <stateEffecter>MagicAndMyths_LightningSparks</stateEffecter>
       </li>
     </comps>
+    <injuryProps>
+      <painPerSeverity>0.15</painPerSeverity>
+      <bleedRate>0.1</bleedRate>
+    </injuryProps>
   </HediffDef>
 </Defs>

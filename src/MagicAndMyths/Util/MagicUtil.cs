@@ -214,12 +214,13 @@ namespace MagicAndMyths
             {
                 if (target.Thing != null && target.Thing is Pawn pawn)
                 {
+                    Map pawnMap = pawn.Map;
                     IntVec3 position = pawn.Position;
                     PetrifiedStatue.PetrifyPawn(
                         MagicAndMythDefOf.MagicAndMyths_PetrifiedStatue,
                         pawn,
                         position,
-                        Find.CurrentMap
+                        pawnMap
                     );
                     Messages.Message("Petrified " + pawn.LabelShort, MessageTypeDefOf.NeutralEvent);
                 }

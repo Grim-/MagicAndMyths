@@ -2,43 +2,93 @@
 <Defs>
   <EffecterDef>
     <defName>MagicAndMyths_EffectGravityExpand</defName>
+    <randomWeight>1</randomWeight>
     <children>
       <li>
         <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
-        <scale>0.12</scale>
         <ticksBetweenMotes>50</ticksBetweenMotes>
-        <positionLerpFactor>0</positionLerpFactor>
-        <maxMoteCount>6</maxMoteCount>
-        <positionRadius>0</positionRadius>
+        <maxMoteCount>1</maxMoteCount>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <spawnLocType>BetweenPositions</spawnLocType>
         <moteDef>MagicAndMyths_MoteGravityShockWaveExpand</moteDef>
-        <rotateTowardsMoveDirection>false</rotateTowardsMoveDirection>
+        <color>(0.831,0,0.816,0.392)</color>
+        <angle>0~360</angle>
+        <speed>0</speed>
+        <rotation>0~360</rotation>
+        <rotationRate>0</rotationRate>
+        <scale>5</scale>
+        <airTime>999999</airTime>
+        <subTriggerOnSpawn>true</subTriggerOnSpawn>
       </li>
       <li>
         <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
-        <scale>0.12</scale>
+        <burstCount>1~5</burstCount>
         <ticksBetweenMotes>20</ticksBetweenMotes>
-        <positionLerpFactor>0</positionLerpFactor>
-        <positionRadius>0</positionRadius>
+        <maxMoteCount>1000000000</maxMoteCount>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <spawnLocType>BetweenPositions</spawnLocType>
         <moteDef>MagicAndMyths_MoteGravityAuraExpand</moteDef>
+        <color>(0.831,0,0.816,0.392)</color>
+        <angle>0~360</angle>
+        <speed>0</speed>
+        <rotation>0~360</rotation>
         <rotationRate>600</rotationRate>
-        <rotateTowardsMoveDirection>false</rotateTowardsMoveDirection>
+        <scale>0.05~0.12</scale>
+        <airTime>999999</airTime>
+        <subTriggerOnSpawn>true</subTriggerOnSpawn>
+      </li>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <burstCount>1</burstCount>
+        <maxMoteCount>1</maxMoteCount>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <spawnLocType>BetweenPositions</spawnLocType>
+        <fleckDef>PsycastAreaEffect</fleckDef>
+        <color>(1,1,1,1)</color>
+        <angle>0</angle>
+        <absoluteAngle>true</absoluteAngle>
+        <speed>0</speed>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+        <scale>1</scale>
+        <airTime>999999</airTime>
+        <rotateTowardsTargetCenter>false</rotateTowardsTargetCenter>
+        <subTriggerOnSpawn>false</subTriggerOnSpawn>
       </li>
     </children>
   </EffecterDef>
 
+
+
   <ThingDef ParentName="MoteBase">
     <defName>MagicAndMyths_MoteGravityShockWaveExpand</defName>
-    <thingClass>MoteAttached</thingClass>
+    <thingClass>MoteThrown</thingClass>
     <graphicData>
       <graphicClass>Graphic_Mote</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <texPath>VFX/StarburstImpact</texPath>
-      <color>(0.831, 0, 0.816, 0.5)</color>
+      <texPath>VFX/Spiral17</texPath>
     </graphicData>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <mote>
       <fadeInTime>0.4</fadeInTime>
-      <solidTime>1</solidTime>
+      <solidTime>0.5</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_MoteImpactExpand</defName>
+    <thingClass>MoteThrown</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <texPath>VFX/Impact/Impact13</texPath>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.4</fadeInTime>
+      <solidTime>0.5</solidTime>
       <fadeOutTime>0.05</fadeOutTime>
       <growthRate>12</growthRate>
     </mote>
@@ -51,12 +101,11 @@
       <graphicClass>Graphic_Mote</graphicClass>
       <shaderType>MoteGlow</shaderType>
       <texPath>MagicCircles/Circle10</texPath>
-      <color>(0.831, 0, 0.816, 0.5)</color>
     </graphicData>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <mote>
       <fadeInTime>0.4</fadeInTime>
-      <solidTime>1</solidTime>
+      <solidTime>0.5</solidTime>
       <fadeOutTime>0.05</fadeOutTime>
       <growthRate>12</growthRate>
     </mote>

@@ -2,8 +2,13 @@
 {
     public class LightningRingConfig
     {
-        public int Strikes { get; set; }
-        public float Radius { get; set; }
+        public int Strikes = 1;
+        public float Radius = 1f;
+
+        public LightningRingConfig()
+        {
+
+        }
 
         public LightningRingConfig(int strikes, float radius)
         {

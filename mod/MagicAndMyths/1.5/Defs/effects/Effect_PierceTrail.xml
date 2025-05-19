@@ -35,8 +35,7 @@
         <fadeOutTime>0.1</fadeOutTime>
         <growthRate>0</growthRate>
         <rotateTowardsTarget>True</rotateTowardsTarget>
-        <scaleToConnectTargets>True</scaleToConnectTargets>
-        <linearScale>(2, 1, 1)</linearScale>
+        <scaleToConnectTargets>false</scaleToConnectTargets>
       </mote>
     </ThingDef>
 </Defs>

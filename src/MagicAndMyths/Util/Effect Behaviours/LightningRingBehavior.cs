@@ -21,11 +21,18 @@ namespace MagicAndMyths
             this.rings = rings;
             this.center = center;
             this.map = map;
-            _OnTick = DoLightningRing;
         }
 
         public LightningRingBehavior()
         {
+
+        }
+
+        protected override void OnTick()
+        {
+            base.OnTick();
+
+            DoLightningRing();
         }
 
         private void DoLightningRing()
@@ -35,9 +42,7 @@ namespace MagicAndMyths
                 this.Stop();
                 return;
             }
-            SoundDefOf.Thunder_OffMap.PlayOneShotOnCamera(map);
-
-
+  
             var ring = rings[currentRing];
             float angleStep = 360f / ring.Strikes;
             for (int i = 0; i < ring.Strikes; i++)
@@ -49,9 +54,6 @@ namespace MagicAndMyths
             }
             currentRing++;
         }
-
-
-
 
         private IntVec3 GetStrikeOffset(float angle, float radius)
         {

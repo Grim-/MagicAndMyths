@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -30,26 +31,40 @@ namespace MagicAndMyths
                 Props.effecterDef.Spawn(this.parent.pawn.Position, this.parent.pawn.Map);
             }
 
-            List<Pawn> pawnsInRange = TargetUtil.GetPawnsInRadius(this.parent.pawn.Position, map, Props.radius, this.parent.pawn.Faction, true, this.parent.pawn, true, false, false);
 
-            foreach (var pawn in pawnsInRange)
+            List<IntVec3> cells = GenRadial.RadialCellsAround(this.parent.pawn.Position, Props.radius, true).ToList();
+
+            StageVisualEffect.CreateStageEffect(cells, map, 8, (IntVec3 cell) =>
             {
-                if (pawn == this.parent.pawn)
+                EffecterDefOf.ImpactSmallDustCloud.Spawn(cell, map);
+
+                List<Thing> things = cell.GetThingList(map).ToList();
+
+                foreach (var t in things)
                 {
-                    continue;
+                    if (t is Pawn || t is Building building)
+                    {
+                        if (t != this.parent.pawn)
+                        {
+                            DamageInfo damage = t.def.mineable ? new DamageInfo(DamageDefOf.Mining, 344 * 2, 1) : new DamageInfo(DamageDefOf.Blunt, 15, 1);
+                            t.TakeDamage(damage);
+
+                            if (t is Pawn)
+                            {
+                                float distance = t.Position.DistanceTo(this.parent.pawn.Position);
+                                float pushFactor = 1f - (distance / Props.radius);
+                                int pushDistance = Mathf.RoundToInt(Props.minTilesToPush + pushFactor * (Props.maxTilesToPush - Props.minTilesToPush));
+                                IntVec3 direction = (t.Position - this.parent.pawn.Position);
+                                IntVec3 destination = t.Position + (direction * pushDistance);
+                                ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, t, destination, map, null, null, this.parent.pawn, t.DrawPos, false);
+                                ThingFlyer.LaunchFlyer(thingFlyer, t, t.Position, map);
+                            }
+                        }
+
+                    }
                 }
 
-                float distance = pawn.Position.DistanceTo(this.parent.pawn.Position);
-                float pushFactor = 1f - (distance / Props.radius);
-                int pushDistance = Mathf.RoundToInt(Props.minTilesToPush + pushFactor * (Props.maxTilesToPush - Props.minTilesToPush));
-
-                IntVec3 direction = (pawn.Position - this.parent.pawn.Position);
-
-                IntVec3 destination = pawn.Position + (direction * pushDistance);
-
-                ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, pawn, destination, map, null, null, this.parent.pawn, pawn.DrawPos, false);
-                ThingFlyer.LaunchFlyer(thingFlyer, pawn, pawn.Position, map);
-            }
+            }, 5);
         }
     }
 }

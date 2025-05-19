@@ -15,6 +15,21 @@
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_LightningRing">
+        <delayTicks>5</delayTicks>
+        <rings>
+          <li>
+            <Strikes>8</Strikes>
+            <Radius>3</Radius>
+          </li>
+          <li>
+            <Strikes>5</Strikes>
+            <Radius>7</Radius>
+          </li>
+          <li>
+            <Strikes>5</Strikes>
+            <Radius>7</Radius>
+          </li>
+        </rings>
       </li>
     </comps>
   </AbilityDef>

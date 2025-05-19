@@ -6,9 +6,11 @@
     <description>Fly to the target location</description>
     <iconPath>Skills/Fly</iconPath>
     <hostile>false</hostile>
+    <jobDef>CastJump</jobDef>
     <verbProperties>
       <verbClass>Verb_CastAbility</verbClass>
       <range>45</range>
+      <requireLineOfSight>false</requireLineOfSight>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
       </targetParams>

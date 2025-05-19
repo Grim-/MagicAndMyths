@@ -95,6 +95,31 @@ namespace MagicAndMyths
         }
 
 
+        public virtual void EjectAllItems(Map TargetMap, IntVec3 TargetPosition)
+        {
+            List<Thing> allColonists = this.Map.spawnedThings.Where(x => x.Faction == Faction.OfPlayer && x.def.building == null).ToList();
+
+            if (allColonists.Count > 0)
+            {
+                foreach (var item in allColonists)
+                {
+                    EjectThing(item, TargetMap, TargetPosition);
+                }
+
+            }
+        }
+
+        public virtual void EjectThing(Thing thing, Map TargetMap, IntVec3 TargetPosition)
+        {
+            if (TargetMap != null)
+            {
+                if (thing.Spawned)
+                {
+                    thing.DeSpawn(DestroyMode.Vanish);
+                }
+                GenSpawn.Spawn(thing, TargetPosition, TargetMap);
+            }
+        }
         public virtual IEnumerable<FloatMenuOption> GetFloatMenuOptions()
         {
             yield break;

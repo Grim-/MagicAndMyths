@@ -29,6 +29,8 @@ namespace MagicAndMyths
 		protected Pawn throwingPawn = null;
 		public event Action<IntVec3, Pawn> OnBeforeRespawn;
 		public event Action<IntVec3, Thing, Pawn> OnRespawn;
+		public event Action<int, IntVec3, Map, Thing> OnFlightTick;
+
 		protected Thing FlyingThing
 		{
 			get
@@ -40,6 +42,7 @@ namespace MagicAndMyths
 				return this.innerContainer.InnerListForReading[0];
 			}
 		}
+
 
 		public Vector3 DestinationPos
 		{
@@ -152,6 +155,13 @@ namespace MagicAndMyths
 					effecter.EffectTick(this, TargetInfo.Invalid);
 				}
 			}
+
+            if (this.FlyingThing != null)
+            {
+				OnFlightTick?.Invoke(this.ticksFlying, this.DrawPos.ToIntVec3(), Map, FlyingThing);
+            }
+
+
 			if (this.ticksFlying >= this.ticksFlightTime)
 			{
 				this.RespawnThing();
@@ -294,7 +304,22 @@ namespace MagicAndMyths
 
 			return thingFlyer;
 		}
-
+		/// <summary>
+		/// Creates and set up new a ThingFlyer, does not spawn nor start the flyer, see ThingFlyer.LaunchFlyer
+		/// </summary>
+		/// <param name="thing"></param>
+		/// <param name="destCell"></param>
+		/// <param name="map"></param>
+		/// <param name="flightEffecterDef"></param>
+		/// <param name="landingSound"></param>
+		/// <param name="throwerPawn"></param>
+		/// <param name="overrideStartVec"></param>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public static ThingFlyer MakeFlyer(Thing thing, IntVec3 destCell, Map map, EffecterDef flightEffecterDef, SoundDef landingSound, Pawn throwerPawn, Vector3? overrideStartVec = null, bool defaultThrowBehaviour = true)
+		{
+			return MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, thing, destCell, map, flightEffecterDef, landingSound, throwerPawn, overrideStartVec, defaultThrowBehaviour);
+		}
 
 		/// <summary>
 		/// Actually triggers the flyer to move, despawns the thing if not already

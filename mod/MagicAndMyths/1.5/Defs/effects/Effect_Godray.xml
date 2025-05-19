@@ -22,7 +22,8 @@
       <graphicData>
         <graphicClass>Graphic_Mote</graphicClass>
         <shaderType>MoteGlow</shaderType>
-        <texPath>VFX/godray</texPath>
+        <texPath>VFX/EnergyTrail3</texPath>
+        <drawSize>4</drawSize>
       </graphicData>
       <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>

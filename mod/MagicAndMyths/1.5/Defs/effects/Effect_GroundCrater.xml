@@ -24,6 +24,7 @@
         <graphicClass>Graphic_Mote</graphicClass>
         <shaderType>Mote</shaderType>
         <texPath>VFX/Crater/Crater40</texPath>
+        <drawSize>2</drawSize>
       </graphicData>
       <altitudeLayer>Filth</altitudeLayer>
       <mote>

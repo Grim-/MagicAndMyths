@@ -1,51 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <AbilityDef>
-      <defName>RaiseLesserSkeleton</defName>
-      <label>Raise lesser skeleton</label>
-      <description>Resurrect all nearby corpses as a lesser skeleton, these retain nothing of their formerselves, twisted to fight and perform simple labour.</description>
-      <hostile>false</hostile>
-      <targetRequired>true</targetRequired>
-      <verbProperties>
-        <verbClass>Verb_CastAbility</verbClass>
-        <range>25</range>
-        <warmupTime>0</warmupTime>
-        <soundCast>FireSpew_Resolve</soundCast>
-        <targetable>true</targetable>
-        <targetParams>
-          <canTargetLocations>true</canTargetLocations>
-        </targetParams>
-        <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
-      </verbProperties>
-      <comps>
-        <li Class="MagicAndMyths.CompProperties_RaiseAs">
-          <radius>5</radius>
-          <undeadDef>LesserSkeleton</undeadDef>
-        </li>
-      </comps>
-    </AbilityDef>
-    <AbilityDef>
-      <defName>RaiseLesserZombie</defName>
-      <label>Raise lesser zombie</label>
-      <description>Resurrect all nearby corpses as a lesser zombie, these retain some of their traits and skills from life.</description>
-      <hostile>false</hostile>
-      <targetRequired>true</targetRequired>
-      <verbProperties>
-        <verbClass>Verb_CastAbility</verbClass>
-        <range>25</range>
-        <warmupTime>0</warmupTime>
-        <soundCast>FireSpew_Resolve</soundCast>
-        <targetable>true</targetable>
-        <targetParams>
-          <canTargetLocations>true</canTargetLocations>
-        </targetParams>
-        <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
-      </verbProperties>
-      <comps>
-        <li Class="MagicAndMyths.CompProperties_RaiseAs">
-          <radius>5</radius>
-          <undeadDef>Zombie</undeadDef>
-        </li>
-      </comps>
-    </AbilityDef>
+  <AbilityDef>
+    <defName>RaiseLesserSkeleton</defName>
+    <label>Raise lesser skeleton</label>
+    <description>Resurrect all nearby corpses as a lesser skeleton, these retain nothing of their formerselves, twisted to fight and perform simple labour.</description>
+    <hostile>false</hostile>
+    <targetRequired>true</targetRequired>
+    <iconPath>Skills/SummonDead</iconPath>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>25</range>
+      <warmupTime>0</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetable>true</targetable>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_RaiseAs">
+        <radius>5</radius>
+        <undeadDef>LesserSkeleton</undeadDef>
+      </li>
+    </comps>
+  </AbilityDef>
 </Defs>

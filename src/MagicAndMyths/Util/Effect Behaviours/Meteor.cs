@@ -27,7 +27,7 @@ namespace MagicAndMyths
         private DamageDef damageDef = DamageDefOf.Bomb;
         protected bool Launched = false;
 
-
+        private EffecterDef impactEffecter = null;
 
         private Vector2 startSize = new Vector2(5, 5);
         private Vector2 finalSize = new Vector2(0.5f, 0.5f);
@@ -50,18 +50,6 @@ namespace MagicAndMyths
             }
         }
 
-        //private float shadowOpacityMin = 0.1f;
-        //private float shadowOpacityMax = 0.4f;
-        //private float ShadowOpacity
-        //{
-        //    get
-        //    {
-        //        float progress = Mathf.Clamp01((float)currentTick / totalDurationTicks);
-        //        return Mathf.InverseLerp(shadowOpacityMin, shadowOpacityMax, progress);
-        //    }
-        //}
-
-
         public void Launch(IntVec3 target, int ticksToImpact = 1000)
         {
             targetPosition = target.ToVector3Shifted();
@@ -72,6 +60,10 @@ namespace MagicAndMyths
             Launched = true;
         }
 
+        public void SetImpactEffecter(EffecterDef effecterDef)
+        {
+            impactEffecter = effecterDef;
+        }
 
         public void SetSize(Vector2 startSize, Vector2 endSize)
         {
@@ -115,6 +107,11 @@ namespace MagicAndMyths
 
         private void Impact()
         {
+            if (impactEffecter != null)
+            {
+                impactEffecter.Spawn(Position, Map);
+            }
+
             hasImpacted = true;
             GenExplosion.DoExplosion(
                 Position,
@@ -122,8 +119,11 @@ namespace MagicAndMyths
                 explosionRadius,
                 damageDef,
                 this,
-                damageAmount);
+                damageAmount,
+                -1, 
+                null, null, this.def);
             this.DeSpawn();
+
         }
 
 
@@ -157,7 +157,7 @@ namespace MagicAndMyths
         }
 
 
-        public static Meteor Launch(IntVec3 position, Map map, Vector2 startSize, Vector2 endSize, int radius = 5, int ticksToImpact = 1000, DamageDef customDamageDef = null, int customDamage = -1)
+        public static Meteor Launch(IntVec3 position, Map map, Vector2 startSize, Vector2 endSize, int radius = 5, int ticksToImpact = 1000, DamageDef customDamageDef = null, int customDamage = -1, EffecterDef impactEffectDef = null)
         {
             Meteor meteor = (Meteor)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_Meteor);
             meteor.SetSize(startSize, endSize);
@@ -176,6 +176,12 @@ namespace MagicAndMyths
             }
 
 
+            if (impactEffectDef != null)
+            {
+                meteor.SetImpactEffecter(impactEffectDef);
+            }
+
+
             GenSpawn.Spawn(meteor, position, map);
             meteor.Launch(position, ticksToImpact);
             return meteor;
@@ -191,6 +197,7 @@ namespace MagicAndMyths
             Scribe_Values.Look(ref totalDurationTicks, "totalDurationTicks");
             Scribe_Values.Look(ref hasImpacted, "hasImpacted");
             Scribe_Values.Look(ref Launched, "isLaunched");
+            Scribe_Defs.Look(ref impactEffecter, "impactEffecter");
         }
     }
 }

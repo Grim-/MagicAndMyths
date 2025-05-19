@@ -40,8 +40,7 @@ namespace MagicAndMyths
 
             if (CurrentTick >= Ticks)
             {
-                CurrentRepeatCount++;
-                _OnTick?.Invoke();
+                OnTick();
 
                 if (RepeatAmount > 0 && CurrentRepeatCount >= RepeatAmount)
                 {
@@ -52,6 +51,12 @@ namespace MagicAndMyths
                     Reset();
                 }
             }
+        }
+
+        protected virtual void OnTick()
+        {
+            CurrentRepeatCount++;
+            _OnTick?.Invoke();
         }
 
         public virtual void Reset()

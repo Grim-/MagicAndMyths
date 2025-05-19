@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_Portal</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>1.4</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_MotePortalShort</moteDef>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_MotePortal</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <texPath>VFX/Portal</texPath>
+        <graphicClass>Graphic_Single_SquashNStretch</graphicClass>
+        <drawSize>2</drawSize>
+        <color>(0.004, 0.843, 1)</color>
+        <shaderType>MoteGlowDistorted</shaderType>
+        <shaderParameters>
+          <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
+          <_distortionScale>0.17</_distortionScale>
+          <_distortionIntensity>0.14</_distortionIntensity>
+          <_brightnessMultiplier>1.1</_brightnessMultiplier>
+          <_pulseSpeed>50</_pulseSpeed>
+        </shaderParameters>
+      </graphicData>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
+      <mote>
+        <fadeInTime>0.1</fadeInTime>
+        <solidTime>20</solidTime>
+        <fadeOutTime>0.4</fadeOutTime>
+      </mote>
+    </ThingDef>
+
+    <ThingDef ParentName="MoteBase">
+        <defName>MagicAndMyths_MotePortalShort</defName>
+        <thingClass>MoteAttached</thingClass>
+        <graphicData>
+          <texPath>VFX/Portal</texPath>
+          <graphicClass>Graphic_Single_SquashNStretch</graphicClass>
+          <drawSize>2</drawSize>
+          <color>(0.104, 0.843, 1)</color>
+          <shaderType>MoteGlowDistorted</shaderType>
+          <shaderParameters>
+            <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
+            <_distortionScale>0.17</_distortionScale>
+            <_distortionIntensity>0.14</_distortionIntensity>
+            <_brightnessMultiplier>1.1</_brightnessMultiplier>
+            <_pulseSpeed>50</_pulseSpeed>
+          </shaderParameters>
+        </graphicData>
+        <altitudeLayer>MoteOverhead</altitudeLayer>
+        <mote>
+          <fadeInTime>0.1</fadeInTime>
+          <solidTime>1</solidTime>
+          <fadeOutTime>0.4</fadeOutTime>
+        </mote>
+      </ThingDef>
+</Defs>

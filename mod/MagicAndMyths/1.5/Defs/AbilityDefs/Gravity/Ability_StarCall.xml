@@ -21,10 +21,13 @@
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_StarCall">
-        <amount>8</amount>
+        <amount>1</amount>
         <meteorMaxSize>(2, 2)</meteorMaxSize>
         <meteorMinSize>(0.5, 0.5)</meteorMinSize>
         <impactRadius>2</impactRadius>
+        <ticksToImpact>300</ticksToImpact>
+        <impactEffecterDef>MagicAndMyths_GroundCrater</impactEffecterDef>
+        <overrideDamageAmount>15</overrideDamageAmount>
       </li>
     </comps>
   </AbilityDef>

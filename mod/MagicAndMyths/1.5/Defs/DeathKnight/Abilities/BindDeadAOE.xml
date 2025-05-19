@@ -6,6 +6,7 @@
     <description>Resurrect all nearby corpses.</description>
     <hostile>false</hostile>
     <targetRequired>false</targetRequired>
+    <iconPath>Skills/SummonDead</iconPath>
     <verbProperties>
       <verbClass>Verb_CastAbility</verbClass>
       <range>25</range>
@@ -19,5 +20,4 @@
       </li>
     </comps>
   </AbilityDef>
-
 </Defs>

@@ -30,12 +30,12 @@ namespace MagicAndMyths
         private const int LightningEffectLifetime = 399;
 
         // Lingering effect settings
-        private int effectLingerTicks = 60; // How long effects should linger after last jump (1 second at 60 TPS)
+        private int effectLingerTicks = 60;
         private int lingerCounter = 0;
         private bool inLingeringPhase = false;
 
         private List<TrackedMote> activeEffects = new List<TrackedMote>();
-        private static readonly ThingDef LightningMoteDef = DefDatabase<ThingDef>.GetNamed("Mote_GraserBeamBase");
+        private static readonly ThingDef LightningMoteDef = DefDatabase<ThingDef>.GetNamed("MagicAndMyths_MoteMoonBeam");
 
         private Mesh Mesh = null;
         public event Action<StaggeredChainLightning, Thing, Map> OnTargetHit;
@@ -44,7 +44,7 @@ namespace MagicAndMyths
 
         #region Initialization
         public StaggeredChainLightning(Map map, Thing instigator, int lifeTimeTicks, int maxJumps, float jumpRadius,
-            int damageAmount, DamageDef damageDef, Func<Thing, bool> targetValidator, int ticksBetweenJumps = 7, int effectLingerTicks = 120)
+            int damageAmount, DamageDef damageDef, Func<Thing, bool> targetValidator, int ticksBetweenJumps = 30, int effectLingerTicks = 120)
             : base(lifeTimeTicks, null, null, false)
         {
             this.map = map;
@@ -81,17 +81,12 @@ namespace MagicAndMyths
             firstTarget = firstTargetInfo.Thing;
             chainTargets = FindAllTargets(firstTarget);
 
-            // Adjusting lifetime to include lingering phase
             this.Ticks = ticksBetweenJumps * (chainTargets?.Count ?? 0) + effectLingerTicks;
 
             currentIndex = 0;
             currentTarget = firstTarget;
         }
 
-        public override void Start()
-        {
-            base.Start();
-        }
         #endregion
 
         #region Target Finding
@@ -137,6 +132,7 @@ namespace MagicAndMyths
         {
             return GenRadial.RadialDistinctThingsAround(currentTarget.Position, map, jumpRadius, true)
                 .Where(t =>
+                    t is Pawn &&
                     t != currentTarget &&
                     !struckTargets.Contains(t) &&
                     targetValidator(t) &&
@@ -250,6 +246,8 @@ namespace MagicAndMyths
         private void UpdateEffect(TrackedMote trackedMote)
         {
             trackedMote.Mote.Maintain();
+
+            trackedMote.Mote.linearScale = new Vector3(2f, 1f, (trackedMote.SourceThing.Position.ToVector3Shifted() - trackedMote.TargetThing.Position.ToVector3Shifted()).MagnitudeHorizontal());
             trackedMote.Mote.UpdateTargets(
                 trackedMote.SourceThing,
                 trackedMote.TargetThing,
@@ -367,6 +365,7 @@ namespace MagicAndMyths
             Scribe_References.Look(ref firstTarget, "firstTarget");
             Scribe_References.Look(ref currentTarget, "currentTarget");
             Scribe_Collections.Look(ref chainTargets, "chainTargets", LookMode.Reference);
+            Scribe_Collections.Look(ref activeEffects, "activeEffects", LookMode.Reference);
         }
         #endregion
     }

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Xml;
 using UnityEngine;
 using Verse;
 
@@ -38,6 +40,8 @@ namespace MagicAndMyths
             this.absorbInputAroundWindow = false;
             this.resizeable = true;
             this.draggable = true;
+            this.onlyOneOfTypeAllowed = true;
+            this.preventCameraMotion = false;
             allEffecterDefs = DefDatabase<EffecterDef>.AllDefs.OrderBy(def => def.defName).ToList();
         }
 
@@ -91,9 +95,8 @@ namespace MagicAndMyths
                 foreach (EffecterDef def in filteredDefs)
                 {
                     options.Add(new FloatMenuOption(def.defName, () => {
-                        selectedEffecterDef = def;
-                        workingCopy = DeepCopyEffecterDef(def);
-                        ResetSubEffecterFoldouts();
+
+                        SetWorkingCopy(def);
                     }));
                 }
 
@@ -103,6 +106,14 @@ namespace MagicAndMyths
             GUI.color = Color.gray;
             Widgets.Label(labelRect, $"Showing {filteredDefs.Count} of {allEffecterDefs.Count} EffecterDefs");
             GUI.color = Color.white;
+        }
+
+
+        private void SetWorkingCopy(EffecterDef effecterDef)
+        {
+            selectedEffecterDef = effecterDef;
+            workingCopy = DeepCopyEffecterDef(effecterDef);
+            ResetSubEffecterFoldouts();
         }
 
         private void ResetSubEffecterFoldouts()
@@ -553,7 +564,8 @@ namespace MagicAndMyths
 
             if (Widgets.ButtonText(exportRect, "Export"))
             {
-                Messages.Message("Export not implemented yet", MessageTypeDefOf.NeutralEvent);
+                GUIUtility.systemCopyBuffer = EffecterDefToXmlString(workingCopy);
+                Messages.Message("Copied to clipboard", MessageTypeDefOf.NeutralEvent);
             }
 
             if (Widgets.ButtonText(closeRect, "Close"))
@@ -566,25 +578,43 @@ namespace MagicAndMyths
         {
             Find.Targeter.BeginTargeting(new TargetingParameters()
             {
-                canTargetLocations = true
+                canTargetLocations = true,
+                canTargetPawns = true,
             },
             (LocalTargetInfo target) =>
             {
-                if (target.Cell.IsValid && target.Cell.InBounds(Find.CurrentMap))
-                {
-                    Effecter effecter = workingCopy.Spawn();
-                    TargetInfo targetInfo = new TargetInfo(target.Cell, Find.CurrentMap, false);
-                    effecter.Trigger(targetInfo, targetInfo, -1);
 
+                if (target.HasThing && target.Thing is Pawn pawn)
+                {
+                    Effecter effecter = workingCopy.SpawnAttached(pawn, pawn.Map);
+                    effecter.Trigger(pawn, pawn, -1);
                     if (maintained)
                     {
-                        Find.CurrentMap.effecterMaintainer.AddEffecterToMaintain(effecter, target.Cell, 1000);
+                        Find.CurrentMap.effecterMaintainer.AddEffecterToMaintain(effecter, pawn.Position, 1000);
                     }
                     else
                     {
                         effecter.Cleanup();
                     }
                 }
+                else
+                {
+                    if (target.Cell.IsValid && target.Cell.InBounds(Find.CurrentMap))
+                    {
+                        Effecter effecter = workingCopy.Spawn();
+                        TargetInfo targetInfo = new TargetInfo(target.Cell, Find.CurrentMap, false);
+                        effecter.Trigger(targetInfo, targetInfo, -1);
+                        if (maintained)
+                        {
+                            Find.CurrentMap.effecterMaintainer.AddEffecterToMaintain(effecter, target.Cell, 1000);
+                        }
+                        else
+                        {
+                            effecter.Cleanup();
+                        }
+                    }
+                }
+
             });
         }
 
@@ -911,6 +941,344 @@ namespace MagicAndMyths
             }
 
             return copy;
+        }
+
+        public string EffecterDefToXmlString(EffecterDef effecterDef)
+        {
+            XmlDocument doc = new XmlDocument();
+
+            // Create root element
+            XmlElement rootElement = doc.CreateElement("EffecterDef");
+            doc.AppendChild(rootElement);
+
+            if (!effecterDef.defName.NullOrEmpty())
+            {
+                XmlElement defNameElement = doc.CreateElement("defName");
+                defNameElement.InnerText = effecterDef.defName;
+                rootElement.AppendChild(defNameElement);
+            }
+
+            if (!effecterDef.label.NullOrEmpty())
+            {
+                XmlElement labelElement = doc.CreateElement("label");
+                labelElement.InnerText = effecterDef.label;
+                rootElement.AppendChild(labelElement);
+            }
+
+            if (!effecterDef.description.NullOrEmpty())
+            {
+                XmlElement descElement = doc.CreateElement("description");
+                descElement.InnerText = effecterDef.description;
+                rootElement.AppendChild(descElement);
+            }
+
+            if (effecterDef.positionRadius != 0f)
+            {
+                XmlElement radiusElement = doc.CreateElement("positionRadius");
+                radiusElement.InnerText = effecterDef.positionRadius.ToString("0.##");
+                rootElement.AppendChild(radiusElement);
+            }
+
+            if (effecterDef.offsetTowardsTarget.min != 0f || effecterDef.offsetTowardsTarget.max != 0f)
+            {
+                XmlElement offsetElement = doc.CreateElement("offsetTowardsTarget");
+                offsetElement.InnerText = FloatRangeToString(effecterDef.offsetTowardsTarget);
+                rootElement.AppendChild(offsetElement);
+            }
+
+            if (effecterDef.maintainTicks != 0)
+            {
+                XmlElement ticksElement = doc.CreateElement("maintainTicks");
+                ticksElement.InnerText = effecterDef.maintainTicks.ToString();
+                rootElement.AppendChild(ticksElement);
+            }
+
+            if (effecterDef.randomWeight != 0f)
+            {
+                XmlElement weightElement = doc.CreateElement("randomWeight");
+                weightElement.InnerText = effecterDef.randomWeight.ToString("0.##");
+                rootElement.AppendChild(weightElement);
+            }
+
+ 
+            if (effecterDef.offsetMode != EffecterDef.OffsetMode.TrueCenterCompensated)
+            {
+                XmlElement modeElement = doc.CreateElement("offsetMode");
+                modeElement.InnerText = effecterDef.offsetMode.ToString();
+                rootElement.AppendChild(modeElement);
+            }
+
+      
+            if (effecterDef.children != null && effecterDef.children.Count > 0)
+            {
+                XmlElement childrenElement = doc.CreateElement("children");
+                rootElement.AppendChild(childrenElement);
+
+                foreach (SubEffecterDef subDef in effecterDef.children)
+                {
+                    XmlElement liElement = doc.CreateElement("li");
+                    childrenElement.AppendChild(liElement);
+                    AddSubEffecterDefToXml(doc, liElement, subDef);
+                }
+            }
+
+            return FormatXml(doc);
+        }
+
+        private void AddSubEffecterDefToXml(XmlDocument doc, XmlElement parent, SubEffecterDef subDef)
+        {
+            if (subDef.subEffecterClass != null)
+            {
+                XmlElement classElement = doc.CreateElement("subEffecterClass");
+                classElement.InnerText = subDef.subEffecterClass.Name;
+                parent.AppendChild(classElement);
+            }
+
+            if (subDef.burstCount.min != 1 || subDef.burstCount.max != 1)
+            {
+                XmlElement burstElement = doc.CreateElement("burstCount");
+                burstElement.InnerText = IntRangeToString(subDef.burstCount);
+                parent.AppendChild(burstElement);
+            }
+
+            if (subDef.ticksBetweenMotes != 0)
+            {
+                XmlElement ticksElement = doc.CreateElement("ticksBetweenMotes");
+                ticksElement.InnerText = subDef.ticksBetweenMotes.ToString();
+                parent.AppendChild(ticksElement);
+            }
+
+
+            if (subDef.maxMoteCount != 0)
+            {
+                XmlElement maxElement = doc.CreateElement("maxMoteCount");
+                maxElement.InnerText = subDef.maxMoteCount.ToString();
+                parent.AppendChild(maxElement);
+            }
+
+
+            if (subDef.initialDelayTicks != 0)
+            {
+                XmlElement delayElement = doc.CreateElement("initialDelayTicks");
+                delayElement.InnerText = subDef.initialDelayTicks.ToString();
+                parent.AppendChild(delayElement);
+            }
+
+            if (subDef.lifespanMaxTicks != 0)
+            {
+                XmlElement lifespanElement = doc.CreateElement("lifespanMaxTicks");
+                lifespanElement.InnerText = subDef.lifespanMaxTicks.ToString();
+                parent.AppendChild(lifespanElement);
+            }
+
+            if (subDef.spawnLocType != MoteSpawnLocType.OnSource)
+            {
+                XmlElement locTypeElement = doc.CreateElement("spawnLocType");
+                locTypeElement.InnerText = subDef.spawnLocType.ToString();
+                parent.AppendChild(locTypeElement);
+            }
+
+            if (subDef.positionOffset != Vector3.zero)
+            {
+                XmlElement offsetElement = doc.CreateElement("positionOffset");
+                offsetElement.InnerText = Vector3ToString(subDef.positionOffset);
+                parent.AppendChild(offsetElement);
+            }
+
+            if (subDef.positionRadius != 0f)
+            {
+                XmlElement radiusElement = doc.CreateElement("positionRadius");
+                radiusElement.InnerText = subDef.positionRadius.ToString("0.##");
+                parent.AppendChild(radiusElement);
+            }
+
+            if (subDef.positionRadiusMin != 0f)
+            {
+                XmlElement radiusMinElement = doc.CreateElement("positionRadiusMin");
+                radiusMinElement.InnerText = subDef.positionRadiusMin.ToString("0.##");
+                parent.AppendChild(radiusMinElement);
+            }
+
+            if (subDef.moteDef != null)
+            {
+                XmlElement moteElement = doc.CreateElement("moteDef");
+                moteElement.InnerText = subDef.moteDef.defName;
+                parent.AppendChild(moteElement);
+            }
+
+            if (subDef.fleckDef != null)
+            {
+                XmlElement fleckElement = doc.CreateElement("fleckDef");
+                fleckElement.InnerText = subDef.fleckDef.defName;
+                parent.AppendChild(fleckElement);
+            }
+
+            if (subDef.color != Color.white)
+            {
+                XmlElement colorElement = doc.CreateElement("color");
+                colorElement.InnerText = ColorToString(subDef.color);
+                parent.AppendChild(colorElement);
+            }
+
+            if (subDef.angle.min != 0f || subDef.angle.max != 0f)
+            {
+                XmlElement angleElement = doc.CreateElement("angle");
+                angleElement.InnerText = FloatRangeToString(subDef.angle);
+                parent.AppendChild(angleElement);
+            }
+
+            if (subDef.absoluteAngle)
+            {
+                XmlElement absAngleElement = doc.CreateElement("absoluteAngle");
+                absAngleElement.InnerText = "true";
+                parent.AppendChild(absAngleElement);
+            }
+
+            if (subDef.speed != null)
+            {
+                XmlElement speedElement = doc.CreateElement("speed");
+                speedElement.InnerText = FloatRangeToString(subDef.speed);
+                parent.AppendChild(speedElement);
+            }
+
+
+            if (subDef.rotation != null)
+            {
+                XmlElement rotationElement = doc.CreateElement("rotation");
+                rotationElement.InnerText = FloatRangeToString(subDef.rotation);
+                parent.AppendChild(rotationElement);
+            }
+
+   
+            if (subDef.rotationRate != null)
+            {
+                XmlElement rotRateElement = doc.CreateElement("rotationRate");
+                rotRateElement.InnerText = FloatRangeToString(subDef.rotationRate);
+                parent.AppendChild(rotRateElement);
+            }
+
+
+            if (subDef.scale != null)
+            {
+                XmlElement scaleElement = doc.CreateElement("scale");
+                scaleElement.InnerText = FloatRangeToString(subDef.scale);
+                parent.AppendChild(scaleElement);
+            }
+
+
+            if (subDef.airTime != null)
+            {
+                XmlElement airTimeElement = doc.CreateElement("airTime");
+                airTimeElement.InnerText = FloatRangeToString(subDef.airTime);
+                parent.AppendChild(airTimeElement);
+            }
+
+
+            if (subDef.soundDef != null)
+            {
+                XmlElement soundElement = doc.CreateElement("soundDef");
+                soundElement.InnerText = subDef.soundDef.defName;
+                parent.AppendChild(soundElement);
+            }
+
+            if (subDef.orbitSnapStrength != 0)
+            {
+                XmlElement orbitSnapStrength = doc.CreateElement("orbitSnapStrength");
+                orbitSnapStrength.InnerText = subDef.orbitSnapStrength.ToString();
+                parent.AppendChild(orbitSnapStrength);
+            }
+
+            if (subDef.orbitSpeed != default(FloatRange))
+            {
+                XmlElement orbitSpeed = doc.CreateElement("orbitSpeed");
+                orbitSpeed.InnerText = subDef.orbitSpeed.ToString();
+                parent.AppendChild(orbitSpeed);
+            }
+
+
+            AddBooleanProperty(doc, parent, "attachToSpawnThing", subDef.attachToSpawnThing);
+            AddBooleanProperty(doc, parent, "useTargetAInitialRotation", subDef.useTargetAInitialRotation);
+            AddBooleanProperty(doc, parent, "useTargetBInitialRotation", subDef.useTargetBInitialRotation);
+            AddBooleanProperty(doc, parent, "fleckUsesAngleForVelocity", subDef.fleckUsesAngleForVelocity);
+            AddBooleanProperty(doc, parent, "rotateTowardsTargetCenter", subDef.rotateTowardsTargetCenter);
+            AddBooleanProperty(doc, parent, "useTargetABodyAngle", subDef.useTargetABodyAngle);
+            AddBooleanProperty(doc, parent, "useTargetBBodyAngle", subDef.useTargetBBodyAngle);
+            AddBooleanProperty(doc, parent, "orbitOrigin", subDef.orbitOrigin);
+            
+            AddBooleanProperty(doc, parent, "makeMoteOnSubtrigger", subDef.makeMoteOnSubtrigger);
+            AddBooleanProperty(doc, parent, "destroyMoteOnCleanup", subDef.destroyMoteOnCleanup);
+            AddBooleanProperty(doc, parent, "subTriggerOnSpawn", subDef.subTriggerOnSpawn);
+            AddBooleanProperty(doc, parent, "isDarkeningEffect", subDef.isDarkeningEffect);
+
+            if (subDef.children != null && subDef.children.Count > 0)
+            {
+                XmlElement childrenElement = doc.CreateElement("children");
+                parent.AppendChild(childrenElement);
+
+                foreach (SubEffecterDef childSubDef in subDef.children)
+                {
+                    XmlElement liElement = doc.CreateElement("li");
+                    childrenElement.AppendChild(liElement);
+                    AddSubEffecterDefToXml(doc, liElement, childSubDef);
+                }
+            }
+        }
+
+        private void AddBooleanProperty(XmlDocument doc, XmlElement parent, string name, bool value)
+        {
+            if (value)
+            {
+                XmlElement element = doc.CreateElement(name);
+                element.InnerText = "true";
+                parent.AppendChild(element);
+            }
+        }
+
+        private string FloatRangeToString(FloatRange range)
+        {
+            if (range.min == range.max)
+            {
+                return range.min.ToString("0.##");
+            }
+            return $"{range.min.ToString("0.##")}~{range.max.ToString("0.##")}";
+        }
+
+        private string IntRangeToString(IntRange range)
+        {
+            if (range.min == range.max)
+            {
+                return range.min.ToString();
+            }
+            return $"{range.min}~{range.max}";
+        }
+
+        private string Vector3ToString(Vector3 vec)
+        {
+            return $"({vec.x.ToString("0.##")},{vec.y.ToString("0.##")},{vec.z.ToString("0.##")})";
+        }
+
+        private string ColorToString(Color color)
+        {
+            return $"({color.r.ToString("0.###")},{color.g.ToString("0.###")},{color.b.ToString("0.###")},{color.a.ToString("0.###")})";
+        }
+
+        public static string FormatXml(XmlDocument doc)
+        {
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                Indent = true,
+                IndentChars = "  ",
+                NewLineChars = "\n",
+                NewLineHandling = NewLineHandling.Replace
+            };
+
+            using (XmlWriter writer = XmlWriter.Create(sb, settings))
+            {
+                doc.Save(writer);
+            }
+
+            return sb.ToString();
         }
     }
 }

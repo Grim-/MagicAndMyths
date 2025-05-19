@@ -15,7 +15,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_PortalBarrage">
+      <li Class="MagicAndMyths.CompProperties_SpawnProjectileProxy">
         <portalDef>MagicAndMyths_ProjectilePortal</portalDef>
         <projectileDef>Projectile_Fireball</projectileDef>
         <portalCount>5</portalCount>
