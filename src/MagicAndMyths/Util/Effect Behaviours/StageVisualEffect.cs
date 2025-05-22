@@ -14,9 +14,9 @@ namespace MagicAndMyths
         private int ticksRemaining;
         private EffecterDef effecterDef;
         private Map map;
-        private Action<IntVec3> forCellAction;
+        private Action<IntVec3, Map, int> forCellAction;
 
-        public void Initialize(List<IntVec3> cells, Map map, int sections, Action<IntVec3> ForCellAction = null, int ticksPerSection = 8)
+        public void Initialize(List<IntVec3> cells, Map map, int sections, Action<IntVec3, Map, int> ForCellAction = null, int ticksPerSection = 8)
         {
             this.cells = new List<IntVec3>(cells);
             this.map = map;
@@ -56,12 +56,12 @@ namespace MagicAndMyths
                 IntVec3 cell = cells[i];
                 if (cell.InBounds(Map))
                 {
-                    forCellAction?.Invoke(cell);         
+                    forCellAction?.Invoke(cell, map, currentSection);         
                 }
             }
         }
 
-        public static StageVisualEffect CreateStageEffect(List<IntVec3> cells, Map map, int sections, Action<IntVec3> ForCellAction, int ticksPerSection = 8)
+        public static StageVisualEffect CreateStageEffect(List<IntVec3> cells, Map map, int sections, Action<IntVec3, Map, int> ForCellAction, int ticksPerSection = 8)
         {
             if (cells.NullOrEmpty())
                 return null;
@@ -84,9 +84,9 @@ namespace MagicAndMyths
             if (effect == null)
                 return null;
 
-            effect.Initialize(cells, map, sections, (IntVec3 cell) =>
+            effect.Initialize(cells, map, sections, (IntVec3 cell, Map targetMap, int sectionIndex) =>
             {
-                effecterDef.Spawn(cell, map);
+                effecterDef.Spawn(cell, targetMap);
             }, ticksPerSection);
 
             GenSpawn.Spawn(effect, cells[0], map);

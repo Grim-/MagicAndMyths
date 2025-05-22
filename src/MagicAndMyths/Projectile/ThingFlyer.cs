@@ -60,6 +60,10 @@ namespace MagicAndMyths
 			}
 		}
 
+
+		private bool ThingWasSelected = false;
+		private bool PawnWasDrafted = false;
+
 		public ThingFlyer()
 		{
 			this.innerContainer = new ThingOwner<Thing>(this);
@@ -137,6 +141,17 @@ namespace MagicAndMyths
 			OnBeforeRespawn?.Invoke(this.destCell, this.throwingPawn);
 			this.innerContainer.TryDrop(flyingThing, this.destCell, map, ThingPlaceMode.Near, out Thing thing, null, null, false);
 			OnRespawn?.Invoke(this.destCell, flyingThing, this.throwingPawn);
+
+
+            if (ThingWasSelected)
+            {
+				Find.Selector.Select(thing);
+            }
+
+            if (PawnWasDrafted && thing is Pawn pawn)
+            {
+				pawn.drafter.Drafted = PawnWasDrafted;
+            }
         }
 
 
@@ -332,6 +347,9 @@ namespace MagicAndMyths
 		/// <returns></returns>
 		public static ThingFlyer LaunchFlyer(ThingFlyer Flyer, Thing thing, IntVec3 spawnCell, Map map)
         {
+
+			bool wasSelected = Find.Selector.IsSelected(thing);
+			bool wasDrafted = thing is Pawn pawn ? pawn.drafter.Drafted : false;
 			if (thing.Spawned)
 			{
 				thing.DeSpawn(DestroyMode.Vanish);
@@ -342,6 +360,9 @@ namespace MagicAndMyths
 				//failed to add
 			}
 
+
+			Flyer.PawnWasDrafted = wasDrafted;
+			Flyer.ThingWasSelected = wasSelected;
 
 			GenSpawn.Spawn(Flyer, spawnCell, map);
 			return Flyer;

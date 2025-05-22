@@ -106,11 +106,13 @@
     <Compile Include="Comps\Ability\CompProperties_AbilityChangeWeather.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilityEffecterOnCaster.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilitySpawnTotem.cs" />
+    <Compile Include="Comps\Ability\CompProperties_AbilityTargetPositionSwap.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilityTeleport.cs" />
+    <Compile Include="Comps\Ability\Jump\CompProperties_ThunderousImpact.cs" />
     <Compile Include="Comps\Ability\Singularity.cs" />
-    <Compile Include="Comps\Ability\WeaponAbility\CompProperties_BaseWeaponAbility.cs" />
+    <Compile Include="Comps\Ability\Jump\CompProperties_BaseJumpEffect.cs" />
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_DealWeaponDamage.cs" />
-    <Compile Include="Comps\Ability\WeaponAbility\CompProperties_LeapAttack.cs" />
+    <Compile Include="Comps\Ability\Jump\CompProperties_LeapAttack.cs" />
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_StarPush.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_Petrification.cs" />
     <Compile Include="Hediff\Hediff_Petrification.cs" />

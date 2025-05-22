@@ -3,15 +3,17 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class CompProperties_DealWeaponDamage : CompProperties_BaseWeaponAbility
+    public class CompProperties_DealWeaponDamage : CompProperties_AbilityEffect
     {
+        public FloatRange weaponDamageMulti = new FloatRange(1, 1);
+
         public CompProperties_DealWeaponDamage()
         {
             compClass = typeof(CompAbilityEffect_DealWeaponDamage);
         }
     }
 
-    public class CompAbilityEffect_DealWeaponDamage : CompAbilityEffect_BaseWeaponAbility
+    public class CompAbilityEffect_DealWeaponDamage : CompAbilityEffect
     {
         CompProperties_DealWeaponDamage Props => (CompProperties_DealWeaponDamage)props;
 

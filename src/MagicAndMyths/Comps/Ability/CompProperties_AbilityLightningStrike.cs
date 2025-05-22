@@ -1,14 +1,14 @@
 ﻿using RimWorld;
+using System.Collections.Generic;
 using Verse;
 
 namespace MagicAndMyths
 {
     public class CompProperties_AbilityLightningStrike : CompProperties_AbilityEffect
     {
-        public bool lightning = true;
-        public float explosionRadius = 3f;
-        public int explosionDamage = 50;
-        public SoundDef soundOnImpact;
+        public float strikeRadius = 3f;
+        public int strikeDamage = 50;
+        public DamageDef strikeDamageDef;
 
         public CompProperties_AbilityLightningStrike()
         {
@@ -19,8 +19,7 @@ namespace MagicAndMyths
 
     public class CompAbilityEffect_LightningStrike : CompAbilityEffect
     {
-        private LightningRingBehavior lightningBehavior;
-        new CompProperties_LightningRing Props => (CompProperties_LightningRing)props;
+        new CompProperties_AbilityLightningStrike Props => (CompProperties_AbilityLightningStrike)props;
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
@@ -28,39 +27,7 @@ namespace MagicAndMyths
             if (parent.pawn?.Map == null)
                 return;
 
-            lightningBehavior = new LightningRingBehavior(
-                Props.rings,
-                target.Cell,
-                parent.pawn.Map,
-                Props.delayTicks
-            );
-        }
-
-        public override void CompTick()
-        {
-            base.CompTick();
-
-            if (lightningBehavior != null)
-            {
-                lightningBehavior?.Tick();
-
-                if (lightningBehavior.IsFinished)
-                {
-                    lightningBehavior = null;
-                }
-            }
-        }
-
-        public override bool Valid(LocalTargetInfo target, bool throwMessages = false)
-        {
-            return parent.pawn?.Map != null && base.Valid(target, throwMessages);
-        }
-
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
-
-            Scribe_Deep.Look(ref lightningBehavior, "lightningTicker");
+            LightningStrike.GenerateLightningStrike(parent.pawn.Map, target.Cell, Props.strikeRadius, out IEnumerable<IntVec3> affectedCells, Props.strikeDamage, 1, Props.strikeDamageDef);
         }
     }
 }

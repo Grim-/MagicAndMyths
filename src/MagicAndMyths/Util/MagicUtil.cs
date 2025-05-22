@@ -279,11 +279,17 @@ namespace MagicAndMyths
 
         public static bool HasWeaponEquipped(this Pawn pawn)
         {
-            return pawn.equipment != null && pawn.equipment.Primary != null && pawn.equipment.PrimaryEq != null;
+            return pawn.def.race.Humanlike && pawn.equipment != null && pawn.equipment.Primary != null && pawn.equipment.PrimaryEq != null;
         }
         public static DamageInfo GetWeaponDamage(this CompEquippable Equippable, Pawn attacker, float damageMultiplier = 1, float overrideArmourPen = -1)
         {
             DamageDef damageDef = Equippable.PrimaryVerb.GetDamageDef();
+
+            if (Equippable.PrimaryVerb == null || Equippable.PrimaryVerb.GetDamageDef() == null)
+            {
+                return default(DamageInfo);
+            }
+
 
             float armourPen = overrideArmourPen > 0 ? overrideArmourPen : Equippable.PrimaryVerb.verbProps.AdjustedArmorPenetration(Equippable.PrimaryVerb, attacker);
 

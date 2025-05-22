@@ -119,6 +119,8 @@ namespace MagicAndMyths
                 pawn.SetFaction(Faction.OfPlayer);
             }
 
+            DraftingUtility.MakeDraftable(pawn);
+
 
             if (pawn.RaceProps.Humanlike)
             {

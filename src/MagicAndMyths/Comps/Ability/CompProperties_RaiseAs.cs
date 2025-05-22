@@ -91,8 +91,13 @@ namespace MagicAndMyths
 
         private void SetupRaisedPawn(Pawn newPawn, IntVec3 spawnPosition)
         {
-            newPawn.story.Childhood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
-            newPawn.story.Adulthood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
+            if (newPawn.story != null)
+            {
+
+                newPawn.story.Childhood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
+                newPawn.story.Adulthood = MagicAndMythDefOf.MagicAndMyths_LesserUndead;
+            }
+
 
             Hediff_Undead undeadHediff = (Hediff_Undead)newPawn.health.GetOrAddHediff(Props.undeadDef.hediff);
             master.SummonCreature(newPawn, spawnPosition);

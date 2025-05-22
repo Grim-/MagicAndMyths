@@ -18,7 +18,6 @@ namespace MagicAndMyths
 
     public class CompAbilityEffect_Fly : CompAbilityEffect
     {
-
         private ThingFlyer flyer;
 
 
@@ -37,7 +36,7 @@ namespace MagicAndMyths
             if (flyer != null)
             {
                 flyer.OnFlightTick -= Flyer_OnFlightTick;
-                flyer.Destroy();
+                if(!flyer.Destroyed) flyer.Destroy();
                 flyer = null;
             }
 
@@ -48,7 +47,7 @@ namespace MagicAndMyths
             if (tagetPosition.IsValid)
             {
 
-                ThingFlyer flyer = ThingFlyer.MakeFlyer(pawn, tagetPosition, map, null, null, this.parent.pawn, this.parent.pawn.DrawPos, false);
+                flyer = ThingFlyer.MakeFlyer(pawn, tagetPosition, map, null, null, this.parent.pawn, this.parent.pawn.DrawPos, false);
                 flyer.OnFlightTick += Flyer_OnFlightTick;
                 ThingFlyer.LaunchFlyer(flyer, pawn, tagetPosition, map);
             }
@@ -64,7 +63,7 @@ namespace MagicAndMyths
                 {
                     if (t != this.parent.pawn)
                     {
-                        DamageInfo damage = t.def.mineable ? new DamageInfo(DamageDefOf.Mining, 344 * 2, 1) : new DamageInfo(DamageDefOf.Blunt, 15, 1);
+                        DamageInfo damage = t.def.mineable ? new DamageInfo(DamageDefOf.Mining, 344 * 2, 1) : new DamageInfo(DamageDefOf.Bomb, 150, 1);
                         t.TakeDamage(damage);
                     }
 

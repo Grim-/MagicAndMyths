@@ -86,29 +86,15 @@ namespace MagicAndMyths
                         thing.TakeDamage(damage);
                     }
 
-
                     if (CanPullThing(thing))
                     {
-                        if (thing is Pawn pawn)
-                        {
-                            TryPullPawn(pawn, currentPullStrength);
-                        }
-                        else if (thing.def.category == ThingCategory.Item && thing.def.EverHaulable)
+                        if (thing is Pawn pawn || thing.def.category == ThingCategory.Item && thing.def.EverHaulable)
                         {
                             TryPullItem(thing, pullDirection, currentPullStrength);
                         }
-
                     }
-
                 }
             }
-        }
-
-        private void TryPullPawn(Pawn pawn, float pullStrength)
-        {
-            ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, pawn, this.Position, pawn.Map, null, null, null, pawn.DrawPos, false);
-            thingFlyer.OnRespawn += ThingFlyer_OnRespawn;
-            ThingFlyer.LaunchFlyer(thingFlyer, pawn, this.Position, pawn.Map);
         }
 
         private void TryPullItem(Thing thing, Vector3 pullDirection, float pullStrength)
@@ -133,7 +119,7 @@ namespace MagicAndMyths
 
             if (thing is Pawn pawn)
             {
-                return !pawn.Dead;
+                return !pawn.Dead && pawn.Downed;
             }
 
             return false;
@@ -152,13 +138,6 @@ namespace MagicAndMyths
                 relativePositions[thing] = Rand.InsideUnitCircleVec3 * 2.2f;
             }
         }
-
-        //protected override void DrawAt(Vector3 drawLoc, bool flip = false)
-        //{
-        //    base.DrawAt(drawLoc, flip);
-
-
-        //}
 
         public override void DynamicDrawPhaseAt(DrawPhase phase, Vector3 drawLoc, bool flip = false)
         {

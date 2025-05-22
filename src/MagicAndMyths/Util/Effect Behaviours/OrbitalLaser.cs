@@ -208,7 +208,7 @@ namespace MagicAndMyths
         {
             hasImpacted = true;
 
-            StageVisualEffect.CreateStageEffect(impactCells, Map, Random.Range(3, 5), (IntVec3 cell) =>
+            StageVisualEffect.CreateStageEffect(impactCells, Map, Random.Range(3, 5), (IntVec3 cell, Map targetMap, int currentSection) =>
             {
                 EffecterDefOf.ImpactSmallDustCloud.Spawn(cell, Map);
 

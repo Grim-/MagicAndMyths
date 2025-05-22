@@ -14,8 +14,9 @@ namespace MagicAndMyths
 
 
 
-            return base.TryCastShot();
+            return true;
         }
+
 
         public override void OnChannelStart(LocalTargetInfo target)
         {
@@ -43,10 +44,10 @@ namespace MagicAndMyths
             {
                 currentBeam.Tick();
             }
+
             if (Find.TickManager.TicksGame % 15 == 0 && this.currentTarget.HasThing)
                 ApplyDamageToTarget(this.currentTarget.Thing, 0.1f);
 
-            // For debugging - log every 60 ticks
             if (channelTicks % 60 == 0)
                 Log.Message("Channel tick: " + channelTicks + " / " + Props.channelDurationTicks);
         }
@@ -87,9 +88,6 @@ namespace MagicAndMyths
 
         private void ApplyDamageToTarget(Thing targetThing, float damageMultiplier)
         {
-            if (!(targetThing is Pawn) || targetThing.Destroyed)
-                return;
-
             float baseDamage = 10f;
 
             DamageInfo dinfo = new DamageInfo(

@@ -34,7 +34,7 @@ namespace MagicAndMyths
 
             List<IntVec3> cells = GenRadial.RadialCellsAround(this.parent.pawn.Position, Props.radius, true).ToList();
 
-            StageVisualEffect.CreateStageEffect(cells, map, 8, (IntVec3 cell) =>
+            StageVisualEffect.CreateStageEffect(cells, map, 8, (IntVec3 cell, Map targetMap, int currentSection) =>
             {
                 EffecterDefOf.ImpactSmallDustCloud.Spawn(cell, map);
 

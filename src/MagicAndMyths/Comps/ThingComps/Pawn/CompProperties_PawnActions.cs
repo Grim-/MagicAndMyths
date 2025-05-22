@@ -23,7 +23,7 @@ namespace MagicAndMyths
     [StaticConstructorOnStartup]
     public class Comp_PawnActions : Comp_PawnActionBase
     {
-        private static Texture2D defaultIcon = ContentFinder<Texture2D>.Get("UI/Commands/Attack", true);
+        private static Texture2D defaultIcon = ContentFinder<Texture2D>.Get("UI/UIThrow");
         private Pawn Pawn => parent as Pawn;
         public CompProperties_PawnActions Props => (CompProperties_PawnActions)props;
 

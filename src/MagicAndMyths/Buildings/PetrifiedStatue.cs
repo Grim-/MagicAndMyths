@@ -108,40 +108,6 @@ namespace MagicAndMyths
             }
         }
 
-        public static PetrifiedStatue PetrifyPawn(ThingDef statueDef, Pawn pawn, IntVec3 position, Map map)
-        {
-            PetrifiedStatue statue = (PetrifiedStatue)ThingMaker.MakeThing(statueDef, null);
-
-            if (statue == null)
-            {
-                return null;
-            }
-
-            if (pawn.Spawned)
-            {
-                pawn.DeSpawn();
-            }
-
-
-            pawn.story.skinColorOverride = Color.gray;
-
-            statue.restoreFaction = pawn.Faction;
-            pawn.SetFaction(null);
-
-            if (!statue.innerContainer.TryAdd(pawn, true))
-            {
-                Log.Error("Failed to add pawn to petrified statue container: " + pawn);
-                return null;
-            }
-
-            GenSpawn.Spawn(statue, position, map);
-            return statue;
-        }
-
-        public static PetrifiedStatue PetrifyPawn(Pawn pawn, IntVec3 position, Map map)
-        {
-            return PetrifyPawn(MagicAndMythDefOf.MagicAndMyths_PetrifiedStatue, pawn, position, map);
-        }
 
         public Pawn UnpetrifyThing(bool destroy = true)
         {
@@ -192,6 +158,40 @@ namespace MagicAndMyths
         public void GetChildHolders(List<IThingHolder> outChildren)
         {
             ThingOwnerUtility.AppendThingHoldersFromThings(outChildren, this.GetDirectlyHeldThings());
+        }
+        public static PetrifiedStatue PetrifyPawn(ThingDef statueDef, Pawn pawn, IntVec3 position, Map map)
+        {
+            PetrifiedStatue statue = (PetrifiedStatue)ThingMaker.MakeThing(statueDef, null);
+
+            if (statue == null)
+            {
+                return null;
+            }
+
+            if (pawn.Spawned)
+            {
+                pawn.DeSpawn();
+            }
+
+
+            pawn.story.skinColorOverride = Color.gray;
+
+            statue.restoreFaction = pawn.Faction;
+            pawn.SetFaction(null);
+
+            if (!statue.innerContainer.TryAdd(pawn, true))
+            {
+                Log.Error("Failed to add pawn to petrified statue container: " + pawn);
+                return null;
+            }
+
+            GenSpawn.Spawn(statue, position, map);
+            return statue;
+        }
+
+        public static PetrifiedStatue PetrifyPawn(Pawn pawn, IntVec3 position, Map map)
+        {
+            return PetrifyPawn(MagicAndMythDefOf.MagicAndMyths_PetrifiedStatue, pawn, position, map);
         }
 
         public override string GetInspectString()

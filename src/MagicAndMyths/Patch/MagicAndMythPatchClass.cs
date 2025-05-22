@@ -305,12 +305,38 @@ namespace MagicAndMyths
             {
                 if (pawn != null)
                 {
-                    __result *= pawn.GetStatValue(MagicAndMythDefOf.Stat_LimbMaxHP);
+                    __result *= Mathf.Clamp(pawn.GetStatValue(MagicAndMythDefOf.Stat_LimbMaxHP), 0.01f, 100000f);
                 }
             }
         }
+        [HarmonyPatch(typeof(VerbProperties), "IsMeleeAttack", MethodType.Getter)]
+        public class VerbProperties_Patch
+        {
+            static bool Prefix(VerbProperties __instance, ref bool __result)
+            {
+                if (__instance.verbClass.IsAssignableFrom(typeof(Verb_LaserBeam)))
+                {
+                    __result = false;
+                    return false;
+                }
 
+                return true;
+            }
+        }
+        [HarmonyPatch(typeof(VerbProperties), "Ranged", MethodType.Getter)]
+        public class VerbProperties_RangedPatch
+        {
+            static bool Prefix(VerbProperties __instance, ref bool __result)
+            {
+                if (__instance.verbClass.IsAssignableFrom(typeof(Verb_LaserBeam)))
+                {
+                    __result = true;
+                    return false;
+                }
 
+                return true;
+            }
+        }
 
         [HarmonyPatch(typeof(Pawn_EquipmentTracker), "EquipmentTrackerTick")]
         public class CompEquippable_BowModeSwitcher_Tick_Patch

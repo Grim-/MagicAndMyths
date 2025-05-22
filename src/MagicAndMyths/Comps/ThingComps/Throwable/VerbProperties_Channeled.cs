@@ -9,7 +9,7 @@ namespace MagicAndMyths
         public JobDef channelJobDef;
     }
 
-    public abstract class Verb_Channeled : Verb_ShootBeam
+    public abstract class Verb_Channeled : Verb
     {
        protected VerbProperties_Channeled Props => (VerbProperties_Channeled)verbProps;
 
@@ -30,7 +30,7 @@ namespace MagicAndMyths
 
         public override bool Available()
         {
-            return !IsOnCooldown && base.Available();
+            return !IsOnCooldown;
         }
 
         protected override bool TryCastShot()
@@ -41,13 +41,38 @@ namespace MagicAndMyths
             }
 
 
-            lastVerbUseTick = Current.Game.tickManager.TicksGame;
-            channelTicks = 0;
 
-            OrderForceTarget(currentTarget);
+
+            TryStartCastOn(currentTarget);
             return true;
         }
 
+
+        public override bool TryStartCastOn(LocalTargetInfo castTarg, LocalTargetInfo destTarg, bool surpriseAttack = false, bool canHitNonTargetPawns = true, bool preventFriendlyFire = false, bool nonInterruptingSelfCast = false)
+        {
+            lastVerbUseTick = Current.Game.tickManager.TicksGame;
+            channelTicks = 0;
+            return base.TryStartCastOn(castTarg, destTarg, surpriseAttack, canHitNonTargetPawns, preventFriendlyFire, nonInterruptingSelfCast);
+        }
+
+        public override bool CanHitTarget(LocalTargetInfo targ)
+        {
+            return base.CanHitTarget(targ);
+        }
+
+        public override void OrderForceTarget(LocalTargetInfo target)
+        {
+            if (!IsOnCooldown)
+            {
+                Job job = JobMaker.MakeJob(Props.channelJobDef, target);
+                job.verbToUse = this;
+                this.CasterPawn.jobs.TryTakeOrderedJob(job, new JobTag?(JobTag.Misc), false);
+            }
+            else
+            {
+                Log.Message("On cooldown");
+            }
+        }
 
         public virtual void OnChannelStart(LocalTargetInfo target)
         {
@@ -71,20 +96,6 @@ namespace MagicAndMyths
         public virtual void OnChannelEnd(LocalTargetInfo target)
         {
             this.Reset();
-        }
-
-        public override void OrderForceTarget(LocalTargetInfo target)
-        {
-            if (!IsOnCooldown)
-            {
-                Job job = JobMaker.MakeJob(Props.channelJobDef, target);
-                job.verbToUse = this;
-                this.CasterPawn.jobs.TryTakeOrderedJob(job, new JobTag?(JobTag.Misc), false);
-            }
-            else
-            {
-                Log.Message("On cooldown");
-            }
         }
 
 
