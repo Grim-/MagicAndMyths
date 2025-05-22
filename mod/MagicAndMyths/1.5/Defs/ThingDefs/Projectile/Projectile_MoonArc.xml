@@ -5,7 +5,7 @@
       <label>moon arc</label>
       <thingClass>Projectile_Explosive</thingClass>
       <graphicData>
-        <texPath>MagicCircles/MoonArc</texPath>
+        <texPath>VFX/Moon</texPath>
         <graphicClass>Graphic_Single</graphicClass>
         <shaderType>MoteGlow</shaderType>
       </graphicData>

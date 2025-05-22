@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <EffecterDef>
+      <defName>MagicAndMyths_PetrificationGas</defName>
+      <children>
+        <li>
+          <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+          <positionRadius>0.2</positionRadius>
+          <burstCount>3~5</burstCount>
+          <speed>4.8~8.4</speed>
+          <scale>0.4~0.6</scale>
+          <moteDef>MagicAndMyths_PetrificationGas</moteDef>
+        </li>
+      </children>
+    </EffecterDef>
+
+    <ThingDef ParentName="MoteBase">
+        <defName>MagicAndMyths_PetrificationGas</defName>
+        <thingClass>MoteThrown</thingClass>
+        <graphicData>
+          <graphicClass>Graphic_Mote</graphicClass>
+          <shaderType>MoteGlow</shaderType>
+          <texPath>VFX/Magic13</texPath>
+          <color>(0, 0.5, 0, 1)</color>
+        </graphicData>
+        <altitudeLayer>MoteOverhead</altitudeLayer>
+        <mote>
+          <fadeInTime>0.1</fadeInTime>
+          <solidTime>1</solidTime>
+          <fadeOutTime>0.4</fadeOutTime>
+          <growthRate>0.1</growthRate>
+        </mote>
+      </ThingDef>
+</Defs>

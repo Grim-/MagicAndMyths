@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>Icicle</defName>
+    <graphicData>
+      <texPath>VFX/Icicle</texPath>
+      <renderInstanced>true</renderInstanced>
+      <shaderType>Transparent</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.3</fadeInTime>
+    <solidTime>10</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+  </FleckDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_MoteSnowPatch</defName>
+      <thingClass>MoteThrown</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_Mote</graphicClass>
+        <shaderType>MoteGlow</shaderType>
+        <texPath>VFX/Snow</texPath>
+      </graphicData>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
+      <mote>
+        <fadeInTime>0.1</fadeInTime>
+        <solidTime>999</solidTime>
+        <fadeOutTime>0.4</fadeOutTime>
+        <growthRate>0</growthRate>
+      </mote>
+    </ThingDef>
+</Defs>

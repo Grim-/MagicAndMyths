@@ -38,6 +38,9 @@
       <li Class="MagicAndMyths.HediffCompProperties_Regeneration">
         <healPerRegenTick>0.1</healPerRegenTick>
         <disruptingDamageTypes>
+            <li>Flame</li>
+            <li>Burn</li>
+            <li>AcidBurn</li>
         </disruptingDamageTypes>
       </li>
       <li Class="HediffCompProperties_DisappearsOnDeath">

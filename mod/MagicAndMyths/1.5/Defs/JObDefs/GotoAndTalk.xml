@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <JobDef>
+    <defName>GotoAndTalk</defName>
+    <driverClass>MagicAndMyths.JobDriver_GoToAndTalk</driverClass>
+    <reportString>talking to.</reportString>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <neverShowWeapon>true</neverShowWeapon>
+  </JobDef>
+
+</Defs>

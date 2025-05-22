@@ -8,7 +8,7 @@
     <injuryProps>
       <painPerSeverity>0.002</painPerSeverity>
       <bleedRate>0</bleedRate>
-      <canMerge>false</canMerge>
+      <canMerge>true</canMerge>
       <destroyedLabel>rotted off</destroyedLabel>
       <destroyedOutLabel>frozen off</destroyedOutLabel>
     </injuryProps>

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
     <ThingDef ParentName="BaseBullet">
-      <defName>Bullet_WandProjectilePurple</defName>
-      <label>wand energy</label>
+      <defName>Projectile_IceShard</defName>
+      <label>shard of ice</label>
       <graphicData>
-        <texPath>Projectiles/MagicBoltPurple</texPath>
+        <texPath>Projectiles/Projectile_IceShard</texPath>
         <graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <projectile>
         <damageDef>Frost</damageDef>
-        <damageAmountBase>12</damageAmountBase>
-        <speed>48</speed>
+        <damageAmountBase>5</damageAmountBase>
+        <speed>50</speed>
+        <arcHeightFactor>0</arcHeightFactor>
       </projectile>
     </ThingDef>
 </Defs>

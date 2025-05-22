@@ -6,13 +6,20 @@
     <externalViolence>true</externalViolence>
         <workerClass>DamageWorker_AddInjury</workerClass>
     <deathMessage>{0} has been electrocuted to death.</deathMessage>
-    <hediff>MagicAndMyths_Shocked</hediff>
-    <hediffSkin>MagicAndMyths_Shocked</hediffSkin>
-    <hediffSolid>MagicAndMyths_Shocked</hediffSolid>
+    <hediff>Burn</hediff>
+    <hediffSkin>Burn</hediffSkin>
+    <hediffSolid>Burn</hediffSolid>
     <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
     <impactSoundType>Blunt</impactSoundType>
     <armorCategory>Blunt</armorCategory>
     <overkillPctToDestroyPart>0.9~1.2</overkillPctToDestroyPart>
+    <additionalHediffs>
+      <li>
+        <hediff>MagicAndMyths_Shocked</hediff>
+        <severityPerDamageDealt>0</severityPerDamageDealt>
+        <severityFixed>0.1</severityFixed>
+      </li>
+    </additionalHediffs>
   </DamageDef>
 
 </Defs>

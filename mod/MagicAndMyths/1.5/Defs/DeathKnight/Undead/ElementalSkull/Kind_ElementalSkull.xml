@@ -3,7 +3,7 @@
   <PawnKindDef>
     <defName>MagicAndMyths_ElementalSkull</defName>
     <label>elemental skull</label>
-    <race>Race_Skull</race>
+    <race>Race_ElementalSkull</race>
     <combatPower>1</combatPower>
     <canArriveManhunter>false</canArriveManhunter>
     <aiAvoidCover>true</aiAvoidCover>
@@ -12,7 +12,7 @@
       <li>
         <bodyGraphicData>
           <texPath>Things/Pawn/Humanlike/Heads/None_Average_Skull</texPath>
-          <drawSize>1</drawSize>
+          <drawSize>2</drawSize>
           <color>(199, 77, 12)</color>
           <shaderType>CutoutComplex</shaderType>
           <shadowData>
@@ -22,7 +22,7 @@
         </bodyGraphicData>
         <dessicatedBodyGraphicData>
           <texPath>Things/Pawn/Humanlike/Heads/None_Average_Skull</texPath>
-          <drawSize>1</drawSize>
+          <drawSize>2</drawSize>
         </dessicatedBodyGraphicData>
       </li>
     </lifeStages>

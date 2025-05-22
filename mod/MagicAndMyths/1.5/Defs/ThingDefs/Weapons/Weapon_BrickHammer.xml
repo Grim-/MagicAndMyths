@@ -42,14 +42,28 @@
         <cooldownTime>3</cooldownTime>
       </li>
     </tools>
+    <!-- <verbs>
+     <li Class="MagicAndMyths.VerbProperties_Channeled">
+       <channelDurationTicks>300</channelDurationTicks>
+       <channelJobDef>MagicAndMyths_ChannelVerb</channelJobDef>
+       <verbClass>MagicAndMyths.Verb_LaserBeam</verbClass>
+       <hasStandardCommand>true</hasStandardCommand>
+       <warmupTime>1</warmupTime>
+       <range>24</range>
+       <targetParams>
+         <canTargetPawns>true</canTargetPawns>
+       </targetParams>
+       <muzzleFlashScale>0</muzzleFlashScale>
+       <label>laser beam</label>
+       <onlyManualCast>false</onlyManualCast>
+     </li>
+   </verbs> -->
     <comps>
       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
         <abilityDefs>
           <li>MagicAndMyths_ChargeAttack</li>
           <li>MagicAndMyths_KnockBack</li>
           <li>MagicAndMyths_LeapSlam</li>
-          <li>MagicAndMyths_Pierce</li>
-          <li>MagicAndMyths_Sunder</li>
           <li>MagicAndMyths_GroundSlam</li>
           <li>MagicAndMyths_WhirlWind</li>
         </abilityDefs>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef>
+    <defName>MagicAndMyths_LesserSkeleton</defName>
+    <label>lesser skeleton</label>
+    <race>MagicAndMyths_LesserSkeleton</race>
+    <combatPower>50</combatPower>
+    <canArriveManhunter>false</canArriveManhunter>
+    <aiAvoidCover>true</aiAvoidCover>
+    <fleeHealthThresholdRange>0~0</fleeHealthThresholdRange>
+    <initialResistanceRange>100~100</initialResistanceRange>
+    <initialWillRange>100~100</initialWillRange>
+    <modExtensions>
+    </modExtensions>
+  </PawnKindDef>
+</Defs>

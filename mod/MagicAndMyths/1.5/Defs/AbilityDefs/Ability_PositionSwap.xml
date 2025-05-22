@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <AbilityDef>
-    <defName>MagicAndMyths_LeapSlam</defName>
-    <label>leap slam</label>
-    <description>Leap to the target location slamming your weapon down dealing weapon damage in a radius around your landing location.</description>
+    <defName>MagicAndMyths_PositionSwap</defName>
+    <label>swap position</label>
+    <description>Surge forward a short distance using the point of your blade, any targets between you and the destination take weapon damage with a chance to apply laceration.</description>
     <iconPath>Projectiles/Projectile_Fireball</iconPath>
-    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
     <cooldownTicksRange>6000</cooldownTicksRange>
     <category>Sanguophage</category>
     <displayOrder>200</displayOrder>
@@ -13,17 +12,19 @@
     <verbProperties>
       <verbClass>Verb_CastAbility</verbClass>
       <range>15</range>
-      <warmupTime>0.1</warmupTime>
+      <warmupTime>0</warmupTime>
       <targetParams>
-        <canTargetLocations>true</canTargetLocations>
+        <canTargetLocations>false</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
         <canTargetItems>true</canTargetItems>
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_ThunderousImpact">
-        <landingEffecterDef>MagicAndMyths_GroundCrater</landingEffecterDef>
+      <li Class="MagicAndMyths.CompProperties_AbilityTargetPositionSwap">
+        <delayTicks>40</delayTicks>
+        <effecter>MagicAndMyths_RavenExplosion</effecter>
       </li>
     </comps>
   </AbilityDef>
+
 </Defs>

@@ -122,23 +122,23 @@
     </BodyDef>
 
 
-      <BodyPartDef>
-        <defName>JibberingSkull</defName>
-        <label>skull</label>
-        <hitPoints>100</hitPoints>
-        <skinCovered>true</skinCovered>
-        <canScarify>true</canScarify>
-        <canSuggestAmputation>false</canSuggestAmputation>
-        <executionPartPriority>400</executionPartPriority>
-        <tags>
-          <li>ManipulationLimbCore</li>
-          <li>MovingLimbCore</li>
-          <li>ManipulationLimbSegment</li>
-          <li>ManipulationLimbCore</li>
-          <li>BreathingSource</li>
-          <li>ConsciousnessSource</li>
-          <li>BloodPumpingSource</li>
-        </tags>
-            <alive>false</alive>
-      </BodyPartDef>
+    <BodyPartDef>
+      <defName>JibberingSkull</defName>
+      <label>skull</label>
+      <hitPoints>100</hitPoints>
+      <skinCovered>true</skinCovered>
+      <canScarify>true</canScarify>
+      <canSuggestAmputation>false</canSuggestAmputation>
+      <executionPartPriority>400</executionPartPriority>
+      <tags>
+        <li>ManipulationLimbCore</li>
+        <li>MovingLimbCore</li>
+        <li>ManipulationLimbSegment</li>
+        <li>ManipulationLimbCore</li>
+        <li>BreathingSource</li>
+        <li>ConsciousnessSource</li>
+        <li>BloodPumpingSource</li>
+      </tags>
+          <alive>false</alive>
+    </BodyPartDef>
 </Defs>

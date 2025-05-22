@@ -4,7 +4,6 @@
     <defName>MagicAndMyths_Shocked</defName>
     <label>shocked</label>
     <description>This pawn has been struck by lightning. Electrical energy courses through their body, causing intense pain and slowing their movements.</description>
-        <hediffClass>Hediff_Injury</hediffClass>
     <stages>
       <li>
         <painFactor>1.6</painFactor>

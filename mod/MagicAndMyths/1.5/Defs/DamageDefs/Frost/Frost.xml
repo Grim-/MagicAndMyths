@@ -4,15 +4,22 @@
     <defName>Frost</defName>
     <label>frost</label>
     <externalViolence>true</externalViolence>
-        <workerClass>DamageWorker_AddInjury</workerClass>
+    <workerClass>MagicAndMyths.DamageWorker_AddOrUpdateHediffSeverity</workerClass>
     <deathMessage>{0} has been frozen to death.</deathMessage>
-    <hediff>MagicAndMyths_ChillBlains</hediff>
-    <hediffSkin>MagicAndMyths_ChillBlains</hediffSkin>
-    <hediffSolid>MagicAndMyths_ChillBlains</hediffSolid>
+    <hediff>Cut</hediff>
+    <hediffSkin>Cut</hediffSkin>
+    <hediffSolid>Cut</hediffSolid>
     <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
     <impactSoundType>Blunt</impactSoundType>
-    <armorCategory>Blunt</armorCategory>
+    <armorCategory>Sharp</armorCategory>
     <overkillPctToDestroyPart>0.7~1.0</overkillPctToDestroyPart>
+    <additionalHediffs>
+      <li>
+        <hediff>MagicAndMyths_ChillBlains</hediff>
+        <severityPerDamageDealt>0</severityPerDamageDealt>
+        <severityFixed>0.1</severityFixed>
+      </li>
+    </additionalHediffs>
   </DamageDef>
 
 </Defs>

@@ -56,11 +56,4 @@
       </nodes>
     </root>
   </QuestScriptDef>
-  <JobDef>
-    <defName>GotoAndTalk</defName>
-    <driverClass>MagicAndMyths.JobDriver_GoToAndTalk</driverClass>
-    <reportString>talking to.</reportString>
-    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
-    <neverShowWeapon>true</neverShowWeapon>
-  </JobDef>
 </Defs>

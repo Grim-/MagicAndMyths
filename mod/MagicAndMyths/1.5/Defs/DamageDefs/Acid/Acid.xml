@@ -8,7 +8,7 @@
     <hediff>MagicAndMyths_AcidBurn</hediff>
     <hediffSkin>MagicAndMyths_AcidBurn</hediffSkin>
     <hediffSolid>MagicAndMyths_AcidBurn</hediffSolid>
-    <defaultDamage>100</defaultDamage>
+    <defaultDamage>9</defaultDamage>
     <scaleDamageToBuildingsBasedOnFlammability>false</scaleDamageToBuildingsBasedOnFlammability>
   </DamageDef>
 </Defs>

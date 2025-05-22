@@ -26,10 +26,10 @@
       <li>
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
-        <defaultProjectile>Bullet_WandProjectilePurple</defaultProjectile>
+        <defaultProjectile>Projectile_IceShard</defaultProjectile>
         <warmupTime>0.9</warmupTime>
-        <range>22.9</range>
-        <burstShotCount>3</burstShotCount>
+        <range>15</range>
+        <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>11</ticksBetweenBurstShots>
         <soundCast>Shot_HeavySMG</soundCast>
         <soundCastTail>GunTail_Heavy</soundCastTail>

@@ -18,7 +18,7 @@
       <defName>MagicAndMyths_MotePortal</defName>
       <thingClass>MoteAttached</thingClass>
       <graphicData>
-        <texPath>VFX/Portal</texPath>
+        <texPath>VFX/Portal3</texPath>
         <graphicClass>Graphic_Single_SquashNStretch</graphicClass>
         <drawSize>2</drawSize>
         <color>(0.004, 0.843, 1)</color>
@@ -26,7 +26,7 @@
         <shaderParameters>
           <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
           <_distortionScale>0.17</_distortionScale>
-          <_distortionIntensity>0.14</_distortionIntensity>
+          <_distortionIntensity>0.44</_distortionIntensity>
           <_brightnessMultiplier>1.1</_brightnessMultiplier>
           <_pulseSpeed>50</_pulseSpeed>
         </shaderParameters>
