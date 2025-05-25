@@ -3,6 +3,8 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
+
     public static class ColorWidgets
     {
         public static Color ColorField(Rect rect, Color color)

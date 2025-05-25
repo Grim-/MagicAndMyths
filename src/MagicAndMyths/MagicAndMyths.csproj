@@ -52,6 +52,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0TaranMagicFramework">
+      <HintPath>D:\Games\RimWorld\Mods\3025338958\1.5\Assemblies\0TaranMagicFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -94,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\AbilityRadialPagerSettings.cs" />
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
     <Compile Include="AI\JobDriver_JumpOverObstacle.cs" />
     <Compile Include="AI\JobDriver_UnlockDoor.cs" />
@@ -116,9 +121,12 @@
     <Compile Include="Comps\Ability\WeaponAbility\CompProperties_StarPush.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_Petrification.cs" />
     <Compile Include="Hediff\Hediff_Petrification.cs" />
+    <Compile Include="MagicAndMythsMod.cs" />
     <Compile Include="UI\ColorWidgets.cs" />
     <Compile Include="UI\EffecterDefEditorWindow.cs" />
+    <Compile Include="UI\GizmoGridPager.cs" />
     <Compile Include="UI\MoteEditorWindow.cs" />
+    <Compile Include="UI\RadialMenuWindow.cs" />
     <Compile Include="Util\Effect Behaviours\StageVisualEffect.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectPetrify.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectUnPetrify.cs" />
