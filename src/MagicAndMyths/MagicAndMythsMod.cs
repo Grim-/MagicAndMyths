@@ -37,6 +37,12 @@ namespace MagicAndMyths
             listingStandard.Label("Menu Layout Settings");
             listingStandard.Gap(6f);
 
+
+
+            listingStandard.Label($"Radius: {settings.baseRadius}");
+            settings.baseRadius = listingStandard.Slider(settings.baseRadius, 20f, 100f);
+            listingStandard.Gap(4f);
+
             listingStandard.Label($"Items per page: {settings.itemsPerPage}");
             settings.itemsPerPage = Mathf.RoundToInt(listingStandard.Slider(settings.itemsPerPage, 1, 50));
             listingStandard.Gap(4f);

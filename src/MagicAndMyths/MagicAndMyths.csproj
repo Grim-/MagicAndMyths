@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comps\Game\GameComp_RadialFavouritesTracker.cs" />
     <Compile Include="UI\AbilityRadialPagerSettings.cs" />
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
     <Compile Include="AI\JobDriver_JumpOverObstacle.cs" />

@@ -11,12 +11,19 @@ namespace MagicAndMyths
         private Mote warmupMote;
 
         protected ThingWithComps TargetThing => (ThingWithComps)this.job.GetTarget(TargetIndex.A);
-        protected Comp_Artifact ArtifactComp => TargetThing.TryGetComp<Comp_Artifact>();
+        protected Comp_Artifact ArtifactComp => TargetThing?.TryGetComp<Comp_Artifact>();
 
         public override void Notify_Starting()
         {
             base.Notify_Starting();
-            this.useDuration = ArtifactComp.Props.useDuration;
+
+            if (ArtifactComp != null)
+            {
+                this.useDuration = ArtifactComp.Props.useDuration;
+            }
+            else
+                this.useDuration = 100;
+
         }
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -28,15 +35,20 @@ namespace MagicAndMyths
         protected override IEnumerable<Toil> MakeNewToils()
         {
             this.FailOnIncapable(PawnCapacityDefOf.Manipulation);
+
+            this.FailOn(() => TargetThing == null);
+
+            this.FailOn(() => ArtifactComp == null);
+
             this.FailOn(() => !ArtifactComp.CanBeUsedNow(this.pawn));
 
-            yield return Toils_Goto.GotoThing(TargetIndex.A, base.TargetThingA.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch);
+            yield return Toils_Goto.GotoThing(TargetIndex.A, TargetThing.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch);
 
             Toil takeSingleItem = ToilMaker.MakeToil("TakeSingleItem");
             takeSingleItem.initAction = delegate ()
             {
                 Thing targetThing = takeSingleItem.actor.CurJob.targetA.Thing;
-                if (targetThing.stackCount > 1)
+                if (targetThing != null && targetThing.stackCount > 1)
                 {
                     Thing singleItem = targetThing.SplitOff(1);
                     IntVec3 spawnCell = targetThing.Position + GenAdj.CardinalDirections.RandomElement();
@@ -93,7 +105,7 @@ namespace MagicAndMyths
             Toil toil = Toils_General.Wait(this.useDuration, TargetIndex.A);
             toil.WithProgressBarToilDelay(TargetIndex.A, false, -0.5f);
             toil.FailOnDespawnedNullOrForbidden(TargetIndex.A);
-            toil.FailOnCannotTouch(TargetIndex.A, base.TargetThingA.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch);
+            toil.FailOnCannotTouch(TargetIndex.A, TargetThing.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch);
             toil.handlingFacing = true;
             toil.tickAction = delegate ()
             {

@@ -10,6 +10,10 @@ namespace MagicAndMyths
         protected Dictionary<int, DungeonMapParent> DungeonMaps = new Dictionary<int, DungeonMapParent>();
         public static Map StartingColonyMap => Find.Maps.First(x => x.IsPlayerHome);
 
+
+        private List<int> workingKeys;
+        private List<DungeonMapParent> workingValues;
+
         public WorldComp_DungeonManager(World world) : base(world)
         {
 
@@ -124,7 +128,7 @@ namespace MagicAndMyths
         {
             base.ExposeData();
 
-            Scribe_Collections.Look(ref DungeonMaps, "dungeonMaps", LookMode.Value, LookMode.Reference);
+            Scribe_Collections.Look(ref DungeonMaps, "dungeonMaps", LookMode.Value, LookMode.Reference, ref workingKeys, ref workingValues);
         }
     }
 }

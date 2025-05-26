@@ -13,7 +13,7 @@ namespace MagicAndMyths
     public static class AbilityRadialPager
     {
         private static Texture2D RadialIcon => TexCommand.Draft;
-        private static Texture2D FavoritesIcon => TexButton.Info;
+        private static Texture2D FavoritesIcon => TexButton.Plus;
         private static AbilityRadialPagerSettings Settings => MagicAndMythsMod.Settings;
 
         static AbilityRadialPager()
@@ -24,25 +24,34 @@ namespace MagicAndMyths
                 prefix: new HarmonyMethod(typeof(AbilityRadialPager), nameof(GizmoGridPatchPrefix))
             );
         }
-   
-
 
         public static bool GizmoGridPatchPrefix(ref IEnumerable<Gizmo> gizmos, float startX, out Gizmo mouseoverGizmo,
             Func<Gizmo, bool> customActivatorFunc, Func<Gizmo, bool> highlightFunc, Func<Gizmo, bool> lowlightFunc, bool multipleSelected)
         {
             mouseoverGizmo = null;
-            if (Event.current.type == EventType.Layout || Find.Selector.SelectedPawns.Count > 1 || Settings != null && !Settings.IsEnabled)
+            if (Event.current.type == EventType.Layout || !(Find.Selector.SingleSelectedObject is Pawn) || Find.Selector.SelectedPawns.Count > 1 || Settings != null && !Settings.IsEnabled)
                 return true;
 
-            Pawn selectedPAwn = Find.Selector.SelectedPawns[0];
+            Pawn selectedPawn = Find.Selector.SelectedPawns[0];
+            if (selectedPawn == null)
+            {
+                return true;
+            }
+
             var gizmoList = gizmos.ToList();
             var abilityGizmos = gizmoList.Where(x => IsAbilityGizmo(x)).Cast<Command>().ToList();
             var nonAbilityGizmos = gizmoList.Where(g => !IsAbilityGizmo(g)).ToList();
 
             if (abilityGizmos.Any())
             {
-                var radialGizmo = CreateRadialMenuGizmo(selectedPAwn, abilityGizmos);
+                var radialGizmo = CreateRadialMenuGizmo(selectedPawn, abilityGizmos);
                 nonAbilityGizmos.Add(radialGizmo);
+            }
+
+            if (Current.Game.GetComponent<GameComp_RadialFavouritesTracker>().HasAnyFavourites(selectedPawn))
+            {
+                var favoritesGizmo = CreateFavouriteRadialMenuGizmo(selectedPawn, abilityGizmos);
+                nonAbilityGizmos.Add(favoritesGizmo);
             }
 
             gizmos = nonAbilityGizmos;
@@ -54,7 +63,6 @@ namespace MagicAndMyths
             return gizmo is Command_Ability || gizmo is CommandAbility;
         }
 
-
         private static Command_Action CreateRadialMenuGizmo(Pawn pawn, List<Command> abilityGizmos)
         {
             return new Command_Action
@@ -62,114 +70,75 @@ namespace MagicAndMyths
                 defaultLabel = "Abilities",
                 defaultDesc = "Open radial ability menu",
                 icon = RadialIcon,
-                hotKey = Settings.radialMenuHotKey ?? KeyBindingDefOf.Misc1,
+                hotKey = KeyBindingDefOf.Misc1,
                 action = () => OpenRadialMenu(pawn, abilityGizmos),
                 Order = -100
             };
         }
 
+        private static Command_Action CreateFavouriteRadialMenuGizmo(Pawn pawn, List<Command> abilityGizmos)
+        {
+            return new Command_Action
+            {
+                defaultLabel = "Favourites",
+                defaultDesc = "Open favorite abilities",
+                icon = FavoritesIcon,
+                hotKey = KeyBindingDefOf.Misc2,
+                action = () => OpenFavoritesMenu(pawn, abilityGizmos),
+                Order = -99
+            };
+        }
+
         private static void OpenRadialMenu(Pawn pawn, List<Command> abilityGizmos)
         {
-            var menuItems = BuildAbilityMenuItems(pawn, abilityGizmos);
-            if (menuItems.Any())
+            if (abilityGizmos.Any())
             {
-                RadialMenuWindow.Show(menuItems, false);
+                RadialMenuWindow.ShowFromGizmos(pawn, abilityGizmos, false);
             }
         }
 
-        private static List<RadialMenuItem> BuildAbilityMenuItems(Pawn pawn, List<Command> abilityGizmos)
+        private static void OpenFavoritesMenu(Pawn pawn, List<Command> abilityGizmos)
         {
-            var categoryGroups = abilityGizmos
-                .GroupBy(g => GetAbilityCategory(g))
-                .OrderBy(group => group.Key)
-                .ToList();
+            var favoritesTracker = Current.Game.GetComponent<GameComp_RadialFavouritesTracker>();
+            var favoriteDefNames = favoritesTracker.PawnAbilityFavourites.ContainsKey(pawn)
+                ? favoritesTracker.PawnAbilityFavourites[pawn]
+                : new List<string>();
 
-            var menuItems = new List<RadialMenuItem>();
+            List<RadialMenuItem> favoriteItems = new List<RadialMenuItem>();
 
-            foreach (var categoryGroup in categoryGroups)
+            foreach (var gizmo in abilityGizmos)
             {
-                var categoryItem = new RadialMenuItem(
-                    pawn,
-                    categoryGroup.Key,
-                    "",
-                   categoryGroup.First().icon as Texture2D
-                );
-
-                foreach (var abilityGizmo in categoryGroup.OrderBy(g => GetGizmoLabel(g)))
+                string defName = GetAbilityDefName(gizmo);
+                if (!string.IsNullOrEmpty(defName) && favoriteDefNames.Contains(defName))
                 {
-                    RadialMenuItem abilityItem = new RadialMenuItem(
+                    RadialMenuItem favoriteItem = new RadialMenuItem(
                         pawn,
-                        GetGizmoLabel(abilityGizmo),
-                        GetAbilityDescription(abilityGizmo),
-                        abilityGizmo.icon as Texture2D,
-                        () => ExecuteAbilityGizmo(abilityGizmo),
-                        abilityGizmo)
+                        GetGizmoLabel(gizmo),
+                        GetAbilityDescription(gizmo),
+                        gizmo.icon as Texture2D,
+                        () => ExecuteAbilityGizmo(gizmo))
                     {
-                        enabled = !abilityGizmo.Disabled,
-                        color = abilityGizmo.Disabled ? Color.gray : Color.white
+                        sourceGizmo = gizmo,
+                        defName = defName
                     };
 
-                    categoryItem.subItems.Add(abilityItem);
-                }
-
-                if (categoryItem.subItems.Count == 1)
-                {
-                    var singleAbility = categoryItem.subItems.First();
-                    singleAbility.label = categoryGroup.Key;
-                    menuItems.Add(singleAbility);
-                }
-                else if (categoryItem.subItems.Any())
-                {
-                    menuItems.Add(categoryItem);
+                    favoriteItems.Add(favoriteItem);
                 }
             }
 
-            return menuItems;
-        }
-
-        private static List<RadialMenuItem> BuildFavoriteMenuItems(Pawn pawn, List<Command> favoriteAbilities)
-        {
-            var menuItems = new List<RadialMenuItem>();
-
-            foreach (var abilityGizmo in favoriteAbilities.OrderBy(g => GetGizmoLabel(g)))
+            if (favoriteItems.Any())
             {
-                RadialMenuItem abilityItem = new RadialMenuItem(
-                    pawn,
-                    GetGizmoLabel(abilityGizmo),
-                    GetAbilityDescription(abilityGizmo),
-                    abilityGizmo.icon as Texture2D,
-                    () => ExecuteAbilityGizmo(abilityGizmo),
-                    abilityGizmo)
-                {
-                    enabled = !abilityGizmo.Disabled,
-                    color = abilityGizmo.Disabled ? Color.gray : Color.white
-                };
-
-                menuItems.Add(abilityItem);
+                RadialMenuWindow.Show(favoriteItems, true);
             }
-
-            return menuItems;
+            else
+            {
+                Messages.Message("No favorite abilities found.", MessageTypeDefOf.RejectInput);
+            }
         }
 
         private static string GetGizmoLabel(Command gizmo)
         {
             return gizmo.Label;
-        }
-
-        private static string GetAbilityCategory(Command command)
-        {
-            if (command is CommandAbility commandAbility)
-            {
-                return commandAbility.Ability.def.abilityTrees.First().label;
-            }
-            else if (command is Command_Ability commandAbi)
-            {
-                if (commandAbi.Ability != null && commandAbi.Ability.def != null && commandAbi.Ability.def.category != null)
-                {
-                    return commandAbi.Ability.def.category.defName;
-                }
-            }
-            return "";
         }
 
         private static string GetAbilityDescription(Command command)
@@ -199,6 +168,21 @@ namespace MagicAndMyths
                 Log.Message(abilityGizmo.disabledReason);
             }
         }
-    }
 
+        private static string GetAbilityDefName(Command command)
+        {
+            if (command is CommandAbility commandAbility)
+            {
+                return commandAbility.Ability.def.defName;
+            }
+            else if (command is Command_Ability commandAbi)
+            {
+                if (commandAbi.Ability != null && commandAbi.Ability.def != null)
+                {
+                    return commandAbi.Ability.def.defName;
+                }
+            }
+            return "";
+        }
+    }
 }

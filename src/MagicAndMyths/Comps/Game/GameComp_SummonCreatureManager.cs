@@ -4,6 +4,8 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
+
     public class GameComp_SummonCreatureManager : GameComponent
     {
         private List<SummonCreatureData> summonCreatureDatas = new List<SummonCreatureData>();
@@ -95,13 +97,11 @@ namespace MagicAndMyths
             if (summonCreatureDatas == null || master == null)
                 return null;
 
-            // Try direct reference check first (faster and more reliable when it works)
             SummonCreatureData data = summonCreatureDatas.FirstOrDefault(x => x.Master == master);
 
             if (data != null)
                 return data;
 
-            // Fallback to ThingID check
             return summonCreatureDatas.FirstOrDefault(x =>
                 x.Master != null && master != null && x.Master.ThingID == master.ThingID);
         }
@@ -118,38 +118,26 @@ namespace MagicAndMyths
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                // Initialize if null
                 if (summonCreatureDatas == null)
                     summonCreatureDatas = new List<SummonCreatureData>();
 
-                // Clean up the collection
                 summonCreatureDatas.RemoveAll(data => data == null || data.Master == null);
 
-                // THIS is likely the key fix - when loading in-game, the Master references might
-                // point to different instances than the ones being used by the game
-                // We need to sync them with the actual in-game instances
                 for (int i = 0; i < summonCreatureDatas.Count; i++)
                 {
                     var data = summonCreatureDatas[i];
-
-                    // Find the actual in-game pawn instance that corresponds to this Master
-                    // This corrects the reference to point to the actual in-game object
                     Pawn actualMaster = FindActualPawnInstance(data.Master);
                     if (actualMaster != null && actualMaster != data.Master)
                     {
-                        // Replace with the correct in-game reference
                         data.Master = actualMaster;
                     }
                 }
             }
         }
-
-        // Helper method to find the actual in-game pawn instance
         private Pawn FindActualPawnInstance(Pawn originalRef)
         {
             if (originalRef == null) return null;
 
-            // Look for pawns with the same ThingID in all maps and in world pawns
             foreach (Map map in Find.Maps)
             {
                 foreach (Pawn p in map.mapPawns.AllPawnsSpawned)
@@ -166,7 +154,7 @@ namespace MagicAndMyths
                     return p;
             }
 
-            return originalRef; // Fall back to original if not found
+            return originalRef;
         }
     }
 

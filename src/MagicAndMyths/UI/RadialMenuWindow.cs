@@ -16,26 +16,30 @@ namespace MagicAndMyths
         public Action action;
         public List<RadialMenuItem> subItems;
         public Color color = Color.white;
-        public bool enabled = true;
-        public Command originalCommand;
         public string abilityId;
         public Pawn parentPawn;
+        public Command sourceGizmo;
+        public string defName;
 
-        public RadialMenuItem(Pawn pawn, string label, string description = "", Texture2D icon = null, Action action = null, Command originalCommand = null)
+        public int order = 100;
+
+        public RadialMenuItem(Pawn pawn, string label, string description = "", Texture2D icon = null, Action action = null, int order = 100)
         {
             this.parentPawn = pawn;
             this.label = label;
             this.description = description;
             this.icon = icon;
             this.action = action;
-            this.originalCommand = originalCommand;
+            this.order = order;
             this.subItems = new List<RadialMenuItem>();
         }
 
         public bool HasSubItems => subItems != null && subItems.Count > 0;
+        public bool IsFavoritable => !string.IsNullOrEmpty(defName) && sourceGizmo != null;
     }
 
 
+    [StaticConstructorOnStartup]
     public class RadialMenuWindow : Window
     {
         private List<RadialMenuItem> allMenuItems;
@@ -45,8 +49,10 @@ namespace MagicAndMyths
         private Vector2 currentWindowSize;
         private Vector2 centerPosition => new Vector2(this.windowRect.size.x / 2, this.windowRect.size.y / 2 - Settings.heightOffset);
         private bool isFavoritesMenu;
+        private Pawn sourcePawn;
 
         private AbilityRadialPagerSettings Settings => MagicAndMythsMod.Settings;
+        private GameComp_RadialFavouritesTracker FavoritesTracker => Current.Game.GetComponent<GameComp_RadialFavouritesTracker>();
 
         private int itemsPerPage => Settings.itemsPerPage;
         private int currentPage = 0;
@@ -57,8 +63,7 @@ namespace MagicAndMyths
         private float SpacePerItem => Mathf.Lerp(Settings.maxSpacePerItem, Settings.minSpacePerItem,
             Mathf.InverseLerp(Settings.minPageCount, Settings.maxPageCount, currentPageItems.Count));
 
-
-        private float baseRadius = 50f;
+        private float baseRadius => Settings.baseRadius;
 
         private float radius => baseRadius + (currentPageItems.Count * SpacePerItem);
 
@@ -67,12 +72,33 @@ namespace MagicAndMyths
 
         private int hoveredIndex = -1;
 
-
         protected static Texture2D BackgroundTex = ContentFinder<Texture2D>.Get("UI/RadialBG");
 
         public RadialMenuWindow(List<RadialMenuItem> menuItems, bool isFavoritesMenu = false)
         {
-            this.allMenuItems = menuItems;
+            this.allMenuItems = menuItems.OrderBy(x => x.order).ToList();
+            this.isFavoritesMenu = isFavoritesMenu;
+            this.sourcePawn = menuItems.FirstOrDefault()?.parentPawn;
+            this.menuStack = new Stack<List<RadialMenuItem>>();
+            this.pageStack = new Stack<int>();
+            this.currentPage = 0;
+            UpdateCurrentPageItems();
+            this.currentWindowSize = CalculateWindowSize();
+            this.doWindowBackground = false;
+            this.doCloseX = false;
+            this.doCloseButton = false;
+            this.absorbInputAroundWindow = true;
+            this.closeOnClickedOutside = true;
+            this.forcePause = false;
+            this.preventCameraMotion = false;
+            this.layer = WindowLayer.Super;
+            this.drawShadow = false;
+        }
+
+        public RadialMenuWindow(Pawn pawn, List<Command> abilityGizmos, bool isFavoritesMenu = false)
+        {
+            this.sourcePawn = pawn;
+            this.allMenuItems = BuildAbilityMenuItems(pawn, abilityGizmos);
             this.isFavoritesMenu = isFavoritesMenu;
             this.menuStack = new Stack<List<RadialMenuItem>>();
             this.pageStack = new Stack<int>();
@@ -92,18 +118,186 @@ namespace MagicAndMyths
 
         public override Vector2 InitialSize => currentWindowSize;
 
+        private List<RadialMenuItem> BuildAbilityMenuItems(Pawn pawn, List<Command> abilityGizmos)
+        {
+            var categoryGroups = abilityGizmos
+                .GroupBy(g => GetAbilityCategory(g))
+                .OrderBy(group => group.Key)
+                .ToList();
+
+            List<RadialMenuItem> menuItems = new List<RadialMenuItem>();
+
+            foreach (var categoryGroup in categoryGroups)
+            {
+                var categoryItem = new RadialMenuItem(
+                    pawn,
+                    categoryGroup.Key,
+                    "",
+                    categoryGroup.First().icon as Texture2D
+                );
+
+                foreach (var abilityGizmo in categoryGroup)
+                {
+                    RadialMenuItem abilityItem = new RadialMenuItem(
+                        pawn,
+                        GetGizmoLabel(abilityGizmo),
+                        GetAbilityDescription(abilityGizmo),
+                        abilityGizmo.icon as Texture2D,
+                        () => ExecuteAbilityGizmo(abilityGizmo))
+                    {
+                        sourceGizmo = abilityGizmo,
+                        defName = GetAbilityDefName(abilityGizmo)
+                    };
+
+                    categoryItem.subItems.Add(abilityItem);
+                }
+
+                if (categoryItem.subItems.Count == 1)
+                {
+                    var singleAbility = categoryItem.subItems.First();
+                    singleAbility.label = categoryGroup.Key;
+                    menuItems.Add(singleAbility);
+                }
+                else if (categoryItem.subItems.Any())
+                {
+                    menuItems.Add(categoryItem);
+                }
+            }
+
+            menuItems.Add(new RadialMenuItem(pawn, "Favourites", "Favourites", null, () => OpenFavoritesMenu(), 20));
+
+            return menuItems.OrderBy(x => x.order).ToList();
+        }
+
+        private string GetAbilityDefName(Command command)
+        {
+            if (command is CommandAbility commandAbility)
+            {
+                return commandAbility.Ability.def.defName;
+            }
+            else if (command is Command_Ability commandAbi)
+            {
+                if (commandAbi.Ability != null && commandAbi.Ability.def != null)
+                {
+                    return commandAbi.Ability.def.defName;
+                }
+            }
+            return "";
+        }
+
+        private void OpenFavoritesMenu()
+        {
+            if (sourcePawn == null) return;
+
+            var favoriteDefNames = FavoritesTracker.PawnAbilityFavourites.ContainsKey(sourcePawn)
+                ? FavoritesTracker.PawnAbilityFavourites[sourcePawn]
+                : new List<string>();
+
+            List<RadialMenuItem> favoriteItems = new List<RadialMenuItem>();
+
+            foreach (var menuItem in GetAllAbilityItems(allMenuItems))
+            {
+                if (!string.IsNullOrEmpty(menuItem.defName) && favoriteDefNames.Contains(menuItem.defName))
+                {
+                    favoriteItems.Add(menuItem);
+                }
+            }
+
+            if (favoriteItems.Any())
+            {
+                RadialMenuWindow favWindow = new RadialMenuWindow(favoriteItems, true);
+                Find.WindowStack.Add(favWindow);
+                favWindow.windowRect.x = UI.screenWidth / 2f - favWindow.currentWindowSize.x / 2f;
+                favWindow.windowRect.y = (UI.screenHeight / 2f - favWindow.currentWindowSize.y / 2f) - Settings.heightOffset;
+                Close();
+            }
+            else
+            {
+                Messages.Message("No favorite abilities found.", MessageTypeDefOf.RejectInput);
+            }
+        }
+
+        private List<RadialMenuItem> GetAllAbilityItems(List<RadialMenuItem> items)
+        {
+            List<RadialMenuItem> result = new List<RadialMenuItem>();
+            foreach (var item in items)
+            {
+                if (item.HasSubItems)
+                {
+                    result.AddRange(GetAllAbilityItems(item.subItems));
+                }
+                else if (item.sourceGizmo != null)
+                {
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        private string GetGizmoLabel(Command gizmo)
+        {
+            return gizmo.Label;
+        }
+
+        private string GetAbilityCategory(Command command)
+        {
+            if (command is CommandAbility commandAbility)
+            {
+                return commandAbility.Ability.def.abilityTrees.First().label;
+            }
+            else if (command is Command_Ability commandAbi)
+            {
+                if (commandAbi.Ability != null && commandAbi.Ability.def != null && commandAbi.Ability.def.category != null)
+                {
+                    return commandAbi.Ability.def.category.defName;
+                }
+            }
+            return "";
+        }
+
+        private string GetAbilityDescription(Command command)
+        {
+            if (command is CommandAbility commandAbility)
+            {
+                return commandAbility.Ability.def.description;
+            }
+            else if (command is Command_Ability commandAbi)
+            {
+                if (commandAbi.Ability != null && commandAbi.Ability.def != null)
+                {
+                    return commandAbi.Ability.def.description;
+                }
+            }
+            return "";
+        }
+
+        private void ExecuteAbilityGizmo(Command abilityGizmo)
+        {
+            if (!abilityGizmo.Disabled)
+            {
+                abilityGizmo.ProcessInput(Event.current);
+            }
+            else
+            {
+                Log.Message(abilityGizmo.disabledReason);
+            }
+        }
+
         private void UpdateCurrentPageItems()
         {
             int startIndex = currentPage * itemsPerPage;
             int endIndex = Mathf.Min(startIndex + itemsPerPage, allMenuItems.Count);
             currentPageItems = allMenuItems.GetRange(startIndex, endIndex - startIndex);
+            currentPageItems = currentPageItems.OrderBy(x => x.order).ToList();
         }
+
+        private float extraPageIndicatorHeight = 20f;
 
         private Vector2 CalculateWindowSize()
         {
             float menuRadius = radius;
             float labelHeight = Text.CalcHeight("Sample", 200f);
-            float pageIndicatorHeight = hasMultiplePages ? 20f : 0f;
+            float pageIndicatorHeight = hasMultiplePages ? extraPageIndicatorHeight : 0f;
             float totalRadius = menuRadius + itemSize / 2f + labelHeight + pageIndicatorHeight + 30f;
             float size = (totalRadius * 2f) + 10f;
             return new Vector2(size, size);
@@ -113,7 +307,6 @@ namespace MagicAndMyths
         {
             Vector2 mousePos = Event.current.mousePosition;
             hoveredIndex = GetHoveredItemIndex(mousePos);
-
 
             Vector2 newSize = CalculateWindowSize();
             if (newSize != currentWindowSize)
@@ -133,15 +326,12 @@ namespace MagicAndMyths
                 Widgets.DrawTextureFitted(bgRect, BackgroundTex, 1);
             }
 
-
             DrawRadialMenu(inRect);
             HandleInput();
         }
 
         private void DrawRadialMenu(Rect rect)
         {
-
-
             for (int i = 0; i < currentPageItems.Count; i++)
             {
                 DrawMenuItem(i, currentPageItems[i]);
@@ -172,7 +362,15 @@ namespace MagicAndMyths
             if (hoveredIndex >= 0 && hoveredIndex < currentPageItems.Count)
             {
                 RadialMenuItem hoveredItem = currentPageItems[hoveredIndex];
-                string displayText = hoveredItem.label;
+                bool isEnabled = hoveredItem.sourceGizmo?.Disabled != true;
+                string displayText = isEnabled ? hoveredItem.label : $"{hoveredItem.label} ({hoveredItem.sourceGizmo?.disabledReason ?? "Disabled"})";
+
+                if (hoveredItem.IsFavoritable && sourcePawn != null)
+                {
+                    bool isFavorited = FavoritesTracker.IsFavourite(sourcePawn, hoveredItem.defName);
+                    displayText += isFavorited ? " ★" : " (Right-click to favorite)";
+                }
+
                 Vector2 labelSize = Text.CalcSize(displayText);
                 float yOffset = hasMultiplePages ? 40f : 20f;
                 Rect hoveredItemLabel = new Rect(centerPosition.x - labelSize.x / 2f, centerPosition.y + yOffset, labelSize.x, labelSize.y);
@@ -237,12 +435,15 @@ namespace MagicAndMyths
             Rect itemRect = new Rect(itemPos.x - itemSize * extraHoverSize / 2f, itemPos.y - itemSize * extraHoverSize / 2f,
                 itemSize * extraHoverSize, itemSize * extraHoverSize);
 
-            GUI.color = item.enabled ? item.color : Color.gray;
+            bool isEnabled = item.sourceGizmo?.Disabled != true;
+            Color itemColor = isEnabled ? (item.color != Color.white ? item.color : Color.white) : Color.gray;
+
+            GUI.color = itemColor;
 
             if (index == hoveredIndex)
             {
                 GUI.color = Color.yellow;
-                string tooltip = currentPageItems[hoveredIndex].description;
+                string tooltip = isEnabled ? item.description : $"{item.description}\n\nDisabled: {item.sourceGizmo?.disabledReason ?? "Unknown reason"}";
                 TooltipHandler.TipRegion(itemRect, tooltip);
             }
 
@@ -253,6 +454,13 @@ namespace MagicAndMyths
             else
             {
                 GUI.DrawTexture(itemRect, TexButton.Infinity);
+            }
+
+            if (item.IsFavoritable && sourcePawn != null && FavoritesTracker.IsFavourite(sourcePawn, item.defName))
+            {
+                Rect starRect = new Rect(itemPos.x + itemSize * extraHoverSize / 2f - 12f, itemPos.y - itemSize * extraHoverSize / 2f, 12f, 12f);
+                GUI.color = Color.yellow;
+                GUI.Label(starRect, "★");
             }
 
             GUI.color = Color.white;
@@ -330,53 +538,10 @@ namespace MagicAndMyths
 
         private void HandleInput()
         {
-           // OnFavoriteInput();
             OnConfirmInput();
             OnGoBackInput();
             OnCloseInput();
         }
-
-        //private void OnFavoriteInput()
-        //{
-        //    if (Event.current.type == EventType.MouseDown && Event.current.button == 1)
-        //    {
-        //        if (hoveredIndex >= 0 && hoveredIndex < currentPageItems.Count)
-        //        {
-        //            RadialMenuItem item = currentPageItems[hoveredIndex];
-        //            if (!string.IsNullOrEmpty(item.abilityId))
-        //            {
-        //                Settings.ToggleAbilityFavorite(item.parentPawn, item.abilityId);
-        //                if (isFavoritesMenu && !item.IsFavorite(item.parentPawn))
-        //                {
-        //                    allMenuItems.Remove(item);
-        //                    UpdateCurrentPageItems();
-        //                    if (currentPageItems.Count == 0 && currentPage > 0)
-        //                    {
-        //                        currentPage--;
-        //                        UpdateCurrentPageItems();
-        //                    }
-        //                    if (allMenuItems.Count == 0)
-        //                    {
-        //                        Close();
-        //                        return;
-        //                    }
-        //                }
-        //                Event.current.Use();
-        //                return;
-        //            }
-        //        }
-
-        //        if (menuStack.Count > 0)
-        //        {
-        //            GoBack();
-        //        }
-        //        else
-        //        {
-        //            Close();
-        //        }
-        //        Event.current.Use();
-        //    }
-        //}
 
         private void OnGoBackInput()
         {
@@ -384,7 +549,15 @@ namespace MagicAndMyths
             {
                 if (hoveredIndex >= 0 && hoveredIndex < currentPageItems.Count)
                 {
-                    return;
+                    RadialMenuItem item = currentPageItems[hoveredIndex];
+                    if (item.IsFavoritable && sourcePawn != null)
+                    {
+                        FavoritesTracker.ToggleFavourite(sourcePawn, item.defName);
+                        bool isFavorited = FavoritesTracker.IsFavourite(sourcePawn, item.defName);
+                        Messages.Message($"{item.label} {(isFavorited ? "added to" : "removed from")} favorites.", MessageTypeDefOf.SilentInput);
+                        Event.current.Use();
+                        return;
+                    }
                 }
 
                 if (menuStack.Count > 0)
@@ -421,8 +594,9 @@ namespace MagicAndMyths
                 else if (hoveredIndex >= 0 && hoveredIndex < currentPageItems.Count)
                 {
                     RadialMenuItem item = currentPageItems[hoveredIndex];
+                    bool isEnabled = item.sourceGizmo?.Disabled != true;
 
-                    if (item.enabled)
+                    if (isEnabled)
                     {
                         if (item.HasSubItems)
                         {
@@ -500,6 +674,14 @@ namespace MagicAndMyths
         public static void Show(List<RadialMenuItem> menuItems, bool isFavoritesMenu = false)
         {
             RadialMenuWindow window = new RadialMenuWindow(menuItems, isFavoritesMenu);
+            Find.WindowStack.Add(window);
+            window.windowRect.x = UI.screenWidth / 2f - window.currentWindowSize.x / 2f;
+            window.windowRect.y = (UI.screenHeight / 2f - window.currentWindowSize.y / 2f) - window.Settings.heightOffset;
+        }
+
+        public static void ShowFromGizmos(Pawn pawn, List<Command> abilityGizmos, bool isFavoritesMenu = false)
+        {
+            RadialMenuWindow window = new RadialMenuWindow(pawn, abilityGizmos, isFavoritesMenu);
             Find.WindowStack.Add(window);
             window.windowRect.x = UI.screenWidth / 2f - window.currentWindowSize.x / 2f;
             window.windowRect.y = (UI.screenHeight / 2f - window.currentWindowSize.y / 2f) - window.Settings.heightOffset;
