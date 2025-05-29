@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef ParentName="MagicalDiseaseBase">
+    <defName>MagicAndMyths_LaughingDisease</defName>
+    <label>laughing disease</label>
+    <description>A contagious magical disease that drains mana from its victims while causing pain and mental fog. Victims of the spell plague exhibit faint arcane symbols that appear and disappear on their skin as the disease progresses. The disease can leap to nearby individuals through magical resonance, making it particularly dangerous in groups of spellcasters.</description>
+    <defaultLabelColor>(64, 0, 128)</defaultLabelColor>
+    <initialSeverity>0.25</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <makesSickThought>true</makesSickThought>
+    <comps>
+      <li Class="HediffCompProperties_Immunizable">
+        <severityPerDayNotImmune>0.3</severityPerDayNotImmune>
+        <immunityPerDaySick>0.3</immunityPerDaySick>
+        <severityPerDayImmune>-0.4</severityPerDayImmune>
+        <immunityPerDayNotSick>-0.05</immunityPerDayNotSick>
+      </li>
+      <li Class="HediffCompProperties_CauseMentalState">
+        <animalMentalState>WanderConfused</animalMentalState>
+        <animalMentalStateAlias>WanderConfused</animalMentalStateAlias>
+        <humanMentalState>WanderConfused</humanMentalState>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_Propagate">
+        <initialStack>2</initialStack>
+        <removeOnStackEmpty>true</removeOnStackEmpty>
+        <ticksBetweenPropogation>900</ticksBetweenPropogation>
+        <radius>4.5</radius>
+        <canMerge>false</canMerge>
+        <canTargetHostile>true</canTargetHostile>
+        <canTargetFriendly>true</canTargetFriendly>
+        <canTargetNeutral>true</canTargetNeutral>
+      </li>
+    </comps>
+    <stages>
+    </stages>
+  </HediffDef>
+
+</Defs>

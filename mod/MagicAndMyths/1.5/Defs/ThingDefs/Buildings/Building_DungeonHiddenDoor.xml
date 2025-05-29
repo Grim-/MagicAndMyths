@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="Door">
+    <defName>DungeonHiddenWallDoor</defName>
+    <label>dungeon door</label>
+    <description>Divides rooms. Simple doors must be manually opened, which slows people down.</description>
+    <thingClass>MagicAndMyths.Building_HiddenDoor</thingClass>
+    <statBases>
+      <WorkToBuild>850</WorkToBuild>
+    </statBases>
+        <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>Things/Building/Linked/VoidmetalWall_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <linkType>CornerFiller</linkType>
+      <linkFlags>
+        <li>Wall</li>
+        <li>Rock</li>
+        <li>MapEdge</li>
+      </linkFlags>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+        <edgeTop>Damage/Edge</edgeTop>
+        <edgeBot>Damage/Edge</edgeBot>
+        <edgeLeft>Damage/Edge</edgeLeft>
+        <edgeRight>Damage/Edge</edgeRight>
+      </damageData>
+    </graphicData>
+    <useStuffTerrainAffordance>false</useStuffTerrainAffordance>
+    <uiIconPath>Things/Building/Door/DoorSimple_MenuIcon</uiIconPath>
+    <stuffCategories Inherit="false">
+    </stuffCategories>
+    <costList>
+      <Steel>25</Steel>
+    </costList>
+    <designationHotKey>Misc1</designationHotKey>
+    <building>
+      <isInert>true</isInert>
+      <repairable>false</repairable>
+      <claimable>false</claimable>
+      <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+      <deconstructible>false</deconstructible>
+      <isTargetable>false</isTargetable>
+    </building>
+  </ThingDef>
+</Defs>

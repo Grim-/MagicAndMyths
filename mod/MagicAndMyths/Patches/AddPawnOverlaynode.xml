@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnRenderTreeDef[defName="Humanlike"]/root/children</xpath>
+    <value>
+      <li>
+        <debugLabel>Pawn Overlay</debugLabel>
+        <workerClass>MagicAndMyths.PawnRenderNodeWorker_PawnOverlay</workerClass>
+        <baseLayer>100</baseLayer>
+      </li>
+    </value>
+  </Operation>
+</Patch>

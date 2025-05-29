@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+<MagicAndMyths.DurableComponentDef>
+  <defName>ThingProp_Durable</defName>
+  <label>Durable</label>
+</MagicAndMyths.DurableComponentDef>
+
+<MagicAndMyths.ThingPropertyDef>
+  <defName>ThingProp_Photovolatic</defName>
+  <label>Power Charging (Photovolatic)</label>
+  <workerClass>MagicAndMyths.BatteryCharger_PhotovolaticPropertyWorker</workerClass>
+</MagicAndMyths.ThingPropertyDef>
+
+
+<MagicAndMyths.ThingPropertyDef>
+  <defName>ThingProp_Invisible</defName>
+  <label>Invisible</label>
+  <workerClass>MagicAndMyths.InvisiblePropertyWorker</workerClass>
+</MagicAndMyths.ThingPropertyDef>
+
+</Defs>

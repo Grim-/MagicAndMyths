@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ArtifactBase">
+    <defName>MagicAndMyths_LargeHealthPotion</defName>
+    <label>health potion (large)</label>
+    <description>A large potion that cures wounds, but not illnesses or addictions.</description>
+    <graphicData>
+      <texPath>Potions/HealthPotion</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>5</stackLimit>
+    <orderedTakeGroup>Potion</orderedTakeGroup>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>600</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <relicChance>0</relicChance>
+    <comps Inherit="false">
+      <!--- what happens when used -->
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Drink {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>false</destroyOnUse>
+        <cooldownTickRange>100</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>0</chargesRestoredPerCooldown>
+        <charges>4</charges>
+        <targetSelf>true</targetSelf>
+        <requiresTarget>true</requiresTarget>
+        <moveToTarget>true</moveToTarget>
+        <targetParams>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetLocations>false</canTargetLocations>
+        </targetParams>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ArtifactEffectHeal">
+        <healAmount>25</healAmount>
+        <healingParams>
+          <canHealAddictions>false</canHealAddictions>
+          <canHealInfections>false</canHealInfections>
+          <canHealInjuries>true</canHealInjuries>
+          <canHealIllnesses>false</canHealIllnesses>
+          <canHealMissingParts>false</canHealMissingParts>
+          <canHealPermanentInjuries>false</canHealPermanentInjuries>
+          <canHealChronicConditions>false</canHealChronicConditions>
+        </healingParams>
+      </li>
+      <!--- what happens when thrown -->
+      <li Class="MagicAndMyths.CompProperties_ThrowableHealAOEOnImpact">
+        <radius>3</radius>
+        <impactEffectDef>MagicAndMyths_HealingGeneric</impactEffectDef>
+        <healAmount>25</healAmount>
+        <maxTargets>4</maxTargets>
+        <healingParams>
+          <canHealAddictions>false</canHealAddictions>
+          <canHealInfections>false</canHealInfections>
+          <canHealInjuries>true</canHealInjuries>
+          <canHealIllnesses>false</canHealIllnesses>
+          <canHealMissingParts>false</canHealMissingParts>
+          <canHealPermanentInjuries>false</canHealPermanentInjuries>
+          <canHealChronicConditions>false</canHealChronicConditions>
+        </healingParams>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_PrisonSeal</defName>
+    <label>prison seal</label>
+    <description>Speaking the command word then throwing this rune inscribed rock will imprison the first living creature it hits inside a pocket dimension, the target will be not be conscious of any time having passed.</description>
+    <graphicData>
+      <texPath>Runestones/Artifact_RunePurple</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>5</stackLimit>
+    <orderedTakeGroup>Potion</orderedTakeGroup>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>600</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <relicChance>0</relicChance>
+    <comps Inherit="false">
+      <li Class="MagicAndMyths.CompProperties_PawnStorage">
+      </li>
+      <!--- what happens when used -->
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Use {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>false</destroyOnUse>
+        <cooldownTickRange>2400~2400</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
+        <charges>-1</charges>
+        <targetSelf>true</targetSelf>
+        <requiresTarget>true</requiresTarget>
+        <moveToTarget>true</moveToTarget>
+        <targetParams>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ArtifactEffectStoredPawn">
+      </li>
+      <!--- what happens when thrown -->
+      <li Class="MagicAndMyths.CompProperties_ThrowableStoredPawn">
+        <destroyOnThrow>false</destroyOnThrow>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

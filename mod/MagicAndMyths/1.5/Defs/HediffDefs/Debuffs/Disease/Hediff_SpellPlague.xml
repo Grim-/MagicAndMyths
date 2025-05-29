@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef ParentName="MagicalDiseaseBase">
+    <defName>SpellPlague</defName>
+    <label>spell plague</label>
+    <description>A contagious magical disease that drains mana from its victims while causing pain and mental fog. Victims of the spell plague exhibit faint arcane symbols that appear and disappear on their skin as the disease progresses. The disease can leap to nearby individuals through magical resonance, making it particularly dangerous in groups of spellcasters.</description>
+    <defaultLabelColor>(64, 0, 128)</defaultLabelColor>
+    <initialSeverity>0.25</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <makesSickThought>true</makesSickThought>
+    <comps>
+      <li Class="HediffCompProperties_Immunizable">
+        <severityPerDayNotImmune>0.3</severityPerDayNotImmune>
+        <immunityPerDaySick>0.3</immunityPerDaySick>
+        <severityPerDayImmune>-0.4</severityPerDayImmune>
+        <immunityPerDayNotSick>-0.05</immunityPerDayNotSick>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_Propagate">
+        <initialStack>3</initialStack>
+        <removeOnStackEmpty>true</removeOnStackEmpty>
+        <ticksBetweenPropogation>900</ticksBetweenPropogation>
+        <radius>4.5</radius>
+        <canMerge>false</canMerge>
+        <canTargetHostile>true</canTargetHostile>
+        <canTargetFriendly>true</canTargetFriendly>
+        <canTargetNeutral>true</canTargetNeutral>
+      </li>
+      <li Class="HediffCompProperties_Effecter">
+        <stateEffecter>MagicAndMyths_SpellPlague</stateEffecter>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_IncreaseSeverityOnAbilityUse">
+        <severityIncreaseOnCast>0.03~0.05</severityIncreaseOnCast>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <label>minor</label>
+        <minSeverity>0.25</minSeverity>
+        <painOffset>0.05</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.05</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <Stat_Mana>-0.15</Stat_Mana>
+          <Stat_ManaRegen>-0.2</Stat_ManaRegen>
+        </statOffsets>
+      </li>
+      <li>
+        <label>moderate</label>
+        <minSeverity>0.50</minSeverity>
+        <painOffset>0.1</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.1</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <Stat_Mana>-0.3</Stat_Mana>
+          <Stat_ManaRegen>-0.4</Stat_ManaRegen>
+        </statOffsets>
+      </li>
+      <li>
+        <label>severe</label>
+        <minSeverity>0.75</minSeverity>
+        <painOffset>0.15</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.15</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <Stat_Mana>-0.5</Stat_Mana>
+          <Stat_ManaRegen>-0.75</Stat_ManaRegen>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

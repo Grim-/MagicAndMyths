@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.UndeadDef>
+    <defName>LesserSkeleton</defName>
+    <hediff>DeathKnight_UndeadSekeleton</hediff>
+    <kind>MagicAndMyths_LesserSkeleton</kind>
+    <childhoodBackstories>
+      <li>MagicAndMyths_LesserUndead</li>
+    </childhoodBackstories>
+    <adulthoodBackstories>
+      <li>MagicAndMyths_LesserUndead</li>
+    </adulthoodBackstories>
+    <baseWillCost>1</baseWillCost>
+    <willCostMultiplier>1</willCostMultiplier>
+  </MagicAndMyths.UndeadDef>
+</Defs>

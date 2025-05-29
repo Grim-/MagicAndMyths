@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="Door">
+    <defName>DungeonLockedDoor</defName>
+    <label>door</label>
+    <description>Divides rooms. Simple doors must be manually opened, which slows people down. The amount of slowdown depends on what the door is made of.</description>
+    <thingClass>MagicAndMyths.Building_LockableDoor</thingClass>
+    <statBases>
+      <WorkToBuild>850</WorkToBuild>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Building/Door/DoorSimple_Mover</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <damageData>
+        <enabled>false</enabled>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Things/Building/Door/DoorSimple_MenuIcon</uiIconPath>
+    <costStuffCount>25</costStuffCount>
+    <costList>
+      <Steel>25</Steel>
+    </costList>
+    <stuffCategories Inherit="false" />
+    <designationHotKey>Misc1</designationHotKey>
+    <useStuffTerrainAffordance>false</useStuffTerrainAffordance>
+    <building>
+      <isInert>true</isInert>
+      <repairable>false</repairable>
+      <claimable>false</claimable>
+      <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+      <deconstructible>false</deconstructible>
+      <isTargetable>false</isTargetable>
+    </building>
+  </ThingDef>
+
+</Defs>

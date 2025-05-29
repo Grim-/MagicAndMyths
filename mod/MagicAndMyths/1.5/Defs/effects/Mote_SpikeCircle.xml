@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MoteBase">
+    <defName>MagicAndMyths_MoteSpikeyCircle</defName>
+    <thingClass>MoteThrown</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <texPath>VFX/Circle/SpikeyCircle</texPath>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0.4</fadeInTime>
+      <solidTime>0.5</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>12</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_LightningSparks</defName>
+    <randomWeight>1</randomWeight>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerContinuous</subEffecterClass>
+        <burstCount>1~3</burstCount>
+        <ticksBetweenMotes>10</ticksBetweenMotes>
+        <maxMoteCount>50</maxMoteCount>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <positionRadius>0.5</positionRadius>
+        <moteDef>MagicAndMyths_LightningSparks</moteDef>
+        <color>(1,1,1,1)</color>
+        <angle>0~360</angle>
+        <speed>0</speed>
+        <rotation>0~360</rotation>
+        <rotationRate>0</rotationRate>
+        <scale>0.71~0.99</scale>
+        <airTime>999999</airTime>
+        <subTriggerOnSpawn>true</subTriggerOnSpawn>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_LightningSparks</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_Mote</graphicClass>
+        <shaderType>TransparentAnimated</shaderType>
+        <texPath>Animations/Lightning</texPath>
+        <shaderParameters>
+          <_NumFrames>8</_NumFrames>
+          <_FramesPerSec>10</_FramesPerSec>
+        </shaderParameters>
+      </graphicData>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
+      <mote>
+        <fadeInTime>0.1</fadeInTime>
+        <solidTime>0.5</solidTime>
+        <fadeOutTime>0.1</fadeOutTime>
+        <growthRate>0</growthRate>
+      </mote>
+    </ThingDef>
+</Defs>

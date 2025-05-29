@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_Mines</defName>
+    <label>Enchantment: Mines</label>
+    <description>Deals additional water damage on hit</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_OnHitSplashThing">
+        <thing>Filth_Fuel</thing>
+        <thingSpawnMax>3</thingSpawnMax>
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+    <allowedCategories>
+      <li>EnchantCategory_Melee</li>
+    </allowedCategories>
+  </MagicAndMyths.EnchantDef>
+
+</Defs>

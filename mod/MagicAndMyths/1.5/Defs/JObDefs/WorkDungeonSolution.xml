@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <JobDef>
+    <defName>MagicAndMyths_WorkSolution</defName>
+    <driverClass>MagicAndMyths.JobDriver_AttemptSolveDungeonObstacle</driverClass>
+    <reportString>attempting to solve..</reportString>
+  </JobDef>
+</Defs>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.RoomTypeDef>
+    <defName>TreasureRoom</defName>
+    <roomType>Normal</roomType>
+    <roomTypeWorker>MagicAndMyths.TreasureRoom</roomTypeWorker>
+    <maxSize>(4,4)</maxSize>
+  </MagicAndMyths.RoomTypeDef>
+
+</Defs>

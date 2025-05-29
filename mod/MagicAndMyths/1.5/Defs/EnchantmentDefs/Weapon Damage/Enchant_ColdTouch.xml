@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantDef>
+    <defName>Enchant_ColdTouch</defName>
+    <label>Enchantment: cold touch</label>
+    <description>Deals additional Frost damage on hit</description>
+    <commonality>1.0</commonality>
+    <effects>
+      <li Class="MagicAndMyths.EnchantEffectDef_OnHitDamage">
+        <workerClass>MagicAndMyths.EnchantEffect_OnHitDamage</workerClass>
+        <damageValue>3</damageValue>
+        <damageType>Frost</damageType>
+      </li>
+    </effects>
+    <textColor>(0.8, 0, 0)</textColor>
+    <allowedCategories>
+      <li>EnchantCategory_Melee</li>
+    </allowedCategories>
+  </MagicAndMyths.EnchantDef>
+
+</Defs>
