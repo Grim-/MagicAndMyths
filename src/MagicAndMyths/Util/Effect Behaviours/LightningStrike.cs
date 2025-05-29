@@ -45,8 +45,30 @@ namespace MagicAndMyths
                 SoundInfo info = SoundInfo.InMap(new TargetInfo(Position, map, false), MaintenanceType.None);
                 SoundDefOf.Thunder_OnMap.PlayOneShot(info);
 
-                Graphics.DrawMesh(LightningBoltMeshPool.RandomBoltMesh, Position.ToVector3ShiftedWithAltitude(AltitudeLayer.Weather),
+                Graphics.DrawMesh(LightningBoltMeshPool.RandomBoltMesh, Position.ToVector3Shifted(),
                     Quaternion.identity, LightningMat, 0);
+            }
+        }
+
+        public static void GenerateLightningStrikeVisual(Map map, IntVec3 Position, int repeatVisualCount = 4)
+        {
+            if (Position.InBounds(map))
+            {
+                if (Position.IsValid)
+                {
+                    SoundInfo info = SoundInfo.InMap(new TargetInfo(Position, map, false), MaintenanceType.None);
+                    SoundDefOf.Thunder_OnMap.PlayOneShot(info);
+
+                    Vector3 loc = Position.ToVector3Shifted();
+                    for (int x = 0; x < repeatVisualCount; x++)
+                    {
+                        FleckMaker.ThrowSmoke(loc, map, 1.5f);
+                        FleckMaker.ThrowMicroSparks(loc, map);
+                        FleckMaker.ThrowLightningGlow(loc, map, 1.5f);
+                    }
+                    Graphics.DrawMesh(LightningBoltMeshPool.RandomBoltMesh, Position.ToVector3Shifted(),
+                        Quaternion.identity, LightningMat, 0);
+                }
             }
         }
     }

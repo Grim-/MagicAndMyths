@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System;
 using System.Text;
 using UnityEngine;
 using Verse;
@@ -8,9 +7,7 @@ namespace MagicAndMyths
 {
     public class CompProperties_ArtifactEffectHeal : CompProperties
     {
-        public bool onlyLifeThreatening = false;
-        public bool onlyBleeding = false;
-        public bool onlyPermanent = false;
+        public HealParameters healingParams;
         public FloatRange healAmount = new FloatRange(10f, 10f);
 
         public CompProperties_ArtifactEffectHeal()
@@ -28,30 +25,13 @@ namespace MagicAndMyths
             if (target.Thing == null || !(target.Thing is Pawn targetPawn))
                 return;
 
-            Func<Hediff, bool> filter = CreateInjuryFilter();
+            float healAmount = Props.healAmount.RandomInRange;
+            float actualHealed = targetPawn.SpendHealingAmount(healAmount, Props.healingParams);
 
-            if (MagicUtil.TryGetWorstInjury(targetPawn, out Hediff hediff, out BodyPartRecord part, filter))
+            if (actualHealed > 0)
             {
-                if (hediff != null)
-                {
-                    float reductionAmount = Props.healAmount.RandomInRange;
-                    hediff.Severity -= reductionAmount;
-                    MoteMaker.ThrowText(target.Thing.Position.ToVector3Shifted(), target.Thing.Map, $"{targetPawn.LabelShort} Healed {reductionAmount}", Color.green, 3);
-                }
+                MoteMaker.ThrowText(target.Thing.Position.ToVector3Shifted(), target.Thing.Map, $"{targetPawn.LabelShort} Healed {actualHealed:F1}", Color.green, 3);
             }
-        }
-
-        private Func<Hediff, bool> CreateInjuryFilter()
-        {
-            return (Hediff h) =>
-            {
-                if (h.def.isInfection || h.def.IsAddiction || h is Hediff_MissingPart missingPart)
-                {
-                    return false;
-                }
-
-                return true;
-            };
         }
     }
 }

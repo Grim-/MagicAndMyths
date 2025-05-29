@@ -28,6 +28,7 @@ namespace MagicAndMyths
         private Thing currentTarget;
         private int jumpWaitCounter = 0;
         private const int LightningEffectLifetime = 399;
+        private float beamWidth = 2f;
 
         // Lingering effect settings
         private int effectLingerTicks = 60;
@@ -233,7 +234,15 @@ namespace MagicAndMyths
                 Mesh = LightningBoltMeshPool.RandomBoltMesh;
             }
 
-            WeatherEvent_LightningStrike.DoStrike(arg2.Position, arg3, ref Mesh);
+            if (arg2.def.useHitPoints)
+            {
+                if (damageDef != null && damageAmount > 0)
+                {
+                    arg2.TakeDamage(new DamageInfo(damageDef, damageAmount, 0, -1, instigator));
+                }
+            }
+
+            LightningStrike.GenerateLightningStrikeVisual(arg3, arg2.Position);
         }
         private void CleanupEffect(TrackedMote trackedMote)
         {
@@ -247,7 +256,7 @@ namespace MagicAndMyths
         {
             trackedMote.Mote.Maintain();
 
-            trackedMote.Mote.linearScale = new Vector3(2f, 1f, (trackedMote.SourceThing.Position.ToVector3Shifted() - trackedMote.TargetThing.Position.ToVector3Shifted()).MagnitudeHorizontal());
+            trackedMote.Mote.linearScale = new Vector3(beamWidth, 1f, (trackedMote.SourceThing.Position.ToVector3Shifted() - trackedMote.TargetThing.Position.ToVector3Shifted()).MagnitudeHorizontal());
             trackedMote.Mote.UpdateTargets(
                 trackedMote.SourceThing,
                 trackedMote.TargetThing,

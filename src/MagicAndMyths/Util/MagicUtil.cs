@@ -1,5 +1,4 @@
-﻿using LudeonTK;
-using RimWorld;
+﻿using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,213 +24,6 @@ namespace MagicAndMyths
                 }
             }
             return false;
-        }
-
-        [DebugAction("Magic And Myths", "Add Thing Property", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void AddThingProperty()
-        {
-            Find.Targeter.BeginTargeting(new TargetingParameters()
-            {
-                canTargetPawns = true,
-                canTargetAnimals = true,
-                canTargetBuildings = true,
-                canTargetCorpses = true, 
-                canTargetHumans = true,
-                canTargetItems = true,
-                mustBeSelectable = true,
-            },
-            (LocalTargetInfo target) =>
-            {
-                if (target.Thing != null && target.Thing is ThingWithComps withComps)
-                {
-                    List<FloatMenuOption> Options = new List<FloatMenuOption>();
-
-                    foreach (var item in DefDatabase<ThingPropertyDef>.AllDefs)
-                    {
-                        Options.Add(new FloatMenuOption($"Add {item.label} Property to {target.Thing.Label}", () =>
-                        {
-                            if (withComps.TryGetComp(out Comp_ThingProperties _ThingProperties))
-                            {
-                                Log.Message("Adding prop to thing");
-                                _ThingProperties.AddProperty(item);
-                            }
-                            else
-                            {
-                                Log.Message("thing has no comp_thingproperties");
-                            }
-                        }));
-                    }
-
-                    Find.WindowStack.Add(new FloatMenu(Options));
-                }
-            }
-            );
-        }
-
-
-        [DebugAction("Magic And Myths", "Add Enchant To Item", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void AddEnchant()
-        {
-            Find.Targeter.BeginTargeting(new TargetingParameters()
-            {
-                canTargetPawns = false,
-                canTargetAnimals = false,
-                canTargetBuildings = false,
-                canTargetCorpses = false,
-                canTargetHumans = false,
-                canTargetItems = true,
-                mustBeSelectable = true,
-                mapObjectTargetsMustBeAutoAttackable = false
-            },
-            (LocalTargetInfo target) =>
-            {
-                if (target.Thing != null && target.Thing is ThingWithComps withComps)
-                {
-
-                    if (withComps.TryGetComp(out Comp_EnchantProvider _EnchantProvider))
-                    {
-                        List<FloatMenuOption> Options = new List<FloatMenuOption>();
-
-                        foreach (var item in DefDatabase<EnchantDef>.AllDefs)
-                        {
-                            Options.Add(new FloatMenuOption($"Add {item.label} to {target.Thing.Label}", () =>
-                            {
-                                _EnchantProvider.AddEnchant(item);
-                            }));
-                        }
-
-                        if (Options.Count > 0)
-                        {
-                            Find.WindowStack.Add(new FloatMenu(Options));
-                        }                     
-                    }         
-                }
-            }
-            );
-        }
-
-        [DebugAction("Magic And Myths", "Test Spawn Orbital Laser", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void SpawnOrbitalLaser()
-        {
-            Find.Targeter.BeginTargeting(new TargetingParameters()
-            {
-                canTargetLocations = true
-            },
-            (LocalTargetInfo target) =>
-            {
-                if (target.Cell.IsValid && target.Cell.InBounds(Find.CurrentMap))
-                {
-                    OrbitalLaser meteor = (OrbitalLaser)ThingMaker.MakeThing(DefDatabase<ThingDef>.GetNamed("MagicAndMyths_OrbitalLaser"));
-                    GenSpawn.Spawn(meteor, target.Cell, Find.CurrentMap);
-
-                    meteor.Fire(target.Cell);
-                }
-            }
-            );
-        }
-
-
-        [DebugAction("Magic And Myths", "Test Transmute Lightning", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void FireTransmutationLightning()
-        {
-            Find.Targeter.BeginTargeting(new TargetingParameters()
-            {
-                canTargetLocations = true
-            },
-            (LocalTargetInfo target) =>
-            {
-                if (target.Cell.IsValid && target.Cell.InBounds(Find.CurrentMap))
-                {
-                    LightningStrike.GenerateLightningStrike(Find.CurrentMap, target.Cell, 5, out IEnumerable<IntVec3> affectedCells);
-                    TerrainDef goldTile = DefDatabase<TerrainDef>.AllDefs.RandomElement();
-
-
-                    List<ThingDef> naturalRockDefs = DefDatabase<ThingDef>.AllDefsListForReading.Where(x => x.building.isNaturalRock).ToList();
-
-                    foreach (var item in affectedCells)
-                    {
-                        Find.CurrentMap.terrainGrid.SetTerrain(item, goldTile);
-
-
-
-                        foreach (var thing in item.GetThingList(Find.CurrentMap))
-                        {
-                            if (thing.def.building != null && thing.def.building.isNaturalRock)
-                            {
-                                IntVec3 position = thing.Position;
-
-                                thing.Destroy();
-
-                                Thing replacementRock = ThingMaker.MakeThing(naturalRockDefs.RandomElement());
-                                GenSpawn.Spawn(replacementRock, position, Find.CurrentMap);
-
-
-                            }
-
-                        }
-                    }
-
-                }
-            }
-            );
-
-
-        }
-        [DebugAction("Magic And Myth", "Test Spawn Meteor", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void SpawnMeteor()
-        {
-            Find.Targeter.BeginTargeting(new TargetingParameters()
-            {
-                canTargetLocations = true
-            },
-            (LocalTargetInfo target) =>
-            {
-                if (target.Cell.IsValid && target.Cell.InBounds(Find.CurrentMap))
-                {
-                    Meteor meteor = (Meteor)ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_Meteor);
-                    GenSpawn.Spawn(meteor, target.Cell, Find.CurrentMap);
-
-                    meteor.Launch(target.Cell);
-                }
-            }
-            );
-
-
-        }
-
-        [DebugAction("Magic And Myth", "Petrify Pawn", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void PetrifyPawn()
-        {
-            Find.Targeter.BeginTargeting(new TargetingParameters()
-            {
-                canTargetPawns = true,
-                canTargetAnimals = true,
-                canTargetHumans = true,
-                canTargetMechs = true,
-                mapObjectTargetsMustBeAutoAttackable = false
-            },
-            (LocalTargetInfo target) =>
-            {
-                if (target.Thing != null && target.Thing is Pawn pawn)
-                {
-                    Map pawnMap = pawn.Map;
-                    IntVec3 position = pawn.Position;
-                    PetrifiedStatue.PetrifyPawn(
-                        MagicAndMythDefOf.MagicAndMyths_PetrifiedStatue,
-                        pawn,
-                        position,
-                        pawnMap
-                    );
-                    Messages.Message("Petrified " + pawn.LabelShort, MessageTypeDefOf.NeutralEvent);
-                }
-            });
-        }
-
-
-        [DebugAction("Magic And Myth", "Test EffecterEditor", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void OpenEffecterEditor()
-        {
-            Find.WindowStack.Add(new EffecterDefEditorWindow());
         }
 
         public static bool HasCooldownByTick(int LastTriggerTick, int CooldownTicks)
@@ -263,19 +55,6 @@ namespace MagicAndMyths
                 }
             }
         }
-
-        //public static bool TryMakeSummonOf(this Pawn pawn, Pawn Master)
-        //{
-        //    Hediff_UndeadMaster master = (Hediff_UndeadMaster)Master.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
-        //    Hediff_Undead undeadSummon = (Hediff_Undead)pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_Undead);
-        //    if (master != null && undeadSummon != null)
-        //    {
-        //        undeadSummon.SetSquadLeader(Master);
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
 
         public static bool HasWeaponEquipped(this Pawn pawn)
         {
@@ -366,7 +145,11 @@ namespace MagicAndMyths
             part = HealthUtility.FindBiggestMissingBodyPart(pawn, 0f);
             if (part != null)
             {
-                return true;
+                hediff = pawn.health.hediffSet.GetMissingPartFor(part);
+                if (PassesFilter(hediff))
+                {
+                    return true;
+                }             
             }
 
             Hediff permanentInjury = HealthUtility.FindPermanentInjury(pawn, null, exclude);
@@ -397,6 +180,114 @@ namespace MagicAndMyths
                 HealthUtility.AdjustSeverity(pawn, hediff.def, -healAmount);
             }
         }
+        public static bool HasMissingBodyParts(Pawn Target)
+        {
+            return Target.health.hediffSet.hediffs
+                .OfType<Hediff_MissingPart>().Count() > 0;
+        }
+
+        public static List<Hediff> GetMostSevereHealthProblems(Pawn pawn)
+        {
+            return pawn.health.hediffSet.hediffs
+                  .Where(x => !(x is Hediff_MissingPart) && x.Visible && x.def.isBad && !x.def.chronic)
+                .OrderByDescending(x => x.Severity)
+                .ToList();
+        }
+        public static List<Hediff_MissingPart> GetMissingPartsPrioritized(Pawn pawn)
+        {
+            return pawn.health.hediffSet.hediffs
+                .OfType<Hediff_MissingPart>()
+                .OrderByDescending(x => x.Part.def.hitPoints)
+                .ThenByDescending(x => x.Part.def.GetMaxHealth(pawn))
+                .ToList();
+        }
+
+        public static bool RestoreMissingPart(Pawn target)
+        {
+            List<Hediff_MissingPart> missingParts = GetMissingPartsPrioritized(target);
+            if (missingParts.Count > 0)
+            {
+                Hediff_MissingPart highestPrio = missingParts.First();
+                HealthUtility.Cure(highestPrio);
+                return true;
+            }
+            return false;
+        }
+        public static Hediff_MissingPart GetMostPrioritizedMissingPartFromList(Pawn pawn, List<Hediff_MissingPart> List)
+        {
+            return List
+               .OrderByDescending(x => x.Part.def.hitPoints)
+               .ThenByDescending(x => x.Part.def.GetMaxHealth(pawn))
+               .FirstOrDefault();
+        }
+        public static Hediff_MissingPart GetMostPrioritizedMissingPart(Pawn pawn)
+        {
+            return pawn.health.hediffSet.hediffs
+               .OfType<Hediff_MissingPart>()
+               .OrderByDescending(x => x.Part.def.hitPoints)
+               .ThenByDescending(x => x.Part.def.GetMaxHealth(pawn))
+               .FirstOrDefault();
+        }
+
+        public static float SpendHealingAmount(this Pawn pawn, float totalHealAmount, HealParameters healParams)
+        {
+            return pawn.SpendHealingAmount(totalHealAmount, healParams.CreateFilter());
+        }
+
+        public static float SpendHealingAmount(this Pawn pawn, float totalHealAmount, Func<Hediff, bool> filter = null)
+        {
+            if (totalHealAmount <= 0)
+            {
+                Log.Error($"No healing amount provided for SpendHealingAmount");
+                return 0;
+            }
+
+            float remainingHeal = totalHealAmount;
+            float totalHealed = 0f;
+
+
+
+            while (remainingHeal > 0.01f)
+            {
+                if (MagicUtil.TryGetWorstInjury(pawn, out Hediff hediff, out BodyPartRecord part, filter))
+                {
+                    if (hediff == null && part == null)
+                    {
+                        break;
+                    }
+
+
+                    Hediff toHeal = hediff;
+
+                    if (part != null)
+                    {
+                        toHeal = pawn.health.hediffSet.GetMissingPartFor(part);
+                    }
+
+
+                    if (toHeal != null)
+                    {
+                        float healToApply = Mathf.Min(remainingHeal, toHeal.Severity);
+                        toHeal.Severity -= healToApply;
+                        remainingHeal -= healToApply;
+                        totalHealed += healToApply;
+
+                        if (toHeal.Severity <= 0)
+                        {
+                            HealthUtility.Cure(toHeal);
+                        }
+                    }
+                    else break;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return totalHealed;
+        }
+
         public static bool IsControlledSummon(this Pawn pawn)
         {
             return pawn.health.hediffSet.HasHediff<Hediff_Undead>();

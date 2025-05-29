@@ -6,10 +6,9 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
-
     public class CompProperties_ThrowableHealAOEOnImpact : CompProperties_Throwable
     {
+        public HealParameters healingParams;
         public FloatRange healAmount = new FloatRange(10, 10);
         public int maxTargets = 4;
         public bool splitHealAmountBetweenTargets = true;
@@ -31,11 +30,6 @@ namespace MagicAndMyths
             int targetcount = 0;
             float heal = Props.healAmount.RandomInRange;
 
-            //if (Props.splitHealAmountBetweenTargets)
-            //{
-            //    heal = heal / 
-            //}
-
             foreach (var item in pawnsInRange)
             {
                 if (item is Pawn pawn)
@@ -50,8 +44,8 @@ namespace MagicAndMyths
                         break;
                     }
 
-                    pawn.QuickHeal(heal);
-                    MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"Healed +{heal}", Color.green, 3f);
+                   float amountUsed = pawn.SpendHealingAmount(heal, Props.healingParams);
+                    MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"Healed +{amountUsed}", Color.green, 3f);
                     targetcount++;
                 }
                 else continue;

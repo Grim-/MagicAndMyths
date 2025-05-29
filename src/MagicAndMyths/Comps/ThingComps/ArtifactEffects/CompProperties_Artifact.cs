@@ -50,19 +50,28 @@ namespace MagicAndMyths
     public class Comp_Artifact : ThingComp
     {
         private int chargesRemaining;
-        private int cooldownTicksRemaining;
+        private int cooldownTicksRemaining = -1;
         protected bool UsesCharges => Props.charges > 0;
+
+        protected bool ChargesInitiallySet = false;
 
         public CompProperties_Artifact Props => (CompProperties_Artifact)props;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            if (!respawningAfterLoad)
+            if (!ChargesInitiallySet)
             {
-                chargesRemaining = Props.charges;
                 cooldownTicksRemaining = 0;
+                SetCharges(Props.charges);
             }
+        }
+
+
+        public void SetCharges(int charges)
+        {
+            chargesRemaining = charges;
+            ChargesInitiallySet = true;
         }
 
         public override void CompTick()
@@ -71,7 +80,7 @@ namespace MagicAndMyths
             if (cooldownTicksRemaining > 0)
             {
                 cooldownTicksRemaining--;
-                if (cooldownTicksRemaining <= 0 && Props.cooldownRestoresCharges)
+                if (cooldownTicksRemaining <= 0 && Props.cooldownRestoresCharges && UsesCharges)
                 {
                     if (chargesRemaining < Props.charges)
                     {
@@ -214,6 +223,7 @@ namespace MagicAndMyths
             if (UsesCharges)
             {
                 chargesRemaining--;
+                Log.Message($"Using charge, remaining {chargesRemaining}");
             }
 
             if (Props.hasCooldown)
@@ -252,6 +262,7 @@ namespace MagicAndMyths
             base.PostExposeData();
             Scribe_Values.Look(ref chargesRemaining, "usesRemaining", Props.charges);
             Scribe_Values.Look(ref cooldownTicksRemaining, "cooldownTicksRemaining", 0);
+            Scribe_Values.Look(ref ChargesInitiallySet, "ChargesInitiallySet");
         }
     }
 }

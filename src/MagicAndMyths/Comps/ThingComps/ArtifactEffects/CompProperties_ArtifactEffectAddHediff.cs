@@ -29,7 +29,7 @@ namespace MagicAndMyths
                 if (target.Thing is Pawn targetPawn)
                 {
                     Hediff hediff = targetPawn.health.GetOrAddHediff(Props.hediff);
-                    hediff.Severity += Props.severity.RandomInRange;
+                    hediff.Severity = Props.severity.RandomInRange;
                 }
             }
         }

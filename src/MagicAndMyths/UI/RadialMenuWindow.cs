@@ -121,7 +121,7 @@ namespace MagicAndMyths
         private List<RadialMenuItem> BuildAbilityMenuItems(Pawn pawn, List<Command> abilityGizmos)
         {
             var categoryGroups = abilityGizmos
-                .GroupBy(g => GetAbilityCategory(g))
+                .GroupBy(g => AbilityRadialPager.GetAbilityCategory(g))
                 .OrderBy(group => group.Key)
                 .ToList();
 
@@ -141,12 +141,12 @@ namespace MagicAndMyths
                     RadialMenuItem abilityItem = new RadialMenuItem(
                         pawn,
                         GetGizmoLabel(abilityGizmo),
-                        GetAbilityDescription(abilityGizmo),
+                        AbilityRadialPager.GetAbilityDescription(abilityGizmo),
                         abilityGizmo.icon as Texture2D,
                         () => ExecuteAbilityGizmo(abilityGizmo))
                     {
                         sourceGizmo = abilityGizmo,
-                        defName = GetAbilityDefName(abilityGizmo)
+                        defName = AbilityRadialPager.GetAbilityDefName(abilityGizmo)
                     };
 
                     categoryItem.subItems.Add(abilityItem);
@@ -169,21 +169,7 @@ namespace MagicAndMyths
             return menuItems.OrderBy(x => x.order).ToList();
         }
 
-        private string GetAbilityDefName(Command command)
-        {
-            if (command is CommandAbility commandAbility)
-            {
-                return commandAbility.Ability.def.defName;
-            }
-            else if (command is Command_Ability commandAbi)
-            {
-                if (commandAbi.Ability != null && commandAbi.Ability.def != null)
-                {
-                    return commandAbi.Ability.def.defName;
-                }
-            }
-            return "";
-        }
+
 
         private void OpenFavoritesMenu()
         {
@@ -237,38 +223,6 @@ namespace MagicAndMyths
         private string GetGizmoLabel(Command gizmo)
         {
             return gizmo.Label;
-        }
-
-        private string GetAbilityCategory(Command command)
-        {
-            if (command is CommandAbility commandAbility)
-            {
-                return commandAbility.Ability.def.abilityTrees.First().label;
-            }
-            else if (command is Command_Ability commandAbi)
-            {
-                if (commandAbi.Ability != null && commandAbi.Ability.def != null && commandAbi.Ability.def.category != null)
-                {
-                    return commandAbi.Ability.def.category.defName;
-                }
-            }
-            return "";
-        }
-
-        private string GetAbilityDescription(Command command)
-        {
-            if (command is CommandAbility commandAbility)
-            {
-                return commandAbility.Ability.def.description;
-            }
-            else if (command is Command_Ability commandAbi)
-            {
-                if (commandAbi.Ability != null && commandAbi.Ability.def != null)
-                {
-                    return commandAbi.Ability.def.description;
-                }
-            }
-            return "";
         }
 
         private void ExecuteAbilityGizmo(Command abilityGizmo)
