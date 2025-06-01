@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.BasicResourceGeneDef>
+  <MagicAndMyths.BasicResourceGeneDef Name="MagicAndMyths_BaseManaGene">
     <defName>MagicAndMyths_ManaGene</defName>
     <label>mana</label>
     <resourceName>Mana</resourceName>
@@ -13,6 +13,7 @@
       <li>0.5</li>
       <li>0.75</li>
     </resourceGizmoThresholds>
+    <resourceGizmoType>MagicAndMyths.GeneGizmo_BasicResource</resourceGizmoType>
     <showGizmoOnWorldView>false</showGizmoOnWorldView>
     <showGizmoWhenDrafted>true</showGizmoWhenDrafted>
     <iconPath>Skills/ManaUser</iconPath>

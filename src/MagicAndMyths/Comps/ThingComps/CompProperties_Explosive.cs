@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -30,14 +31,28 @@ namespace MagicAndMyths
                 return;
             }
 
-            GenExplosion.DoExplosion(
-            this.parent.Position,
-            this.parent.Map,
-            Props.radius,
-            Props.damageDef != null ? Props.damageDef : DamageDefOf.Bomb,
-            Instigator,
-            Mathf.RoundToInt(Props.damageAmount.RandomInRange));
+            List<IntVec3> cells = GenRadial.RadialCellsAround(this.parent.Position, Props.radius, true).ToList();
 
+            StageVisualEffect.CreateStageEffect(cells, this.parent.Map, 8, (IntVec3 cell, Map targetMap, int currentSection) =>
+            {
+                EffecterDefOf.ImpactSmallDustCloud.Spawn(cell, targetMap);
+
+                List<Thing> things = cell.GetThingList(targetMap).ToList();
+
+                foreach (var t in things)
+                {
+                    if (t is Pawn || t is Building building)
+                    {
+                        DamageInfo damage = new DamageInfo(Props.damageDef != null ? Props.damageDef : DamageDefOf.Bomb, Mathf.RoundToInt(Props.damageAmount.RandomInRange), 1);
+                        if (t.def.mineable)
+                        {
+                            damage = new DamageInfo(DamageDefOf.Mining, Mathf.RoundToInt(Props.damageAmount.RandomInRange) * 12, 1);
+                        }
+                        t.TakeDamage(damage);
+                    }
+                }
+
+            }, 5);
 
             if (!this.parent.Destroyed)
             {

@@ -1,12 +1,13 @@
-﻿using Verse;
+﻿using RimWorld;
+using System.Collections.Generic;
+using System.Linq;
+using Verse;
 
 namespace MagicAndMyths
 {
     public abstract class HediffCompProperties_AbilityEffect : HediffCompProperties
     {
-        public HediffCompProperties_AbilityEffect()
-        {
-        }
+
     }
 
     public abstract class HediffComp_AbilityEffect : HediffComp

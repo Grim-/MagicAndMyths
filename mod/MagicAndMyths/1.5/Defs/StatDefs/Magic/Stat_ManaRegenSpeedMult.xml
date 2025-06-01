@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <StatDef>
+    <defName>Stat_ManaRegenSpeedMult</defName>
+    <label>mana regen speed multiplier</label>
+    <category>PawnMisc</category>
+    <description>Mana is regenerated per hour (2400 ticks).</description>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0</minValue>
+    <maxValue>100</maxValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+
+</Defs>

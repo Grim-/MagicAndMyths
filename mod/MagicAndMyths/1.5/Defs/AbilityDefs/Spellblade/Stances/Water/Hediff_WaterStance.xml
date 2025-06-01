@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>Spellblade_WaterStanceHediff</defName>
+    <label>Water Stance</label>
+    <description>Channeling protective water magic. Provides defensive bonuses and regeneration.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+        <statOffsets>
+          <MeleeDodgeChance>0.15</MeleeDodgeChance>
+          <ComfyTemperatureMin>-5</ComfyTemperatureMin>
+          <ComfyTemperatureMax>5</ComfyTemperatureMax>
+        </statOffsets>
+        <statFactors>
+          <Stat_ManaRegen>1.15</Stat_ManaRegen>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

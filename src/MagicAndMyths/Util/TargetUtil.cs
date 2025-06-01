@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 namespace MagicAndMyths
@@ -192,7 +193,17 @@ namespace MagicAndMyths
 
             return things;
         }
+        public static List<Thing> GetDamageableThingsInCells(List<IntVec3> Cells, Map map)
+        {
+            List<Thing> things = new List<Thing>();
 
+            foreach (var item in Cells)
+            {
+                things.AddRange(item.GetThingList(map).Where(x=> x.def.useHitPoints));
+            }
+
+            return things;
+        }
         public static List<Pawn> GetPawnsInCells(List<IntVec3> Cells, Map map)
         {
             List<Pawn> pawns = new List<Pawn>();

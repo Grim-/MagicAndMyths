@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="MMArtifactBase">
-    <defName>Artifact_EnchantScrollOfDragonKind</defName>
-    <label>enchantment : dragonkind</label>
-    <description>An aritfact wrought of vile magic, when placed on a victim, the victim suffers 100 years of torment, breaking their will, they will immediately convert to the colonys main ideology, if one exists, their will will also be broken completely.</description>
+    <defName>Artifact_EnchantScrollOfWarding</defName>
+    <label>enchantment : warding</label>
+    <description>todo</description>
     <graphicData>
       <texPath>Scrolls/Enchantment_redscroll</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -42,7 +42,7 @@
         </targetParams>
       </li>
       <li Class="MagicAndMyths.CompProperties_ArtifactEffectAddEnchant">
-        <enchantDef>Enchant_DragonKind</enchantDef>
+        <enchantDef>Enchant_Warding</enchantDef>
       </li>
     </comps>
   </ThingDef>

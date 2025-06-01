@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -71,6 +72,56 @@ namespace MagicAndMyths
                 return null;
 
             effect.Initialize(cells, map, sections, ForCellAction, ticksPerSection);
+            GenSpawn.Spawn(effect, cells[0], map);
+            return effect;
+        }
+   
+
+
+        public static StageVisualEffect CreateConalStageEffect(IntVec3 Origin, IntVec3 Target, int length, float angle, Map map, int sections, Action<IntVec3, Map, int> ForCellAction, int ticksPerSection = 8)
+        {
+            List<IntVec3> cells = TargetUtil.GetCellsInCone(Origin, Target, length, angle);
+            if (cells.NullOrEmpty())
+                return null;
+
+            StageVisualEffect effect = ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_StagedVisualEffect) as StageVisualEffect;
+            if (effect == null)
+                return null;
+
+            effect.Initialize(cells, map, sections, ForCellAction, ticksPerSection);
+
+            GenSpawn.Spawn(effect, cells[0], map);
+            return effect;
+        }
+
+        public static StageVisualEffect CreateRadialStageEffect(IntVec3 Origin, float radius, Map map, int sections, Action<IntVec3, Map, int> ForCellAction, int ticksPerSection = 8)
+        {
+            List<IntVec3> cells = GenRadial.RadialCellsAround(Origin, radius, true).ToList();
+            if (cells.NullOrEmpty())
+                return null;
+
+            StageVisualEffect effect = ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_StagedVisualEffect) as StageVisualEffect;
+            if (effect == null)
+                return null;
+
+            effect.Initialize(cells, map, sections, ForCellAction, ticksPerSection);
+
+            GenSpawn.Spawn(effect, cells[0], map);
+            return effect;
+        }
+
+        public static StageVisualEffect CreateRectStageEffect(IntVec3 Origin, IntVec3 Target, int width, int length, Map map, int sections, Action<IntVec3, Map, int> ForCellAction, int ticksPerSection = 8)
+        {
+            List<IntVec3> cells = TargetUtil.GetAllCellsInRect(Origin, Target, width, length).ToList();
+            if (cells.NullOrEmpty())
+                return null;
+
+            StageVisualEffect effect = ThingMaker.MakeThing(MagicAndMythDefOf.MagicAndMyths_StagedVisualEffect) as StageVisualEffect;
+            if (effect == null)
+                return null;
+
+            effect.Initialize(cells, map, sections, ForCellAction, ticksPerSection);
+
             GenSpawn.Spawn(effect, cells[0], map);
             return effect;
         }

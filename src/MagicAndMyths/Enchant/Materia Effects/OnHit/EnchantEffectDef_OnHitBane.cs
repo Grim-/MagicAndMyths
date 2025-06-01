@@ -12,7 +12,7 @@ namespace MagicAndMyths
             get
             {
                 string damageText = isMultiplicative ? damageValue + "x" : damageValue.ToString();
-                return string.Format("Deal {0} ({1}) damage on a successful {3} attack against {2} targets.", damageText, damageType.LabelCap, race.LabelCap, attackType);
+                return $"Deal {damageText} ({damageType.LabelCap}) damage on a successful {attackType} attack against {race.LabelCap} targets.";
             }
         }
 

@@ -17,7 +17,7 @@ namespace MagicAndMyths
         }
     }
 
-    public class CompTransformableEquipment : ThingComp
+    public class CompTransformableEquipment : ThingComp, IDrawEquippedGizmos
     {
         private ThingDef originalDef;
 
@@ -44,26 +44,33 @@ namespace MagicAndMyths
         {
 
         }
+
+
+        //public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
+        //{
+        //    foreach (Gizmo gizmo in base.CompGetWornGizmosExtra())
+        //        yield return gizmo;
+
+        //    yield return GetTransformGizmo();
+        //}
+
+        //public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        //{
+        //    foreach (Gizmo gizmo in base.CompGetGizmosExtra())
+        //        yield return gizmo;
+
+        //}
+
+        public IEnumerable<Gizmo> GetEquippedGizmos()
+        {
+            yield return GetTransformGizmo();
+        }
+
+
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Defs.Look(ref originalDef, "originalDef");
-        }
-
-        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
-        {
-            foreach (Gizmo gizmo in base.CompGetWornGizmosExtra())
-                yield return gizmo;
-
-            yield return GetTransformGizmo();
-        }
-
-        public override IEnumerable<Gizmo> CompGetGizmosExtra()
-        {
-            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
-                yield return gizmo;
-
-            yield return GetTransformGizmo();
         }
     }
 }

@@ -7,6 +7,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
+    [StaticConstructorOnStartup]
     public static class MagicUtil
     {
         public static bool IsInvisible(this Thing t)

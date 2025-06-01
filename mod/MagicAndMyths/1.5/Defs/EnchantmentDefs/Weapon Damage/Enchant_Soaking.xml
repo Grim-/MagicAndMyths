@@ -11,6 +11,10 @@
         <damageValue>3</damageValue>
         <damageType>Water</damageType>
       </li>
+      <li Class="MagicAndMyths.EnchantEffectDef_OnHitSplashThing">
+        <thing>Filth_Water</thing>
+        <thingSpawnMax>3</thingSpawnMax>
+      </li>
     </effects>
     <textColor>(0.8, 0, 0)</textColor>
     <allowedCategories>

@@ -7,6 +7,11 @@ namespace MagicAndMyths
     {
         public AbilityDef ability;
 
+        public EnchantEffectDef_GrantAbility()
+        {
+            workerClass = typeof(EnchantEffect_GrantAbility);
+        }
+
         public override string EffectDescription => $"Grants the {ability.LabelCap} ability while equipped";
     }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.StanceDef>
+    <defName>Spellblade_WaterStance</defName>
+    <label>Water Stance</label>
+    <description>Defensive stance providing healing and protection. Increases dodge and provides regeneration.</description>
+    <iconPath>UI/Abilities/Spellblade/WaterStance</iconPath>
+    <iconColor>(0.2, 0.6, 1)</iconColor>
+    <activationSound>Spellblade_WaterStanceActivate</activationSound>
+    <activationEffecter>Spellblade_WaterStanceEffect</activationEffecter>
+    <cooldownTicks>300</cooldownTicks>
+    <upkeepCost>5</upkeepCost>
+    <hediffsToApply>
+      <li>Spellblade_WaterStanceHediff</li>
+    </hediffsToApply>
+  </MagicAndMyths.StanceDef>
+</Defs>

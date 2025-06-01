@@ -49,6 +49,9 @@ namespace MagicAndMyths
         public void Respawn(IntVec3 position, Thing thing, Map map, Pawn throwingPawn)
         {
             OnRespawn(position, thing, map, throwingPawn);
+
+
+
             PostRespawn();
         }
 

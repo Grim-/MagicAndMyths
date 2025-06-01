@@ -75,14 +75,15 @@ namespace MagicAndMyths
         public static StatDef Stat_Charisma;
         public static StatDef Stat_LimbMaxHP;
 
-
         public static JobDef UseArtifact;
         //public static JobDef MagicAndMyths_CastLaserBeam;
 
         public static ThingPropertyDef ThingProp_Invisible;
 
 
-       
+        public static EffecterDef MagicAndMyths_EffectSingularityAura;
+
+
 
         public static EnchantCategoryDef EnchantCategory_Universal;
         public static EnchantCategoryDef EnchantCategory_Melee;

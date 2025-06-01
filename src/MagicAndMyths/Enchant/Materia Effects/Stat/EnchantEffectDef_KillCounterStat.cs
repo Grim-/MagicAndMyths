@@ -5,8 +5,9 @@ namespace MagicAndMyths
 {
     public class EnchantEffectDef_KillCounterStat : EnchantEffectDef_PawnStat
     {
+        public RecordDef recordDef;
         public float increasePerKill = 0.1f;
-
+        public RecordDef record => recordDef != null ? recordDef : RecordDefOf.KillsHumanlikes;
         public EnchantEffectDef_KillCounterStat()
         {
             workerClass = typeof(EnchantEffect_KillCounterStat);
@@ -20,7 +21,7 @@ namespace MagicAndMyths
                     $"+{increasePerKill}" :
                     $"x{increasePerKill}";
 
-                return $"Increases {statToAffect.LabelCap} by {increaseText} for each enemy killed";
+                return $"Increases {statToAffect.LabelCap} by {increaseText} for each {record.LabelCap} killed";
             }
         }
     }
@@ -30,12 +31,11 @@ namespace MagicAndMyths
         protected int killCounter = 0;
         protected EnchantEffectDef_KillCounterStat KillDef => (EnchantEffectDef_KillCounterStat)def;
 
-
         public override float GetStatOffset(StatDef stat)
         {
             if (stat == KillDef.statToAffect && KillDef.modifierType == StatModifierType.Offset)
             {
-                return this.EquippingPawn.records.GetAsInt(RecordDefOf.KillsHumanlikes) * KillDef.increasePerKill;
+                return this.EquippingPawn.records.GetAsInt(KillDef.record) * KillDef.increasePerKill;
             }
             return 0f;
         }
@@ -44,7 +44,7 @@ namespace MagicAndMyths
         {
             if (stat == KillDef.statToAffect && KillDef.modifierType == StatModifierType.Factor)
             {
-                return 1f + (this.EquippingPawn.records.GetAsInt(RecordDefOf.KillsHumanlikes) * KillDef.increasePerKill);
+                return 1f + (this.EquippingPawn.records.GetAsInt(KillDef.record) * KillDef.increasePerKill);
             }
             return 1f;
         }
@@ -56,11 +56,11 @@ namespace MagicAndMyths
             if (KillDef.modifierType == StatModifierType.Offset)
             {
                 string sign = currentBonus >= 0 ? "+" : "";
-                return $"{sign}{currentBonus:0.##} ({this.EquippingPawn.records.GetAsInt(RecordDefOf.KillsHumanlikes)} kills)";
+                return $"{sign}{currentBonus:0.##} ({this.EquippingPawn.records.GetAsInt(KillDef.record)} {KillDef.record.LabelCap} kills)";
             }
             else
             {
-                return $"x{(1f + currentBonus):0.##} ({this.EquippingPawn.records.GetAsInt(RecordDefOf.KillsHumanlikes)} kills)";
+                return $"x{(1f + currentBonus):0.##} ({this.EquippingPawn.records.GetAsInt(KillDef.record)} {KillDef.record.LabelCap} kills)";
             }
         }
 

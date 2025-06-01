@@ -16,6 +16,10 @@ namespace MagicAndMyths
     public class CompAbilityEffect_ThunderousImpact : CompAbilityEffect_BaseJumpEffect
     {
         CompProperties_ThunderousImpact Props => (CompProperties_ThunderousImpact)props;
+
+
+
+
         protected override void OnLand(IntVec3 arg1, Thing arg2, Pawn arg3)
         {
             base.OnLand(arg1, arg2, arg3);
@@ -44,6 +48,12 @@ namespace MagicAndMyths
 
                 }
             });
+        }
+
+        public override void DrawEffectPreview(LocalTargetInfo target)
+        {
+            base.DrawEffectPreview(target);
+            GenDraw.DrawRadiusRing(this.parent.pawn.Position, Props.landingRadius);
         }
 
     }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="EtherealThingBase">
+    <defName>WindZone</defName>
+    <label>wind zone</label>
+    <description>An invisible zone of cutting winds.</description>
+    <thingClass>MagicAndMyths.ActiveZone</thingClass>
+    <category>Ethereal</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <passability>Standable</passability>
+    <pathCost>0</pathCost>
+    <fillPercent>0</fillPercent>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Weather</altitudeLayer>
+  </ThingDef>
+</Defs>

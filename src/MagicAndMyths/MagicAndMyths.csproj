@@ -98,12 +98,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comps\Ability\CompProperties_AbilityCancelStances.cs" />
+    <Compile Include="Comps\Ability\CompProperties_AbilityZoneEffect.cs" />
+    <Compile Include="Comps\Ability\CompProperties_ConalZoneEffect.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_DealCleaveDamage.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_DealDamage.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_EffecterKeeper.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_MeleeAttackAddHediff.cs" />
+    <Compile Include="Hediff\Comps\HediffComp_OnMeleeAttackEffect.cs" />
+    <Compile Include="Hediff\HediffWithStacks.cs" />
     <Compile Include="Comps\Game\GameComp_RadialFavouritesTracker.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\HealParameters.cs" />
-    <Compile Include="Comps\ThingComps\Throwable\CompProperties_Explosive.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_Explosive.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableSpawnGas.cs" />
-    <Compile Include="Comps\ThingComps\Throwable\CompProperties_TimedDetonator.cs" />
+    <Compile Include="Comps\ThingComps\CompProperties_TimedDetonator.cs" />
+    <Compile Include="Enchant\Materia Effects\EnchantEffectDef_DurabilityRepair.cs" />
+    <Compile Include="Enchant\Materia Effects\OnDamageTaken\EnchantEffectDef_OnDamageTakenApplyHediff.cs" />
+    <Compile Include="Enchant\Materia Effects\OnDamageTaken\EnchantEffectDef_OnDamageTakenNullify.cs" />
+    <Compile Include="Enchant\Materia Effects\OnHit\EnchantEffectDef_OnHitConeDamage.cs" />
     <Compile Include="Enchant\Materia Effects\OnHit\EnchantEffectDef_OnHitSplashThing.cs" />
+    <Compile Include="Gene\BasicResourceGeneDef.cs" />
+    <Compile Include="Comps\Ability\CompProperties_AbilityToggleStance.cs" />
+    <Compile Include="Gene\GeneGizmo_BasicResource.cs" />
+    <Compile Include="Gene\Gene_StanceManager.cs" />
+    <Compile Include="Gene\StanceDef.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_LimbRegeneration.cs" />
     <Compile Include="UI\AbilityRadialPagerSettings.cs" />
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
@@ -134,6 +152,8 @@
     <Compile Include="Patch\GizmoGridPager.cs" />
     <Compile Include="UI\MoteEditorWindow.cs" />
     <Compile Include="UI\RadialMenuWindow.cs" />
+    <Compile Include="Util\ActiveZone.cs" />
+    <Compile Include="Util\ActiveZoneComp.cs" />
     <Compile Include="Util\Effect Behaviours\StageVisualEffect.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectPetrify.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectUnPetrify.cs" />
@@ -148,7 +168,7 @@
     <Compile Include="Comps\Ability\CompProperties_SummonPawn.cs" />
     <Compile Include="Comps\Ability\CompProperties_TeleportPawnToHomeMap.cs" />
     <Compile Include="Comps\Ability\CompProperties_ToggleHediff.cs" />
-    <Compile Include="Comps\Ability\Gene_BasicResource.cs" />
+    <Compile Include="Gene\Gene_BasicResource.cs" />
     <Compile Include="Comps\Map\MapComp_PerceptionManager.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddEnchant.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectAddGene.cs" />
@@ -268,7 +288,7 @@
     <Compile Include="Enchant\Materia Effects\OnDamageTaken\EnchantEffectDef_DamageShield.cs" />
     <Compile Include="Enchant\Materia Effects\OnDamageTaken\EnchantEffectDef_OnDamageTaken.cs" />
     <Compile Include="Enchant\Materia Effects\OnDeath\EnchantEffectDef_Revival.cs" />
-    <Compile Include="Enchant\Materia Effects\OnHit\AdditionalGraphicData.cs" />
+    <Compile Include="Util\AdditionalGraphicData.cs" />
     <Compile Include="Enchant\Materia Effects\OnHit\EnchantEffectDef_OnHitApplyHediff.cs" />
     <Compile Include="Enchant\Materia Effects\OnHit\EnchantEffectDef_OnHitBane.cs" />
     <Compile Include="Enchant\Materia Effects\OnHit\EnchantEffectDef_OnHitBase.cs" />

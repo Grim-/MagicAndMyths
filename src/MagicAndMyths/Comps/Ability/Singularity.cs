@@ -14,6 +14,12 @@ namespace MagicAndMyths
         public float gravityRadius = 10f;
         public float pullStrength = 0.05f;
 
+        public int baseDamage = 15;
+        public DamageDef damageDef = null;
+
+        public float miningDamageMultiplier = 10f;
+        public int baseMiningDamage = 400;
+
 
         private Effecter effecter = null;
         public Singularity()
@@ -31,7 +37,7 @@ namespace MagicAndMyths
 
             if (effecter == null)
             {
-                effecter = DefDatabase<EffecterDef>.GetNamed("MagicAndMyths_EffectSingularityAura").SpawnMaintained(this.Position, this.Map);
+                effecter = MagicAndMythDefOf.MagicAndMyths_EffectSingularityAura.SpawnMaintained(this.Position, this.Map);
             }
         }
 
@@ -51,7 +57,7 @@ namespace MagicAndMyths
 
         public override void Tick()
         {
-            if (Find.TickManager.TicksGame % 10 == 0)
+            if (this.IsHashIntervalTick(50))
             {
                 ApplyGravitationalPull();
             }
@@ -82,7 +88,7 @@ namespace MagicAndMyths
                 {
                     if (thing != this)
                     {
-                        DamageInfo damage = thing.def.mineable ? new DamageInfo(DamageDefOf.Mining, 344 * 2, 1) : new DamageInfo(DamageDefOf.Blunt, 15, 1);
+                        DamageInfo damage = GetDamageFor(thing);
                         thing.TakeDamage(damage);
                     }
 
@@ -95,6 +101,16 @@ namespace MagicAndMyths
                     }
                 }
             }
+        }
+
+        public override void DrawExtraSelectionOverlays()
+        {
+            base.DrawExtraSelectionOverlays();
+        }
+
+        protected virtual DamageInfo GetDamageFor(Thing thing)
+        {
+            return thing.def.mineable ? new DamageInfo(DamageDefOf.Mining, baseMiningDamage * miningDamageMultiplier, 1) : new DamageInfo(DamageDefOf.Blunt, baseDamage, 1);
         }
 
         private void TryPullItem(Thing thing, Vector3 pullDirection, float pullStrength)

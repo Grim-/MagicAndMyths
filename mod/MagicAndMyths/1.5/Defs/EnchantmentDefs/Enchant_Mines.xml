@@ -7,7 +7,7 @@
     <commonality>1.0</commonality>
     <effects>
       <li Class="MagicAndMyths.EnchantEffectDef_OnHitSplashThing">
-        <thing>Filth_Fuel</thing>
+        <thing>MagicAndMyths_SimpleBomb</thing>
         <thingSpawnMax>3</thingSpawnMax>
       </li>
     </effects>

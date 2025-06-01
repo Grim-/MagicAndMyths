@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.BasicResourceGeneDef ParentName="MagicAndMyths_BaseManaGene">
+    <defName>MagicAndMyths_SpellBladeGene</defName>
+    <label>spellblade</label>
+    <description>The ability to channel different elemental stances, each providing unique combat advantages.</description>
+    <iconPath>UI/Icons/Genes/Gene_ElementalMastery</iconPath>
+    <geneClass>MagicAndMyths.Gene_StanceManager</geneClass>
+    <displayOrderInCategory>100</displayOrderInCategory>
+    <biostatCpx>2</biostatCpx>
+    <biostatMet>-3</biostatMet>
+    <barColor>(0.3, 0.5, 1.0)</barColor>
+    <abilities>
+      <li>Spellblade_ToggleFireStance</li>
+      <li>Spellblade_ToggleWaterStance</li>
+      <li>Spellblade_ToggleLightningStance</li>
+      <li>Spellblade_ToggleEarthStance</li>
+      <li>MagicAndMyths_SpellBladeWindCutter</li>
+    </abilities>
+  </MagicAndMyths.BasicResourceGeneDef>
+</Defs>

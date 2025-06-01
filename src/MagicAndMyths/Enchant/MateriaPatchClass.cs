@@ -87,6 +87,7 @@ namespace MagicAndMyths
     //    }
     //}
 
+
     //Allows Weapons to call PostPreApplyDamage which is normally only called on apparel.
     [HarmonyPatch(typeof(Pawn_HealthTracker), "PreApplyDamage")]
     public class Pawn_HealthTracker_PreApplyDamage_Patch

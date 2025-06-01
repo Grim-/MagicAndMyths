@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -21,7 +22,7 @@ namespace MagicAndMyths
         {
             get
             {
-                return $"Has a {chanceToSplash.min * 100} - {chanceToSplash.max * 100} % chance to splash {thing.LabelCap} in a {splashRadius} radius around the hit target";
+                return $"Has a {chanceToSplash.min * 100} - {chanceToSplash.max * 100} % chance to splash {thing.LabelCap} around in a {splashRadius} radius around the hit target";
             }
         }
 
@@ -34,7 +35,7 @@ namespace MagicAndMyths
 
         public override DamageWorker.DamageResult Notify_ApplyMeleeDamageToTarget(LocalTargetInfo target, Pawn Attacker, ref DamageWorker.DamageResult damageResult)
         {
-            if (Def.hitMode == OnHitMode.Melee && Def.chanceToSplash.RandomInRange >= Rand.Value)
+            if (Def.hitMode == OnHitMode.Melee && Rand.Value <= Def.chanceToSplash.RandomInRange)
             {
                 List<IntVec3> Cells = GenRadial.RadialCellsAround(target.Thing.Position, Def.splashRadius, true).ToList();
 
@@ -56,4 +57,6 @@ namespace MagicAndMyths
             return damageResult;
         }
     }
+
+
 }
