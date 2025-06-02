@@ -54,4 +54,5 @@ namespace MagicAndMyths
             return pawn?.genes?.GetFirstGeneOfType<Gene_StanceManager>();
         }
     }
+
 }

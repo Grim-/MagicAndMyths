@@ -6,43 +6,40 @@ using Verse.AI;
 
 namespace MagicAndMyths
 {
+    public delegate bool BeforeThingDamageTakenHandler(Thing target, ref DamageInfo dinfo);
+
     public class EventManager
     {
         private static readonly EventManager instance = new EventManager();
 
         public static EventManager Instance => instance;
 
-        // Combat events
         public event Func<Thing, Thing, DamageInfo, DamageWorker.DamageResult, DamageWorker.DamageResult> OnDamageDealt;
         public event Action<Pawn, DamageInfo> OnPawnDamageTaken;
         public event Action<Pawn, DamageInfo?, Hediff> OnPawnHediffGained;
         public event Action<Pawn, Hediff> OnPawnHediffRemoved;
+        public event BeforeThingDamageTakenHandler OnBeforeThingDamageTaken;
         public event Action<Thing, DamageInfo> OnThingDamageTaken;
         public event Action<Pawn, DamageInfo, Hediff> OnThingKilled;
 
-        // Work events
         public event Action<Pawn, WorkTypeDef, float> OnWorkCompleted;
         public event Action<Pawn, SkillDef, float> OnSkillGained;
 
-        // Ability events
         public event Action<Pawn, Verb> OnVerbUsed;
-        //public event Action<Pawn, Ability> OnAbilityCast;
         public event Action<Pawn, Ability> OnAbilityCompleted;
 
-        // Job events
         public event Action<Pawn, Job> OnJobStarted;
         public event Action<Pawn, Job, int> OnJobProgress;
         public event Action<Pawn, Job, JobCondition> OnJobEnded;
         public event Action<Pawn, Job, JobCondition> OnJobCleanedUp;
 
-        // Movement and perception events
         public event Action<Pawn, IntVec3> OnCellEntered;
-        public event Action<Pawn, IntVec3, IntVec3> OnPawnMoved; // From, To
+        public event Action<Pawn, IntVec3, IntVec3> OnPawnMoved;
         public event Func<Pawn, IntVec3, bool> OnPerceptionCheck;
 
         private EventManager()
         {
-            
+
         }
 
         public DamageWorker.DamageResult RaiseDamageDealt(Thing target, Thing attacker, DamageInfo dinfo, DamageWorker.DamageResult baseResult)
@@ -53,6 +50,21 @@ namespace MagicAndMyths
         public void RaiseThingDamageTaken(Thing target, DamageInfo info)
         {
             OnThingDamageTaken?.Invoke(target, info);
+        }
+
+        public bool RaiseOnBeforeThingDamageTaken(Thing target, ref DamageInfo info)
+        {
+            if (OnBeforeThingDamageTaken != null)
+            {
+                foreach (BeforeThingDamageTakenHandler handler in OnBeforeThingDamageTaken.GetInvocationList())
+                {
+                    if (handler(target, ref info))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void RaisePawnDamageTaken(Pawn target, DamageInfo info)
@@ -89,11 +101,6 @@ namespace MagicAndMyths
         {
             OnVerbUsed?.Invoke(pawn, verb);
         }
-
-        //public void RaiseAbilityCast(Pawn pawn, Ability ability)
-        //{
-        //    OnAbilityCast?.Invoke(pawn, ability);
-        //}
 
         public void RaiseAbilityCompleted(Pawn pawn, Ability ability)
         {

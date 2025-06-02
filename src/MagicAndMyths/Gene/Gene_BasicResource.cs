@@ -8,6 +8,7 @@ namespace MagicAndMyths
     public class Gene_BasicResource : Gene_Resource, IGeneResourceDrain
     {
         public BasicResourceGeneDef Def => def != null ? (BasicResourceGeneDef)def : null;
+        public PawnResourceDef ResourceDef => Def?.resourceDef;
 
         public bool EnableResource = true;
         public Gene_Resource Resource => this;
@@ -17,12 +18,38 @@ namespace MagicAndMyths
         {
             get
             {
+                if (IsLocked)
+                {
+                    return false;
+                }
+
                 if (Active)
                 {
                     return !pawn.Deathresting;
                 }
                 return false;
             }
+        }
+
+
+        private bool _IsLocked = false;
+        public bool IsLocked
+        {
+            get
+            {
+                return _IsLocked;
+            }
+            set => _IsLocked = value;
+        }
+
+        private bool _IsRegenEnabled = false;
+        public bool IsRegenEnabled
+        {
+            get
+            {
+                return _IsRegenEnabled;
+            }
+            set => _IsRegenEnabled = value;
         }
 
         private int CurrentRegenTick = 0;
@@ -34,12 +61,11 @@ namespace MagicAndMyths
         }
 
         public float ValueCostMultiplied => Value * CostMult;
-        public string DisplayLabel => Def.resourceName + " (" + "Gene".Translate() + ")";
+        public string DisplayLabel => ResourceDef?.resourceName ?? "Unknown Resource";
         public float ResourceLossPerDay => def?.resourceLossPerDay ?? 0f;
-        public override float InitialResourceMax => Def?.maxStat != null ? Pawn.GetStatValue(Def.maxStat, true, 1250) : 100f;
+        public override float InitialResourceMax => ResourceDef?.maxStat != null ? Pawn.GetStatValue(ResourceDef.maxStat, true, 1250) : 100f;
         public override float MinLevelForAlert => 0.15f;
         public override float MaxLevelOffset => 0.1f;
-
 
         protected float defaultMax = 10f;
 
@@ -48,10 +74,10 @@ namespace MagicAndMyths
         {
             get
             {
-                if (Def?.maxStat == null) 
+                if (ResourceDef?.maxStat == null)
                     return defaultMax;
 
-                float currentMax = Pawn.GetStatValue(Def.maxStat, true, 1250);
+                float currentMax = Pawn.GetStatValue(ResourceDef.maxStat, true, 1250);
                 if (currentMax != lastMax)
                 {
                     lastMax = currentMax;
@@ -61,16 +87,16 @@ namespace MagicAndMyths
             }
         }
 
-        protected override Color BarColor => Def?.barColor ?? new ColorInt(3, 3, 138).ToColor;
+        protected override Color BarColor => ResourceDef?.barColor ?? new ColorInt(3, 3, 138).ToColor;
         protected override Color BarHighlightColor => new ColorInt(42, 42, 145).ToColor;
 
         public override int ValueForDisplay => Mathf.RoundToInt(Value);
         public override int MaxForDisplay => Mathf.RoundToInt(Max);
 
-        public float RegenAmount => Def?.regenStat != null ? Pawn.GetStatValue(Def.regenStat, true, 100) : 1f;
-        public float RegenSpeed => Def?.regenSpeedStat != null ? Pawn.GetStatValue(Def.regenSpeedStat, true, 100) : 1f;
-        public int RegenTicks => Def?.regenTicks != null ? Mathf.RoundToInt(Pawn.GetStatValue(Def.regenTicks, true, 100) * RegenSpeed)  : Mathf.RoundToInt(2500 * RegenSpeed);
-        public float CostMult => Def?.costMult != null ? Pawn.GetStatValue(Def.costMult, true, 100) : 1f;
+        public float RegenAmount => ResourceDef?.regenStat != null ? Pawn.GetStatValue(ResourceDef.regenStat, true, 100) : 1f;
+        public float RegenSpeed => ResourceDef?.regenSpeedStat != null ? Pawn.GetStatValue(ResourceDef.regenSpeedStat, true, 100) : 1f;
+        public int RegenTicks => ResourceDef?.regenTicks != null ? Mathf.RoundToInt(Pawn.GetStatValue(ResourceDef.regenTicks, true, 100) * RegenSpeed) : Mathf.RoundToInt(2500 * RegenSpeed);
+        public float CostMult => ResourceDef?.costMult != null ? Pawn.GetStatValue(ResourceDef.costMult, true, 100) : 1f;
 
         public float TotalResourceUsed = 0;
 
@@ -88,38 +114,57 @@ namespace MagicAndMyths
             this.SetMax(newMax);
         }
 
-
-        public void Consume(float Amount)
+        public void Consume(float Amount, bool addToUsedTotal = true)
         {
-            if (!ModsConfig.BiotechActive) 
+            if (!ModsConfig.BiotechActive)
                 return;
 
-            TotalResourceUsed += Amount;
+            if (IsLocked)
+            {
+                return;
+            }
+
+            if(addToUsedTotal) TotalResourceUsed += Amount;
             Value -= Amount * CostMult;
         }
 
         public void Restore(float Amount)
         {
-            if (!ModsConfig.BiotechActive) 
+            if (!ModsConfig.BiotechActive)
                 return;
+
+            if (IsLocked)
+            {
+                return;
+            }
+
             Value += Amount;
         }
 
         public bool Has(float Amount)
         {
-            if (!ModsConfig.BiotechActive) 
+            if (!ModsConfig.BiotechActive)
                 return false;
+
+            if (ResourceIsUnavailable(out string reason))
+            {
+                return false;
+            }
+
             return Value >= Amount * CostMult;
         }
 
         public override void Tick()
         {
             base.Tick();
-            CurrentRegenTick++;
-            if (CurrentRegenTick >= RegenTicks)
+            if (IsRegenEnabled)
             {
-                Restore(RegenAmount);
-                ResetRegenTicks();
+                CurrentRegenTick++;
+                if (CurrentRegenTick >= RegenTicks)
+                {
+                    Restore(RegenAmount);
+                    ResetRegenTicks();
+                }
             }
         }
 
@@ -133,9 +178,22 @@ namespace MagicAndMyths
             targetValue = Mathf.Clamp(val * Max, 0f, Max - MaxLevelOffset);
         }
 
-        public bool ShouldConsumeHemogenNow()
+        public bool ResourceIsUnavailable(out string reason)
         {
-            return Value < targetValue;
+            if (IsLocked)
+            {
+                reason = "Resource Locked";
+                return true;
+            }
+
+            if (!EnableResource)
+            {
+                reason = "Resource not enabled";
+                return true;
+            }
+
+            reason = string.Empty;
+            return false;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -144,9 +202,29 @@ namespace MagicAndMyths
             {
                 yield return gizmo;
             }
-            foreach (Gizmo resourceDrainGizmo in GeneResourceDrainUtility.GetResourceDrainGizmos(this))
+
+
+            if (Prefs.DevMode)
             {
-                yield return resourceDrainGizmo;
+                yield return new Command_Action()
+                {
+                    defaultLabel = $"Add 50 {ResourceLabel}",
+                    defaultDesc = $"Add 50 {ResourceLabel}",
+                    action = () =>
+                    {
+                        this.Restore(50f);
+                    }
+                };
+
+                yield return new Command_Action()
+                {
+                    defaultLabel = $"Remove 50 {ResourceLabel}",
+                    defaultDesc = $"Remove 50 {ResourceLabel}",
+                    action = () =>
+                    {
+                        this.Consume(50f, false);
+                    }
+                };
             }
         }
 

@@ -199,7 +199,7 @@ namespace MagicAndMyths
 
             foreach (var item in Cells)
             {
-                things.AddRange(item.GetThingList(map).Where(x=> x.def.useHitPoints));
+                things.AddRange(item.GetThingList(map).Where(x=> x.def.useHitPoints || x is Pawn));
             }
 
             return things;

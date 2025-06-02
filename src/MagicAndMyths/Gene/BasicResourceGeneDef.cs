@@ -1,18 +1,10 @@
-﻿using RimWorld;
-using UnityEngine;
-using Verse;
+﻿using Verse;
 
 namespace MagicAndMyths
 {
     public class BasicResourceGeneDef : GeneDef
     {
-        public string resourceName = "unnamed resource";
-        public StatDef maxStat;
-        public StatDef regenTicks;
-        public StatDef regenStat;
-        public StatDef regenSpeedStat;
-        public StatDef costMult;
-        public Color barColor = Color.cyan;
+        public PawnResourceDef resourceDef;
 
         public BasicResourceGeneDef()
         {

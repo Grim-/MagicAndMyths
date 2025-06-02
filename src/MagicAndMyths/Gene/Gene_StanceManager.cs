@@ -12,6 +12,7 @@ namespace MagicAndMyths
         private Dictionary<StanceDef, int> stanceCooldowns = new Dictionary<StanceDef, int>();
         private Dictionary<HediffDef, HashSet<StanceDef>> hediffSources = new Dictionary<HediffDef, HashSet<StanceDef>>();
         private Dictionary<AbilityDef, HashSet<StanceDef>> abilitySources = new Dictionary<AbilityDef, HashSet<StanceDef>>();
+        private Dictionary<AbilityDef, int> abilityCooldowns = new Dictionary<AbilityDef, int>();
 
         public IEnumerable<StanceDef> ActiveStances => activeStances;
         public bool HasActiveStances => activeStances.Any();
@@ -41,7 +42,7 @@ namespace MagicAndMyths
                 return false;
             if (IsStanceActive(stance))
                 return false;
-            if (IsStanceOnCooldown(stance))
+            if (stance.cooldownTicks > 0 && IsStanceOnCooldown(stance))
                 return false;
 
             if (IsExclusiveMode && HasActiveStances)
@@ -85,7 +86,7 @@ namespace MagicAndMyths
 
         public int GetStanceCooldownRemaining(StanceDef stance)
         {
-            if (!IsStanceOnCooldown(stance)) 
+            if (!IsStanceOnCooldown(stance))
                 return 0;
             return Mathf.Max(0, stanceCooldowns[stance] - GenTicks.TicksGame);
         }
@@ -161,16 +162,21 @@ namespace MagicAndMyths
         private void ApplyStanceEffects(StanceDef stance, bool activate)
         {
             ApplyHediffEffects(stance, activate);
-            ApplyAbilityEffects(stance, activate);
 
             if (activate)
             {
+                AddStanceAbilities(stance);
+
                 if (stance.activationEffecter != null)
                 {
                     var effecter = stance.activationEffecter.Spawn();
                     effecter.Trigger(new TargetInfo(pawn), new TargetInfo(pawn));
                     effecter.Cleanup();
                 }
+            }
+            else
+            {
+                RemoveStanceAbilities(stance);
             }
         }
 
@@ -214,37 +220,62 @@ namespace MagicAndMyths
             }
         }
 
-        private void ApplyAbilityEffects(StanceDef stance, bool activate)
+        private void AddStanceAbilities(StanceDef stance)
         {
             foreach (var abilityDef in stance.abilitiesToGain)
             {
-                if (activate)
+                if (!abilitySources.ContainsKey(abilityDef))
                 {
-                    if (!abilitySources.ContainsKey(abilityDef))
-                    {
-                        abilitySources[abilityDef] = new HashSet<StanceDef>();
-                    }
+                    abilitySources[abilityDef] = new HashSet<StanceDef>();
+                }
 
-                    abilitySources[abilityDef].Add(stance);
+                abilitySources[abilityDef].Add(stance);
 
-                    if (pawn.abilities.GetAbility(abilityDef) == null)
+                if (pawn.abilities.GetAbility(abilityDef) == null)
+                {
+                    pawn.abilities.GainAbility(abilityDef);
+
+                    if (abilityCooldowns.ContainsKey(abilityDef))
                     {
-                        pawn.abilities.GainAbility(abilityDef);
+                        var ability = pawn.abilities.GetAbility(abilityDef);
+                        if (ability != null)
+                        {
+                            ability.StartCooldown(abilityCooldowns[abilityDef]);
+                        }
                     }
                 }
-                else
-                {
-                    if (abilitySources.ContainsKey(abilityDef))
-                    {
-                        abilitySources[abilityDef].Remove(stance);
+            }
+        }
 
-                        if (abilitySources[abilityDef].Count == 0)
+        private void RemoveStanceAbilities(StanceDef stance)
+        {
+            foreach (var abilityDef in stance.abilitiesToGain)
+            {
+                if (abilitySources.ContainsKey(abilityDef))
+                {
+                    abilitySources[abilityDef].Remove(stance);
+
+                    if (abilitySources[abilityDef].Count == 0)
+                    {
+                        abilitySources.Remove(abilityDef);
+                        var ability = pawn.abilities.GetAbility(abilityDef);
+                        if (ability != null)
                         {
-                            abilitySources.Remove(abilityDef);
-                            if (pawn.abilities.GetAbility(abilityDef) != null)
+                            if (ability.CooldownTicksRemaining > 0)
                             {
-                                pawn.abilities.RemoveAbility(abilityDef);
+                                abilityCooldowns[abilityDef] = ability.CooldownTicksRemaining;
                             }
+                            else
+                            {
+                                abilityCooldowns.Remove(abilityDef);
+                            }
+
+                            if (ability is IToggleableAbility toggleAbility)
+                            {
+                                toggleAbility.DeActivate();
+                            }
+
+                            pawn.abilities.RemoveAbility(abilityDef);
                         }
                     }
                 }
@@ -279,6 +310,12 @@ namespace MagicAndMyths
                         }
                     }
                 }
+
+                var expiredCooldowns = abilityCooldowns.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToList();
+                foreach (var abilityDef in expiredCooldowns)
+                {
+                    abilityCooldowns.Remove(abilityDef);
+                }
             }
         }
 
@@ -287,6 +324,7 @@ namespace MagicAndMyths
             base.ExposeData();
             Scribe_Collections.Look(ref activeStances, "activeStances", LookMode.Def);
             Scribe_Collections.Look(ref stanceCooldowns, "stanceCooldowns", LookMode.Def, LookMode.Value);
+            Scribe_Collections.Look(ref abilityCooldowns, "abilityCooldowns", LookMode.Def, LookMode.Value);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {

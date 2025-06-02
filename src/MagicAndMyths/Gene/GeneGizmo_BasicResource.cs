@@ -17,7 +17,7 @@ namespace MagicAndMyths
             {
                 if (gene is Gene_BasicResource resourceGene && resourceGene.Def != null)
                 {
-                    return resourceGene.Def.resourceName;
+                    return resourceGene.Def.resourceDef.label;
                 }
                 return base.Title;
             }
@@ -37,9 +37,9 @@ namespace MagicAndMyths
             if (!(gene is Gene_BasicResource resourceGene)) 
                 return "";
 
-            string text = $"{resourceGene.Def.resourceName.CapitalizeFirst()}: {resourceGene.ValueForDisplay} / {resourceGene.MaxForDisplay}\n";
+            string text = $"{resourceGene.Def.resourceDef.label.CapitalizeFirst()}: {resourceGene.ValueForDisplay} / {resourceGene.MaxForDisplay}\n";
 
-            string regen = $"\nRegenerates {resourceGene.RegenAmount} {resourceGene.Def.resourceName.CapitalizeFirst()} every {GenDate.ToStringTicksToPeriod(resourceGene.RegenTicks)}";
+            string regen = $"\nRegenerates {resourceGene.RegenAmount} {resourceGene.Def.resourceDef.label.CapitalizeFirst()} every {GenDate.ToStringTicksToPeriod(resourceGene.RegenTicks)}";
 
             if (!resourceGene.def.resourceDescription.NullOrEmpty())
             {

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Verse;
 
 namespace MagicAndMyths
@@ -10,6 +11,26 @@ namespace MagicAndMyths
     [StaticConstructorOnStartup]
     public static class MagicUtil
     {
+        static MagicUtil()
+        {
+
+        }
+
+        public static void ListShaderProperties(string shaderPath)
+        {
+            Shader shader = ShaderDatabase.LoadShader(shaderPath);
+
+            if (shader != null)
+            {
+                for (int i = 0; i < shader.GetPropertyCount(); i++)
+                {
+                    string propertyName = shader.GetPropertyName(i);
+                    ShaderPropertyType propertyType = shader.GetPropertyType(i);
+                    Log.Message($"Property {i}: {propertyName} (Type: {propertyType})");
+                }
+            }
+        }
+
         public static bool IsInvisible(this Thing t)
         {
             if (t is ThingWithComps withComps)
@@ -235,6 +256,7 @@ namespace MagicAndMyths
             return pawn.SpendHealingAmount(totalHealAmount, healParams.CreateFilter());
         }
 
+
         public static float SpendHealingAmount(this Pawn pawn, float totalHealAmount, Func<Hediff, bool> filter = null)
         {
             if (totalHealAmount <= 0)
@@ -288,7 +310,15 @@ namespace MagicAndMyths
 
             return totalHealed;
         }
+        public static Gene_BasicResource GetGeneForResourceDef(this Pawn pawn, PawnResourceDef resourceDef)
+        {
+            if (pawn?.genes?.GenesListForReading == null || resourceDef == null)
+                return null;
 
+            return pawn.genes.GenesListForReading
+                .OfType<Gene_BasicResource>()
+                .FirstOrDefault(g => g.ResourceDef == resourceDef);
+        }
         public static bool IsControlledSummon(this Pawn pawn)
         {
             return pawn.health.hediffSet.HasHediff<Hediff_Undead>();

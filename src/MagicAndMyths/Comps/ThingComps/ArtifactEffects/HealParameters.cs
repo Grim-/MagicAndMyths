@@ -64,7 +64,8 @@ namespace MagicAndMyths
                 canHealIllnesses = false,
                 canHealMissingParts = false,
                 canHealPermanentInjuries = true,
-                canHealChronicConditions = false
+                canHealChronicConditions = false,
+                canHealBloodloss = false
             };
         }
 
@@ -78,7 +79,8 @@ namespace MagicAndMyths
                 canHealIllnesses = false,
                 canHealMissingParts = false,
                 canHealPermanentInjuries = false,
-                canHealChronicConditions = false
+                canHealChronicConditions = false,
+                canHealBloodloss = false
             };
         }
 
@@ -92,7 +94,23 @@ namespace MagicAndMyths
                 canHealIllnesses = true,
                 canHealMissingParts = true,
                 canHealPermanentInjuries = true,
-                canHealChronicConditions = true
+                canHealChronicConditions = true,
+                canHealBloodloss = true
+            };
+        }
+
+        public static HealParameters TrollRegeneration()
+        {
+            return new HealParameters
+            {
+                canHealAddictions = true,
+                canHealInfections = true,
+                canHealInjuries = true,
+                canHealIllnesses = true,
+                canHealMissingParts = true,
+                canHealPermanentInjuries = true,
+                canHealChronicConditions = false,
+                canHealBloodloss = true
             };
         }
     }

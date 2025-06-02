@@ -80,6 +80,20 @@ namespace MagicAndMyths
             }
         }
 
+        [HarmonyPatch(typeof(Thing), nameof(Thing.PreApplyDamage))]
+        public static class Patch_Thing_PreApplyDamage
+        {
+            public static void Prefix(Thing __instance, ref DamageInfo dinfo, out bool absorbed)
+            {
+                absorbed = false;
+                if (!__instance.Destroyed)
+                {
+                    absorbed = EventManager.Instance.RaiseOnBeforeThingDamageTaken(__instance, ref dinfo);
+                }
+            }
+        }
+
+
         [HarmonyPatch(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.AddHediff), new[] { typeof(Hediff), typeof(BodyPartRecord), typeof(DamageInfo), typeof(DamageWorker.DamageResult) })]
         public static class Patch_Pawn_HediffAdded
         {

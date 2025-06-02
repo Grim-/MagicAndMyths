@@ -112,7 +112,8 @@ namespace MagicAndMyths
 
                     ZoneCells.ForEach(x =>
                     {
-                        EffecterDefOf.ImpactSmallDustCloud.Spawn(x, this.Map, 0.4f);
+
+                        DefDatabase<EffecterDef>.GetNamed("MagicAndMyths_RandomWinds").Spawn(x, this.Map, 1f);
                     });
                 }
             }
