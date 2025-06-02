@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="BaseBullet">
+      <defName>Projectile_Skull</defName>
+      <label>skull missile</label>
+      <graphicData>
+        <texPath>Things/Item/Equipment/WeaponMelee/Knife</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <projectile>
+        <damageDef>Blunt</damageDef>
+        <damageAmountBase>9</damageAmountBase>
+        <speed>70</speed>
+      </projectile>
+    </ThingDef>
+</Defs>

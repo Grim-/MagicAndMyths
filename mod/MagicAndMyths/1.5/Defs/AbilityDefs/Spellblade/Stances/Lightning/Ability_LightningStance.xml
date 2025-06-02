@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.StanceDef>
+    <defName>Spellblade_LightningStance</defName>
+    <label>Lightning Stance</label>
+    <description>Speed-focused stance for quick strikes and mobility. High speed and precision.</description>
+    <iconPath>UI/Abilities/Spellblade/LightningStance</iconPath>
+    <iconColor>(1, 1, 0.3)</iconColor>
+    <activationSound>Spellblade_LightningStanceActivate</activationSound>
+    <activationEffecter>Spellblade_LightningStanceEffect</activationEffecter>
+    <cooldownTicks>300</cooldownTicks>
+        <upkeepCost>10</upkeepCost>
+    <hediffsToApply>
+      <li>Spellblade_LightningStanceHediff</li>
+    </hediffsToApply>
+    <abilitiesToGain>
+      <li>MagicAndMyths_ElementalArmour_Lightning</li>
+      <li>MagicAndMyths_LightningSpear</li>
+    </abilitiesToGain>
+  </MagicAndMyths.StanceDef>
+
+  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+      <defName>Spellblade_ToggleLightningStance</defName>
+      <label>Lightning Stance</label>
+      <description>Toggle the swift lightning stance on or off.</description>
+      <iconPath>UI/Abilities/Spellblade/LightningStance</iconPath>
+      <cooldownTicksRange>0</cooldownTicksRange>
+      <aiCanUse>false</aiCanUse>
+      <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+      <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+      <verbProperties>
+        <verbClass>Verb_CastAbility</verbClass>
+        <range>0</range>
+        <warmupTime>0</warmupTime>
+        <soundCast>FireSpew_Resolve</soundCast>
+        <targetable>False</targetable>
+        <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+      </verbProperties>
+      <comps>
+        <li Class="MagicAndMyths.CompProperties_AbilityToggleStance">
+          <stance>Spellblade_LightningStance</stance>
+          <allowDeactivation>true</allowDeactivation>
+        </li>
+      </comps>
+    </MagicAndMyths.ResourceAbilityDef>
+
+    <HediffDef>
+      <defName>Spellblade_LightningStanceHediff</defName>
+      <label>Lightning Stance</label>
+      <description>Channeling swift lightning magic. Greatly increases speed and agility.</description>
+      <hediffClass>HediffWithComps</hediffClass>
+      <maxSeverity>1.0</maxSeverity>
+      <isBad>false</isBad>
+      <stages>
+        <li>
+          <statOffsets>
+            <MoveSpeed>6</MoveSpeed>
+            <MeleeHitChance>1.5</MeleeHitChance>
+            <MeleeDodgeChance>2</MeleeDodgeChance>
+            <MeleeArmorPenetration>0.6</MeleeArmorPenetration>
+            <MeleeCooldownFactor>1.3</MeleeCooldownFactor>
+          </statOffsets>
+          <statFactors>
+            <Stat_ManaRegen>0.5</Stat_ManaRegen>
+          </statFactors>
+        </li>
+      </stages>
+      <comps>
+        <li Class="MagicAndMyths.HediffCompProperties_DealDamage">
+          <damage>1~2</damage>
+          <damageDef>Lightning</damageDef>
+        </li>
+      </comps>
+    </HediffDef>
+</Defs>

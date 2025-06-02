@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="HatMakeableBase">
+		<defName>MagicAndMyths_MaskOfMajora</defName>
+		<label>MagicAndMyths_MaskOfMajora</label>
+		<description>A mask used to MagicAndMyths_MaskOfMajoraMagicAndMyths_MaskOfMajoraMagicAndMyths_MaskOfMajora.</description>
+		<graphicData Class="MagicAndMyths.GraphicDataWithShader">
+			<drawSize>2</drawSize>
+			<texPath>Mask/MaskMajora/Mask_Majora</texPath>
+			<graphicClass>MagicAndMyths.Graphic_MultiWithShader</graphicClass>
+      <customShaderName>Shader Forge/AnimatedMask</customShaderName>
+      <shaderParameters>
+        <_MaskTex>/Mask/MaskMajora/Mask_Majora</_MaskTex>
+        <_PatternOne>/Misc/Marble4</_PatternOne>
+        <_DisplacementTex>/noise/Distortion3</_DisplacementTex>
+      </shaderParameters>
+		</graphicData>
+		<costList>
+			<Plasteel>50</Plasteel>
+			<ComponentIndustrial>1</ComponentIndustrial>
+		</costList>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<MaxHitPoints>250</MaxHitPoints>
+			<Mass>1</Mass>
+			<ArmorRating_Sharp>0.70</ArmorRating_Sharp>
+			<ArmorRating_Blunt>0.60</ArmorRating_Blunt>
+			<ArmorRating_Heat>0.70</ArmorRating_Heat>
+			<Insulation_Cold>4</Insulation_Cold>
+			<Insulation_Heat>2</Insulation_Heat>
+			<EquipDelay>1.5</EquipDelay>
+		</statBases>
+		<apparel>
+      <wornGraphicPath>Mask/MaskMajora/Mask_Majora</wornGraphicPath>
+			<developmentalStageFilter>Child, Adult</developmentalStageFilter>
+			<bodyPartGroups>
+				<li>FullHead</li>
+			</bodyPartGroups>
+			<renderSkipFlags>
+				<li>None</li>
+			</renderSkipFlags>
+			<layers>
+				<li>Overhead</li>
+			</layers>
+			<defaultOutfitTags>
+				<li>Soldier</li>
+			</defaultOutfitTags>
+		</apparel>
+		<colorGenerator IsNull="True"/>
+		<tradeTags>
+			<li>Armor</li>
+		</tradeTags>
+		<thingSetMakerTags>
+			<li>RewardStandardMidFreq</li>
+		</thingSetMakerTags>
+	</ThingDef>
+</Defs>

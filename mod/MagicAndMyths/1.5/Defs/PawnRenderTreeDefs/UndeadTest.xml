@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <PawnRenderTreeDef>
+      <defName>Undead</defName>
+      <root Class="PawnRenderNodeProperties_Parent">
+        <debugLabel>Root</debugLabel>
+        <tagDef>Root</tagDef>
+        <children>
+          <li>
+            <debugLabel>Body</debugLabel>
+            <nodeClass>PawnRenderNode_Body</nodeClass>
+            <workerClass>PawnRenderNodeWorker_Body</workerClass>
+            <tagDef>Body</tagDef>
+            <skipFlag>Body</skipFlag>
+            <colorType>Skin</colorType>
+            <useRottenColor>true</useRottenColor>
+            <useSkinShader>true</useSkinShader>
+            <texPath>Pawn/Animal/BotchJob_UndeadColossus/BotchJob_UndeadColossus</texPath>
+            <children>
+              <li Class="PawnRenderNodeProperties_Overlay">
+                <debugLabel>Wounds - pre apparel</debugLabel>
+                <workerClass>PawnRenderNodeWorker_OverlayWounds</workerClass>
+                <overlayLayer>Body</overlayLayer>
+                <baseLayer>8</baseLayer>
+              </li>
+              <li Class="PawnRenderNodeProperties_Parent">
+                <debugLabel>Apparel root</debugLabel>
+                <tagDef>ApparelBody</tagDef>
+                <baseLayer>20</baseLayer>
+              </li>
+              <li Class="PawnRenderNodeProperties_Overlay">
+                <debugLabel>Wounds - post apparel</debugLabel>
+                <workerClass>PawnRenderNodeWorker_OverlayWounds</workerClass>
+                <overlayOverApparel>true</overlayOverApparel>
+                <overlayLayer>Body</overlayLayer>
+                <baseLayer>30</baseLayer>
+              </li>
+              <li Class="PawnRenderNodeProperties_Overlay">
+                <debugLabel>Firefoam</debugLabel>
+                <workerClass>PawnRenderNodeWorker_OverlayFirefoam</workerClass>
+                <overlayLayer>Body</overlayLayer>
+                <baseLayer>40</baseLayer>
+              </li>
+            </children>
+          </li>
+        </children>
+      </root>
+    </PawnRenderTreeDef>
+</Defs>

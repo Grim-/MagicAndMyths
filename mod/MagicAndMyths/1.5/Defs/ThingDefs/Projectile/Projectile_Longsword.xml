@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="BaseBullet">
+      <defName>Projectile_Longsword</defName>
+      <label>longsword</label>
+      <graphicData>
+        <texPath>Equipment/Sword_29</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+        <drawSize>1.8</drawSize>
+      </graphicData>
+      <projectile>
+        <damageDef>Cut</damageDef>
+        <damageAmountBase>15</damageAmountBase>
+        <speed>70</speed>
+      </projectile>
+    </ThingDef>
+</Defs>

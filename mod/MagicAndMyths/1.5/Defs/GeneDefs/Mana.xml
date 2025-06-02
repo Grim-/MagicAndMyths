@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.BasicResourceGeneDef Name="MagicAndMyths_BaseManaGene">
+    <defName>MagicAndMyths_ManaGene</defName>
+    <label>mana</label>
+    <resourceDef>Mana</resourceDef>
+    <description>All creatures have access to mana, only humans practice magic however.</description>
+    <customEffectDescriptions>
+      <li>All creatures have access to mana, only humans practice magic however.</li>
+    </customEffectDescriptions>
+    <resourceGizmoThresholds>
+      <li>0.25</li>
+      <li>0.5</li>
+      <li>0.75</li>
+    </resourceGizmoThresholds>
+    <resourceGizmoType>MagicAndMyths.GeneGizmo_BasicResource</resourceGizmoType>
+    <showGizmoOnWorldView>false</showGizmoOnWorldView>
+    <showGizmoWhenDrafted>true</showGizmoWhenDrafted>
+    <iconPath>Skills/ManaUser</iconPath>
+    <selectionWeight>0.2</selectionWeight>
+    <displayCategory>Hemogen</displayCategory>
+    <displayOrderInCategory>-2</displayOrderInCategory>
+    <minAgeActive>3</minAgeActive>
+    <resourceLossPerDay>0</resourceLossPerDay>
+    <biostatCpx>0</biostatCpx>
+    <biostatMet>0</biostatMet>
+  </MagicAndMyths.BasicResourceGeneDef>
+
+</Defs>

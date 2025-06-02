@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ObstacleDef_PlaceThing>
+    <defName>PlaceDesecratedAltar</defName>
+    <workerClass>MagicAndMyths.ObstacleWorker_PlaceThing</workerClass>
+    <thingToPlace>MagicAndMyths_DesecratedAltar</thingToPlace>
+    <commonality>0.13</commonality>
+  </MagicAndMyths.ObstacleDef_PlaceThing>
+</Defs>

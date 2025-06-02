@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MagicAndMyths_Phylactery</defName>
+    <label>phylactery</label>
+    <thingClass>MagicAndMyths.Building_Phylactery</thingClass>
+    <description>Phylacteries are often used by Liches, aslong as it remains, they cannot die..</description>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Potions/Phylacterycentered</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shadowData>
+        <volume>(0.3, 0.2, 0.3)</volume>
+        <offset>(0,0,-0.1)</offset>
+      </shadowData>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <WorkToBuild>8000</WorkToBuild>
+      <Flammability>0.2</Flammability>
+      <Mass>5</Mass>
+    </statBases>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>0.15</fillPercent>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Small</destroySound>
+    </building>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <pathCost>14</pathCost>
+    <designationCategory>Misc</designationCategory>
+    <uiOrder>2100</uiOrder>
+    <rotatable>false</rotatable>
+  </ThingDef>
+
+  <HediffDef>
+    <defName>MagicAndMyths_Phylactery</defName>
+    <label>MagicAndMyths_Phylactery</label>
+    <hediffClass>MagicAndMyths.Hediff_Phylactery</hediffClass>
+    <description>This pawn is has stored their soul in a phylactery, aslong as it remains, they cannot die..</description>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <duplicationAllowed>false</duplicationAllowed>
+  </HediffDef>
+</Defs>

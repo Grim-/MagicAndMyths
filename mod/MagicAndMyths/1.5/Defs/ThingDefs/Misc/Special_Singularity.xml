@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef>
+      <defName>MagicAndMyths_Singularity</defName>
+      <label>Singularity</label>
+      <description>A Singularity.</description>
+      <category>Item</category>
+      <tickerType>Normal</tickerType>
+      <altitudeLayer>Skyfaller</altitudeLayer>
+      <statBases>
+        <MaxHitPoints>300</MaxHitPoints>
+        <WorkToBuild>0</WorkToBuild>
+        <Mass>100000000</Mass>
+        <Flammability>0</Flammability>
+        <Beauty>4</Beauty>
+      </statBases>
+      <selectable>true</selectable>
+      <graphicData>
+          <texPath>Misc/Meteor</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <drawSize>2.5</drawSize>
+      </graphicData>
+      <thingClass>MagicAndMyths.Singularity</thingClass>
+      <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+</Defs>

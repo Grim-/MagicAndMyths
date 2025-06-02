@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>Race_ElementalSkull</defName>
+    <label>elemental skull</label>
+    <description>elemental skull</description>
+    <statBases>
+      <MoveSpeed>4.5</MoveSpeed>
+      <ComfyTemperatureMin>-150</ComfyTemperatureMin>
+      <ComfyTemperatureMax>150</ComfyTemperatureMax>
+      <MarketValue>0</MarketValue>
+      <PsychicSensitivity>0</PsychicSensitivity>
+      <Flammability>0</Flammability>
+    </statBases>
+    <tools>
+      <li>
+        <label>Head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>1</power>
+        <cooldownTime>2</cooldownTime>
+        <ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+        <chanceFactor>1</chanceFactor>
+      </li>
+    </tools>
+    <race>
+      <body>SkullBody</body>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <wildness>0</wildness>
+      <canReleaseToWild>false</canReleaseToWild>
+      <needsRest>false</needsRest>
+      <hasGenders>false</hasGenders>
+      <baseBodySize>20</baseBodySize>
+      <baseHungerRate>0</baseHungerRate>
+      <baseHealthScale>5.0</baseHealthScale>
+      <foodType>None</foodType>
+      <trainability>Advanced</trainability>
+      <petness>0</petness>
+      <lifeExpectancy>1000</lifeExpectancy>
+      <lifeStageAges>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <butcherProducts />
+  </ThingDef>
+
+</Defs>

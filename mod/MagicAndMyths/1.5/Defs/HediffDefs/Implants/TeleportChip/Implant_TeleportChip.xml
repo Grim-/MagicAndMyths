@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BodyPartBase">
+      <defName>TeleportationChipItem</defName>
+      <label>teleportation chip</label>
+      <description>An advanced implant that grants the user short-range teleportation abilities. The chip interfaces directly with the nervous system through the arm to enable instantaneous spatial displacement.</description>
+      <descriptionHyperlinks>
+        <RecipeDef>InstallTeleportationChip</RecipeDef>
+      </descriptionHyperlinks>
+      <statBases>
+        <MaxHitPoints>50</MaxHitPoints>
+        <Mass>0.3</Mass>
+        <DeteriorationRate>0.5</DeteriorationRate>
+        <MarketValue>2000</MarketValue>
+      </statBases>
+      <costList>
+        <Steel>100</Steel>
+      </costList>
+      <techLevel>Ultra</techLevel>
+      <recipeMaker>
+        <skillRequirements>
+          <Crafting>12</Crafting>
+        </skillRequirements>
+        <recipeUsers>
+          <li>FabricationBench</li>
+        </recipeUsers>
+        <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      </recipeMaker>
+    </ThingDef>
+</Defs>

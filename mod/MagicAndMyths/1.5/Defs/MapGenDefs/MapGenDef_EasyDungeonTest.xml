@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MapGeneratorDef>
+    <defName>MapGenEasyDungeon</defName>
+    <genSteps>
+      <li>ElevationFertility</li>
+      <li>Terrain</li>
+      <li>Plants</li>
+      <li>DungeonGen</li>
+    </genSteps>
+    <pocketMapProperties>
+        <biome>HiddenForest</biome>
+        <temperature>21</temperature>
+    </pocketMapProperties>
+  </MapGeneratorDef>
+</Defs>

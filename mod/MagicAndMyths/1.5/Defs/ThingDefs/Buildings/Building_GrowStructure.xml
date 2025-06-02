@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.GrowableStructureDef ParentName="TreeBase">
+    <defName>TestGrowable</defName>
+    <label>ewfefe</label>
+    <tickerType>Normal</tickerType>
+    <structureLayout>testmaze</structureLayout>
+    <thingClass>MagicAndMyths.Building_GrowableStructure</thingClass>
+    <previewColor>(0, 0.5, 0, 0.4)</previewColor>
+    <drawGUIOverlay>True</drawGUIOverlay>
+    <size>(2, 2)</size>
+    <placeWorkers>
+      <li>MagicAndMyths.PlaceWorker_GrowableStructure</li>
+    </placeWorkers>
+    <graphicData>
+      <texPath>Things/Plant/TreeAnima</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <shadowData>
+        <volume>(0.12, 0.08, 0.1)</volume>
+        <offset>(0,0,-0.25)</offset>
+      </shadowData>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <minifiedDef IsNull="True" />
+    <preventSkyfallersLandingOn>true</preventSkyfallersLandingOn>
+    <canScatterOver>false</canScatterOver>
+    <rootDef>TreeRoot</rootDef>
+    <plant>
+      <growDays>1</growDays>
+      <visualSizeRange>1.8~2.5</visualSizeRange>
+      <sowMinSkill>0</sowMinSkill>
+      <sowTags Inherit="False"/>
+      <dieIfNoSunlight>False</dieIfNoSunlight>
+      <dieFromToxicFallout>False</dieFromToxicFallout>
+      <lifespanDaysPerGrowDays>0</lifespanDaysPerGrowDays>
+      <fertilityMin>0.02</fertilityMin>
+      <fertilitySensitivity>0</fertilitySensitivity>
+      <sowResearchPrerequisites Inherit="False" />
+      <treeCategory>Super</treeCategory>
+      <allowAutoCut>false</allowAutoCut>
+      <warnIfMarkedForCut>true</warnIfMarkedForCut>
+      <choppedThingDef>ChoppedStump_Anima</choppedThingDef>
+      <smashedThingDef>SmashedStump_Anima</smashedThingDef>
+      <immatureGraphicPath>Things/Plant/TreeAnima_Immature</immatureGraphicPath>
+    </plant>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_DirectGrower">
+      </li>
+    </comps>
+  </MagicAndMyths.GrowableStructureDef>
+</Defs>

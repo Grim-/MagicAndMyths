@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_FireStanceAura</defName>
+    <randomWeight>1</randomWeight>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <burstCount>1</burstCount>
+        <ticksBetweenMotes>10</ticksBetweenMotes>
+        <maxMoteCount>1</maxMoteCount>
+        <lifespanMaxTicks>999999</lifespanMaxTicks>
+        <positionRadius>0</positionRadius>
+        <spawnLocType>OnSource</spawnLocType>
+        <moteDef>MagicAndMyths_FireStanceAura</moteDef>
+        <color>(1, 0.733, 0.075, 0.5)</color>
+        <angle>0</angle>
+        <speed>0</speed>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+        <scale>2</scale>
+        <airTime>999999</airTime>
+        <subTriggerOnSpawn>false</subTriggerOnSpawn>
+        <attachToSpawnThing>true</attachToSpawnThing>
+        <destroyMoteOnCleanup>true</destroyMoteOnCleanup>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_FireStanceAura</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
+        <shaderType>GlowAnimated</shaderType>
+        <texPath>Animations/FireFlipbook_1x10</texPath>
+        <shaderParameters>
+          <_NumFrames>10</_NumFrames>
+          <_Loop>1</_Loop>
+          <Color>(1, 0.733, 0.075, 0.5)</Color>
+          <_FramesPerSec>10</_FramesPerSec>
+        </shaderParameters>
+        <color>(1, 0.733, 0.075, 0.5)</color>
+        <drawSize>2</drawSize>
+        <drawOffset>(0, 0, 0.6)</drawOffset>
+      </graphicData>
+      <altitudeLayer>MoteLow</altitudeLayer>
+      <mote>
+        <fadeInTime>0.1</fadeInTime>
+        <solidTime>9999</solidTime>
+        <fadeOutTime>0.1</fadeOutTime>
+        <growthRate>0</growthRate>
+      </mote>
+    </ThingDef>
+</Defs>

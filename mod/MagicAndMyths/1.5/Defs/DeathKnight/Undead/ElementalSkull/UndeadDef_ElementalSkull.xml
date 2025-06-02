@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.UndeadDef>
+    <defName>ElementalSkull</defName>
+    <hediff>DeathKnight_UndeadSekeleton</hediff>
+    <kind>MagicAndMyths_JibberingSkull</kind>
+    <childhoodBackstories>
+      <li>MagicAndMyths_LesserUndead</li>
+    </childhoodBackstories>
+    <adulthoodBackstories>
+      <li>MagicAndMyths_LesserUndead</li>
+    </adulthoodBackstories>
+  </MagicAndMyths.UndeadDef>
+</Defs>

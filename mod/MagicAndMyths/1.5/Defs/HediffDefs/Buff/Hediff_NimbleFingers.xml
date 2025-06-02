@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef ParentName="PotionEffectBase">
+    <defName>MagicAndMyths_NimbleFingers</defName>
+    <label>Nimble Fingers</label>
+    <description>Dexterous hands and steady grip improve crafting precision and speed.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <aptitudes>
+      <Crafting>5</Crafting>
+    </aptitudes>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>0.3</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>6000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>

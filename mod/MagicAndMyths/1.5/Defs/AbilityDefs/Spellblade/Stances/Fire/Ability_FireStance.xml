@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.StanceDef>
+    <defName>Spellblade_FireStance</defName>
+    <label>Fire Stance</label>
+    <description>Aggressive stance focused on dealing fire damage. Grants burn effects on attacks but reduces defense.</description>
+    <iconPath>UI/Abilities/Spellblade/FireStance</iconPath>
+    <iconColor>(1, 0.3, 0.1)</iconColor>
+    <activationSound>Spellblade_FireStanceActivate</activationSound>
+    <activationEffecter>Spellblade_FireStanceEffect</activationEffecter>
+    <cooldownTicks>300</cooldownTicks>
+    <upkeepCost>15</upkeepCost>
+    <hediffsToApply>
+      <li>Spellblade_FireStanceHediff</li>
+    </hediffsToApply>
+    <abilitiesToGain>
+      <li>MagicAndMyths_ElementalArmour_Fire</li>
+      <li>MagicAndMyths_FlamingSword</li>
+      <li>MagicAndMyths_FireHammer</li>
+    </abilitiesToGain>
+  </MagicAndMyths.StanceDef>
+
+  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+    <defName>Spellblade_ToggleFireStance</defName>
+    <label>Fire Stance</label>
+    <description>Toggle the aggressive fire stance on or off.</description>
+    <iconPath>UI/Abilities/Spellblade/FireStance</iconPath>
+    <cooldownTicksRange>0</cooldownTicksRange>
+    <aiCanUse>false</aiCanUse>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>0</range>
+      <warmupTime>0</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetable>False</targetable>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilityToggleStance">
+        <stance>Spellblade_FireStance</stance>
+        <allowDeactivation>true</allowDeactivation>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceAbilityDef>
+
+  <HediffDef>
+    <defName>Spellblade_FireStanceHediff</defName>
+    <label>Fire Stance</label>
+    <description>Channeling aggressive fire magic. Attacks deal additional burn damage.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>1.0</MoveSpeed>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <MeleeDodgeChance>-0.05</MeleeDodgeChance>
+          <ComfyTemperatureMax>100</ComfyTemperatureMax>
+        </statOffsets>
+        <statFactors>
+          <Stat_ManaRegen>0.80</Stat_ManaRegen>
+          <Flammability>0</Flammability>
+        </statFactors>
+      </li>
+    </stages>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_MeleeAttackAddHediff">
+        <hediffDef>Burn</hediffDef>
+        <intialSeverity>0.1</intialSeverity>
+        <severityIncrease>0.1</severityIncrease>
+        <chanceToApply>0.5</chanceToApply>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_DealDamage">
+        <damage>1~3</damage>
+        <damageDef>Flame</damageDef>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>

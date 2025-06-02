@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef Name="DebuffBase" Abstract="true">
+    <isBad>true</isBad>
+    <hediffClass>HediffWithComps</hediffClass>
+    <duplicationAllowed>false</duplicationAllowed>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <tendable>false</tendable>
+  </HediffDef>
+</Defs>

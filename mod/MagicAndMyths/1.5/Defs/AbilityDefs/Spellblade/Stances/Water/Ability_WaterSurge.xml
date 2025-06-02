@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <AbilityDef>
+      <defName>MagicAndMyths_WaterSurge</defName>
+      <label>Water Surge</label>
+      <description>Unleash a powerful surge of water that erupts in all directions, forcefully pushing back targets and slowing their movement by 40% for 500 ticks.</description>
+      <iconPath>Projectiles/Projectile_Fireball</iconPath>
+      <cooldownTicksRange>6000</cooldownTicksRange>
+      <category>Sanguophage</category>
+      <displayOrder>200</displayOrder>
+      <aiCanUse>true</aiCanUse>
+      <verbProperties>
+        <verbClass>Verb_CastAbility</verbClass>
+        <range>20</range>
+        <warmupTime>0.5</warmupTime>
+        <soundCast>PiercingSpine_Launch</soundCast>
+        <targetParams>
+          <canTargetLocations>true</canTargetLocations>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetItems>true</canTargetItems>
+        </targetParams>
+      </verbProperties>
+      <comps>
+        <li Class="MagicAndMyths.CompProperties_ConalZoneEffect">
+          <zoneDef>WindZone</zoneDef>
+        </li>
+      </comps>
+    </AbilityDef>
+</Defs>
