@@ -21,8 +21,9 @@
         </targetParams>
       </verbProperties>
       <comps>
-        <li Class="MagicAndMyths.CompProperties_ConalZoneEffect">
-          <zoneDef>WindZone</zoneDef>
+        <li Class="MagicAndMyths.CompProperties_WaterSurge">
+          <range>5</range>
+          <angle>30</angle>
         </li>
       </comps>
     </AbilityDef>

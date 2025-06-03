@@ -13,7 +13,7 @@ namespace MagicAndMyths
 
         public static AbilityDef MagicAndMyths_RevertTransformation;
 
-        public static HediffDef TranquilizerEffect;
+        public static HediffDef MagicAndMyths_TranquilizerEffect;
         public static HediffDef BoundWeapon;
         public static HediffDef DeathKnight_UndeadMaster;
         public static HediffDef DeathKnight_Undead;

@@ -16,6 +16,13 @@
       <Nutrition>200</Nutrition>
       <Beauty>10</Beauty>
     </statBases>
+    <ingestible>
+      <preferability>NeverForNutrition</preferability>
+      <optimalityOffsetHumanlikes>-5</optimalityOffsetHumanlikes>
+      <optimalityOffsetFeedingAnimals>-10</optimalityOffsetFeedingAnimals>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
     <allowedArchonexusCount>1</allowedArchonexusCount>
     <comps Inherit="false">
       <li Class="MagicAndMyths.CompProperties_Artifact">

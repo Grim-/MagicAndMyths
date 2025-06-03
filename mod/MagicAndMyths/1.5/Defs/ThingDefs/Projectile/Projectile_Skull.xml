@@ -8,7 +8,7 @@
         <graphicClass>Graphic_Single</graphicClass>
       </graphicData>
       <projectile>
-        <damageDef>Blunt</damageDef>
+        <damageDef>ToxicBite</damageDef>
         <damageAmountBase>9</damageAmountBase>
         <speed>70</speed>
       </projectile>

@@ -15,7 +15,7 @@
        <MarketValue>10000</MarketValue>
      </statBases>
      <apparel>
-       <texPath>Jewelry/Ring_snake</texPath>
+       <wornGraphicPath>Jewelry/Ring_snake</wornGraphicPath>
      </apparel>
      <comps>
      </comps>

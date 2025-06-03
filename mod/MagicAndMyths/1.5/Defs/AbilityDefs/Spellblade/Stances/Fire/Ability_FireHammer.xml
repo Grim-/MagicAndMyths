@@ -11,7 +11,7 @@
     <aiCanUse>true</aiCanUse>
     <verbProperties>
       <verbClass>Verb_CastAbility</verbClass>
-      <range>20</range>
+      <range>9</range>
       <warmupTime>0.5</warmupTime>
       <soundCast>PiercingSpine_Launch</soundCast>
       <targetParams>
@@ -21,8 +21,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_ConalZoneEffect">
-        <zoneDef>WindZone</zoneDef>
+      <li Class="MagicAndMyths.CompProperties_FlameSweep">
       </li>
     </comps>
   </AbilityDef>

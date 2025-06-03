@@ -3,7 +3,7 @@
   <MagicAndMyths.BasicResourceGeneDef Name="MagicAndMyths_BaseManaGene">
     <defName>MagicAndMyths_ManaGene</defName>
     <label>mana</label>
-    <resourceDef>Mana</resourceDef>
+    <primaryResourceDef>Mana</primaryResourceDef>
     <description>All creatures have access to mana, only humans practice magic however.</description>
     <customEffectDescriptions>
       <li>All creatures have access to mana, only humans practice magic however.</li>
@@ -13,7 +13,7 @@
       <li>0.5</li>
       <li>0.75</li>
     </resourceGizmoThresholds>
-    <resourceGizmoType>MagicAndMyths.GeneGizmo_BasicResource</resourceGizmoType>
+    <resourceGizmoType>MagicAndMyths.GeneGizmo_PrimaryResource</resourceGizmoType>
     <showGizmoOnWorldView>false</showGizmoOnWorldView>
     <showGizmoWhenDrafted>true</showGizmoWhenDrafted>
     <iconPath>Skills/ManaUser</iconPath>

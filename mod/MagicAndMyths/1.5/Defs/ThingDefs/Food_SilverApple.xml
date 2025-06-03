@@ -17,7 +17,7 @@
       <Beauty>20</Beauty>
     </statBases>
     <ingestible>
-      <preferability>MealSimple</preferability>
+      <preferability>NeverForNutrition</preferability>
       <optimalityOffsetHumanlikes>-5</optimalityOffsetHumanlikes>
       <optimalityOffsetFeedingAnimals>-10</optimalityOffsetFeedingAnimals>
       <ingestEffect>EatVegetarian</ingestEffect>
@@ -32,4 +32,18 @@
     </ingestible>
     <allowedArchonexusCount>40</allowedArchonexusCount>
   </ThingDef>
+
+  <ThoughtDef>
+    <defName>MagicAndMyths_SilverAppleEuphoria</defName>
+    <durationDays>1.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>strange euphoric feeling</label>
+        <description>I feel strange, but also very relaxed.</description>
+        <baseMoodEffect>15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
 </Defs>

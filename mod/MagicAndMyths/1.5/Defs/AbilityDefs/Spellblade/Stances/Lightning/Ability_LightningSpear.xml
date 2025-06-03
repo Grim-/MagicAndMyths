@@ -28,24 +28,88 @@
         <damageDef>Cut</damageDef>
         <effectMote>MagicAndMyths_LightningSpear</effectMote>
       </li>
+      <li Class="CompProperties_AbilityLaunchProjectile">
+        <projectileDef>Projectile_LightningSpear</projectileDef>
+      </li>
     </comps>
   </AbilityDef>
+
+  <!-- <MagicAndMyths.ActiveZoneDef ParentName="EtherealThingBase">
+    <defName>LightningSpearZone</defName>
+    <label>longsword</label>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>VFX/LightningSpear</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>4</drawSize>
+    </graphicData>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ActiveZoneApplyHediff">
+        <hediff>Spellblade_LightningSpeedBuff</hediff>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ActiveZoneLightningStrike">
+      </li>
+    </comps>
+  </MagicAndMyths.ActiveZoneDef> -->
+
+  <MagicAndMyths.DomainZoneDef ParentName="EtherealThingBase">
+    <defName>LightningSpearZone</defName>
+    <label>longsword</label>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>VFX/LightningSpear</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>4</drawSize>
+    </graphicData>
+    <FilthDef>Filth_Water</FilthDef>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ActiveZoneApplyHediff">
+        <hediff>Spellblade_LightningSpeedBuff</hediff>
+      </li>
+    </comps>
+  </MagicAndMyths.DomainZoneDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>Projectile_LightningSpear</defName>
+    <label>longsword</label>
+    <thingClass>MagicAndMyths.Projectile_Extended</thingClass>
+    <graphicData>
+      <texPath>VFX/LightningSpear</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.8</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Cut</damageDef>
+      <damageAmountBase>15</damageAmountBase>
+      <speed>150</speed>
+    </projectile>
+    <comps>
+      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactLightningStrike">
+      </li>
+      <li Class="MagicAndMyths.ProjectileCompProperties_SpawnsActiveZoneRadius">
+        <spawnsThingDef>LightningSpearZone</spawnsThingDef>
+      </li>
+    </comps>
+  </ThingDef>
 
   <ThingDef ParentName="MoteBase">
       <defName>MagicAndMyths_LightningSpear</defName>
       <thingClass>MoteDualAttached</thingClass>
       <graphicData>
         <graphicClass>Graphic_Mote</graphicClass>
-        <shaderType>MoteGlow</shaderType>
+        <shaderType>Transparent</shaderType>
         <texPath>VFX/TrailElectricAlt</texPath>
-        <color>(0.929, 1, 0, 1)</color>
+        <color>(0.929, 1, 0, 0.7)</color>
+        <drawSize>3</drawSize>
       </graphicData>
       <altitudeLayer>Filth</altitudeLayer>
       <mote>
         <fadeInTime>0.1</fadeInTime>
         <solidTime>1</solidTime>
-        <fadeOutTime>0</fadeOutTime>
-        <growthRate>0</growthRate>
+        <fadeOutTime>0.2</fadeOutTime>
+        <growthRate>-10</growthRate>
         <rotateTowardsTarget>True</rotateTowardsTarget>
         <scaleToConnectTargets>false</scaleToConnectTargets>
       </mote>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <AbilityDef>
-    <defName>MagicAndMyths_Fireball</defName>
-    <label>Fireball</label>
+    <defName>MagicAndMyths_Firebolt</defName>
+    <label>Firebolt</label>
     <description>Use a hemogenic chemical reaction to launch a bony spine at the target. The spine exits through the skin from an opening between the collarbones. Given the method of launch, it is surprisingly easy to aim.</description>
     <iconPath>Projectiles/Projectile_Fireball</iconPath>
     <cooldownTicksRange>6000</cooldownTicksRange>
@@ -22,8 +22,26 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
-        <projectileDef>Projectile_Fireball</projectileDef>
+        <projectileDef>Projectile_Firebolt</projectileDef>
       </li>
     </comps>
   </AbilityDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>Projectile_Firebolt</defName>
+    <label>firebolt</label>
+    <thingClass>Projectile</thingClass>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Fireball</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.8</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <explosionRadius>3.9</explosionRadius>
+      <speed>70</speed>
+      <arcHeightFactor>1.2</arcHeightFactor>
+    </projectile>
+  </ThingDef>
 </Defs>

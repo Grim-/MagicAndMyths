@@ -6,15 +6,15 @@
     <children>
       <li>
         <subEffecterClass>SubEffecter_SprayerContinuous</subEffecterClass>
-        <burstCount>1~3</burstCount>
-        <ticksBetweenMotes>10</ticksBetweenMotes>
-        <maxMoteCount>50</maxMoteCount>
+        <burstCount>1</burstCount>
+        <ticksBetweenMotes>45</ticksBetweenMotes>
+        <maxMoteCount>2</maxMoteCount>
         <lifespanMaxTicks>999999</lifespanMaxTicks>
         <positionRadius>0.5</positionRadius>
         <moteDef>MagicAndMyths_WaterBubbles</moteDef>
         <color>(1,1,1,1)</color>
         <angle>0</angle>
-        <speed>0</speed>
+        <speed>0.1</speed>
         <rotation>0</rotation>
         <rotationRate>0</rotationRate>
         <scale>1</scale>
@@ -27,7 +27,7 @@
 
   <ThingDef ParentName="MoteBase">
       <defName>MagicAndMyths_WaterBubbles</defName>
-      <thingClass>MoteAttached</thingClass>
+      <thingClass>MoteThrown</thingClass>
       <graphicData>
         <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
         <shaderType>GlowAnimated</shaderType>
@@ -41,7 +41,7 @@
       <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
         <fadeInTime>0.1</fadeInTime>
-        <solidTime>5</solidTime>
+        <solidTime>3</solidTime>
         <fadeOutTime>0.1</fadeOutTime>
         <growthRate>0</growthRate>
       </mote>

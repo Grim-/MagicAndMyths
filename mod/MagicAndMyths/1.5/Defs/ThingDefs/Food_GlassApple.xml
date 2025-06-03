@@ -17,7 +17,7 @@
       <Beauty>20</Beauty>
     </statBases>
     <ingestible>
-      <preferability>MealSimple</preferability>
+      <preferability>NeverForNutrition</preferability>
       <optimalityOffsetHumanlikes>-5</optimalityOffsetHumanlikes>
       <optimalityOffsetFeedingAnimals>-10</optimalityOffsetFeedingAnimals>
       <ingestEffect>EatVegetarian</ingestEffect>

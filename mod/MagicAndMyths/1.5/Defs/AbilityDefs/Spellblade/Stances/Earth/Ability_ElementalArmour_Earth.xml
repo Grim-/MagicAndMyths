@@ -29,7 +29,7 @@
   <MagicAndMyths.StackingHediffDef>
     <defName>Spellblade_EarthArmourHediff</defName>
     <label>Earth Armour</label>
-    <description>Channeling solid earth magic. Provides heavy armor but reduces mobility.</description>
+    <description>Each stack of Earthen Armour reduces all physical damage taken by 50%, upon taking damage you lose a stack of Earthen armour, this persists while you have armour stacks, you lose 1 stack every 600 ticks..</description>
     <maxSeverity>1.0</maxSeverity>
     <initialStacks>1</initialStacks>
     <maxStacks>10</maxStacks>
@@ -59,6 +59,8 @@
       <li Class="HediffCompProperties_Disappears">
         <disappearsAfterTicks>2350</disappearsAfterTicks>
         <showRemainingTime>true</showRemainingTime>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_ModifyDamage">
       </li>
     </comps>
   </MagicAndMyths.StackingHediffDef>

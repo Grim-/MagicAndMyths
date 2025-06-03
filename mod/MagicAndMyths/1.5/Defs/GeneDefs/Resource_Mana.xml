@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.PawnResourceDef>
+  <MagicAndMyths.AbilityResourceDef>
     <defName>Mana</defName>
     <label>Mana</label>
     <resourceName>mana</resourceName>
@@ -9,5 +9,6 @@
     <regenSpeedStat>Stat_ManaRegenSpeedMult</regenSpeedStat>
     <costMult>Stat_ManaUseMult</costMult>
     <barColor>(0.2, 0.4, 1.0)</barColor>
-  </MagicAndMyths.PawnResourceDef>
+  </MagicAndMyths.AbilityResourceDef>
+
 </Defs>

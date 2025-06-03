@@ -22,7 +22,7 @@
       <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_SummonPawn">
+      <li Class="MagicAndMyths.CompProperties_AbilitySummonPawn">
         <summonKind>MagicAndMyths_ElementalSkull</summonKind>
       </li>
     </comps>

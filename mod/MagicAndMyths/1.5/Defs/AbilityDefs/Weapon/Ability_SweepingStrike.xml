@@ -21,7 +21,7 @@
         </targetParams>
       </verbProperties>
       <comps>
-        <li Class="MagicAndMyths.CompProperties_SweepingStrike">
+        <li Class="MagicAndMyths.CompProperties_DealDamageInCone">
         </li>
       </comps>
     </AbilityDef>

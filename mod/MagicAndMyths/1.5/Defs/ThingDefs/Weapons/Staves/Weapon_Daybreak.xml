@@ -19,6 +19,7 @@
       <AccuracyMedium>0.35</AccuracyMedium>
       <AccuracyLong>0.20</AccuracyLong>
       <RangedWeapon_Cooldown>1.65</RangedWeapon_Cooldown>
+      <Stat_Mana>50</Stat_Mana>
     </statBases>
     <costList>
       <Steel>75</Steel>

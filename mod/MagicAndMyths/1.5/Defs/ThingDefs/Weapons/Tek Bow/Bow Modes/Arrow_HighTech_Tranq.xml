@@ -21,7 +21,7 @@
       <color>(120, 190, 255)</color>
     </graphicData>
     <projectile>
-      <damageDef>TranquilizerDamage</damageDef>
+      <damageDef>MagicAndMyths_TranquilizerDamage</damageDef>
       <damageAmountBase>12</damageAmountBase>
       <armorPenetrationBase>0.25</armorPenetrationBase>
       <stoppingPower>1.0</stoppingPower>

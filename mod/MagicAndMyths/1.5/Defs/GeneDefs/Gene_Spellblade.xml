@@ -6,17 +6,34 @@
     <description>The ability to channel different elemental stances, each providing unique combat advantages.</description>
     <iconPath>UI/Icons/Genes/Gene_ElementalMastery</iconPath>
     <geneClass>MagicAndMyths.Gene_StanceManager</geneClass>
-    <resourceDef>Mana</resourceDef>
+    <primaryResourceDef>Mana</primaryResourceDef>
+    <additionalResources>
+      <li>
+        <resourceDef>ArcaneCharges</resourceDef>
+      </li>
+    </additionalResources>
     <displayOrderInCategory>100</displayOrderInCategory>
     <biostatCpx>2</biostatCpx>
     <biostatMet>-3</biostatMet>
-    <barColor>(0.3, 0.5, 1.0)</barColor>
     <abilities>
       <li>Spellblade_ToggleFireStance</li>
       <li>Spellblade_ToggleWaterStance</li>
       <li>Spellblade_ToggleLightningStance</li>
       <li>Spellblade_ToggleEarthStance</li>
-      <li>MagicAndMyths_SpellBladeWindCutter</li>
+      <li>MagicAndMyths_WindCutter</li>
     </abilities>
   </MagicAndMyths.BasicResourceGeneDef>
+
+  <MagicAndMyths.AbilityResourceDef>
+      <defName>ArcaneCharges</defName>
+      <label>Arcane charges</label>
+      <resourceName>Arcane charges</resourceName>
+      <gizmoClass>MagicAndMyths.GeneGizmo_BasicResource</gizmoClass>
+      <maxStatDefault>10</maxStatDefault>
+      <regenTicksDefault>2500</regenTicksDefault>
+      <regenStatDefault>1</regenStatDefault>
+      <regenSpeedStatDefault>1</regenSpeedStatDefault>
+      <costMultStatDefault>1</costMultStatDefault>
+      <barColor>(0.2, 0.3, 1.0)</barColor>
+  </MagicAndMyths.AbilityResourceDef>
 </Defs>

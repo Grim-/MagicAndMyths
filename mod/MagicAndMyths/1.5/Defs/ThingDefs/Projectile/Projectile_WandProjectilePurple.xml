@@ -9,7 +9,7 @@
       </graphicData>
       <projectile>
         <damageDef>Frost</damageDef>
-        <damageAmountBase>12</damageAmountBase>
+        <damageAmountBase>4</damageAmountBase>
         <speed>48</speed>
       </projectile>
     </ThingDef>

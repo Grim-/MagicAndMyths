@@ -6,8 +6,6 @@
     <description>Speed-focused stance for quick strikes and mobility. High speed and precision.</description>
     <iconPath>UI/Abilities/Spellblade/LightningStance</iconPath>
     <iconColor>(1, 1, 0.3)</iconColor>
-    <activationSound>Spellblade_LightningStanceActivate</activationSound>
-    <activationEffecter>Spellblade_LightningStanceEffect</activationEffecter>
     <cooldownTicks>300</cooldownTicks>
         <upkeepCost>10</upkeepCost>
     <hediffsToApply>

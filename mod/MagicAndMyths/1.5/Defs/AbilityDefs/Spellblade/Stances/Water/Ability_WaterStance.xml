@@ -6,8 +6,6 @@
     <description>Defensive stance providing healing and protection. Increases dodge and provides regeneration.</description>
     <iconPath>UI/Abilities/Spellblade/WaterStance</iconPath>
     <iconColor>(0.2, 0.6, 1)</iconColor>
-    <activationSound>Spellblade_WaterStanceActivate</activationSound>
-    <activationEffecter>Spellblade_WaterStanceEffect</activationEffecter>
     <cooldownTicks>300</cooldownTicks>
     <upkeepCost>5</upkeepCost>
     <hediffsToApply>
@@ -16,6 +14,7 @@
     <abilitiesToGain>
       <li>MagicAndMyths_SoothingVapours</li>
       <li>MagicAndMyths_WaterSurge</li>
+      <li>MagicAndMyths_ElementalArmour_Water</li>
     </abilitiesToGain>
   </MagicAndMyths.StanceDef>
 
