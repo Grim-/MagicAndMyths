@@ -29,7 +29,7 @@ namespace MagicAndMyths
                     {
                         Hediff hediff = pawn.health.AddHediff(Def.hediff);
                         if (hediff != null)
-                        {
+                        { 
                             hediff.Severity = Def.severity.RandomInRange;
                         }
                     }

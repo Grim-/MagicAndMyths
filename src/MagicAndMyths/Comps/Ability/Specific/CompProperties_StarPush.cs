@@ -56,8 +56,7 @@ namespace MagicAndMyths
                                 int pushDistance = Mathf.RoundToInt(Props.minTilesToPush + pushFactor * (Props.maxTilesToPush - Props.minTilesToPush));
                                 IntVec3 direction = (t.Position - this.parent.pawn.Position);
                                 IntVec3 destination = t.Position + (direction * pushDistance);
-                                ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, t, destination, map, null, null, this.parent.pawn, t.DrawPos, false);
-                                ThingFlyer.LaunchFlyer(thingFlyer, t, t.Position, map);
+                                ThingFlyer thingFlyer = MagicUtil.QuickFlyer(t, map, destination, this.parent.pawn);
                             }
                         }
 

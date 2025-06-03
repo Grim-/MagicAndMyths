@@ -16,7 +16,7 @@ namespace MagicAndMyths
                 {
                     if (ShouldTarget(pawn.Faction, Faction, canTargetHostile, canTargetFriendly, canTargetNeutral))
                     {
-                        pawn.QuickHeal(healAmount);
+                        pawn.SpendHealingAmount(healAmount);
                     }
                 }
             }
@@ -24,18 +24,21 @@ namespace MagicAndMyths
 
 
 
-        public static void ApplyHediffInRadius(HediffDef hediffDef, IntVec3 Position, Map map, float radius, Faction Faction, bool useCenter = true, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
+        public static List<Hediff> ApplyHediffInRadius(HediffDef hediffDef, IntVec3 Position, Map map, float radius, Faction Faction, bool useCenter = true, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
         {
+            List<Hediff> hediffs = new List<Hediff>();
             foreach (var item in GenRadial.RadialDistinctThingsAround(Position, map, radius, useCenter))
             {
                 if (item is Pawn pawn)
                 {
                     if (ShouldTarget(pawn.Faction, Faction, canTargetHostile, canTargetFriendly, canTargetNeutral))
                     {
-                        pawn.health.GetOrAddHediff(hediffDef);
+                        hediffs.Add(pawn.health.GetOrAddHediff(hediffDef));
                     }
                 }
             }
+
+            return hediffs;
         }
 
         public static void ApplyHediffSeverityInRadius(HediffDef hediffDef, IntVec3 Position, Map map, float radius, Faction Faction, float SeverityChange, bool useCenter = true, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
@@ -103,7 +106,35 @@ namespace MagicAndMyths
         }
 
 
+        public static bool CanTargetThing(this Thing thing, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
+        {
+            if (thing.Faction == null)
+                return true;
 
+            if (thing.Faction == sourceFaction && canTargetFriendly)
+                return true;
+
+            if (canTargetHostile && thing.Faction.HostileTo(sourceFaction))
+                return true;
+
+            return false;
+        }
+
+        public static bool CanTargetThing(this Thing thing, Faction sourceFaction, FriendlyFireSettings validTargetParams)
+        {
+            if (thing.Faction == null)
+                return true;
+
+            if (thing.Faction == sourceFaction && validTargetParams.canTargetFriendly)
+                return true;
+
+            if (validTargetParams.canTargetHostile && thing.Faction.HostileTo(sourceFaction))
+                return true;
+
+            return false;
+        }
+
+        
         public static List<IntVec3> GetAllCellsInRect(IntVec3 Origin, IntVec3 Target, int width, int height)
         {
             List<IntVec3> result = new List<IntVec3>();
@@ -182,13 +213,19 @@ namespace MagicAndMyths
         }
 
 
-        public static List<Thing> GetThingsInCells(List<IntVec3> Cells, Map map)
+        public static HashSet<Thing> GetThingsInCells(List<IntVec3> Cells, Map map)
         {
-            List<Thing> things = new List<Thing>();
+            HashSet<Thing> things = new HashSet<Thing>();
 
             foreach (var item in Cells)
             {
-                things.AddRange(item.GetThingList(map));
+                things.AddRange(item.GetThingList(map).Where(x=> x.def.selectable));
+
+                Pawn pawn = item.GetFirstPawn(map);
+                if (pawn != null)
+                {
+                    things.Add(pawn);
+                }
             }
 
             return things;
@@ -204,9 +241,9 @@ namespace MagicAndMyths
 
             return things;
         }
-        public static List<Pawn> GetPawnsInCells(List<IntVec3> Cells, Map map)
+        public static HashSet<Pawn> GetPawnsInCells(List<IntVec3> Cells, Map map)
         {
-            List<Pawn> pawns = new List<Pawn>();
+            HashSet<Pawn> pawns = new HashSet<Pawn>();
             foreach (var item in Cells)
             {
                 Pawn pawn = item.GetFirstPawn(map);
@@ -216,6 +253,59 @@ namespace MagicAndMyths
                 }
             }
             return pawns;
+        }
+    }
+
+    public static class DamageUtil
+    {
+
+    }
+
+
+    public class FriendlyFireSettings
+    {
+        public bool canTargetHostile = true;
+        public bool canTargetFriendly = true;
+        public bool canTargetNeutral = true;
+
+        public static FriendlyFireSettings AllFriendly()
+        {
+            return new FriendlyFireSettings()
+            {
+                canTargetFriendly = true,
+                canTargetHostile = false,
+                canTargetNeutral = true
+            };
+        }
+
+        public static FriendlyFireSettings FriendlyFactionOnly()
+        {
+            return new FriendlyFireSettings()
+            {
+                canTargetFriendly = true,
+                canTargetHostile = false,
+                canTargetNeutral = false
+            };
+        }
+
+        public static FriendlyFireSettings HostileOnly()
+        {
+            return new FriendlyFireSettings()
+            {
+                canTargetFriendly = false,
+                canTargetHostile = true,
+                canTargetNeutral = false
+            };
+        }
+
+        public static FriendlyFireSettings All()
+        {
+            return new FriendlyFireSettings()
+            {
+                canTargetFriendly = true,
+                canTargetHostile = true,
+                canTargetNeutral = true
+            };
         }
     }
 }

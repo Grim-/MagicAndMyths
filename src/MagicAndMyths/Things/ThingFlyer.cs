@@ -349,7 +349,7 @@ namespace MagicAndMyths
         {
 
 			bool wasSelected = Find.Selector.IsSelected(thing);
-			bool wasDrafted = thing is Pawn pawn ? pawn.drafter.Drafted : false;
+			bool wasDrafted = thing is Pawn pawn  && pawn.drafter != null ? pawn.drafter.Drafted : false;
 			if (thing.Spawned)
 			{
 				thing.DeSpawn(DestroyMode.Vanish);

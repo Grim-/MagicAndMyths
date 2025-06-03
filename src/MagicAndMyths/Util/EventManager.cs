@@ -7,6 +7,7 @@ using Verse.AI;
 namespace MagicAndMyths
 {
     public delegate bool BeforeThingDamageTakenHandler(Thing target, ref DamageInfo dinfo);
+    public delegate bool BeforeMeleeDamageInfoHandler(Pawn attacker, LocalTargetInfo target, ref DamageInfo damageInfo);
 
     public class EventManager
     {
@@ -19,6 +20,7 @@ namespace MagicAndMyths
         public event Action<Pawn, DamageInfo?, Hediff> OnPawnHediffGained;
         public event Action<Pawn, Hediff> OnPawnHediffRemoved;
         public event BeforeThingDamageTakenHandler OnBeforeThingDamageTaken;
+        public event BeforeMeleeDamageInfoHandler OnBeforeMeleeDamageInfo;
         public event Action<Thing, DamageInfo> OnThingDamageTaken;
         public event Action<Pawn, DamageInfo, Hediff> OnThingKilled;
 
@@ -100,6 +102,21 @@ namespace MagicAndMyths
         public void RaiseVerbUsed(Pawn pawn, Verb verb)
         {
             OnVerbUsed?.Invoke(pawn, verb);
+        }
+
+        public bool RaiseBeforeMeleeDamageInfo(Pawn attacker, LocalTargetInfo target, ref DamageInfo damageInfo)
+        {
+            if (OnBeforeMeleeDamageInfo != null)
+            {
+                foreach (BeforeMeleeDamageInfoHandler handler in OnBeforeMeleeDamageInfo.GetInvocationList())
+                {
+                    if (handler(attacker, target, ref damageInfo))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void RaiseAbilityCompleted(Pawn pawn, Ability ability)

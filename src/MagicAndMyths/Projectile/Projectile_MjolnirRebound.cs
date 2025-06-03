@@ -63,20 +63,5 @@ namespace MagicAndMyths
                 return new IntVec3(incomingDir.x, 0, -incomingDir.z);
             }
         }
-        private IntVec3 AddRandomness(IntVec3 direction)
-        {
-            if (Rand.Chance(0.3f))
-            {
-                if (Rand.Bool)
-                {
-                    direction.x += direction.x != 0 ? 0 : (Rand.Bool ? 1 : -1);
-                }
-                else
-                {
-                    direction.z += direction.z != 0 ? 0 : (Rand.Bool ? 1 : -1);
-                }
-            }
-            return direction;
-        }
     }
 }

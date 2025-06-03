@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
@@ -34,8 +35,11 @@ namespace MagicAndMyths
                     Props.canTargetHostile,
                     Props.canTargetFriendly,
                     Props.canTargetNeutral);
+
+              
             }
         }
     }
+
 
 }

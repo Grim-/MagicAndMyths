@@ -7,7 +7,7 @@ namespace MagicAndMyths
     public class CompProperties_AbilityToggleWithResource : CompProperties_AbilityEffect
     {
         public HediffDef hediffDef;
-        public PawnResourceDef resourceDef;
+        public AbilityResourceDef resourceDef;
         public float activationCost = 10f;
 
         public CompProperties_AbilityToggleWithResource()

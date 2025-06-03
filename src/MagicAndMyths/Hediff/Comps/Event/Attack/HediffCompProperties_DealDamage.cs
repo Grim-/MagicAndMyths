@@ -8,6 +8,9 @@ namespace MagicAndMyths
         public FloatRange damage;
         public DamageDef damageDef;
 
+        public bool useWeaponDamageIfAvailable = true;
+        public bool overrideWeaponDamageDef = false;
+
         public HediffCompProperties_DealDamage()
         {
             compClass = typeof(HediffComp_DealDamage);
@@ -23,11 +26,20 @@ namespace MagicAndMyths
 
             if (Target.Thing != null)
             {
-                Target.Thing.TakeDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange));
+                if (Props.useWeaponDamageIfAvailable && this.Pawn.HasWeaponEquipped())
+                {
+                    DamageInfo damage = this.Pawn.equipment.PrimaryEq.GetWeaponDamage(this.Pawn, Props.damage.RandomInRange);
+                    if (Props.overrideWeaponDamageDef && Props.damageDef != null) damage.Def = Props.damageDef;
+                    Target.Thing.TakeDamage(damage);
+                }
+                else
+                {
+                    Target.Thing.TakeDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange));
+                }
+                
             }
         }
     }
 
 
- 
 }

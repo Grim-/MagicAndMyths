@@ -16,7 +16,6 @@ namespace MagicAndMyths
         }
     }
 
-
     public class CompAbilityEffect_LightningStrike : CompAbilityEffect
     {
         new CompProperties_AbilityLightningStrike Props => (CompProperties_AbilityLightningStrike)props;

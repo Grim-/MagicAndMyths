@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Items.md",
+                "file": "Equipment.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Items"
+              "title": "Equipment"
             }
           }
         ],
@@ -185,11 +185,11 @@
   },
   "active": "98679b484e11c059",
   "lastOpenFiles": [
+    "Items.md",
+    "Tatoos.md",
+    "Welcome.md",
     "Death Knight.md",
     "Equipment.md",
-    "Welcome.md",
-    "Tatoos.md",
-    "Items.md",
     "Untitled"
   ]
 }

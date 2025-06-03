@@ -3,8 +3,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
-
     public abstract class HediffCompProperties_BaseInterval : HediffCompProperties
     {
         public int intervalTicks = 2400;
@@ -45,5 +43,6 @@ namespace MagicAndMyths
         }
 
     }
+
 
 }

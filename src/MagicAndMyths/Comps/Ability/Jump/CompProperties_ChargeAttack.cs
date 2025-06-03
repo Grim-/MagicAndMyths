@@ -5,61 +5,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
-
-    //public class Trail : Thing
-    //{
-    //    MoteDualAttached mote = null;
-    //    private TargetInfo Target = null;
-    //    private float Width = 2f;
-    //    private Map Map = null;
-    //    private Vector3 originOffset;
-    //    private Vector3 targetOffset;
-
-    //    private int LifetimeTicks = 0;
-    //    private int TicksToLive = 500;
-
-    //    public void Init(ThingDef effecterDef, TargetInfo target, Map map, float width = 2f, int ticksToLive = 500, Vector3 originOffset = default(Vector3), Vector3 targetOffset = default(Vector3))
-    //    {
-    //        Target = target;
-    //        Map = map;
-    //        Width = width;
-    //        TicksToLive = ticksToLive;
-    //        mote = (MoteDualAttached)ThingMaker.MakeThing(effecterDef, null);
-    //        GenSpawn.Spawn(mote, target.Cell, map, WipeMode.Vanish);
-    //        mote.Attach(new TargetInfo(this.Position, map, false), target);
-    //        mote.linearScale = new Vector3(width, 1f, (this.DrawPos - target.Cell.ToVector3Shifted()).MagnitudeHorizontal());
-    //    }
-
-    //    public override void Tick()
-    //    {
-    //        if (!Spawned)
-    //        {
-    //            return;
-    //        }
-
-    //        LifetimeTicks++;
-    //        if (LifetimeTicks >= TicksToLive)
-    //        {
-    //            this.Destroy();
-    //            return;
-    //        }
-
-    //        if (mote != null)
-    //        {
-    //            mote.Maintain();
-    //            mote.UpdateTargets(new TargetInfo(this.Position, Map, false), Target, originOffset != default(Vector3) ? originOffset : Vector3.zero, targetOffset != default(Vector3) ? targetOffset : Vector3.zero);
-    //            mote.linearScale = new Vector3(Width, 1f, (this.DrawPos - Target.Cell.ToVector3Shifted()).MagnitudeHorizontal());
-    //        }
-    //    }
-
-
-    //    public static Trail PlaceTrail(ThingDef effecterDef, IntVec3 spawnPosition, TargetInfo target, Map map, float width = 2f, int ticksToLive = 500, Vector3 originOffset = default(Vector3), Vector3 targetOffset = default(Vector3))
-    //    {
-
-    //    }
-    //}
-
     public class CompProperties_ChargeAttack : CompProperties_AbilityEffect
     {
         public int width = 3;

@@ -8,45 +8,122 @@ namespace MagicAndMyths
     [StaticConstructorOnStartup]
     public class GeneGizmo_BasicResource : GeneGizmo_Resource
     {
-        private const float TotalPulsateTime = 0.85f;
-        private List<Pair<IGeneResourceDrain, float>> tmpDrainGenes = new List<Pair<IGeneResourceDrain, float>>();
-
+        private ResourceData ResourceData;
         protected override string Title
         {
             get
             {
-                if (gene is Gene_BasicResource resourceGene && resourceGene.Def != null)
+                if (gene is Gene_BasicResource basicResource)
                 {
-                    return resourceGene.Def.resourceDef.label;
+                    return ResourceData.resourceDef.LabelCap;
                 }
                 return base.Title;
             }
         }
 
-        public GeneGizmo_BasicResource(Gene_Resource gene, List<IGeneResourceDrain> drainGenes, Color barColor, Color barHighlightColor) : base(gene, drainGenes, barColor, barHighlightColor)
+   
+
+        public GeneGizmo_BasicResource(Gene_BasicResource gene, ResourceData data, List<IGeneResourceDrain> drainGenes, Color barColor, Color barHighlightColor) : base(gene, drainGenes, barColor, barHighlightColor)
         {
             if (gene == null)
             {
                 Log.Error("GeneGizmo_BasicResource created with null gene");
                 return;
             }
+            ResourceData = data;
         }
+
+        public GeneGizmo_BasicResource(Gene_Resource gene, List<IGeneResourceDrain> drainGenes, Color barColor, Color barHighlightColor) : base(gene, drainGenes, barColor, barHighlightColor)
+        {
+
+        }
+        protected override float ValuePercent
+        {
+            get
+            {
+                if (gene is Gene_BasicResource basicResource)
+                {
+                    return basicResource.GetAdditionalResource(ResourceData.resourceDef).ValueAsPercent;
+                }
+
+                return base.ValuePercent;
+            }
+        }
+
+        protected override string BarLabel
+        {
+            get
+            {
+                if (gene is Gene_BasicResource basicResource)
+                {
+                    return basicResource.GetAdditionalResource(ResourceData.resourceDef).ValueDisplayString;
+                }
+
+                return base.BarLabel;
+            }
+        }
+
+        protected override Color BarColor
+        {
+            get
+            {
+                if (gene is Gene_BasicResource basicResource)
+                {
+                    return ResourceData.resourceDef.barColor;
+                }
+
+                return base.BarColor;
+            }
+        }
+
+        protected override Color BarHighlightColor
+        {
+            get
+            {
+                if (gene is Gene_BasicResource basicResource)
+                {
+                    return ResourceData.resourceDef.barHighlightColor;
+                }
+
+                return base.BarHighlightColor;
+            }
+        }
+
+        public override IEnumerable<FloatMenuOption> RightClickFloatMenuOptions
+        {
+            get
+            {
+                foreach (var item in base.RightClickFloatMenuOptions)
+                {
+                    yield return item;
+                }
+
+                yield return new FloatMenuOption("Im ahwoih", () =>
+                {
+
+
+                });
+            }
+        }
+
 
         protected override string GetTooltip()
         {
-            if (!(gene is Gene_BasicResource resourceGene)) 
-                return "";
+            if (!(gene is Gene_BasicResource resourceGene))
+                return string.Empty;
 
-            string text = $"{resourceGene.Def.resourceDef.label.CapitalizeFirst()}: {resourceGene.ValueForDisplay} / {resourceGene.MaxForDisplay}\n";
+            string text = $"{ResourceData.resourceDef.LabelCap}: {resourceGene.GetAdditionalResource(ResourceData.resourceDef).currentValue} / {resourceGene.GetAdditionalResource(ResourceData.resourceDef).maxValue}\n";
 
-            string regen = $"\nRegenerates {resourceGene.RegenAmount} {resourceGene.Def.resourceDef.label.CapitalizeFirst()} every {GenDate.ToStringTicksToPeriod(resourceGene.RegenTicks)}";
+            if (ResourceData.isRegenEnabled)
+            {
+                text += $"\nRegenerates {ResourceData.resourceDef.RegenStatValue(this.gene.pawn)} {ResourceData.resourceDef.LabelCap} every {ResourceData.resourceDef.RegenTicksValue(this.gene.pawn)} ticks.";
+            }
 
             if (!resourceGene.def.resourceDescription.NullOrEmpty())
             {
-                text += $"\n\n{resourceGene.def.resourceDescription.Formatted(resourceGene.pawn.Named("PAWN")).Resolve()}";
+                text += $"\n\n{ResourceData.resourceDef.description.Formatted(resourceGene.pawn.Named("PAWN")).Resolve()}";
             }
-
-            return text + regen;
+            return text;
         }
     }
 }

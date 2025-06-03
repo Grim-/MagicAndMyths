@@ -14,7 +14,6 @@ namespace MagicAndMyths
         }
     }
 
-
     public class HediffComp_DamagePerInterval : HediffComp_BaseInterval
     {
         new public HediffCompProperties_DamagePerInterval Props => (HediffCompProperties_DamagePerInterval)props;

@@ -6,6 +6,7 @@ namespace MagicAndMyths
     public class ResourceToggleAbilityDef : ResourceAbilityDef
     {
         public float resourceMaintainCost = 0;
+        public int resourceMaintainInterval = 300;
 
         public ResourceToggleAbilityDef()
         {
@@ -15,9 +16,6 @@ namespace MagicAndMyths
 
     public class ResourceToggleAbility : ResourceAbility, IToggleableAbility
     {
-        new public ResourceToggleAbilityDef ResourceDef => (ResourceToggleAbilityDef)def;
-
-        protected bool IsActive = false;
 
         public ResourceToggleAbility()
         {
@@ -43,13 +41,16 @@ namespace MagicAndMyths
         {
 
         }
+        new public ResourceToggleAbilityDef ResourceDef => (ResourceToggleAbilityDef)def;
+
+        protected bool IsActive = false;
 
         public override bool CanCast
         {
             get
             {
                 //if it has a cooldown and the toggle is active, allow deactivating regardless of cooldown
-                if (this.HasCooldown && IsActive)
+                if (this.OnCooldown && IsActive)
                 {
                     return true;
                 }
@@ -62,11 +63,24 @@ namespace MagicAndMyths
             get
             {
                 //if it has a cooldown and the toggle is active, allow deactivating regardless of cooldown
-                if (this.HasCooldown && IsActive)
+                if (this.OnCooldown && IsActive)
                 {
                     return true;
                 }
                 else return base.CanQueueCast;
+            }
+        }
+        public override string Tooltip
+        {
+            get
+            {
+
+                if (ResourceDef != null && ResourceDef.resourceDef != null)
+                {
+                    return base.Tooltip + $"\r\nMaintain Cost : {ResourceDef.resourceMaintainCost} ({ResourceDef.resourceDef.LabelCap}) every {ResourceDef.resourceMaintainInterval.ToStringTicksToPeriod()}.";
+                }
+
+                return base.Tooltip;
             }
         }
 
@@ -89,9 +103,19 @@ namespace MagicAndMyths
         {
             base.AbilityTick();
 
-            if (!resourceGene.Has(ResourceDef.resourceMaintainCost))
+            if (IsActive)
             {
-                DeActivate();
+                if (this.pawn.IsHashIntervalTick(ToggleDef.resourceMaintainInterval))
+                {
+                    if (!resourceGene.Has(ResourceDef.resourceMaintainCost))
+                    {
+                        DeActivate();
+                    }
+                    else
+                    {
+                        resourceGene.Consume(ResourceDef.resourceDef, ResourceDef.resourceMaintainCost);
+                    }
+                }
             }
         }
 

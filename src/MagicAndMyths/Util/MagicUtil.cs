@@ -15,7 +15,11 @@ namespace MagicAndMyths
         {
 
         }
-
+        public static ThingFlyer QuickFlyer(this Thing thing, Map map, IntVec3 destination, Pawn throwerPawn = null)
+        {
+            ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, thing, destination, map, null, null, throwerPawn, thing.DrawPos, false);
+            return ThingFlyer.LaunchFlyer(thingFlyer, thing, thing.Position, map);
+        }
         public static void ListShaderProperties(string shaderPath)
         {
             Shader shader = ShaderDatabase.LoadShader(shaderPath);
@@ -256,7 +260,10 @@ namespace MagicAndMyths
             return pawn.SpendHealingAmount(totalHealAmount, healParams.CreateFilter());
         }
 
-
+        public static bool NeedsHealing(this Pawn pawn)
+        {
+            return pawn.health.summaryHealth.SummaryHealthPercent < 1;
+        }
         public static float SpendHealingAmount(this Pawn pawn, float totalHealAmount, Func<Hediff, bool> filter = null)
         {
             if (totalHealAmount <= 0)
@@ -310,14 +317,16 @@ namespace MagicAndMyths
 
             return totalHealed;
         }
-        public static Gene_BasicResource GetGeneForResourceDef(this Pawn pawn, PawnResourceDef resourceDef)
+        public static Gene_BasicResource GetGeneForResourceDef(this Pawn pawn, AbilityResourceDef resourceDef)
         {
             if (pawn?.genes?.GenesListForReading == null || resourceDef == null)
                 return null;
 
-            return pawn.genes.GenesListForReading
+
+            Gene_BasicResource foundGene = pawn.genes.GenesListForReading
                 .OfType<Gene_BasicResource>()
-                .FirstOrDefault(g => g.ResourceDef == resourceDef);
+                .FirstOrDefault(g => g.HasResource(resourceDef));
+            return foundGene;
         }
         public static bool IsControlledSummon(this Pawn pawn)
         {

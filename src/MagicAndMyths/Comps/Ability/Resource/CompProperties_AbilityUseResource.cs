@@ -6,7 +6,7 @@ namespace MagicAndMyths
 {
     public class CompProperties_AbilityUseResource : CompProperties_AbilityEffect
     {
-        public PawnResourceDef resourceDef;
+        public AbilityResourceDef resourceDef;
         public float resourceCost = 10f;
 
         public CompProperties_AbilityUseResource()

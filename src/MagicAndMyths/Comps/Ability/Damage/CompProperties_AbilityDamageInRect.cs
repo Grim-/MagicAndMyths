@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -7,7 +8,6 @@ namespace MagicAndMyths
 {
     public class CompProperties_AbilityDamageInRect : CompProperties_AbilityEffect
     {
-
         public int length = 10;
         public int width = 3;
 
@@ -15,6 +15,8 @@ namespace MagicAndMyths
         public DamageDef damageDef;
 
         public ThingDef effectMote = null;
+
+        public FriendlyFireSettings friendlyFireParms = FriendlyFireSettings.HostileOnly();
 
         public CompProperties_AbilityDamageInRect()
         {
@@ -44,7 +46,7 @@ namespace MagicAndMyths
 
             foreach (var item in TargetUtil.GetDamageableThingsInCells(cells, this.parent.pawn.Map))
             {
-                if (item != this.parent.pawn)
+                if (item != this.parent.pawn && item.CanTargetThing(this.parent.pawn.Faction, Props.friendlyFireParms))
                 {
                     item.TakeDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange));
                 }         

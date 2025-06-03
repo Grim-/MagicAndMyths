@@ -5,11 +5,11 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class CompProperties_SummonPawn : CompProperties_AbilityEffect
+    public class CompProperties_AbilitySummonPawn : CompProperties_AbilityEffect
     {
         public PawnKindDef summonKind;
 
-        public CompProperties_SummonPawn()
+        public CompProperties_AbilitySummonPawn()
         {
             compClass = typeof(CompAbilityEffect_SummonPawn);
         }
@@ -17,7 +17,7 @@ namespace MagicAndMyths
 
     public class CompAbilityEffect_SummonPawn : CompAbilityEffect
     {
-        new CompProperties_SummonPawn Props => (CompProperties_SummonPawn)props;
+        new CompProperties_AbilitySummonPawn Props => (CompProperties_AbilitySummonPawn)props;
         private Pawn SummonedPawn = null;
 
 

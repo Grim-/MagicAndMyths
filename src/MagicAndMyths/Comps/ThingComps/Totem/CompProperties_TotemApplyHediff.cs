@@ -4,9 +4,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
-
-
     public class CompProperties_TotemApplyHediff : CompProperties_BaseTotem
     {
         public HediffDef hediff;
@@ -45,8 +42,6 @@ namespace MagicAndMyths
             }
 
             List<Pawn> pawnsInRange = GetPawnsInRange();
-
-            Log.Message($"Targets found {pawnsInRange.Count}");
 
             foreach (var item in pawnsInRange)
             {

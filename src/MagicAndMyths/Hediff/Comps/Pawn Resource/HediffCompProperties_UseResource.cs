@@ -5,7 +5,7 @@ namespace MagicAndMyths
 {
     public class HediffCompProperties_UseResource : HediffCompProperties
     {
-        public PawnResourceDef resourceDef;
+        public AbilityResourceDef resourceDef;
         public float resourceCostPerInterval = 1f;
         public int intervalTicks = 2500;
         public bool removeOnInsufficientResource = true;

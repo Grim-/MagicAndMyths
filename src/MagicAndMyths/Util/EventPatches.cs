@@ -218,8 +218,6 @@ namespace MagicAndMyths
             }
         }
 
-
-
         [HarmonyPatch(typeof(Pawn))]
         [HarmonyPatch("Notify_UsedVerb")]
         public static class Patch_Pawn_UsedVerb
@@ -229,6 +227,29 @@ namespace MagicAndMyths
                 if (pawn != null && verb != null)
                 {
                     EventManager.Instance.RaiseVerbUsed(pawn, verb);
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Verb_MeleeAttackDamage))]
+        [HarmonyPatch("DamageInfosToApply")]
+        public static class Patch_Verb_MeleeAttackDamage_DamageInfosToApply
+        {
+            public static void Postfix(Verb_MeleeAttackDamage __instance, LocalTargetInfo target, ref IEnumerable<DamageInfo> __result)
+            {
+                if (__instance?.CasterPawn != null && __result != null)
+                {
+                    __result = ModifyDamageInfos(__instance, target, __result);
+                }
+            }
+
+            private static IEnumerable<DamageInfo> ModifyDamageInfos(Verb_MeleeAttackDamage verb, LocalTargetInfo target, IEnumerable<DamageInfo> originalDamageInfos)
+            {
+                foreach (DamageInfo damageInfo in originalDamageInfos)
+                {
+                    DamageInfo modifiedDamageInfo = damageInfo;
+                    EventManager.Instance.RaiseBeforeMeleeDamageInfo(verb.CasterPawn, target, ref modifiedDamageInfo);
+                    yield return modifiedDamageInfo;
                 }
             }
         }

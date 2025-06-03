@@ -5,7 +5,7 @@ namespace MagicAndMyths
 {
     public class ResourceAbilityDef : AbilityDef
     {
-        public PawnResourceDef resourceDef;
+        public AbilityResourceDef resourceDef;
         public float resourceCost = 10f;
 
         public ResourceAbilityDef()
@@ -43,6 +43,21 @@ namespace MagicAndMyths
 
         public ResourceAbilityDef ResourceDef => (ResourceAbilityDef)def;
         protected Gene_BasicResource resourceGene => this.pawn.GetGeneForResourceDef(ResourceDef.resourceDef);
+
+        public override string Tooltip
+        {
+            get
+            {
+
+                if (ResourceDef != null && ResourceDef.resourceDef != null)
+                {
+                    return base.Tooltip + $"\r\nCost : {ResourceDef.resourceCost} ({ResourceDef.resourceDef.LabelCap})";
+                }
+
+                 return base.Tooltip;
+            }
+        }
+
         public override bool CanCast
         {
             get
@@ -50,14 +65,14 @@ namespace MagicAndMyths
                 if (!base.CanCast)
                     return false;
 
-                if (ResourceDef.resourceDef == null)
+                if (ResourceDef == null || ResourceDef.resourceDef == null)
                     return true;
                 if (resourceGene == null)
                     return false;
                 if (resourceGene.ResourceIsUnavailable(out string reason))
                     return false;
 
-                return resourceGene.Has(ResourceDef.resourceCost);
+                return resourceGene.Has(ResourceDef.resourceDef, ResourceDef.resourceCost);
             }
         }
         public override bool CanQueueCast
@@ -74,7 +89,7 @@ namespace MagicAndMyths
                 if (resourceGene.ResourceIsUnavailable(out string reason))
                     return false;
 
-                return resourceGene.Has(ResourceDef.resourceCost);
+                return resourceGene.Has(ResourceDef.resourceDef, ResourceDef.resourceCost);
             }
         }
 
@@ -83,6 +98,19 @@ namespace MagicAndMyths
             base.PreActivate(target);
             ConsumeResource();
         }
+
+
+
+        public DamageInfo GetModifiedDamage(DamageInfo damageInfo)
+        {
+            return damageInfo;
+        }
+
+        public float GetModifiedHealAmount(float baseHealAmount)
+        {
+            return baseHealAmount;
+        }
+
 
         protected virtual void ConsumeResource()
         {
