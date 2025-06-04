@@ -3,6 +3,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
+    //Allows for offseting the drawing of things equipped on a pawn.
     public class DrawOffsetExt : DefModExtension
     {
         public Vector3 offset;

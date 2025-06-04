@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>Spellblade_LightningStanceHediff</defName>
+    <label>Lightning Stance</label>
+    <description>Channeling swift lightning magic. Greatly increases speed and agility.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>6</MoveSpeed>
+          <MeleeHitChance>1.5</MeleeHitChance>
+          <MeleeDodgeChance>2</MeleeDodgeChance>
+          <MeleeArmorPenetration>0.6</MeleeArmorPenetration>
+          <MeleeCooldownFactor>1.3</MeleeCooldownFactor>
+        </statOffsets>
+        <statFactors>
+          <Stat_ManaRegen>0.5</Stat_ManaRegen>
+        </statFactors>
+      </li>
+    </stages>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_OnMeleeAttackDealDamage">
+        <damage>1~2</damage>
+        <damageDef>Lightning</damageDef>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>

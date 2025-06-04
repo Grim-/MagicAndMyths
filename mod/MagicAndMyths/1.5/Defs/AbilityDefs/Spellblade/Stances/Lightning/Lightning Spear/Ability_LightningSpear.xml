@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceAbilityDef>
+    <defName>MagicAndMyths_LightningSpear</defName>
+    <label>Lightning Spear</label>
+    <description>Hurl a crackling spear of lightning toward the target location, damaging all enemies in its path. Upon impact, it creates an electrified zone that slows enemies and accelerates allies. Targets taking lightning damage within the zone trigger additional lightning strikes.</description>
+    <iconPath>Skills/Spellblade/Skill_LightningArmour</iconPath>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <resourceCost>20</resourceCost>
+    <resourceDef>Mana</resourceDef>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>20</range>
+      <warmupTime>0.5</warmupTime>
+      <soundCast>PiercingSpine_Launch</soundCast>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>true</canTargetItems>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilityDamageInRect">
+        <length>20</length>
+        <width>3</width>
+        <damage>5</damage>
+        <damageDef>Cut</damageDef>
+        <effectMote>MagicAndMyths_LightningSpear</effectMote>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_LaunchProjectileExtended">
+        <projectileDef>Projectile_LightningSpear</projectileDef>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceAbilityDef>
+</Defs>

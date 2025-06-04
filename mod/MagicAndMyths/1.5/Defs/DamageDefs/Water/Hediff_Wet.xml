@@ -42,7 +42,7 @@
             <workerClass>MagicAndMyths.ComboReactionWorker_DealDamage</workerClass>
             <reactionProperties>
               <damageDef>Lightning</damageDef>
-              <damageRange>25~45</damageRange>
+              <damageRange>5~6</damageRange>
               <armourpenRange>0.1</armourpenRange>
               <isAOE>true</isAOE>
               <radius>2</radius>

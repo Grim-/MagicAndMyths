@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.StanceDef>
+    <defName>Spellblade_LightningStance</defName>
+    <label>Lightning Stance</label>
+    <description>Speed-focused stance for quick strikes and mobility. High speed and precision.</description>
+    <iconPath>UI/Abilities/Spellblade/LightningStance</iconPath>
+    <iconColor>(1, 1, 0.3)</iconColor>
+    <cooldownTicks>300</cooldownTicks>
+        <upkeepCost>10</upkeepCost>
+    <hediffsToApply>
+      <li>Spellblade_LightningStanceHediff</li>
+    </hediffsToApply>
+    <abilitiesToGain>
+      <li>MagicAndMyths_ElementalArmour_Lightning</li>
+      <li>MagicAndMyths_LightningSpear</li>
+    </abilitiesToGain>
+  </MagicAndMyths.StanceDef>
+
+</Defs>

@@ -19,8 +19,11 @@
       <AccuracyMedium>0.35</AccuracyMedium>
       <AccuracyLong>0.20</AccuracyLong>
       <RangedWeapon_Cooldown>1.65</RangedWeapon_Cooldown>
-      <Stat_Mana>50</Stat_Mana>
     </statBases>
+    <equippedStatOffsets>
+      <Stat_Mana>50</Stat_Mana>
+      <Stat_MagicPower>3</Stat_MagicPower>
+    </equippedStatOffsets>
     <costList>
       <Steel>75</Steel>
       <ComponentIndustrial>4</ComponentIndustrial>

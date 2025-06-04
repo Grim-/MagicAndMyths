@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <AbilityDef>
+  <MagicAndMyths.ResourceAbilityDef>
     <defName>MagicAndMyths_EarthenHammer</defName>
     <label>Earthen Hammer</label>
-    <description>Slam the ground with a massive stone hammer, sending a devastating shockwave toward the target location. All enemies struck are stunned for 600 ticks.</description>
-    <iconPath>Projectiles/Projectile_Fireball</iconPath>
+    <description>Slam the ground with a massive stone hammer, causing mud to erupt from the ground, all enemies in the radius will be pulled towards the center every 200 ticks.</description>
+    <iconPath>Skills/Spellblade/Skill_EarthArmour</iconPath>
     <cooldownTicksRange>6000</cooldownTicksRange>
     <category>Sanguophage</category>
     <displayOrder>200</displayOrder>
@@ -25,6 +25,6 @@
         <zoneDef>WindZone</zoneDef>
       </li>
     </comps>
-  </AbilityDef>
+  </MagicAndMyths.ResourceAbilityDef>
 
 </Defs>

@@ -18,6 +18,11 @@ namespace MagicAndMyths
         public static HediffDef DeathKnight_UndeadMaster;
         public static HediffDef DeathKnight_Undead;
 
+
+
+        public static HediffDef MagicAndMyths_Wet;
+
+
         public static HediffDef MagicAndMyths_Transformation;
         public static ThinkTreeDef MagicAndMyths_TransformationTree;
 

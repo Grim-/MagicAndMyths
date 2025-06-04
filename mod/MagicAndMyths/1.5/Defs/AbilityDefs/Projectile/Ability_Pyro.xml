@@ -21,13 +21,13 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="CompProperties_AbilityLaunchProjectile">
+      <li Class="MagicAndMyths.CompProperties_LaunchProjectileExtended">
         <projectileDef>Projectile_Pyroball</projectileDef>
       </li>
     </comps>
   </AbilityDef>
 
-  <ThingDef ParentName="BaseBullet">
+  <ThingDef ParentName="BaseMagicProjectile">
     <defName>Projectile_Pyroball</defName>
     <label>fireball</label>
     <thingClass>MagicAndMyths.Projectile_Extended</thingClass>

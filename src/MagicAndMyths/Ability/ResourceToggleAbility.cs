@@ -43,14 +43,19 @@ namespace MagicAndMyths
         }
         new public ResourceToggleAbilityDef ResourceDef => (ResourceToggleAbilityDef)def;
 
-        protected bool IsActive = false;
+        protected bool _IsActive = false;
+
+        public bool IsActive
+        {
+            get => _IsActive;
+        }
 
         public override bool CanCast
         {
             get
             {
                 //if it has a cooldown and the toggle is active, allow deactivating regardless of cooldown
-                if (this.OnCooldown && IsActive)
+                if (this.OnCooldown && _IsActive)
                 {
                     return true;
                 }
@@ -63,12 +68,22 @@ namespace MagicAndMyths
             get
             {
                 //if it has a cooldown and the toggle is active, allow deactivating regardless of cooldown
-                if (this.OnCooldown && IsActive)
+                if (this.OnCooldown && _IsActive)
                 {
                     return true;
                 }
                 else return base.CanQueueCast;
             }
+        }
+
+        public override bool GizmoDisabled(out string reason)
+        {
+            if (_IsActive)
+            {
+                reason = "";
+                return false;
+            }
+            return base.GizmoDisabled(out reason);
         }
         public override string Tooltip
         {
@@ -88,7 +103,7 @@ namespace MagicAndMyths
 
         public override bool Activate(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            if (IsActive)
+            if (_IsActive)
             {
                 DeActivate();
             }
@@ -103,11 +118,11 @@ namespace MagicAndMyths
         {
             base.AbilityTick();
 
-            if (IsActive)
+            if (_IsActive)
             {
                 if (this.pawn.IsHashIntervalTick(ToggleDef.resourceMaintainInterval))
                 {
-                    if (!resourceGene.Has(ResourceDef.resourceMaintainCost))
+                    if (!resourceGene.Has(ResourceDef.resourceDef, ResourceDef.resourceMaintainCost))
                     {
                         DeActivate();
                     }
@@ -121,8 +136,7 @@ namespace MagicAndMyths
 
         protected override void ConsumeResource()
         {
-            //no resource cost to deactivate, by default
-            if (!IsActive)
+            if (_IsActive)
             {
                 base.ConsumeResource();
             }  
@@ -131,23 +145,23 @@ namespace MagicAndMyths
 
         public void Activate(bool force = false)
         {
-            if (IsActive && !force)
+            if (_IsActive && !force)
             {
                 return;
             }
 
-            IsActive = true;
+            _IsActive = true;
             OnActivated();
         }
 
         public void DeActivate(bool force = false)
         {
-            if (!IsActive && !force)
+            if (!_IsActive && !force)
             {
                 return;
             }
 
-            IsActive = false;
+            _IsActive = false;
             OnDeactivated();
         }
 

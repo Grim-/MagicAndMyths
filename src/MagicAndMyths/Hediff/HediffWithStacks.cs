@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Verse;
 namespace MagicAndMyths
 {
@@ -19,6 +20,13 @@ namespace MagicAndMyths
             hediffClass = typeof(HediffWithStacks);
         }
     }
+
+
+    //public class StackStageData
+    //{
+    //    public HediffStage stage;
+    //}
+
     public class HediffWithStacks : HediffWithComps
     {
         protected int _CurrentStackLevel = 1;
@@ -38,7 +46,10 @@ namespace MagicAndMyths
                 return def.stages.Count;
             }
         }
-        public override string Description => base.Description + $" ({StackLevel + 1} stacks.)";
+
+        public override string Label => $"[{StackLevel + 1}] " + base.Label;
+
+        public override string Description => base.Description + $"\r\n{StackLevel + 1} stacks.";
         public override HediffStage CurStage => GetStageForStackLevel(StackLevel);
         protected int stackLossTicker = 0;
         private StackingHediffDef Def => (StackingHediffDef)def;
@@ -67,21 +78,33 @@ namespace MagicAndMyths
             }
             return def.stages[Level - 1];
         }
+
         public void AddStack(int stacksToAdd = 1)
         {
             _CurrentStackLevel += stacksToAdd;
             if (_CurrentStackLevel > MaxStackLevel)
             {
                 _CurrentStackLevel = MaxStackLevel;
+
             }
             if (this.TryGetComp(out HediffComp_Disappears _Disappears) && Def.stackGainRefreshesDisappearsDuration)
             {
                 _Disappears.SetDuration(_Disappears.Props.disappearsAfterTicks.RandomInRange);
             }
+
+            if (_CurrentStackLevel >= MaxStackLevel)
+            {
+                OnMaxStacks();
+            }
+
+            OnStacksChange(_CurrentStackLevel);
         }
+
         public void RemoveStack(int stacksToRemove = 1)
         {
             _CurrentStackLevel -= stacksToRemove;
+            OnStacksChange(_CurrentStackLevel);
+
             if (_CurrentStackLevel <= 0)
             {
                 _CurrentStackLevel = 0;
@@ -90,7 +113,31 @@ namespace MagicAndMyths
                     this.pawn.health.RemoveHediff(this);
                 }
             }
+
         }
+
+        protected virtual void OnStacksChange(int newStackLevel)
+        {
+            foreach (var item in comps)
+            {
+                if (item is HediffComp_BaseStack baseStack)
+                {
+                    baseStack.OnStacksChanged(newStackLevel);
+                }
+            }
+        }
+
+        protected virtual void OnMaxStacks()
+        {
+            foreach (var item in comps)
+            {
+                if (item is HediffComp_BaseStack baseStack)
+                {
+                    baseStack.OnMaxStacks();
+                }
+            }
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();

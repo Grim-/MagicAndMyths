@@ -248,12 +248,14 @@ namespace MagicAndMyths
             if (Pawn == null || !Pawn.Spawned || !Pawn.IsColonistPlayerControlled)
                 yield break;
 
-            yield return new Command_ActionWithCooldown
+            var throwCommand = new Command_MultiAction
             {
-                defaultLabel = $"Throw Item upto {ThrowRangeCells} cells away.",
-                defaultDesc = "Throw an item from your inventory at a target location.",
-                icon = defaultIcon,
-                action = delegate
+                defaultLabel = "Throw Actions",
+                defaultDesc = "Throwing actions for items and targets"
+            };
+
+            throwCommand.AddAction(
+                action: delegate
                 {
                     List<Thing> throwableItems = GetThrowableEquipment();
                     if (throwableItems.Count == 0)
@@ -261,31 +263,76 @@ namespace MagicAndMyths
                         Messages.Message("No throwable items in inventory.", MessageTypeDefOf.RejectInput);
                         return;
                     }
-
                     List<FloatMenuOption> options = new List<FloatMenuOption>();
                     foreach (Thing item in throwableItems)
                     {
                         options.Add(new FloatMenuOption(item.LabelCap, () => BeginThrowFromInventory(item),
                             item.def.uiIcon, item.def.uiIconColor));
                     }
-
                     Find.WindowStack.Add(new FloatMenu(options));
                 },
-                Disabled = !CanPerformAction(Pawn),
-                disabledReason = !CanPerformAction(Pawn) ? "This pawn can't throw" : "",
-                //cooldownPercentGetter = () => IsThrowOffCooldown
-            };
+                label: "Throw Item",
+                desc: $"Throw an item from your inventory at a target location up to {ThrowRangeCells} cells away.",
+                icon: defaultIcon,
+                disabled: !CanPerformAction(Pawn),
+                disabledReason: !CanPerformAction(Pawn) ? "This pawn can't throw" : ""
+            );
 
-            yield return new Command_Action
-            {
-                defaultLabel = $"Throw Target upto {ThrowRangeCells} cells away.",
-                defaultDesc = "Pick up and throw an object from the environment.",
-                icon = defaultIcon,
-                action = BeginThrowTarget,
-                Disabled = !CanPerformAction(Pawn),
-                disabledReason = !CanPerformAction(Pawn) ? "This pawn can't throw" : ""
-            };
+            throwCommand.AddAction(
+                action: BeginThrowTarget,
+                label: "Throw Target",
+                desc: $"Pick up and throw an object from the environment up to {ThrowRangeCells} cells away.",
+                icon: defaultIcon,
+                disabled: !CanPerformAction(Pawn),
+                disabledReason: !CanPerformAction(Pawn) ? "This pawn can't throw" : ""
+            );
+
+            yield return throwCommand;
         }
+
+        //public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        //{
+        //    if (Pawn == null || !Pawn.Spawned || !Pawn.IsColonistPlayerControlled)
+        //        yield break;
+
+        //    yield return new Command_ActionWithCooldown
+        //    {
+        //        defaultLabel = $"Throw Item upto {ThrowRangeCells} cells away.",
+        //        defaultDesc = "Throw an item from your inventory at a target location.",
+        //        icon = defaultIcon,
+        //        action = delegate
+        //        {
+        //            List<Thing> throwableItems = GetThrowableEquipment();
+        //            if (throwableItems.Count == 0)
+        //            {
+        //                Messages.Message("No throwable items in inventory.", MessageTypeDefOf.RejectInput);
+        //                return;
+        //            }
+
+        //            List<FloatMenuOption> options = new List<FloatMenuOption>();
+        //            foreach (Thing item in throwableItems)
+        //            {
+        //                options.Add(new FloatMenuOption(item.LabelCap, () => BeginThrowFromInventory(item),
+        //                    item.def.uiIcon, item.def.uiIconColor));
+        //            }
+
+        //            Find.WindowStack.Add(new FloatMenu(options));
+        //        },
+        //        Disabled = !CanPerformAction(Pawn),
+        //        disabledReason = !CanPerformAction(Pawn) ? "This pawn can't throw" : "",
+        //        //cooldownPercentGetter = () => IsThrowOffCooldown
+        //    };
+
+        //    yield return new Command_Action
+        //    {
+        //        defaultLabel = $"Throw Target upto {ThrowRangeCells} cells away.",
+        //        defaultDesc = "Pick up and throw an object from the environment.",
+        //        icon = defaultIcon,
+        //        action = BeginThrowTarget,
+        //        Disabled = !CanPerformAction(Pawn),
+        //        disabledReason = !CanPerformAction(Pawn) ? "This pawn can't throw" : ""
+        //    };
+        //}
 
         public override void PostExposeData()
         {

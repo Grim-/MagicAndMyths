@@ -6,9 +6,9 @@
     <children>
       <li>
         <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
-        <burstCount>1</burstCount>
+        <burstCount>1~2</burstCount>
         <ticksBetweenMotes>10</ticksBetweenMotes>
-        <maxMoteCount>1</maxMoteCount>
+        <maxMoteCount>2</maxMoteCount>
         <lifespanMaxTicks>999999</lifespanMaxTicks>
         <positionRadius>0</positionRadius>
         <spawnLocType>OnSource</spawnLocType>
@@ -18,7 +18,7 @@
         <speed>0</speed>
         <rotation>0</rotation>
         <rotationRate>0</rotationRate>
-        <scale>2</scale>
+        <scale>2~2.3</scale>
         <airTime>999999</airTime>
         <subTriggerOnSpawn>false</subTriggerOnSpawn>
         <attachToSpawnThing>true</attachToSpawnThing>

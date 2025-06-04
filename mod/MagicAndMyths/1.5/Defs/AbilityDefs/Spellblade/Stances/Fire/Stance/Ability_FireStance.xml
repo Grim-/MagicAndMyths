@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceAbilityDef>
+    <defName>Spellblade_ToggleFireStance</defName>
+    <label>Fire Stance</label>
+    <description>Toggle fire stance on or off.</description>
+    <iconPath>Skills/Spellblade/Skill_FireArmour</iconPath>
+    <cooldownTicksRange>0</cooldownTicksRange>
+    <resourceCost>20</resourceCost>
+    <resourceDef>Mana</resourceDef>
+    <aiCanUse>false</aiCanUse>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>0</range>
+      <warmupTime>0</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetable>False</targetable>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilityToggleStance">
+        <stance>Spellblade_FireStance</stance>
+        <allowDeactivation>true</allowDeactivation>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceAbilityDef>
+</Defs>

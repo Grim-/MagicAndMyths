@@ -13,6 +13,8 @@ namespace MagicAndMyths
 
         public EffecterDef targetDamageEffecterDef = null;
 
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.AllFriendly();
+
         public CompProperties_DamageActiveZoneComp()
         {
             compClass = typeof(Damage_ActiveZoneComp);
@@ -34,6 +36,11 @@ namespace MagicAndMyths
                 HashSet<Thing> things = ParentZone.GetCurrentThingsInZone(ref cells);
                 foreach (var item in things)
                 {
+                    if (!item.CanTargetThing(this.parent.Faction, Props.friendlyFireSettings))
+                    {
+                        continue;
+                    }
+
                     if (Props.maxTargets > 0 && currentTargetCount > Props.maxTargets)
                     {
                         break;

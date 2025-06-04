@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+    <defName>MagicAndMyths_ElementalArmour_Earth</defName>
+    <label>Elemental Armour : Earth</label>
+    <description>Gain 5 stacks of Earthen Armour, each stack of Earthen Armour reduces all physical damage taken by 50%, upon taking damage you lose a stack of Earthen armour, this persists while you have armour stacks.</description>
+    <iconPath>Skills/Spellblade/Skill_EarthArmour</iconPath>
+    <cooldownTicksRange>2400</cooldownTicksRange>
+    <resourceCost>20</resourceCost>
+    <aiCanUse>false</aiCanUse>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>0</range>
+      <warmupTime>0</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetable>False</targetable>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilityAddStacks">
+        <hediffDef>Spellblade_EarthArmourHediff</hediffDef>
+        <stacksToGive>5</stacksToGive>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceAbilityDef>
+
+  <MagicAndMyths.StackingHediffDef>
+    <defName>Spellblade_EarthArmourHediff</defName>
+    <label>Earth Armour</label>
+    <description>Each stack of Earthen Armour reduces all physical damage taken by 50%, upon taking damage you lose a stack of Earthen armour, this persists while you have armour stacks, you lose 1 stack every 500 ticks..</description>
+    <maxSeverity>1.0</maxSeverity>
+    <initialStacks>1</initialStacks>
+    <maxStacks>10</maxStacks>
+    <useStagesAsStackCount>false</useStagesAsStackCount>
+    <isBad>false</isBad>
+    <losesStacksPerInterval>true</losesStacksPerInterval>
+    <ticksBetweenStackLoss>600</ticksBetweenStackLoss>
+    <stacksLostPerTickInterval>1</stacksLostPerTickInterval>
+    <removeOnZeroStacks>true</removeOnZeroStacks>
+    <stages>
+    </stages>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_EarthArmour">
+        <damageReductions>
+          <li>
+            <damageDef>Blunt</damageDef>
+            <damageFactor>0.5</damageFactor>
+          </li>
+          <li>
+            <damageDef>Cut</damageDef>
+            <damageFactor>0.5</damageFactor>
+          </li>
+        </damageReductions>
+        <stacksToRemove>1</stacksToRemove>
+        <minimumDamageToTrigger>0.1</minimumDamageToTrigger>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_DisappearsStacks">
+        <disappearsAfterTicks>500</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+        <stacksToRemoveOnDisappear>1</stacksToRemoveOnDisappear>
+        <resetTimerOnStackLoss>true</resetTimerOnStackLoss>
+      </li>
+    </comps>
+  </MagicAndMyths.StackingHediffDef>
+</Defs>

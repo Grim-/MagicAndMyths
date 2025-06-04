@@ -5,22 +5,19 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
-
-
-    public class HediffCompProperties_IncreaseSeverityOnAbilityUse : HediffCompProperties_AbilityEffect
+    public class HediffCompProperties_OnAbilityUseIncreaseSeverity : HediffCompProperties_AbilityEffect
     {
         public FloatRange severityIncreaseOnCast = new FloatRange(0.01f, 0.05f);
 
-        public HediffCompProperties_IncreaseSeverityOnAbilityUse()
+        public HediffCompProperties_OnAbilityUseIncreaseSeverity()
         {
-            compClass = typeof(HediffComp_IncreaseSeverityOnAbilityUse);
+            compClass = typeof(HediffComp_OnAbilityUseIncreaseSeverity);
         }
     }
 
-    public class HediffComp_IncreaseSeverityOnAbilityUse : HediffComp_AbilityEffect
+    public class HediffComp_OnAbilityUseIncreaseSeverity : HediffComp_AbilityEffect
     {
-        public HediffCompProperties_IncreaseSeverityOnAbilityUse Props => (HediffCompProperties_IncreaseSeverityOnAbilityUse)props;
+        public HediffCompProperties_OnAbilityUseIncreaseSeverity Props => (HediffCompProperties_OnAbilityUseIncreaseSeverity)props;
 
         protected override void OnAbilityUsed(Pawn pawn, RimWorld.Ability ability)
         {

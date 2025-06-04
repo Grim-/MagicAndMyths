@@ -8,6 +8,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
     [StaticConstructorOnStartup]
     public static class MagicUtil
     {
@@ -15,6 +16,8 @@ namespace MagicAndMyths
         {
 
         }
+
+
         public static ThingFlyer QuickFlyer(this Thing thing, Map map, IntVec3 destination, Pawn throwerPawn = null)
         {
             ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, thing, destination, map, null, null, throwerPawn, thing.DrawPos, false);
@@ -328,6 +331,31 @@ namespace MagicAndMyths
                 .FirstOrDefault(g => g.HasResource(resourceDef));
             return foundGene;
         }
+
+        public static bool HasResourceDef(this Pawn pawn, AbilityResourceDef resourceDef, out Gene_BasicResource OwningGene)
+        {
+            OwningGene = null;
+
+            if (pawn?.genes?.GenesListForReading == null || resourceDef == null)
+            {
+                return false;
+            }
+
+            Gene_BasicResource foundGene = pawn.genes.GenesListForReading
+            .OfType<Gene_BasicResource>()
+            .FirstOrDefault(g => g.HasResource(resourceDef));
+
+            if (foundGene != null)
+            {
+                OwningGene = foundGene;
+                return true;
+            }
+
+            return false;
+        }
+
+
+
         public static bool IsControlledSummon(this Pawn pawn)
         {
             return pawn.health.hediffSet.HasHediff<Hediff_Undead>();

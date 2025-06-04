@@ -10,6 +10,8 @@ namespace MagicAndMyths
         public FloatRange damage;
         public DamageDef damageDef;
 
+        public bool useWeaponDamageIfAvailable = false;
+
         public FriendlyFireSettings friendlyFireParms = FriendlyFireSettings.HostileOnly();
 
         public CompProperties_AbilityDamageInRadius()
@@ -34,7 +36,8 @@ namespace MagicAndMyths
 
                 if (pawn != null && pawn != this.parent.pawn)
                 {
-                    pawn.TakeDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange));
+                    DamageInfo damage = this.parent.pawn.GetAttackDamageForPawn(Props.damageDef, Props.damage.RandomInRange, 0, 1, Props.useWeaponDamageIfAvailable);
+                    pawn.TakeDamage(damage);
                 }
             });
         }

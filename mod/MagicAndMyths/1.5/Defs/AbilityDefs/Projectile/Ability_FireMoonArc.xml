@@ -21,16 +21,15 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="CompProperties_AbilityLaunchProjectile">
+      <li Class="MagicAndMyths.CompProperties_LaunchProjectileExtended">
         <projectileDef>Projectile_MoonArc</projectileDef>
       </li>
     </comps>
   </AbilityDef>
-  
-  <ThingDef ParentName="BaseBullet">
+
+  <ThingDef ParentName="BaseMagicProjectile">
     <defName>Projectile_MoonArc</defName>
     <label>moon arc</label>
-    <thingClass>Projectile_Explosive</thingClass>
     <graphicData>
       <texPath>VFX/Moon</texPath>
       <graphicClass>Graphic_Single</graphicClass>

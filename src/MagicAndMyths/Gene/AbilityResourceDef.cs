@@ -19,6 +19,10 @@ namespace MagicAndMyths
         public float regenSpeedStatDefault = 1f;
         public StatDef costMult;
         public float costMultStatDefault = 1f;
+        public StatDef damageScalingStat;
+        public float baseScalingMultiplier = 1f;
+        public float maxScalingMultiplier = 20f;
+
         public Color barColor = Color.cyan;
         public Color barHighlightColor = Color.white;
 
@@ -67,6 +71,16 @@ namespace MagicAndMyths
                 return Pawn.GetStatValue(costMult, true, 1250);
             }
             return costMultStatDefault;
+        }
+
+        public StatDef GetScalingStatForDamageType(DamageDef damageDef)
+        {
+            return damageScalingStat != null ? damageScalingStat : null;
+        }
+
+        private bool IsPhysicalDamage(DamageDef damageDef)
+        {
+            return DamageScalingUtility.IsPhysicalDamage(damageDef);
         }
     }
 

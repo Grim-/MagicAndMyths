@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
 {
     public class CompProperties_ActiveZoneLightningStrike : CompProperties
     {
-        public int ticksBetweenStrikes = 120;
+        public int ticksBetweenStrikes = 500;
         public int maxTargets = -1;
+        public float radius = 3f;
+
+        public bool targetEnemies = true;
 
         public bool edgesOnly = true;
 
@@ -15,6 +19,7 @@ namespace MagicAndMyths
 
         public EffecterDef targetDamageEffecterDef = null;
 
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
         public CompProperties_ActiveZoneLightningStrike()
         {
             compClass = typeof(ActiveZoneComp_LightningStrike);
@@ -30,27 +35,51 @@ namespace MagicAndMyths
             base.OnZoneTick(ParentZone, ref cells);
             if (ParentZone.IsHashIntervalTick(Props.ticksBetweenStrikes))
             {
-                if (Props.edgesOnly)
+                if (Props.targetEnemies)
                 {
-                    List<IntVec3> edgeCells = GetEdgeCells(cells);
-                    if (edgeCells.Any())
-                    {
+                    Pawn target = (Pawn)ParentZone.ThingsInZoneRead.Where(x => x.CanTargetThing(this.ParentZone.Faction, Props.friendlyFireSettings) && x is Pawn).RandomElement();
 
-                        foreach (var item in edgeCells)
-                        {
-                            if (Rand.Value > 0.6f)
-                            {
-                                LightningStrike.GenerateLightningStrike(ParentZone.Map, item, 3f, out IEnumerable<IntVec3> Cells, 3, 1);
-                            }              
-                        }
-                       
+                    if (target != null)
+                    {
+                        GenerateStrikeAt(target.Position);
                     }
                 }
                 else
                 {
-                    LightningStrike.GenerateLightningStrike(ParentZone.Map, cells.RandomElement(), 3f, out IEnumerable<IntVec3> Cells, 3, 1);
+                    if (Props.edgesOnly)
+                    {
+                        List<IntVec3> edgeCells = GetEdgeCells(cells);
+                        if (edgeCells.Any())
+                        {
+
+                            foreach (var item in edgeCells)
+                            {
+                                if (Rand.Value > 0.6f)
+                                {
+                                    GenerateStrikeAt(item);
+                                }
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        GenerateStrikeAt(cells.RandomElement());
+                    }
                 }
+
             }
+        }
+
+        private void GenerateStrikeAt(IntVec3 cell)
+        {
+            LightningStrike.GenerateLightningStrike(ParentZone.Map, cell, Props.radius, (IntVec3 Cell, Map map) =>
+            {
+                if (Cell.GetDamageablePawn(map, this.ParentZone.Faction, Props.friendlyFireSettings, out Pawn pawn))
+                {
+                    pawn.TakeDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange));
+                }
+            }, 1);
         }
 
         private List<IntVec3> GetEdgeCells(List<IntVec3> zoneCells)

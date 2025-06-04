@@ -2,7 +2,7 @@
 
 namespace MagicAndMyths
 {
-    public class HediffCompProperties_DealDamageOnAbilityUse : HediffCompProperties_AbilityEffect
+    public class HediffCompProperties_OnAbilityUseDealDamage : HediffCompProperties_AbilityEffect
     {
         public DamageDef damageDef;
         public FloatRange damageRange;
@@ -14,16 +14,15 @@ namespace MagicAndMyths
         public bool canTargetFriendly = false;
         public bool canTargetNeutral = false;
 
-        public HediffCompProperties_DealDamageOnAbilityUse()
+        public HediffCompProperties_OnAbilityUseDealDamage()
         {
-            compClass = typeof(HediffComp_DealDamageOnAbilityUse);
+            compClass = typeof(HediffComp_OnAbilityUseDealDamage);
         }
     }
 
-
-    public class HediffComp_DealDamageOnAbilityUse : HediffComp_AbilityEffect
+    public class HediffComp_OnAbilityUseDealDamage : HediffComp_AbilityEffect
     {
-        public HediffCompProperties_DealDamageOnAbilityUse Props => (HediffCompProperties_DealDamageOnAbilityUse)props;
+        public HediffCompProperties_OnAbilityUseDealDamage Props => (HediffCompProperties_OnAbilityUseDealDamage)props;
 
         protected override void OnAbilityUsed(Pawn pawn, RimWorld.Ability ability)
         {

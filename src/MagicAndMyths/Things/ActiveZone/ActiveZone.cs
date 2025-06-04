@@ -133,8 +133,7 @@ namespace MagicAndMyths
 
         protected virtual void OnThingEnteredZone(Thing thing)
         {
-
-            Log.Message($"{thing.Label} entered zone");
+           // Log.Message($"{thing.Label} entered zone");
             foreach (var comp in ZoneComps)
             {
                 comp.OnThingEnteredZone(this, thing);
@@ -143,7 +142,7 @@ namespace MagicAndMyths
 
         protected virtual void OnThingLeftZone(Thing thing)
         {
-            Log.Message($"{thing.Label} left zone");
+            //Log.Message($"{thing.Label} left zone");
             foreach (var comp in ZoneComps)
             {
                 comp.OnThingLeftZone(this, thing);
@@ -163,7 +162,10 @@ namespace MagicAndMyths
 
         public HashSet<Thing> GetCurrentThingsInZone(ref List<IntVec3> cells)
         {
-            return TargetUtil.GetThingsInCells(cells, this.Map);
+            return TargetUtil.GetThingsInCells(cells, this.Map, (Thing thing) =>
+            {
+                return thing.def.selectable;
+            });
         }
 
         public static ActiveZone SpawnZone(ActiveZoneDef activeZoneDef, IntVec3 SpawnPosition, List<IntVec3> ZoneCells, Map map)

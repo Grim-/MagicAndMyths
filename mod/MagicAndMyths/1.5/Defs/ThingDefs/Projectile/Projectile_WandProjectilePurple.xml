@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <ThingDef ParentName="BaseBullet">
+    <ThingDef ParentName="BaseMagicProjectile">
       <defName>Bullet_WandProjectilePurple</defName>
       <label>wand energy</label>
       <graphicData>

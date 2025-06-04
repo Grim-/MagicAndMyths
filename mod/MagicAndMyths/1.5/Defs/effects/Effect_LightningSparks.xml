@@ -31,11 +31,12 @@
       <graphicData>
         <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
         <shaderType>GlowAnimated</shaderType>
-        <texPath>Animations/BlackLightning2_1x9</texPath>
+        <texPath>Animations/Electricity_1x8</texPath>
         <shaderParameters>
-          <_NumFrames>9</_NumFrames>
+          <_NumFrames>8</_NumFrames>
           <_Loop>1</_Loop>
-          <_FramesPerSec>9</_FramesPerSec>
+          <_FramesPerSec>8</_FramesPerSec>
+          <drawSize>2</drawSize>
         </shaderParameters>
       </graphicData>
       <altitudeLayer>MoteOverhead</altitudeLayer>

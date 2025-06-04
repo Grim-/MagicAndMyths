@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseSpellBladeManaAbility">
+    <defName>MagicAndMyths_FlamingSword</defName>
+    <label>Flaming Sword</label>
+    <description>Unleash a blazing sword strike in a wide cone, dealing fire damage to all targets and significantly increasing the chance to ignite them.</description>
+    <iconPath>Skills/Spellblade/Skill_FireArmour</iconPath>
+    <cooldownTicksRange>300</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>20</range>
+      <warmupTime>0.5</warmupTime>
+      <soundCast>PiercingSpine_Launch</soundCast>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>true</canTargetItems>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ConalZoneEffect">
+        <zoneDef>WindZone</zoneDef>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceAbilityDef>
+
+</Defs>

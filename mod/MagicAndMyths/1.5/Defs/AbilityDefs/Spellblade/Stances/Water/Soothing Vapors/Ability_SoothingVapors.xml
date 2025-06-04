@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceToggleAbilityDef ParentName="MagicAndMyths_BaseSpellBladeManaAbility">
+    <defName>MagicAndMyths_SoothingVapours</defName>
+    <label>Soothing Vapours</label>
+    <description>Create a cloud of restorative vapours that continuously heals allies within the affected area.</description>
+    <iconPath>Skills/Spellblade/Skill_WaterArmour</iconPath>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <resourceCost>20</resourceCost>
+    <resourceMaintainCost>15</resourceMaintainCost>
+    <resourceDef>Mana</resourceDef>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>0</range>
+      <warmupTime>0</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetable>False</targetable>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ResourceToggleHediff">
+        <hediffDef>MagicAndMyths_SoothingVapours</hediffDef>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceToggleAbilityDef>
+
+  <HediffDef>
+    <defName>MagicAndMyths_SoothingVapours</defName>
+    <label>Soothing Vapours</label>
+    <labelNoun>Soothing Vapours</labelNoun>
+    <description>Create a cloud of restorative vapours that continuously heals allies within the affected area.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(1.0, 0.4, 0.0)</defaultLabelColor>
+    <isBad>false</isBad>
+    <maxSeverity>1.0</maxSeverity>
+    <initialSeverity>1.0</initialSeverity>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_HealAOEPerInterval">
+        <healAmount>5</healAmount>
+        <intervalTicks>500</intervalTicks>
+        <healEffecterDef>MagicAndMyths_HealingGeneric</healEffecterDef>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_AddHediffAOEPerInterval">
+        <hediff>MagicAndMyths_Wet</hediff>
+        <intervalTicks>200</intervalTicks>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_ShowRadius">
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

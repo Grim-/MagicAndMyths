@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+    <defName>MagicAndMyths_ElementalArmour_Lightning</defName>
+    <label>Elemental Armour : Lightning</label>
+    <description>Gain Lightning Armour</description>
+    <iconPath>Skills/Spellblade/Skill_LightningArmour</iconPath>
+    <cooldownTicksRange>3000</cooldownTicksRange>
+    <aiCanUse>false</aiCanUse>
+    <resourceCost>20</resourceCost>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>0</range>
+      <warmupTime>0</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetable>False</targetable>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilityAddStacks">
+        <hediffDef>Spellblade_LightningArmorHediff</hediffDef>
+        <stacksToGive>1</stacksToGive>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceAbilityDef>
+</Defs>

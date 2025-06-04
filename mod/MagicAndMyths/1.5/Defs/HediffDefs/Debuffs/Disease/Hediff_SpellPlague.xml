@@ -28,7 +28,7 @@
       <li Class="HediffCompProperties_Effecter">
         <stateEffecter>MagicAndMyths_SpellPlague</stateEffecter>
       </li>
-      <li Class="MagicAndMyths.HediffCompProperties_IncreaseSeverityOnAbilityUse">
+      <li Class="MagicAndMyths.HediffCompProperties_OnAbilityUseIncreaseSeverity">
         <severityIncreaseOnCast>0.03~0.05</severityIncreaseOnCast>
       </li>
     </comps>

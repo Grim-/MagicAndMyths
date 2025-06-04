@@ -32,7 +32,7 @@
     </comps>
   </AbilityDef>
 
-  <ThingDef ParentName="BaseBullet">
+  <ThingDef ParentName="BaseMagicProjectile">
     <defName>Projectile_Longsword</defName>
     <label>longsword</label>
     <graphicData>

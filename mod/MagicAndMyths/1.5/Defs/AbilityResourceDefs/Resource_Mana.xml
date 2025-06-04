@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.AbilityResourceDef>
+    <defName>Mana</defName>
+    <label>Mana</label>
+    <resourceName>mana</resourceName>
+    <maxStat>Stat_Mana</maxStat>
+    <regenStat>Stat_ManaRegen</regenStat>
+    <regenSpeedStat>Stat_ManaRegenSpeedMult</regenSpeedStat>
+    <costMult>Stat_ManaUseMult</costMult>
+    <costMultStatDefault>1</costMultStatDefault>
+    <damageScalingStat>Stat_MagicPower</damageScalingStat>
+    <baseScalingMultiplier>1</baseScalingMultiplier>
+    <maxScalingMultiplier>20</maxScalingMultiplier>
+    <barColor>(0.2, 0.4, 1.0)</barColor>
+  </MagicAndMyths.AbilityResourceDef>
+
+</Defs>

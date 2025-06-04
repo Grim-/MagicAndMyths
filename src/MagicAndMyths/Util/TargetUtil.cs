@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace MagicAndMyths
                 }
             }
         }
+
 
 
 
@@ -100,21 +102,6 @@ namespace MagicAndMyths
                 return true;
 
             if (canTargetHostile && targetFaction.HostileTo(sourceFaction))
-                return true;
-
-            return false;
-        }
-
-
-        public static bool CanTargetThing(this Thing thing, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
-        {
-            if (thing.Faction == null)
-                return true;
-
-            if (thing.Faction == sourceFaction && canTargetFriendly)
-                return true;
-
-            if (canTargetHostile && thing.Faction.HostileTo(sourceFaction))
                 return true;
 
             return false;
@@ -213,16 +200,16 @@ namespace MagicAndMyths
         }
 
 
-        public static HashSet<Thing> GetThingsInCells(List<IntVec3> Cells, Map map)
+        public static HashSet<Thing> GetThingsInCells(List<IntVec3> Cells, Map map, Func<Thing, bool> filter = null)
         {
             HashSet<Thing> things = new HashSet<Thing>();
 
             foreach (var item in Cells)
             {
-                things.AddRange(item.GetThingList(map).Where(x=> x.def.selectable));
+                things.AddRange(item.GetThingList(map).Where(x=> filter?.Invoke(x) == true));
 
                 Pawn pawn = item.GetFirstPawn(map);
-                if (pawn != null)
+                if (pawn != null && (filter != null && filter?.Invoke(pawn) == true))
                 {
                     things.Add(pawn);
                 }
@@ -230,18 +217,43 @@ namespace MagicAndMyths
 
             return things;
         }
-        public static List<Thing> GetDamageableThingsInCells(List<IntVec3> Cells, Map map)
+        public static List<Thing> GetDamageableThingsInCells(List<IntVec3> Cells, Map map, Func<Thing, bool> filter = null)
         {
             List<Thing> things = new List<Thing>();
 
             foreach (var item in Cells)
             {
-                things.AddRange(item.GetThingList(map).Where(x=> x.def.useHitPoints || x is Pawn));
+                things.AddRange(item.GetThingList(map).Where(x => filter?.Invoke(x) == true));
             }
 
             return things;
         }
-        public static HashSet<Pawn> GetPawnsInCells(List<IntVec3> Cells, Map map)
+
+        public static List<Thing> GetDamageableThingsInCells(List<IntVec3> Cells, Map map, Faction faction, FriendlyFireSettings friendlyFireSettings)
+        {
+            List<Thing> things = new List<Thing>();
+
+            foreach (var item in Cells)
+            {
+                things.AddRange(item.GetThingList(map).Where(x=> x.CanTargetThing(faction, friendlyFireSettings)));
+            }
+
+            return things;
+        }
+
+        public static bool GetDamageablePawn(this IntVec3 cell, Map map, Faction faction, FriendlyFireSettings friendlyFireSettings, out Pawn pawn)
+        {
+            pawn = cell.GetFirstPawn(map);
+
+            if (pawn != null && pawn.CanTargetThing(faction, friendlyFireSettings))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static HashSet<Pawn> GetPawnsInCells(this List<IntVec3> Cells, Map map)
         {
             HashSet<Pawn> pawns = new HashSet<Pawn>();
             foreach (var item in Cells)
@@ -254,11 +266,20 @@ namespace MagicAndMyths
             }
             return pawns;
         }
-    }
 
-    public static class DamageUtil
-    {
-
+        public static HashSet<Pawn> GetPawnsInCells(this List<IntVec3> Cells, Map map, Faction faction, FriendlyFireSettings friendlyFireSettings)
+        {
+            HashSet<Pawn> pawns = new HashSet<Pawn>();
+            foreach (var item in Cells)
+            {
+                Pawn pawn = item.GetFirstPawn(map);
+                if (pawn != null && pawn.CanTargetThing(faction, friendlyFireSettings))
+                {
+                    pawns.Add(pawn);
+                }
+            }
+            return pawns;
+        }
     }
 
 

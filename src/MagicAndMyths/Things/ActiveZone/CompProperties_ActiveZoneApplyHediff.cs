@@ -12,6 +12,8 @@ namespace MagicAndMyths
         public EffecterDef onApplyEffect = null;
         public EffecterDef onRemoveEffect = null;
 
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.AllFriendly();
+
         public CompProperties_ActiveZoneApplyHediff()
         {
             compClass = typeof(Comp_ActiveZoneApplyHediff);
@@ -27,7 +29,7 @@ namespace MagicAndMyths
             if (!(thing is Pawn pawn))
                 return;
 
-            if (!pawn.health.hediffSet.HasHediff(Props.hediff))
+            if (!pawn.health.hediffSet.HasHediff(Props.hediff) && pawn.CanTargetThing(this.parent.Faction, Props.friendlyFireSettings))
             {
                 Hediff hediff = pawn.health.GetOrAddHediff(Props.hediff);
                 if (hediff != null)
@@ -50,7 +52,7 @@ namespace MagicAndMyths
             {
                 if (item is Pawn pawn)
                 {
-                    if (!pawn.health.hediffSet.HasHediff(Props.hediff))
+                    if (!pawn.health.hediffSet.HasHediff(Props.hediff) && pawn.CanTargetThing(this.parent.Faction, Props.friendlyFireSettings))
                     {
                         Hediff hediff = pawn.health.GetOrAddHediff(Props.hediff);
                         if (hediff != null)
@@ -71,14 +73,17 @@ namespace MagicAndMyths
             if (!Props.removeOnLeaveZone || !(thing is Pawn pawn))
                 return;
 
-            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(Props.hediff);
-            if (hediff != null)
+            if (thing.CanTargetThing(this.parent.Faction, Props.friendlyFireSettings))
             {
-                pawn.health.RemoveHediff(hediff);
-
-                if (Props.onRemoveEffect != null)
+                Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(Props.hediff);
+                if (hediff != null)
                 {
-                    Props.onRemoveEffect.Spawn(pawn.Position, pawn.Map, 1f);
+                    pawn.health.RemoveHediff(hediff);
+
+                    if (Props.onRemoveEffect != null)
+                    {
+                        Props.onRemoveEffect.Spawn(pawn.Position, pawn.Map, 1f);
+                    }
                 }
             }
         }
@@ -91,14 +96,17 @@ namespace MagicAndMyths
             var thingsInZone = parentZone.PawnsInZoneRead;
             foreach (var thing in thingsInZone)
             {
-                Hediff hediff = thing.health.hediffSet.GetFirstHediffOfDef(Props.hediff);
-                if (hediff != null)
+                if (thing.CanTargetThing(this.parent.Faction, Props.friendlyFireSettings))
                 {
-                    thing.health.RemoveHediff(hediff);
-
-                    if (Props.onRemoveEffect != null)
+                    Hediff hediff = thing.health.hediffSet.GetFirstHediffOfDef(Props.hediff);
+                    if (hediff != null)
                     {
-                        Props.onRemoveEffect.Spawn(thing.Position, thing.Map, 1f);
+                        thing.health.RemoveHediff(hediff);
+
+                        if (Props.onRemoveEffect != null)
+                        {
+                            Props.onRemoveEffect.Spawn(thing.Position, thing.Map, 1f);
+                        }
                     }
                 }
             }

@@ -11,6 +11,11 @@ namespace MagicAndMyths
         public int TicksUntilImpact => ticksToImpact;
 
 
+        public int OverrideDamageAmount = -1;
+
+        public override int DamageAmount => OverrideDamageAmount > 0 ? OverrideDamageAmount : base.DamageAmount;
+
+
 
         public override void Launch(Thing launcher, Vector3 origin, LocalTargetInfo usedTarget, LocalTargetInfo intendedTarget, ProjectileHitFlags hitFlags, bool preventFriendlyFire = false, Thing equipment = null, ThingDef targetCoverDef = null)
         {
