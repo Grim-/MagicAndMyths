@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.StanceDef>
+    <defName>Spellblade_WaterStance</defName>
+    <label>Mistwalker Form</label>
+    <description>Defensive stance providing healing and protection. Increases dodge and provides regeneration.</description>
+    <iconPath>Skills/Spellblade/Skill_WaterArmour</iconPath>
+    <iconColor>(0.2, 0.6, 1)</iconColor>
+    <cooldownTicks>300</cooldownTicks>
+    <upkeepCost>5</upkeepCost>
+    <hediffsToApply>
+      <li>Spellblade_WaterStanceHediff</li>
+    </hediffsToApply>
+    <abilitiesToGain>
+      <li>MagicAndMyths_SoothingVapours</li>
+      <li>MagicAndMyths_WaterSurge</li>
+      <li>MagicAndMyths_ElementalArmour_Water</li>
+    </abilitiesToGain>
+    <hediffsToRemoveOnExit>
+      <li>Spellblade_WaterStanceHediff</li>
+    </hediffsToRemoveOnExit>
+  </MagicAndMyths.StanceDef>
+
+</Defs>

@@ -23,17 +23,60 @@
         <texPath>Animations/FlameSlash_1x9</texPath>
         <shaderParameters>
           <_NumFrames>9</_NumFrames>
-          <_Loop>1</_Loop>
+          <_Loop>0</_Loop>
           <_FramesPerSec>9</_FramesPerSec>
         </shaderParameters>
       </graphicData>
       <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
-        <fadeInTime>0.1</fadeInTime>
-        <solidTime>3</solidTime>
-        <fadeOutTime>0.1</fadeOutTime>
+        <fadeInTime>0</fadeInTime>
+        <solidTime>1</solidTime>
+        <fadeOutTime>01</fadeOutTime>
         <growthRate>0</growthRate>
       </mote>
     </ThingDef>
 
+    <ThingDef ParentName="MoteBase">
+        <defName>MagicAndMyths_FlameSlashTwo</defName>
+        <thingClass>MoteAttached</thingClass>
+        <graphicData>
+          <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
+          <shaderType>GlowAnimated</shaderType>
+          <texPath>Animations/FlameSlash2_1x13</texPath>
+          <shaderParameters>
+            <_NumFrames>13</_NumFrames>
+            <_Loop>0</_Loop>
+            <_FramesPerSec>13</_FramesPerSec>
+          </shaderParameters>
+        </graphicData>
+        <altitudeLayer>MoteOverhead</altitudeLayer>
+        <mote>
+          <fadeInTime>0</fadeInTime>
+          <solidTime>1</solidTime>
+          <fadeOutTime>0</fadeOutTime>
+          <growthRate>0</growthRate>
+        </mote>
+      </ThingDef>
+
+    <ThingDef ParentName="MoteBase">
+        <defName>MagicAndMyths_FlameSlashThree</defName>
+        <thingClass>MoteAttached</thingClass>
+        <graphicData>
+          <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
+          <shaderType>GlowAnimated</shaderType>
+          <texPath>Animations/FlameSlash3_1x12</texPath>
+          <shaderParameters>
+            <_NumFrames>12</_NumFrames>
+            <_Loop>0</_Loop>
+            <_FramesPerSec>12</_FramesPerSec>
+          </shaderParameters>
+        </graphicData>
+        <altitudeLayer>MoteOverhead</altitudeLayer>
+        <mote>
+          <fadeInTime>0</fadeInTime>
+          <solidTime>1</solidTime>
+          <fadeOutTime>0</fadeOutTime>
+          <growthRate>0</growthRate>
+        </mote>
+      </ThingDef>
 </Defs>

@@ -17,7 +17,7 @@ namespace MagicAndMyths
 
     public class ActiveZone : ThingWithComps
     {
-        protected List<IntVec3> ZoneCells = new List<IntVec3>();
+        public List<IntVec3> ZoneCells = new List<IntVec3>();
         protected List<ActiveZoneComp> ZoneComps => this.GetComps<ActiveZoneComp>().ToList();
         public ActiveZoneDef ActiveZoneDef => (ActiveZoneDef)def;
 
@@ -36,6 +36,8 @@ namespace MagicAndMyths
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
+
+
             if (ZoneCells == null || ZoneCells.Empty())
             {
                 return;
@@ -49,10 +51,9 @@ namespace MagicAndMyths
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            base.DeSpawn(mode);
-
             if (ZoneCells == null || ZoneCells.Empty())
             {
+                base.DeSpawn(mode);
                 return;
             }
 
@@ -60,6 +61,10 @@ namespace MagicAndMyths
             {
                 item.OnZoneDespawned(this, ref ZoneCells);
             }
+
+
+            Log.Message("zone despawned");
+            base.DeSpawn(mode);
         }
 
         public void SetZoneCells(List<IntVec3> cells)

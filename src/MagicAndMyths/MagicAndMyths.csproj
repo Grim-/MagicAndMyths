@@ -98,6 +98,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comps\Ability\CompProperties_GrantHediffStackForValidTargetsInRadius.cs" />
+    <Compile Include="Comps\Ability\CompProperties_SpawnRadialZoneEffect.cs" />
+    <Compile Include="Comps\Ability\Hediff\CompProperties_ConsumeHediffStacks.cs" />
+    <Compile Include="Comps\Ability\Specific\CompProperties_StormStep.cs" />
     <Compile Include="Comps\Ability\Specific\CompProperties_WaterSurge.cs" />
     <Compile Include="Comps\Ability\Damage\CompProperties_AbilityDamageInRadius.cs" />
     <Compile Include="Comps\Ability\Damage\CompProperties_AbilityDamageInRect.cs" />
@@ -132,7 +136,7 @@
     <Compile Include="Comps\Ability\Resource\CompProperties_AbilityToggleWithResource.cs" />
     <Compile Include="Comps\Ability\Resource\CompProperties_AbilityUseResource.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilityZoneEffect.cs" />
-    <Compile Include="Comps\Ability\CompProperties_ConalZoneEffect.cs" />
+    <Compile Include="Comps\Ability\CompProperties_SpawnConalZoneEffect.cs" />
     <Compile Include="Comps\Ability\Toggle Comps\CompProperties_ResourceToggleHediff.cs" />
     <Compile Include="Ability\ResourceAbility.cs" />
     <Compile Include="Ability\ResourceToggleAbility.cs" />
@@ -152,7 +156,10 @@
     <Compile Include="Hediff\Comps\HediffCompProperties_EarthArmour.cs" />
     <Compile Include="Hediff\HediffWithStacks.cs" />
     <Compile Include="Comps\Game\GameComp_RadialFavouritesTracker.cs" />
+    <Compile Include="Projectile\ProjectilComps\ProjectileCompProperties_ImpactStartFires.cs" />
+    <Compile Include="Things\ActiveZone\CompProperties_ActiveZoneStartFires.cs" />
     <Compile Include="Util\DamageScalingUtility.cs" />
+    <Compile Include="Util\FriendlyFireSettings.cs" />
     <Compile Include="Util\HealParameters.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_Explosive.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableSpawnGas.cs" />
@@ -177,9 +184,9 @@
     <Compile Include="Projectile\Projectile_Extended.cs" />
     <Compile Include="Things\ActiveZone\CompProperties_ActiveZoneApplyHediff.cs" />
     <Compile Include="Things\ActiveZone\CompProperties_ActiveZoneLightningStrike.cs" />
-    <Compile Include="Things\ActiveZone\CompProperties_DamageActiveZoneComp.cs" />
+    <Compile Include="Things\ActiveZone\CompProperties_ActiveZoneDamage.cs" />
     <Compile Include="Things\ActiveZone\CompProperties_EffecterActiveZoneComp.cs" />
-    <Compile Include="Things\ActiveZone\DomainActiveZone.cs" />
+    <Compile Include="Things\ActiveZone\CompProperties_DomainZone.cs" />
     <Compile Include="UI\AbilityRadialPagerSettings.cs" />
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
     <Compile Include="AI\JobDriver_JumpOverObstacle.cs" />

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+    <defName>MagicAndMyths_StormStep</defName>
+    <label>Storm Step</label>
+    <description>Dash to target location with lightning speed. If no Lightning Armor stacks are available, grants Lightning Armor instead. Otherwise consumes all stacks for enhanced stun and electrical damage on arrival.</description>
+    <iconPath>Skills/Spellblade/Skill_LightningArmour</iconPath>
+    <cooldownTicksRange>3000</cooldownTicksRange>
+    <resourceCost>25</resourceCost>
+    <resourceDef>Mana</resourceDef>
+    <hostile>false</hostile>
+    <jobDef>CastJump</jobDef>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>45</range>
+      <requireLineOfSight>false</requireLineOfSight>
+      <targetable>true</targetable>
+      <nonInterruptingSelfCast>false</nonInterruptingSelfCast>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_StormStep">
+        <hediffToConsume>Spellblade_LightningArmorHediff</hediffToConsume>
+        <consumeAllStacks>true</consumeAllStacks>
+        <maxStacksToConsume>-1</maxStacksToConsume>
+        <hediffToGrant>Spellblade_LightningArmorHediff</hediffToGrant>
+        <stacksToGrant>1</stacksToGrant>
+        <baseStunDuration>60</baseStunDuration>
+        <stunDurationPerStack>30</stunDurationPerStack>
+        <baseDamage>5</baseDamage>
+        <damagePerStack>2</damagePerStack>
+        <damageDef>Lightning</damageDef>
+        <effectRadius>2</effectRadius>
+      </li>
+    </comps>
+  </MagicAndMyths.ResourceAbilityDef>
+</Defs>

@@ -8,6 +8,7 @@
         <positionRadius>0.15</positionRadius>
         <fleckDef>Icicle</fleckDef>
         <chancePerTick>0.9</chancePerTick>
+        <maxMoteCount>15</maxMoteCount>
         <speed>9.5</speed>
         <scale>0.8~1.2</scale>
         <angle>-15~15</angle>
@@ -17,6 +18,7 @@
       <li>
         <subEffecterClass>SubEffecter_SprayerChance</subEffecterClass>
         <positionRadius>0.1</positionRadius>
+        <maxMoteCount>10</maxMoteCount>
         <moteDef>MagicAndMyths_MoteSnowPatch</moteDef>
         <chancePerTick>0.5</chancePerTick>
         <speed>3.3~5</speed>
@@ -24,6 +26,23 @@
         <angle>-12~12</angle>
         <positionLerpFactor>0.8</positionLerpFactor>
         <fleckUsesAngleForVelocity>true</fleckUsesAngleForVelocity>
+      </li>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <positionRadius>0</positionRadius>
+        <burstCount>1</burstCount>
+        <ticksBetweenMotes>10</ticksBetweenMotes>
+        <maxMoteCount>1</maxMoteCount>
+        <moteDef>MagicAndMyths_MoteIcecone</moteDef>
+        <chancePerTick>0</chancePerTick>
+        <angle>0</angle>
+        <speed>0</speed>
+        <rotation>0</rotation>
+        <rotationRate>0</rotationRate>
+        <spawnLocType>OnTarget</spawnLocType>
+        <positionOffset>(0,0,0)</positionOffset>
+        <positionLerpFactor>0</positionLerpFactor>
+        <fleckUsesAngleForVelocity>false</fleckUsesAngleForVelocity>
       </li>
     </children>
   </EffecterDef>
@@ -35,6 +54,7 @@
         <graphicClass>Graphic_Mote</graphicClass>
         <shaderType>MoteGlow</shaderType>
         <texPath>VFX/Cone/FrostCone</texPath>
+        <drawSize>6</drawSize>
       </graphicData>
       <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
@@ -43,6 +63,7 @@
         <fadeOutTime>0.4</fadeOutTime>
         <growthRate>0</growthRate>
         <rotateTowardsTarget>True</rotateTowardsTarget>
+        <scaleToConnectTargets>false</scaleToConnectTargets>
       </mote>
     </ThingDef>
 </Defs>

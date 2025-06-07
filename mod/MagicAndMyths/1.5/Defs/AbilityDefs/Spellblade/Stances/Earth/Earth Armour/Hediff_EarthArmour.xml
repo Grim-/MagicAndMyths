@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.StackingHediffDef>
+      <defName>Spellblade_EarthArmourHediff</defName>
+      <label>Earth Armour</label>
+      <description>Protective earthen plates surrounding the body. Each stack reduces physical damage by 50%. Stacks are lost when taking damage and naturally decay over time.</description>
+      <maxSeverity>1.0</maxSeverity>
+      <initialStacks>1</initialStacks>
+      <maxStacks>10</maxStacks>
+      <useStagesAsStackCount>false</useStagesAsStackCount>
+      <isBad>false</isBad>
+      <losesStacksPerInterval>true</losesStacksPerInterval>
+      <ticksBetweenStackLoss>600</ticksBetweenStackLoss>
+      <stacksLostPerTickInterval>1</stacksLostPerTickInterval>
+      <removeOnZeroStacks>true</removeOnZeroStacks>
+      <stages>
+      </stages>
+      <comps>
+        <li Class="MagicAndMyths.HediffCompProperties_EarthArmour">
+          <damageReductions>
+            <li>
+              <damageDef>Blunt</damageDef>
+              <damageFactor>0.5</damageFactor>
+            </li>
+            <li>
+              <damageDef>Cut</damageDef>
+              <damageFactor>0.5</damageFactor>
+            </li>
+          </damageReductions>
+          <stacksToRemove>1</stacksToRemove>
+          <minimumDamageToTrigger>0.1</minimumDamageToTrigger>
+        </li>
+        <li Class="MagicAndMyths.HediffCompProperties_DisappearsStacks">
+          <disappearsAfterTicks>500</disappearsAfterTicks>
+          <showRemainingTime>true</showRemainingTime>
+          <stacksToRemoveOnDisappear>1</stacksToRemoveOnDisappear>
+          <resetTimerOnStackLoss>true</resetTimerOnStackLoss>
+        </li>
+      </comps>
+    </MagicAndMyths.StackingHediffDef>
+</Defs>

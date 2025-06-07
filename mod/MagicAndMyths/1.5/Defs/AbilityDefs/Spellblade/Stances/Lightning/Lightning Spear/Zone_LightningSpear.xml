@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.DomainZoneDef ParentName="EtherealThingBase">
+  <MagicAndMyths.ActiveZoneDef ParentName="EtherealThingBase">
     <defName>LightningSpearZone</defName>
     <label>longsword</label>
     <tickerType>Normal</tickerType>
@@ -10,7 +10,6 @@
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>4</drawSize>
     </graphicData>
-    <FilthDef>Filth_Water</FilthDef>
     <comps>
       <li Class="MagicAndMyths.CompProperties_ActiveZoneApplyHediff">
         <hediff>Spellblade_LightningSpeedBuff</hediff>
@@ -19,7 +18,10 @@
         <damageDef>Lightning</damageDef>
         <damage>4</damage>
       </li>
+      <li Class="MagicAndMyths.CompProperties_DomainZone">
+        <FilthDef>Filth_Water</FilthDef>
+      </li>
     </comps>
-  </MagicAndMyths.DomainZoneDef>
+  </MagicAndMyths.ActiveZoneDef>
 
 </Defs>

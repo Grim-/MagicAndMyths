@@ -12,6 +12,10 @@ namespace MagicAndMyths
         public float angle = 45f;
         public int maxPushDistance = 10;
         public int minPushDistance = 1;
+        public int sections = 4;
+        public int ticksBetweenSections = 2;
+
+        public EffecterDef splashEffect;
 
 
         public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
@@ -33,49 +37,36 @@ namespace MagicAndMyths
             List<IntVec3> cells = TargetUtil.GetCellsInCone(this.parent.pawn.Position, target.Cell, (int)this.parent.verb.EffectiveRange, Props.angle);
             cells = cells.OrderBy(x => x.DistanceTo(this.parent.pawn.Position)).ToList();
 
-            StageVisualEffect.CreateStageEffect(cells, map, Random.Range(8, 15), (IntVec3 cell, Map targetMap, int sectionIndex) =>
+            StageVisualEffect.CreateStageEffect(cells, map, Props.sections, (IntVec3 cell, Map targetMap, int sectionIndex) =>
             {
                 Pawn attacker = this.parent.pawn;
-
                 if (sectionIndex % 2 == 0)
                 {
-                    EffecterDefOf.PawnEmergeFromWaterLarge.Spawn(cell, map);
+                    if (Props.splashEffect != null)
+                    {
+                        Props.splashEffect.Spawn(cell, map);
+                    }
+                    else
+                        EffecterDefOf.PawnEmergeFromWater.Spawn(cell, map, 0.5f);
                 }
-
 
                 Pawn pawn = cell.GetFirstPawn(map);
 
-
-                if (FireUtility.NumFiresAt(cell, targetMap) > 0)
-                {
-                    foreach (var item in cell.GetFiresNearCell(map))
-                    {
-                        item.TakeDamage(new DamageInfo(DamageDefOf.Extinguish, 100f, 0f, -1f, this.parent.pawn, null, null, DamageInfo.SourceCategory.ThingOrUnknown, null, true, true, QualityCategory.Normal, true));
-                    }
-                }
-
-
+                MagicUtil.TryExtinguishFireAt(cell, map);
 
                 if (pawn != null && pawn != attacker && pawn.CanTargetThing(attacker.Faction, Props.friendlyFireSettings))
                 {
                     pawn.health.GetOrAddHediff(MagicAndMythDefOf.MagicAndMyths_Wet);
-
-                    float distance = pawn.Position.DistanceTo(this.parent.pawn.Position);
-                    float pushFactor = 1f - (distance / Props.maxPushDistance);
-                    int pushDistance = Mathf.RoundToInt(Props.minPushDistance + pushFactor * (Props.maxPushDistance - Props.minPushDistance));
-                    IntVec3 direction = (pawn.Position - this.parent.pawn.Position);
-                    IntVec3 destination = pawn.Position + (direction * pushDistance);
+                    IntVec3 destination = MagicUtil.CalculatePushDirection(this.parent.pawn.Position, pawn.Position, Props.minPushDistance, Props.maxPushDistance);
                     ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, pawn, destination, map, null, null, this.parent.pawn, pawn.DrawPos, false);
                     ThingFlyer.LaunchFlyer(thingFlyer, pawn, pawn.Position, map);
                 }
-            });
+            }, Props.ticksBetweenSections);
         }
 
         public override void DrawEffectPreview(LocalTargetInfo target)
         {
             base.DrawEffectPreview(target);
-
-
             GenDraw.DrawFieldEdges(TargetUtil.GetCellsInCone(this.parent.pawn.Position, target.Cell, (int)this.parent.verb.EffectiveRange, Props.angle));
         }
     }

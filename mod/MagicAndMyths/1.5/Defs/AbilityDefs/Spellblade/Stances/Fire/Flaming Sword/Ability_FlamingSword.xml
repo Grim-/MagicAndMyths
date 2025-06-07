@@ -21,7 +21,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_ConalZoneEffect">
+      <li Class="MagicAndMyths.CompProperties_SpawnConalZoneEffect">
         <zoneDef>WindZone</zoneDef>
       </li>
     </comps>

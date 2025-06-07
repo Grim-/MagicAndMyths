@@ -38,15 +38,23 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>27</damageAmountBase>
-      <explosionRadius>6</explosionRadius>
+      <damageAmountBase>20</damageAmountBase>
       <speed>50</speed>
       <arcHeightFactor>2</arcHeightFactor>
     </projectile>
     <comps>
       <li Class="MagicAndMyths.ProjectileCompProperties_ImpactAOEDamage">
-        <damageDef>Flame</damageDef>
+        <damageDef>Burn</damageDef>
+        <effecterDef>MagicAndMyths_Explosion</effecterDef>
+        <damageAmount>5</damageAmount>
+        <radius>4</radius>
       </li>
+      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactStartFires">
+          <effecterDef>MagicAndMyths_ExplosionThree</effecterDef>
+      </li>
+      <li Class="MagicAndMyths.ProjectileCompProperties_AOEDamageAlongPath">
+          <damageDef>Bomb</damageDef>
+      </li>      
     </comps>
   </ThingDef>
 </Defs>

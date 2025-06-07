@@ -7,6 +7,7 @@ namespace MagicAndMyths
     public class ProjectileCompProperties_SpawnsActiveZoneRadius : ProjectileCompProperties
     {
         public ActiveZoneDef spawnsThingDef;
+        public float radius = 5f;
 
         public ProjectileCompProperties_SpawnsActiveZoneRadius()
         {
@@ -22,9 +23,10 @@ namespace MagicAndMyths
         {
             if (blockedByShield)
                 return;
+
             Map map = parent.Map;
             IntVec3 loc = parent.Position;
-            ActiveZone activeZone = ActiveZone.SpawnZone(Props.spawnsThingDef, loc, GenRadial.RadialCellsAround(loc, 5, true).ToList(), map);
+            ActiveZone activeZone = ActiveZone.SpawnZone(Props.spawnsThingDef, loc, GenRadial.RadialCellsAround(loc, Props.radius, true).ToList(), map);
         }
     }
 

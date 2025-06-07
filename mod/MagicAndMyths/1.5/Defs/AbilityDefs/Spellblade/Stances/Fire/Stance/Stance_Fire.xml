@@ -16,6 +16,9 @@
       <li>MagicAndMyths_FlamingSword</li>
       <li>MagicAndMyths_FireHammer</li>
     </abilitiesToGain>
+    <hediffsToRemoveOnExit>
+      <li>SpellBlade_ElementalArmour_Fire</li>
+    </hediffsToRemoveOnExit>
   </MagicAndMyths.StanceDef>
 
 </Defs>

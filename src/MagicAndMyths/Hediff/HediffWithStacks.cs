@@ -79,6 +79,17 @@ namespace MagicAndMyths
             return def.stages[Level - 1];
         }
 
+        public void SetStack(int stackLevel)
+        {
+            _CurrentStackLevel = stackLevel;
+            OnStacksChange(stackLevel);
+
+            if (_CurrentStackLevel >= MaxStackLevel)
+            {
+                OnMaxStacks();
+            }
+        }
+
         public void AddStack(int stacksToAdd = 1)
         {
             _CurrentStackLevel += stacksToAdd;

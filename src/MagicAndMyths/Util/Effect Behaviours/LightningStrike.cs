@@ -74,13 +74,8 @@ namespace MagicAndMyths
                         FleckMaker.ThrowMicroSparks(loc, map);
                         FleckMaker.ThrowLightningGlow(loc, map, 1.5f);
                     }
+                    GenerateLightningStrikeVisual(map, Position, repeatVisualCount);
                 }
-
-                SoundInfo info = SoundInfo.InMap(new TargetInfo(Position, map, false), MaintenanceType.None);
-                SoundDefOf.Thunder_OnMap.PlayOneShot(info);
-
-                Graphics.DrawMesh(LightningBoltMeshPool.RandomBoltMesh, Position.ToVector3Shifted(),
-                    Quaternion.identity, LightningMat, 0);
             }
         }
 

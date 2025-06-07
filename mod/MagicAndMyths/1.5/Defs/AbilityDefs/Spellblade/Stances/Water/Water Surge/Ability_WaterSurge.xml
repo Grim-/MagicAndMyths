@@ -13,7 +13,7 @@
       <aiCanUse>true</aiCanUse>
       <verbProperties>
         <verbClass>Verb_CastAbility</verbClass>
-        <range>20</range>
+        <range>7</range>
         <warmupTime>0.5</warmupTime>
         <soundCast>PiercingSpine_Launch</soundCast>
         <targetParams>
@@ -25,7 +25,7 @@
       <comps>
         <li Class="MagicAndMyths.CompProperties_WaterSurge">
           <range>5</range>
-          <angle>30</angle>
+          <angle>90</angle>
         </li>
       </comps>
     </MagicAndMyths.ResourceAbilityDef>

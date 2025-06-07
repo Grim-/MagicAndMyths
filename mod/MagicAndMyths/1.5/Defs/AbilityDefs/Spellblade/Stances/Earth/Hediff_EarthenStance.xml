@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>Spellblade_EarthStanceHediff</defName>
+    <label>Earth Stance</label>
+    <description>Channeling earth magic for protection and power. Greatly increases armor and limb durability while reducing movement speed. Melee attacks cleave through multiple enemies and may blind them with mud.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Blunt>0.5</ArmorRating_Blunt>
+          <ArmorRating_Sharp>0.5</ArmorRating_Sharp>
+          <MeleeDodgeChance>-0.4</MeleeDodgeChance>
+          <MeleeCooldownFactor>-0.2</MeleeCooldownFactor>
+        </statOffsets>
+        <statFactors>
+          <MoveSpeed>0.6</MoveSpeed>
+          <ArmorRating_Blunt>1.05</ArmorRating_Blunt>
+          <ArmorRating_Sharp>1.05</ArmorRating_Sharp>
+          <Stat_ManaRegen>0.80</Stat_ManaRegen>
+          <Stat_LimbMaxHP>2</Stat_LimbMaxHP>
+          <Flammability>0.4</Flammability>
+        </statFactors>
+      </li>
+    </stages>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_OnMeleeAttackDealCleaveDamage">
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_OnMeleeAttackAddHediff">
+        <hediffDef>MudInEyes</hediffDef>
+        <intialSeverity>0.1</intialSeverity>
+        <severityIncrease>0.1</severityIncrease>
+        <chanceToApply>0.5</chanceToApply>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

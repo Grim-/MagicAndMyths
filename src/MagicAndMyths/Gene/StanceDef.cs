@@ -22,6 +22,8 @@ namespace MagicAndMyths
         public List<StanceDef> exclusiveWithStances = new List<StanceDef>();
 
 
+        public List<HediffDef> hediffsToRemoveOnExit = new List<HediffDef>();
+
         public bool IsExclusiveWith(StanceDef otherStance)
         {
             return exclusiveWithStances.Contains(otherStance);

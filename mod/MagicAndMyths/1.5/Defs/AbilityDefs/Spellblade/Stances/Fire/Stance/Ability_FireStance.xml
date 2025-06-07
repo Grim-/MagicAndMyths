@@ -2,11 +2,11 @@
 <Defs>
   <MagicAndMyths.ResourceAbilityDef>
     <defName>Spellblade_ToggleFireStance</defName>
-    <label>Fire Stance</label>
-    <description>Toggle fire stance on or off.</description>
+    <label>Flame-wreathed Form</label>
+    <description>Toggle flame-wreathed stance on or off.</description>
     <iconPath>Skills/Spellblade/Skill_FireArmour</iconPath>
     <cooldownTicksRange>0</cooldownTicksRange>
-    <resourceCost>20</resourceCost>
+    <resourceCost>0</resourceCost>
     <resourceDef>Mana</resourceDef>
     <aiCanUse>false</aiCanUse>
     <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>

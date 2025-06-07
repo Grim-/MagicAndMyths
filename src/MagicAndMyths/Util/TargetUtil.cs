@@ -91,7 +91,22 @@ namespace MagicAndMyths
 
             return pawns;
         }
+        public static List<Pawn> GetPawnsInRadius(IntVec3 Position, Map map, float radius, Faction Faction, FriendlyFireSettings friendlyFireSettings, bool useCenter = true)
+        {
+            List<Pawn> pawns = new List<Pawn>();
+            foreach (var item in GenRadial.RadialDistinctThingsAround(Position, map, radius, useCenter))
+            {
+                if (item is Pawn pawn)
+                {
+                    if (pawn.CanTargetThing(Faction, friendlyFireSettings))
+                    {
+                        pawns.Add(pawn);
+                    }
+                }
+            }
 
+            return pawns;
+        }
 
         public static bool ShouldTarget(Faction targetFaction, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
         {
@@ -121,7 +136,9 @@ namespace MagicAndMyths
             return false;
         }
 
+
         
+
         public static List<IntVec3> GetAllCellsInRect(IntVec3 Origin, IntVec3 Target, int width, int height)
         {
             List<IntVec3> result = new List<IntVec3>();
@@ -160,7 +177,7 @@ namespace MagicAndMyths
             return result;
         }
 
-        public static List<IntVec3> GetCellsInCone(IntVec3 Origin, IntVec3 Target, int length, float angle)
+        public static List<IntVec3> GetCellsInCone(IntVec3 Origin, IntVec3 Target, int length, float angle, bool includeOrigin = false)
         {
             List<IntVec3> result = new List<IntVec3>();
             IntVec3 diff = Target - Origin;
@@ -173,20 +190,19 @@ namespace MagicAndMyths
             {
                 direction = new Vector3(diff.x, 0, diff.z).normalized;
             }
-
             float cosHalfAngle = Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad);
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(Origin, length, true))
             {
                 if (cell == Origin)
                 {
-                    result.Add(cell);
+                    if (includeOrigin)
+                    {
+                        result.Add(cell);
+                    }
                     continue;
                 }
-
                 Vector3 toCellVec = (cell.ToVector3Shifted() - Origin.ToVector3Shifted()).normalized;
-
                 float dot = Vector3.Dot(direction, toCellVec);
-
                 if (dot >= cosHalfAngle)
                 {
                     if ((cell - Origin).LengthHorizontalSquared <= length * length)
@@ -195,7 +211,6 @@ namespace MagicAndMyths
                     }
                 }
             }
-
             return result;
         }
 
@@ -279,54 +294,6 @@ namespace MagicAndMyths
                 }
             }
             return pawns;
-        }
-    }
-
-
-    public class FriendlyFireSettings
-    {
-        public bool canTargetHostile = true;
-        public bool canTargetFriendly = true;
-        public bool canTargetNeutral = true;
-
-        public static FriendlyFireSettings AllFriendly()
-        {
-            return new FriendlyFireSettings()
-            {
-                canTargetFriendly = true,
-                canTargetHostile = false,
-                canTargetNeutral = true
-            };
-        }
-
-        public static FriendlyFireSettings FriendlyFactionOnly()
-        {
-            return new FriendlyFireSettings()
-            {
-                canTargetFriendly = true,
-                canTargetHostile = false,
-                canTargetNeutral = false
-            };
-        }
-
-        public static FriendlyFireSettings HostileOnly()
-        {
-            return new FriendlyFireSettings()
-            {
-                canTargetFriendly = false,
-                canTargetHostile = true,
-                canTargetNeutral = false
-            };
-        }
-
-        public static FriendlyFireSettings All()
-        {
-            return new FriendlyFireSettings()
-            {
-                canTargetFriendly = true,
-                canTargetHostile = true,
-                canTargetNeutral = true
-            };
         }
     }
 }

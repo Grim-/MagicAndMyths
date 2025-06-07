@@ -14,7 +14,11 @@
     <abilitiesToGain>
       <li>MagicAndMyths_ElementalArmour_Lightning</li>
       <li>MagicAndMyths_LightningSpear</li>
+      <li>MagicAndMyths_StormStep</li>
     </abilitiesToGain>
+    <hediffsToRemoveOnExit>
+      <li>Spellblade_LightningArmorHediff</li>
+    </hediffsToRemoveOnExit>
   </MagicAndMyths.StanceDef>
 
 </Defs>

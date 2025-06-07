@@ -19,8 +19,6 @@ namespace MagicAndMyths
     public class CompAbilityEffect_Fly : CompAbilityEffect
     {
         private ThingFlyer flyer;
-
-
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);

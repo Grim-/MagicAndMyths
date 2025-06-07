@@ -67,6 +67,27 @@ namespace MagicAndMyths
         }
 
 
+        public static void TryExtinguishFireAt(IntVec3 cell, Map map, float extinguishAmount = 100f)
+        {
+            if (FireUtility.NumFiresAt(cell, map) > 0)
+            {
+                foreach (var item in cell.GetFiresNearCell(map))
+                {
+                    item.TakeDamage(new DamageInfo(DamageDefOf.Extinguish, extinguishAmount, 0f, -1f));
+                }
+            }
+        }
+
+
+        public static IntVec3 CalculatePushDirection(IntVec3 Origin, IntVec3 Position, float minPushDistance, float maxPushDistance)
+        {
+            float distance = Position.DistanceTo(Origin);
+            float pushFactor = 1f - (distance / maxPushDistance);
+            int pushDistance = Mathf.RoundToInt(minPushDistance + pushFactor * (maxPushDistance - minPushDistance));
+            IntVec3 direction = (Position - Origin);
+            return Position + (direction * pushDistance);
+        }
+
         public static void TrainPawn(Pawn PawnToTrain, Pawn Trainer = null)
         {
             if (PawnToTrain.training != null)

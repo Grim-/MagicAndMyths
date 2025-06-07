@@ -140,7 +140,8 @@ namespace MagicAndMyths
 
         public bool DeactivateStance(StanceDef stance)
         {
-            if (!CanDeactivateStance(stance)) return false;
+            if (!CanDeactivateStance(stance)) 
+                return false;
 
             activeStances.Remove(stance);
             ApplyStanceEffects(stance, false);
@@ -177,6 +178,17 @@ namespace MagicAndMyths
             else
             {
                 RemoveStanceAbilities(stance);
+
+                if (stance.hediffsToRemoveOnExit != null)
+                {
+                    foreach (var item in stance.hediffsToRemoveOnExit)
+                    {
+                        if (this.Pawn.health.hediffSet.HasHediff(item))
+                        {
+                            this.Pawn.health.RemoveHediff(this.Pawn.health.hediffSet.GetFirstHediffOfDef(item));
+                        }
+                    }
+                }
             }
         }
 

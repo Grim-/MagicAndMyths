@@ -441,25 +441,29 @@ namespace MagicAndMyths
             //    }
             //}
 
-            if (Prefs.DevMode)
+            if (DebugSettings.godMode)
             {
+                float halfMaxPrimary = this.Max / 2;
+
                 yield return new Command_Action()
                 {
-                    defaultLabel = $"Add 50 {ResourceLabel}",
-                    defaultDesc = $"Add 50 {ResourceLabel}",
+                    defaultLabel = $"Add {halfMaxPrimary} {ResourceLabel}",
+                    defaultDesc = $"Add {halfMaxPrimary} {ResourceLabel}",
+                    icon = TexButton.Add,
                     action = () =>
                     {
-                        this.Restore(50f);
+                        this.Restore(halfMaxPrimary);
                     }
                 };
 
                 yield return new Command_Action()
                 {
-                    defaultLabel = $"Remove 50 {ResourceLabel}",
-                    defaultDesc = $"Remove 50 {ResourceLabel}",
+                    defaultLabel = $"Remove {halfMaxPrimary} {ResourceLabel}",
+                    defaultDesc = $"Remove {halfMaxPrimary} {ResourceLabel}",
+                    icon = TexButton.Delete,
                     action = () =>
                     {
-                        this.Consume(50f, false);
+                        this.Consume(halfMaxPrimary, false);
                     }
                 };
 
@@ -468,18 +472,22 @@ namespace MagicAndMyths
                     if (resource?.resourceDef == null)
                         continue;
 
+                    float halfMax = resource.maxValue / 2;
+
                     yield return new Command_Action()
                     {
-                        defaultLabel = $"Add 50 {resource.resourceDef.resourceName}",
-                        defaultDesc = $"Add 50 {resource.resourceDef.resourceName}",
-                        action = () => Restore(resource.resourceDef, 50f)
+                        defaultLabel = $"Add {halfMax} {resource.resourceDef.resourceName}",
+                        defaultDesc = $"Add {halfMax} {resource.resourceDef.resourceName}",
+                        icon = TexButton.Add,
+                        action = () => Restore(resource.resourceDef, halfMax)
                     };
 
                     yield return new Command_Action()
                     {
-                        defaultLabel = $"Remove 50 {resource.resourceDef.resourceName}",
-                        defaultDesc = $"Remove 50 {resource.resourceDef.resourceName}",
-                        action = () => Consume(resource.resourceDef, 50f, false)
+                        defaultLabel = $"Remove {halfMax} {resource.resourceDef.resourceName}",
+                        defaultDesc = $"Remove {halfMax} {resource.resourceDef.resourceName}",
+                        icon = TexButton.Delete,
+                        action = () => Consume(resource.resourceDef, halfMax, false)
                     };
                 }
             }

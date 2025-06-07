@@ -9,9 +9,9 @@
       <chancePerTick>1</chancePerTick>
       <ticksBetweenMotes>10</ticksBetweenMotes>
       <moteDef>MagicAndMyths_TeleportParticles</moteDef>
-      <spawnLocType>OnSource</spawnLocType>
+      <spawnLocType>OnTarget</spawnLocType>
       <burstCount>1</burstCount>
-      <positionRadius>0.5</positionRadius>
+      <positionRadius>0</positionRadius>
       <positionRadiusMin>0</positionRadiusMin>
       <maxMoteCount>1</maxMoteCount>
       <scale>1</scale>
@@ -34,7 +34,7 @@
       <graphicData>
         <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
         <shaderType>GlowAnimated</shaderType>
-        <texPath>Animations/TeleportParticles</texPath>
+        <texPath>Animations/TeleportParticles_1x8</texPath>
         <shaderParameters>
           <_NumFrames>8</_NumFrames>
           <_FramesPerSec>8</_FramesPerSec>
@@ -42,9 +42,9 @@
       </graphicData>
       <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
-        <fadeInTime>0.1</fadeInTime>
-        <solidTime>4</solidTime>
-        <fadeOutTime>0.1</fadeOutTime>
+        <fadeInTime>0</fadeInTime>
+        <solidTime>1</solidTime>
+        <fadeOutTime>0</fadeOutTime>
         <growthRate>0</growthRate>
       </mote>
     </ThingDef>

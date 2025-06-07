@@ -2,9 +2,11 @@
 <Defs>
   <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
       <defName>Spellblade_ToggleLightningStance</defName>
-      <label>Lightning Stance</label>
-      <description>Toggle the swift lightning stance on or off.</description>
+      <label>Storm Step Form</label>
+      <description>Toggle the swift storm step form on or off.</description>
     <iconPath>Skills/Spellblade/Skill_LightningArmour</iconPath>
+    <resourceCost>0</resourceCost>
+    <resourceDef>Mana</resourceDef>
       <cooldownTicksRange>0</cooldownTicksRange>
       <aiCanUse>false</aiCanUse>
       <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
