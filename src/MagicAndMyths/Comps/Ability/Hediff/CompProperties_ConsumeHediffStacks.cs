@@ -43,7 +43,7 @@ namespace MagicAndMyths
             if (hediff == null)
                 return 0;
 
-            HediffWithStacks stackHediff = hediff as HediffWithStacks;
+            IStackableHediff stackHediff = hediff as IStackableHediff;
             if (stackHediff == null)
                 return 0;
 

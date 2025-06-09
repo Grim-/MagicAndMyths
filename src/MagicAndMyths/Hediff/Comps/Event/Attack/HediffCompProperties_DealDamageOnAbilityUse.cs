@@ -10,9 +10,7 @@ namespace MagicAndMyths
 
         public bool isAOE = false;
         public float radius = 5;
-        public bool canTargetHostile = true;
-        public bool canTargetFriendly = false;
-        public bool canTargetNeutral = false;
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
 
         public HediffCompProperties_OnAbilityUseDealDamage()
         {
@@ -35,11 +33,9 @@ namespace MagicAndMyths
                     Pawn.Map,
                     Props.radius,
                     Pawn.Faction,
+                    Props.friendlyFireSettings,
                     true,
-                    Pawn,
-                    Props.canTargetHostile,
-                    Props.canTargetFriendly,
-                    Props.canTargetNeutral);
+                    Pawn);
             }
             else
             {

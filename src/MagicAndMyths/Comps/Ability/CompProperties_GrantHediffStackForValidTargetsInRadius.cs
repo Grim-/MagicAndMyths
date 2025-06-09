@@ -25,10 +25,10 @@ namespace MagicAndMyths
             base.Apply(target, dest);
             Map map = this.parent.pawn.Map;
 
-            if (Props.hediffDef != null && Props.hediffDef.hediffClass == typeof(HediffWithStacks))
+            if (Props.hediffDef != null && Props.hediffDef.hediffClass is IStackableHediff)
             {
                 List<Pawn> targets = TargetUtil.GetPawnsInRadius(this.parent.pawn.Position, map, Props.radius, this.parent.pawn.Faction, Props.fireSettings, true);
-                HediffWithStacks hediffWithStacks = (HediffWithStacks)this.parent.pawn.health.GetOrAddHediff(Props.hediffDef);
+                IStackableHediff hediffWithStacks = (IStackableHediff)this.parent.pawn.health.GetOrAddHediff(Props.hediffDef);
 
                 if (hediffWithStacks != null)
                 {

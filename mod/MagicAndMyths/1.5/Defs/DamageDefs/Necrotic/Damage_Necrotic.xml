@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageDef>
+    <defName>Necrotic</defName>
+    <label>Necrotic</label>
+    <workerClass>MagicAndMyths.DamageWorker_NecroticDamage</workerClass>
+    <deathMessage>{0} has been dragged into the void.</deathMessage>
+    <hediff>MagicAndMyths_Necrosis</hediff>
+    <hediffSkin>MagicAndMyths_Necrosis</hediffSkin>
+    <hediffSolid>MagicAndMyths_Necrosis</hediffSolid>
+    <defaultDamage>10</defaultDamage>
+    <scaleDamageToBuildingsBasedOnFlammability>false</scaleDamageToBuildingsBasedOnFlammability>
+  </DamageDef>
+</Defs>

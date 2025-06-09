@@ -19,11 +19,9 @@ namespace MagicAndMyths
                         Pawn.Map, 
                         Def.reactionProperties.radius,
                         Pawn.Faction,
+                        Def.reactionProperties.friendlyFireSetting,
                         true, 
-                        Pawn,
-                        Def.reactionProperties.canTargetHostile,
-                        Def.reactionProperties.canTargetFriendly,
-                        Def.reactionProperties.canTargetNeutral);
+                        Pawn);
                 }
                 else
                 {

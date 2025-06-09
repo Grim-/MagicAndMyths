@@ -23,12 +23,14 @@
       <li Class="MagicAndMyths.HediffCompProperties_Propagate">
         <initialStack>2</initialStack>
         <removeOnStackEmpty>true</removeOnStackEmpty>
-        <ticksBetweenPropogation>900</ticksBetweenPropogation>
+        <ticksBetweenPropogation>2400</ticksBetweenPropogation>
         <radius>4.5</radius>
-        <canMerge>false</canMerge>
-        <canTargetHostile>true</canTargetHostile>
-        <canTargetFriendly>true</canTargetFriendly>
-        <canTargetNeutral>true</canTargetNeutral>
+        <canMerge>true</canMerge>
+        <friendlyFireSettings>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetFriendly>true</canTargetFriendly>
+          <canTargetNeutral>true</canTargetNeutral>
+        </friendlyFireSettings>
       </li>
     </comps>
     <stages>

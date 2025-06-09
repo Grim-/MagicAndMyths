@@ -24,10 +24,8 @@ namespace MagicAndMyths
                         Pawn.Map,
                         hediffProperties.radius,
                         Pawn.Faction, 
-                        true,
-                        hediffProperties.canTargetHostile,
-                        hediffProperties.canTargetFriendly,
-                        hediffProperties.canTargetNeutral);
+                        hediffProperties.friendlyFireSetting,
+                        true);
                 }
                 else
                 {

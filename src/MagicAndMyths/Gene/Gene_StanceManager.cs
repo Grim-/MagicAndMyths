@@ -6,7 +6,8 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class Gene_StanceManager : Gene_BasicResource
+
+    public class Gene_StanceManager : Gene_Class
     {
         private HashSet<StanceDef> activeStances = new HashSet<StanceDef>();
         private Dictionary<StanceDef, int> stanceCooldowns = new Dictionary<StanceDef, int>();
@@ -16,7 +17,7 @@ namespace MagicAndMyths
 
         public IEnumerable<StanceDef> ActiveStances => activeStances;
         public bool HasActiveStances => activeStances.Any();
-
+        public Pawn Pawn => pawn;
         public virtual bool IsExclusiveMode
         {
             get
@@ -40,6 +41,8 @@ namespace MagicAndMyths
         {
             if (stance == null)
                 return false;
+            if (!HasRequiredResourceFromGene())
+                return false;
             if (IsStanceActive(stance))
                 return false;
             if (stance.cooldownTicks > 0 && IsStanceOnCooldown(stance))
@@ -55,7 +58,7 @@ namespace MagicAndMyths
                 return AllowStanceReplacement;
             }
 
-            if (stance.activationCost > 0 && !Has(stance.activationCost))
+            if (stance.activationCost > 0 && !PrimaryResourceGene.Has(stance.activationCost))
             {
                 return false;
             }
@@ -120,9 +123,13 @@ namespace MagicAndMyths
                 }
             }
 
+
             if (consumeResource && stance.activationCost > 0)
             {
-                Consume(stance.activationCost);
+                if (PrimaryResourceGene.Has(stance.activationCost))
+                {
+                    PrimaryResourceGene.Consume(stance.activationCost);
+                }
             }
 
             activeStances.Add(stance);
@@ -140,7 +147,7 @@ namespace MagicAndMyths
 
         public bool DeactivateStance(StanceDef stance)
         {
-            if (!CanDeactivateStance(stance)) 
+            if (!CanDeactivateStance(stance))
                 return false;
 
             activeStances.Remove(stance);
@@ -312,9 +319,9 @@ namespace MagicAndMyths
                 {
                     if (stance.upkeepCost > 0)
                     {
-                        if (Has(stance.upkeepCost))
+                        if (PrimaryResourceGene != null && PrimaryResourceGene.Has(stance.upkeepCost))
                         {
-                            Consume(stance.upkeepCost);
+                            PrimaryResourceGene.Consume(stance.upkeepCost);
                         }
                         else if (stance.requiresResourceToMaintain)
                         {

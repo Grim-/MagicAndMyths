@@ -12,6 +12,8 @@ namespace MagicAndMyths
 
         public HediffDef hediffDef = null;
 
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
+
         public CompProperties_StarPull()
         {
             compClass = typeof(CompAbilityEffect_StarPull);
@@ -35,7 +37,7 @@ namespace MagicAndMyths
                 Props.effecterDef.Spawn(this.parent.pawn.Position, this.parent.pawn.Map);
             }
 
-            List<Pawn> pawnsInRange = TargetUtil.GetPawnsInRadius(this.parent.pawn.Position, map, Props.radius, this.parent.pawn.Faction, true, this.parent.pawn, true, false, false);
+            List<Pawn> pawnsInRange = TargetUtil.GetPawnsInRadius(this.parent.pawn.Position, map, Props.radius, this.parent.pawn.Faction, Props.friendlyFireSettings, true);
 
             foreach (var pawn in pawnsInRange)
             {

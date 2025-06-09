@@ -12,7 +12,7 @@ namespace MagicAndMyths
         public Color uiColor = Color.white;
         public SoundDef activationSound;
         public EffecterDef activationEffecter;
-        public BasicResourceGeneDef resourceGeneType;
+        public AbilityResourceDef resourceGeneType;
         public float activationCost = 5f;
         public float upkeepCost = 0f;
         public bool requiresResourceToMaintain = true;

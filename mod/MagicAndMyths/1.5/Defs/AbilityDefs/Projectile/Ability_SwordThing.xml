@@ -17,16 +17,16 @@
     <comps>
       <li Class="MagicAndMyths.CompProperties_SpawnProjectileProxy">
         <portalDef>MagicAndMyths_ProjectilePortal</portalDef>
-        <projectileDef>Projectile_Longsword</projectileDef>
-        <portalCount>1</portalCount>
+        <projectileDef>Projectile_Pyroball</projectileDef>
+        <portalCount>8</portalCount>
         <portalDistance>1</portalDistance>
         <shotsPerBurst>1</shotsPerBurst>
         <ticksBetweenShots>20</ticksBetweenShots>
-        <timesToShoot>8</timesToShoot>
+        <timesToShoot>1</timesToShoot>
       </li>
       <li Class="MagicAndMyths.CompProperties_AbilityEffecterOnCaster">
         <effecterDef>MagicAndMyths_CastRune</effecterDef>
-        <maintainForTicks>500</maintainForTicks>
+        <maintainForTicks>100</maintainForTicks>
         <scale>1</scale>
       </li>
     </comps>
@@ -36,7 +36,7 @@
     <defName>Projectile_Longsword</defName>
     <label>longsword</label>
     <graphicData>
-      <texPath>Equipment/Sword_29</texPath>
+      <texPath>Projectiles/Projectile_Longsword</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>1.8</drawSize>
     </graphicData>

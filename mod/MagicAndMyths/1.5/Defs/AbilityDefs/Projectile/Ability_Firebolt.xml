@@ -39,7 +39,7 @@
       <damageDef>Burn</damageDef>
       <damageAmountBase>9</damageAmountBase>
       <explosionRadius>3.9</explosionRadius>
-      <speed>70</speed>
+      <speed>120</speed>
       <arcHeightFactor>1.2</arcHeightFactor>
     </projectile>
   </ThingDef>

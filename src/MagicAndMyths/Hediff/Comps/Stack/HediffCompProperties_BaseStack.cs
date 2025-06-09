@@ -9,7 +9,7 @@ namespace MagicAndMyths
     public abstract class HediffComp_BaseStack : HediffComp
     {
         new public HediffCompProperties_BaseStack Props => (HediffCompProperties_BaseStack)props;
-        public HediffWithStacks ParentWithStacks => parent as HediffWithStacks;
+        public IStackableHediff ParentWithStacks => parent as IStackableHediff;
 
         public virtual void OnStacksChanged(int newStackAmount)
         {

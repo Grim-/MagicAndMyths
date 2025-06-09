@@ -9,7 +9,7 @@
       </graphicData>
       <projectile>
         <damageDef>Cut</damageDef>
-        <damageAmountBase>9</damageAmountBase>
+        <damageAmountBase>4</damageAmountBase>
         <speed>70</speed>
       </projectile>
     </ThingDef>

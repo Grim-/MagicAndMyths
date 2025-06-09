@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+
+   <!-- should also reduce sleep, food and comfort -->
   <HediffDef ParentName="DebuffBase">
     <defName>MagicAndMyths_Wet</defName>
     <label>wet</label>
     <description>This pawn is soaking wet, they will tire more easily and are more susceptible to lightning attacks.</description>
+    <hediffClass>Hediff_Injury</hediffClass>
+    <injuryProps>
+      <painPerSeverity>0.0001</painPerSeverity>
+      <bleedRate>0</bleedRate>
+      <canMerge>true</canMerge>
+      <destroyedLabel>blown off with high pressure</destroyedLabel>
+      <destroyedOutLabel>blown out with high pressure</destroyedOutLabel>
+    </injuryProps>
     <stages>
       <li>
         <capMods>
@@ -42,13 +52,15 @@
             <workerClass>MagicAndMyths.ComboReactionWorker_DealDamage</workerClass>
             <reactionProperties>
               <damageDef>Lightning</damageDef>
-              <damageRange>5~6</damageRange>
+              <damageRange>2~3</damageRange>
               <armourpenRange>0.1</armourpenRange>
               <isAOE>true</isAOE>
               <radius>2</radius>
-              <canTargetHostile>true</canTargetHostile>
-              <canTargetFriendly>true</canTargetFriendly>
-              <canTargetNeutral>true</canTargetNeutral>
+              <friendlyFireSettings>
+                <canTargetHostile>true</canTargetHostile>
+                <canTargetFriendly>false</canTargetFriendly>
+                <canTargetNeutral>false</canTargetNeutral>
+              </friendlyFireSettings>
             </reactionProperties>
             <reactionEffecter>Impact_Toxic</reactionEffecter>
           </li>

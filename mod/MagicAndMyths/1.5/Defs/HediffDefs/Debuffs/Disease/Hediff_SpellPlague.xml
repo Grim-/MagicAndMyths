@@ -21,9 +21,11 @@
         <ticksBetweenPropogation>900</ticksBetweenPropogation>
         <radius>4.5</radius>
         <canMerge>false</canMerge>
-        <canTargetHostile>true</canTargetHostile>
-        <canTargetFriendly>true</canTargetFriendly>
-        <canTargetNeutral>true</canTargetNeutral>
+        <friendlyFireSettings>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetFriendly>true</canTargetFriendly>
+          <canTargetNeutral>true</canTargetNeutral>
+        </friendlyFireSettings>
       </li>
       <li Class="HediffCompProperties_Effecter">
         <stateEffecter>MagicAndMyths_SpellPlague</stateEffecter>

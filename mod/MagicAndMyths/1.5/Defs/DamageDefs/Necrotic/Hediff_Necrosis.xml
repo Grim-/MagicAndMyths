@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- should also reduce mood -->
+  <MagicAndMyths.StackingHediffDef>
+    <defName>MagicAndMyths_Necrosis</defName>
+    <label>Necrosis</label>
+    <description>A necrotic wound.</description>
+    <maxSeverity>1.0</maxSeverity>
+    <maxStacks>4</maxStacks>
+    <hediffClass>MagicAndMyths.HediffInjuryWithStacks</hediffClass>
+    <isBad>true</isBad>
+    <useStagesAsStackCount>true</useStagesAsStackCount>
+    <stackGainRefreshesDisappearsDuration>true</stackGainRefreshesDisappearsDuration>
+    <losesStacksPerInterval>true</losesStacksPerInterval>
+    <ticksBetweenStackLoss>6000</ticksBetweenStackLoss>
+    <injuryProps>
+      <painPerSeverity>0.005</painPerSeverity>
+      <bleedRate>0</bleedRate>
+      <canMerge>true</canMerge>
+      <destroyedLabel>withered off</destroyedLabel>
+      <destroyedOutLabel>withered out</destroyedOutLabel>
+    </injuryProps>
+    <stages>
+      <li>
+        <partEfficiencyOffset>-0.3</partEfficiencyOffset>
+      </li>
+      <li>
+        <partEfficiencyOffset>-0.6</partEfficiencyOffset>
+      </li>
+      <li>
+        <partEfficiencyOffset>-0.9</partEfficiencyOffset>
+      </li>
+      <li>
+        <partEfficiencyOffset>-1</partEfficiencyOffset>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>6000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+  </MagicAndMyths.StackingHediffDef>
+</Defs>

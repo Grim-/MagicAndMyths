@@ -11,6 +11,8 @@ namespace MagicAndMyths
 
         public EffecterDef healEffecterDef = null;
 
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.FriendlyFactionOnly();
+
         public HediffCompProperties_HealAOEPerInterval()
         {
             compClass = typeof(HediffComp_HealAOEPerInterval);
@@ -27,7 +29,7 @@ namespace MagicAndMyths
 
             int targets = 0;
 
-            foreach (var item in TargetUtil.GetPawnsInRadius(this.parent.pawn.Position, this.parent.pawn.Map, Props.radius, this.parent.pawn.Faction, true, null, false, true, false))
+            foreach (var item in TargetUtil.GetPawnsInRadius(this.parent.pawn.Position, this.parent.pawn.Map, Props.radius, this.parent.pawn.Faction, Props.friendlyFireSettings, true))
             {
                 if (targets >= Props.targetLimit)
                 {

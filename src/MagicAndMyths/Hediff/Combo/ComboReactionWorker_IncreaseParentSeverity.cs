@@ -18,10 +18,8 @@ namespace MagicAndMyths
                         Def.reactionProperties.radius,
                         Pawn.Faction,
                         Def.reactionProperties.severityRange.RandomInRange,
-                        true,
-                        Def.reactionProperties.canTargetHostile,
-                        Def.reactionProperties.canTargetFriendly,
-                        Def.reactionProperties.canTargetNeutral);
+                        Def.reactionProperties.friendlyFireSetting,
+                        true);
                 }
                 else
                 {

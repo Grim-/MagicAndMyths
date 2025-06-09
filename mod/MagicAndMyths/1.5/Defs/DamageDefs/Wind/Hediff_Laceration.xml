@@ -17,9 +17,6 @@
     <stages>
       <li>
         <painFactor>1.1</painFactor>
-        <statFactors>
-          <Flammability>0</Flammability>
-        </statFactors>
       </li>
     </stages>
     <comps>

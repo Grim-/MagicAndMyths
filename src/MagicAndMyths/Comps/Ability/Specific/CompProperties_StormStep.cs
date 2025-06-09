@@ -48,7 +48,7 @@ namespace MagicAndMyths
             Hediff existingHediff = pawn.health.hediffSet.GetFirstHediffOfDef(Props.hediffToGrant);
             if (existingHediff != null)
             {
-                HediffWithStacks stackHediff = existingHediff as HediffWithStacks;
+                IStackableHediff stackHediff = existingHediff as IStackableHediff;
                 if (stackHediff != null)
                 {
                     stackHediff.AddStack(Props.stacksToGrant);
@@ -57,7 +57,7 @@ namespace MagicAndMyths
             else
             {
                 Hediff newHediff = HediffMaker.MakeHediff(Props.hediffToGrant, pawn);
-                if (newHediff is HediffWithStacks newStackHediff)
+                if (newHediff is IStackableHediff newStackHediff)
                 {
                     newStackHediff.SetStack(Props.stacksToGrant);
                 }

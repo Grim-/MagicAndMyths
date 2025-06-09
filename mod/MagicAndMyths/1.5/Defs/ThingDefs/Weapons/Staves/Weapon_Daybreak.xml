@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>MagicAndMyths_DayBreak</defName>
     <label>daybreak (staff)</label>
@@ -35,7 +36,7 @@
         <defaultProjectile>Projectile_StaffDayBreakProjectile</defaultProjectile>
         <warmupTime>0.9</warmupTime>
         <range>22.9</range>
-        <burstShotCount>3</burstShotCount>
+        <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>11</ticksBetweenBurstShots>
         <soundCast>Shot_HeavySMG</soundCast>
         <soundCastTail>GunTail_Heavy</soundCastTail>
@@ -60,8 +61,23 @@
       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
         <abilityDefs>
           <li>MagicAndMyths_Pyroball</li>
+          <li>MagicAndMyths_CruelSun</li>
         </abilityDefs>
       </li>
     </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_StaffDayBreakProjectile</defName>
+    <label>bolt of daybreak</label>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Fireball</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>6</damageAmountBase>
+      <speed>48</speed>
+    </projectile>
   </ThingDef>
 </Defs>

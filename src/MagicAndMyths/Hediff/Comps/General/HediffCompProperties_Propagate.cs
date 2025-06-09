@@ -13,9 +13,8 @@ namespace MagicAndMyths
 
         public float radius = 5f;
         public bool canMerge = false;
-        public bool canTargetHostile = true;
-        public bool canTargetFriendly = false;
-        public bool canTargetNeutral = false;
+
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
 
         public HediffCompProperties_Propagate()
         {
@@ -64,7 +63,7 @@ namespace MagicAndMyths
         {
             var potentialTargets = GenRadial.RadialDistinctThingsAround(Pawn.Position, Pawn.Map, Props.radius, true)
                 .OfType<Pawn>()
-                .Where(p => ShouldTarget(p.Faction, Pawn.Faction, Props.canTargetHostile, Props.canTargetFriendly, Props.canTargetNeutral))
+                .Where(p =>  p.CanTargetThing(Pawn.Faction, Props.friendlyFireSettings))
                 .Where(p => Props.canMerge || !p.health.hediffSet.HasHediff(parent.def))
                 .ToList();
 

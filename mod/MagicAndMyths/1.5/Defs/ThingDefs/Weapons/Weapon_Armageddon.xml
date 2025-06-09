@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
+    <defName>MagicAndMyths_Armageddon</defName>
+    <label>Armageddon</label>
+    <description>A cursed blade that reeks of death and decay. Its corrupted edge spreads necrosis through whatever it touches, leaving flesh to rot and wither.</description>
+    <possessionCount>1</possessionCount>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Equipment/Armageddon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.2</drawSize>
+      <allowFlip>false</allowFlip>
+    </graphicData>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <equipmentType>Primary</equipmentType>
+    <costList>
+      <Steel>300</Steel>
+      <Uranium>25</Uranium>
+    </costList>
+    <techLevel>Medieval</techLevel>
+    <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
+    <statBases>
+      <WorkToMake>20000</WorkToMake>
+      <Mass>1.4</Mass>
+    </statBases>
+    <equippedAngleOffset>35</equippedAngleOffset>
+    <tools>
+      <li>
+        <label>blade</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>16</power>
+        <cooldownTime>1.9</cooldownTime>
+        <extraMeleeDamages>
+          <li>
+            <def>Necrotic</def>
+            <amount>8</amount>
+            <chance>1</chance>
+          </li>
+        </extraMeleeDamages>
+      </li>
+      <li>
+        <label>pommel</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>10</power>
+        <cooldownTime>2.5</cooldownTime>
+        <extraMeleeDamages>
+          <li>
+            <def>Necrotic</def>
+            <amount>4</amount>
+            <chance>1</chance>
+          </li>
+        </extraMeleeDamages>
+      </li>
+    </tools>
+    <modExtensions>
+    </modExtensions>
+  </ThingDef>
+</Defs>

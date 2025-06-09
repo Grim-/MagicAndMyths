@@ -168,21 +168,22 @@ namespace MagicAndMyths
                 if (basicResourceGene.pawn == null)
                     return costs;
 
-                if (basicResourceGene is Gene_StanceManager stanceManager)
+                if (basicResourceGene.pawn.genes.GenesListForReading.Any(x=> x is Gene_StanceManager stanceManager))
                 {
-                    foreach (var stance in stanceManager.ActiveStances)
-                    {
-                        if (stance.upkeepCost > 0)
-                        {
-                            costs.Add(new MaintenanceCostInfo
-                            {
-                                source = stance.label ?? stance.defName,
-                                cost = stance.upkeepCost,
-                                interval = 2500,
-                                isStance = true
-                            });
-                        }
-                    }
+
+                    //foreach (var stance in stanceManager.ActiveStances)
+                    //{
+                    //    if (stance.upkeepCost > 0)
+                    //    {
+                    //        costs.Add(new MaintenanceCostInfo
+                    //        {
+                    //            source = stance.label ?? stance.defName,
+                    //            cost = stance.upkeepCost,
+                    //            interval = 2500,
+                    //            isStance = true
+                    //        });
+                    //    }
+                    //}
                 }
 
                 var activeToggleAbilities = basicResourceGene.pawn.abilities?.AllAbilitiesForReading

@@ -50,9 +50,8 @@ namespace MagicAndMyths
 
         public bool isAOE = false;
         public float radius = 5;
-        public bool canTargetHostile = true;
-        public bool canTargetFriendly = false;
-        public bool canTargetNeutral = false;
+
+        public FriendlyFireSettings friendlyFireSetting = FriendlyFireSettings.All();
         public FloatRange severityRange;
     }
 }

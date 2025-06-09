@@ -21,13 +21,7 @@ namespace MagicAndMyths
         }
     }
 
-
-    //public class StackStageData
-    //{
-    //    public HediffStage stage;
-    //}
-
-    public class HediffWithStacks : HediffWithComps
+    public class HediffWithStacks : HediffWithComps, IStackableHediff
     {
         protected int _CurrentStackLevel = 1;
         public int StackLevel => _CurrentStackLevel;
@@ -47,9 +41,9 @@ namespace MagicAndMyths
             }
         }
 
-        public override string Label => $"[{StackLevel + 1}] " + base.Label;
+        public override string Label => base.Label + $" [{StackLevel + 1}]";
 
-        public override string Description => base.Description + $"\r\n{StackLevel + 1} stacks.";
+        public override string Description => base.Description + $"\r\n[{StackLevel + 1}] stacks.";
         public override HediffStage CurStage => GetStageForStackLevel(StackLevel);
         protected int stackLossTicker = 0;
         private StackingHediffDef Def => (StackingHediffDef)def;
@@ -147,6 +141,33 @@ namespace MagicAndMyths
                     baseStack.OnMaxStacks();
                 }
             }
+        }
+
+        public override bool TryMergeWith(Hediff other)
+        {
+            if (other is IStackableHediff stackableHediff && other.def == this.def)
+            {
+                AddStack(stackableHediff.StackLevel);
+
+                if (this.TryGetComp(out HediffComp_Disappears disappears) &&
+                    other.TryGetComp(out HediffComp_Disappears otherDisappears))
+                {
+                    if (Def.stackGainRefreshesDisappearsDuration)
+                    {
+                        disappears.SetDuration(disappears.Props.disappearsAfterTicks.RandomInRange);
+                    }
+                    else if (Def.stackGainAddsDisappearsDuration)
+                    {
+                        int remainingTicks = disappears.ticksToDisappear;
+                        int addTicks = Def.stackGainDurationAdd;
+                        disappears.SetDuration(remainingTicks + addTicks);
+                    }
+                }
+
+                return true;
+            }
+
+            return base.TryMergeWith(other);
         }
 
         public override void ExposeData()

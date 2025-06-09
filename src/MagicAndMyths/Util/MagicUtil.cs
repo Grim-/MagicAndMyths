@@ -67,7 +67,7 @@ namespace MagicAndMyths
         }
 
 
-        public static void TryExtinguishFireAt(IntVec3 cell, Map map, float extinguishAmount = 100f)
+        public static bool TryExtinguishFireAt(IntVec3 cell, Map map, float extinguishAmount = 100f)
         {
             if (FireUtility.NumFiresAt(cell, map) > 0)
             {
@@ -75,7 +75,10 @@ namespace MagicAndMyths
                 {
                     item.TakeDamage(new DamageInfo(DamageDefOf.Extinguish, extinguishAmount, 0f, -1f));
                 }
+                return true;
             }
+
+            return false;
         }
 
 

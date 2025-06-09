@@ -41,7 +41,7 @@ namespace MagicAndMyths
 
             if (ShouldRemoveStack(originalDamage, dinfo.Def))
             {
-                if (parent is HediffWithStacks stackedHediff)
+                if (parent is IStackableHediff stackedHediff)
                 {
                     stackedHediff.RemoveStack(Props.stacksToRemove);
                 }

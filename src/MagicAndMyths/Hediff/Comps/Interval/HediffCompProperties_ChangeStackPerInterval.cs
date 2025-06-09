@@ -18,7 +18,7 @@ namespace MagicAndMyths
         protected override void OnInterval()
         {
             base.OnInterval();
-            if (this.parent is HediffWithStacks withStacks)
+            if (this.parent is IStackableHediff withStacks)
             {
                 if (Props.stacksToRemove > 0)
                 {

@@ -55,14 +55,16 @@
         <projectileDef>Projectile_PoisonDart</projectileDef>
         <turretFireEffect>Deflect_Metal</turretFireEffect>
         <tickInterval>250</tickInterval>
-        <canTargetHostile>true</canTargetHostile>
-        <canTargetFriendly>false</canTargetFriendly>
-        <canTargetNeutral>false</canTargetNeutral>
+        <friendlyFireSettings>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetFriendly>false</canTargetFriendly>
+          <canTargetNeutral>false</canTargetNeutral>
+        </friendlyFireSettings>
       </li>
     </comps>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
   </MagicAndMyths.TotemDef>
-  
+
   <ThingDef ParentName="BaseBullet">
     <defName>Projectile_PoisonDart</defName>
     <label>poison dart</label>

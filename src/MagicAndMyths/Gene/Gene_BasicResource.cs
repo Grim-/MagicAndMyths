@@ -217,7 +217,7 @@ namespace MagicAndMyths
 
         public bool HasResource(AbilityResourceDef resourceDef)
         {
-            if (resourceDef == ResourceDef || additionalResources.ContainsKey(resourceDef))
+            if (ResourceDef == resourceDef || additionalResources.ContainsKey(resourceDef))
             {
                 return true;
             }

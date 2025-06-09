@@ -9,13 +9,13 @@ namespace MagicAndMyths
     public static class TargetUtil
     {
 
-        public static void QuickHealInRadius(float healAmount, IntVec3 Position, Map map, float radius, Faction Faction, bool useCenter = true, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
+        public static void QuickHealInRadius(float healAmount, IntVec3 Position, Map map, float radius, Faction Faction, FriendlyFireSettings friendlyFireSettings, bool useCenter = true)
         {
             foreach (var item in GenRadial.RadialDistinctThingsAround(Position, map, radius, useCenter))
             {
                 if (item is Pawn pawn)
                 {
-                    if (ShouldTarget(pawn.Faction, Faction, canTargetHostile, canTargetFriendly, canTargetNeutral))
+                    if (pawn.CanTargetThing(Faction, friendlyFireSettings))
                     {
                         pawn.SpendHealingAmount(healAmount);
                     }
@@ -26,14 +26,14 @@ namespace MagicAndMyths
 
 
 
-        public static List<Hediff> ApplyHediffInRadius(HediffDef hediffDef, IntVec3 Position, Map map, float radius, Faction Faction, bool useCenter = true, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
+        public static List<Hediff> ApplyHediffInRadius(HediffDef hediffDef, IntVec3 Position, Map map, float radius, Faction Faction, FriendlyFireSettings friendlyFireSettings, bool useCenter = true)
         {
             List<Hediff> hediffs = new List<Hediff>();
             foreach (var item in GenRadial.RadialDistinctThingsAround(Position, map, radius, useCenter))
             {
                 if (item is Pawn pawn)
                 {
-                    if (ShouldTarget(pawn.Faction, Faction, canTargetHostile, canTargetFriendly, canTargetNeutral))
+                    if (pawn.CanTargetThing(Faction, friendlyFireSettings))
                     {
                         hediffs.Add(pawn.health.GetOrAddHediff(hediffDef));
                     }
@@ -43,13 +43,13 @@ namespace MagicAndMyths
             return hediffs;
         }
 
-        public static void ApplyHediffSeverityInRadius(HediffDef hediffDef, IntVec3 Position, Map map, float radius, Faction Faction, float SeverityChange, bool useCenter = true, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
+        public static void ApplyHediffSeverityInRadius(HediffDef hediffDef, IntVec3 Position, Map map, float radius, Faction Faction, float SeverityChange, FriendlyFireSettings friendlyFireSettings,  bool useCenter = true)
         {
             foreach (var item in GenRadial.RadialDistinctThingsAround(Position, map, radius, useCenter))
             {
                 if (item is Pawn pawn)
                 {
-                    if (ShouldTarget(pawn.Faction, Faction, canTargetHostile, canTargetFriendly, canTargetNeutral))
+                    if (pawn.CanTargetThing(Faction, friendlyFireSettings))
                     {
                         if (pawn.health.hediffSet.HasHediff(hediffDef))
                         {
@@ -63,34 +63,18 @@ namespace MagicAndMyths
             }
         }
 
-        public static void ApplyDamageInRadius(DamageDef damageDef, float damageAmount, float armourPenArmount, IntVec3 Position, Map map, float radius, Faction Faction, bool useCenter = true, Thing instigator = null, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
+
+        public static void ApplyDamageInRadius(DamageDef damageDef, float damageAmount, float armourPenArmount, IntVec3 Position, Map map, float radius, Faction Faction, FriendlyFireSettings friendlyFireSettings, bool useCenter = true, Thing instigator = null)
         {
             foreach (var item in GenRadial.RadialDistinctThingsAround(Position, map, radius, useCenter))
             {
-                if (ShouldTarget(item.Faction, Faction, canTargetHostile, canTargetFriendly, canTargetNeutral))
+                if (item.CanTargetThing(Faction, friendlyFireSettings))
                 {
                     item.TakeDamage(new DamageInfo(damageDef, damageAmount, armourPenArmount, -1, instigator));
                 }
             }
         }
 
-
-        public static List<Pawn> GetPawnsInRadius(IntVec3 Position, Map map, float radius, Faction Faction, bool useCenter = true, Thing instigator = null, bool canTargetHostile = true, bool canTargetFriendly = false, bool canTargetNeutral = false)
-        {
-            List<Pawn> pawns = new List<Pawn>();
-            foreach (var item in GenRadial.RadialDistinctThingsAround(Position, map, radius, useCenter))
-            {
-                if (item is Pawn pawn)
-                {
-                    if (ShouldTarget(item.Faction, Faction, canTargetHostile, canTargetFriendly, canTargetNeutral))
-                    {
-                        pawns.Add(pawn);
-                    }
-                }
-            }
-
-            return pawns;
-        }
         public static List<Pawn> GetPawnsInRadius(IntVec3 Position, Map map, float radius, Faction Faction, FriendlyFireSettings friendlyFireSettings, bool useCenter = true)
         {
             List<Pawn> pawns = new List<Pawn>();
@@ -108,24 +92,10 @@ namespace MagicAndMyths
             return pawns;
         }
 
-        public static bool ShouldTarget(Faction targetFaction, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
-        {
-            if (targetFaction == null)
-                return true;
-
-            if (targetFaction == sourceFaction && canTargetFriendly)
-                return true;
-
-            if (canTargetHostile && targetFaction.HostileTo(sourceFaction))
-                return true;
-
-            return false;
-        }
-
         public static bool CanTargetThing(this Thing thing, Faction sourceFaction, FriendlyFireSettings validTargetParams)
         {
             if (thing.Faction == null)
-                return true;
+                return validTargetParams.canTargetNeutral;
 
             if (thing.Faction == sourceFaction && validTargetParams.canTargetFriendly)
                 return true;
@@ -133,11 +103,12 @@ namespace MagicAndMyths
             if (validTargetParams.canTargetHostile && thing.Faction.HostileTo(sourceFaction))
                 return true;
 
+            if (validTargetParams.canTargetNeutral && !thing.Faction.HostileTo(sourceFaction) && thing.Faction != sourceFaction)
+                return true;
+
             return false;
         }
 
-
-        
 
         public static List<IntVec3> GetAllCellsInRect(IntVec3 Origin, IntVec3 Target, int width, int height)
         {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_Waterball</defName>
+    <label>water ball projectile</label>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Waterball</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <damageDef>Water</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <speed>70</speed>
+    </projectile>
+    <comps>
+      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactAOEHediff">
+        <hediffDef>MagicAndMyths_Wet</hediffDef>
+        <radius>4</radius>
+      </li>
+      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactStartOrStopFires">
+          <effecterDef>MagicAndMyths_ExplosionThree</effecterDef>
+          <extinguishFires>true</extinguishFires>
+          <fireAmount>10~30</fireAmount>
+      </li>
+      <li Class="MagicAndMyths.ProjectileCompProperties_SpawnsThingRadius">
+        <spawnsThingDef>Filth_Water</spawnsThingDef>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

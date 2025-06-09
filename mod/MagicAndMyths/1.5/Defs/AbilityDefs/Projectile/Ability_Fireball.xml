@@ -30,9 +30,11 @@
   <ThingDef ParentName="BaseMagicProjectile">
     <defName>Projectile_Fireball</defName>
     <label>fireball</label>
+    <thingClass>MagicAndMyths.Projectile_Extended</thingClass>
     <graphicData>
       <texPath>Projectiles/Projectile_Fireball</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
@@ -41,5 +43,17 @@
       <speed>50</speed>
       <arcHeightFactor>2</arcHeightFactor>
     </projectile>
+    <comps>
+      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactAOEDamage">
+        <damageDef>Burn</damageDef>
+        <effecterDef>MagicAndMyths_Explosion</effecterDef>
+        <damageAmount>5</damageAmount>
+        <radius>4</radius>
+      </li>
+      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactStartOrStopFires">
+          <effecterDef>MagicAndMyths_ExplosionThree</effecterDef>
+      </li>
+    </comps>
   </ThingDef>
+
 </Defs>

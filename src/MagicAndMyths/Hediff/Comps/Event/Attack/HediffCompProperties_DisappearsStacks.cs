@@ -30,7 +30,7 @@ namespace MagicAndMyths
                 if (base.CompShouldRemove)
                     return true;
 
-                HediffWithStacks stackHediff = parent as HediffWithStacks;
+                IStackableHediff stackHediff = parent as IStackableHediff;
                 if (stackHediff != null && stackHediff.StackLevel <= 0)
                     return true;
 
@@ -47,7 +47,7 @@ namespace MagicAndMyths
 
             if (ticksToDisappear <= 0)
             {
-                HediffWithStacks stackHediff = parent as HediffWithStacks;
+                IStackableHediff stackHediff = parent as IStackableHediff;
                 if (stackHediff != null)
                 {
                     stackHediff.RemoveStack(Props.stacksToRemoveOnDisappear);

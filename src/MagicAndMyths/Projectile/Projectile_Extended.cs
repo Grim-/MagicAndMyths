@@ -1,21 +1,16 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
-    public class Projectile_Extended : Projectile
+    public class Projectile_Extended : Bullet
     {
-
         public int TicksUntilImpact => ticksToImpact;
-
-
         public int OverrideDamageAmount = -1;
-
         public override int DamageAmount => OverrideDamageAmount > 0 ? OverrideDamageAmount : base.DamageAmount;
-
-
 
         public override void Launch(Thing launcher, Vector3 origin, LocalTargetInfo usedTarget, LocalTargetInfo intendedTarget, ProjectileHitFlags hitFlags, bool preventFriendlyFire = false, Thing equipment = null, ThingDef targetCoverDef = null)
         {

@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
@@ -7,8 +8,10 @@ namespace MagicAndMyths
     public class ProjectileCompProperties_ImpactLightningStrike : ProjectileCompProperties
     {
         public float strikeRadius = 3f;
-        public int strikeDamage = 50;
+        public FloatRange strikeDamage = new FloatRange(5,5);
         public DamageDef strikeDamageDef;
+
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
 
         public ProjectileCompProperties_ImpactLightningStrike()
         {
@@ -27,7 +30,14 @@ namespace MagicAndMyths
 
             Map map = parent.Map;
             IntVec3 loc = parent.Position;
-            LightningStrike.GenerateLightningStrike(map, loc, Props.strikeRadius, out IEnumerable<IntVec3> affectedCells, Props.strikeDamage, 1, Props.strikeDamageDef ?? DamageDefOf.ElectricalBurn);
+
+            LightningStrike.GenerateLightningStrike(map, loc, Props.strikeRadius, (IntVec3 cell, Map cellMap) =>
+            {
+                foreach (var item in cell.GetThingList(cellMap).Where(x => x.CanTargetThing(this.ParentAsProjectile.Launcher.Faction, Props.friendlyFireSettings)).ToList())
+                {
+                    item.TakeDamage(new DamageInfo(Props.strikeDamageDef, Props.strikeDamage.RandomInRange, 0, -1, this.ParentAsProjectile.Launcher));
+                }
+            });
         }
     }
 }

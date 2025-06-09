@@ -109,7 +109,12 @@ namespace MagicAndMyths
             }
             else
             {
-                Activate();
+                if (resourceGene.Has(ResourceDef.resourceDef, ResourceDef.resourceMaintainCost))
+                {
+                    resourceGene.Consume(ResourceDef.resourceDef, ResourceDef.resourceMaintainCost);
+                    Activate();
+                }
+              
             }
             return base.Activate(target, dest);
         }
@@ -136,10 +141,10 @@ namespace MagicAndMyths
 
         protected override void ConsumeResource()
         {
-            if (_IsActive)
-            {
-                base.ConsumeResource();
-            }  
+            //if (_IsActive)
+            //{
+            //    base.ConsumeResource();
+            //}  
         }
 
 

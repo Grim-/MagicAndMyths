@@ -8,9 +8,7 @@ namespace MagicAndMyths
     {
         public HediffDef hediff;
         public float radius = 5;
-        public bool canTargetHostile = true;
-        public bool canTargetFriendly = false;
-        public bool canTargetNeutral = false;
+        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
 
         public HediffCompProperties_AddHediffAOEPerInterval()
         {
@@ -31,10 +29,8 @@ namespace MagicAndMyths
                     Pawn.Map,
                     Props.radius,
                     Pawn.Faction,
-                    true,
-                    Props.canTargetHostile,
-                    Props.canTargetFriendly,
-                    Props.canTargetNeutral);
+                    Props.friendlyFireSettings,
+                    true);
 
               
             }

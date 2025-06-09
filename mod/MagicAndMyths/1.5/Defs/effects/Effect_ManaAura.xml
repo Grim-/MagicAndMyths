@@ -32,19 +32,19 @@
       <graphicData>
         <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
         <shaderType>GlowAnimated</shaderType>
-        <texPath>Animations/AuraSpikes_1x4</texPath>
+        <texPath>Animations/Auras/AuraGrey_1x4</texPath>
         <shaderParameters>
           <_NumFrames>4</_NumFrames>
           <_Loop>1</_Loop>
           <_FramesPerSec>4</_FramesPerSec>
         </shaderParameters>
-        <drawSize>4</drawSize>
+        <drawSize>3</drawSize>
         <color>(0.384, 0.875, 1, 1)</color>
       </graphicData>
       <altitudeLayer>MoteLow</altitudeLayer>
       <mote>
         <fadeInTime>0.4</fadeInTime>
-        <solidTime>1</solidTime>
+        <solidTime>99999</solidTime>
         <fadeOutTime>0.4</fadeOutTime>
         <growthRate>0</growthRate>
       </mote>

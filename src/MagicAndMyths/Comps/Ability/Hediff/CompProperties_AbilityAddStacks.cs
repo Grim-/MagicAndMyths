@@ -29,7 +29,7 @@ namespace MagicAndMyths
             {
                 Hediff existingHediff = targetPawn.health.GetOrAddHediff(Props.hediffDef);
 
-                if (existingHediff is HediffWithStacks stackedHediff)
+                if (existingHediff is IStackableHediff stackedHediff)
                 {
                     stackedHediff.AddStack(Props.stacksToGive);
                 }

@@ -35,7 +35,7 @@ namespace MagicAndMyths
 
             if (ticksSinceLastStackGain >= Props.ticksPerStackGain)
             {
-                if (parent is HediffWithStacks stackedHediff)
+                if (parent is IStackableHediff stackedHediff)
                 {
                     stackedHediff.AddStack(1);
                     ticksSinceLastStackGain = 0;
@@ -47,7 +47,7 @@ namespace MagicAndMyths
         {
             if (ShouldTriggerEffects(dinfo))
             {
-                if (parent is HediffWithStacks stackedHediff)
+                if (parent is IStackableHediff stackedHediff)
                 {
                     stackedHediff.RemoveStack(Props.stacksToRemoveOnHit);
                 }
