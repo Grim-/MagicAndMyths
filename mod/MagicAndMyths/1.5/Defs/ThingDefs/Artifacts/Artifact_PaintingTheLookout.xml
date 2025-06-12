@@ -16,8 +16,8 @@
         <DeteriorationRate>5</DeteriorationRate>
         <Flammability>1.0</Flammability>
       </statBases>
-      <comps>
-       <li Class="MagicAndMyths.CompProperties_Portal">
+    <comps Inherit="false">
+       <li Class="MagicAndMyths.CompProperties_PortalMapGenerator">
          <mapGeneratorDef>MapGenHeaven</mapGeneratorDef>
          <mapSize>(80,1,80)</mapSize>
          <cooldownTicks>600</cooldownTicks>

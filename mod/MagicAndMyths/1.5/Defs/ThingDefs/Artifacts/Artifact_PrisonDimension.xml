@@ -19,7 +19,7 @@
     </statBases>
     <drawGUIOverlay>true</drawGUIOverlay>
     <relicChance>0</relicChance>
-    <comps Inherit="false">
+    <comps>
       <li Class="MagicAndMyths.CompProperties_PawnStorage">
       </li>
       <!--- what happens when used -->

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_PowerAmethyst</defName>
+    <label>power amethyst</label>
+    <description>A magnificent violet crystal that pulses with raw energy, electricity seems to dance within its faceted depths. The magic of this amethyst can be invoked to unleash devastating destruction across a vast area, after which it cannot be used again, the amethyst will explode with immense force if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Artifacts/Materia_purple_high</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>12000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_SpaceSapphire</defName>
+    <label>space sapphire</label>
+    <description>A brilliant blue crystal that seems to contain infinite depth, gazing into it feels like peering into the void between worlds. The magic of this sapphire can be invoked to instantly transport anything within a large radius to a distant location, after which it cannot be used again, the sapphire will tear reality if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Artifacts/Materia_blue_high</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>11000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_RealityGarnet</defName>
+    <label>reality garnet</label>
+    <description>A deep crimson crystal that shifts and changes when observed, reality seems malleable in its presence. The magic of this garnet can be invoked to fundamentally alter the nature of matter and energy in a wide area, after which it cannot be used again, the garnet will unravel existence itself if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Artifacts/Materia_crimson_high</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>15000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_SoulCitrine</defName>
+    <label>soul citrine</label>
+    <description>A haunting orange crystal that whispers with the voices of the departed, ghostly figures can be seen moving within its depths. The magic of this citrine can be invoked to manipulate the souls of all living beings in a vast radius, after which it cannot be used again, the citrine will release all trapped souls in torment if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Artifacts/Materia_orange_high</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>13000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_TimeEmerald</defName>
+    <label>time emerald</label>
+    <description>A radiant green crystal where moments from past and future can be glimpsed swirling within, time itself seems to bend around it. The magic of this emerald can be invoked to manipulate the flow of time across a large area, after which it cannot be used again, the emerald will create temporal chaos if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Artifacts/Materia_green_high</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>14000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_MindTopaz</defName>
+    <label>mind topaz</label>
+    <description>A brilliant yellow crystal that seems to look back when observed, thoughts and memories appear to flow like liquid light within its core. The magic of this topaz can be invoked to dominate the minds of all thinking beings in a wide radius, after which it cannot be used again, the topaz will drive all nearby to madness if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Artifacts/Materia_yellow_high</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>11500</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+  </ThingDef>
+</Defs>

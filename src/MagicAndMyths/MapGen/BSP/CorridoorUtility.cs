@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,68 +8,122 @@ namespace MagicAndMyths
 {
     public static class CorridoorUtility
     {
-        public static List<Corridoor> GenerateCorridors(Map map, DungeonRoom roomA, DungeonRoom roomB)
+        public static List<Corridoor> GenerateCorridors(Map map, DungeonRoom roomA, DungeonRoom roomB, int width = 2, bool smoothCorners = false)
         {
+            CorridorPathBase pathGenerator = new LShapedCorridorPath();
+            pathGenerator.smoothCorners = smoothCorners;
+
             List<Corridoor> corridors = new List<Corridoor>();
 
-            IntVec3 centerA = roomA.roomCellRect.CenterCell;
-            IntVec3 centerB = roomB.roomCellRect.CenterCell;
+            ConnectionPoints connectionPoints = FindOptimalConnectionPoints(roomA, roomB);
+            IntVec3 startPoint = connectionPoints.Start;
+            IntVec3 endPoint = connectionPoints.End;
 
-            Corridoor mainCorridor = new Corridoor(centerA, centerB);
+            List<IntVec3> corridorPath = pathGenerator.GeneratePathWithWidth(startPoint, endPoint, map);
 
-            IntVec3 startPoint = FindNearestEdgePoint(roomA.roomCellRect, centerB);
-            IntVec3 endPoint = FindNearestEdgePoint(roomB.roomCellRect, centerA);
-
-            LShapedCorridorPath straightCorridorPath = new LShapedCorridorPath();
-            mainCorridor.path = straightCorridorPath.GeneratePath(startPoint, endPoint, map);
+            Corridoor mainCorridor = new Corridoor(startPoint, endPoint);
+            mainCorridor.SetPath(corridorPath);
             corridors.Add(mainCorridor);
+
             return corridors;
         }
 
-        private static IntVec3 FindNearestEdgePoint(CellRect room, IntVec3 target)
+        public static List<RoomConnection> GenerateRoomConnections(Dungeon Dungeon, Map map)
         {
-            // Try horizontal alignment first
-            if (target.z >= room.minZ && target.z <= room.maxZ)
-            {
-                if (target.x < room.minX)
-                    return new IntVec3(room.minX, 0, target.z);
-                else if (target.x > room.maxX)
-                    return new IntVec3(room.maxX, 0, target.z);
-            }
+            List<RoomConnection> connections = new List<RoomConnection>();
+            HashSet<string> processedConnections = new HashSet<string>();
 
-            // Try vertical alignment
-            if (target.x >= room.minX && target.x <= room.maxX)
+            foreach (var room in Dungeon.GetAllRooms())
             {
-                if (target.z < room.minZ)
-                    return new IntVec3(target.x, 0, room.minZ);
-                else if (target.z > room.maxZ)
-                    return new IntVec3(target.x, 0, room.maxZ);
-            }
-
-            IntVec3 closestPoint = new IntVec3(room.minX, 0, room.minZ);
-            float minDist = float.MaxValue;
-
-            // Check each corner
-            foreach (IntVec3 corner in GetCorners(room))
-            {
-                float dist = (corner - target).LengthHorizontalSquared;
-                if (dist < minDist)
+                foreach (var connectedRoom in room.connectedRooms)
                 {
-                    minDist = dist;
-                    closestPoint = corner;
+                    string connectionId = DungeonRoom.GetConnectionId(room, connectedRoom);
+
+                    if (!processedConnections.Contains(connectionId))
+                    {
+                        RoomConnection connection = new RoomConnection(room, connectedRoom);
+
+                        // Generate with enhanced utility
+                        connection.corridors = GenerateCorridors(
+                            map, room, connectedRoom);
+
+                        connections.Add(connection);
+                        processedConnections.Add(connectionId);
+                    }
+                }
+            }
+            return connections;
+        }
+
+        struct ConnectionPoints
+        {
+           public IntVec3 Start;
+           public IntVec3 End;
+
+            public ConnectionPoints(IntVec3 start, IntVec3 end)
+            {
+                Start = start;
+                End = end;
+            }
+        }
+
+        private static ConnectionPoints FindOptimalConnectionPoints(DungeonRoom roomA, DungeonRoom roomB)
+        {
+            IntVec3 bestA = IntVec3.Invalid;
+            IntVec3 bestB = IntVec3.Invalid;
+            float bestDistance = float.MaxValue;
+
+            var edgePointsA = GetRoomEdgePoints(roomA.roomCellRect);
+            var edgePointsB = GetRoomEdgePoints(roomB.roomCellRect);
+
+            foreach (var pointA in edgePointsA)
+            {
+                foreach (var pointB in edgePointsB)
+                {
+                    float distance = (pointA - pointB).LengthHorizontalSquared;
+                    if (distance < bestDistance)
+                    {
+                        bestDistance = distance;
+                        bestA = pointA;
+                        bestB = pointB;
+                    }
                 }
             }
 
-            return closestPoint;
+            return new ConnectionPoints(bestA, bestB);
         }
 
-        // Helper to get room corners
-        private static IEnumerable<IntVec3> GetCorners(CellRect room)
+        private static List<IntVec3> GetRoomEdgePoints(CellRect room)
         {
-            yield return new IntVec3(room.minX, 0, room.minZ);
-            yield return new IntVec3(room.minX, 0, room.maxZ);
-            yield return new IntVec3(room.maxX, 0, room.minZ);
-            yield return new IntVec3(room.maxX, 0, room.maxZ);
+            List<IntVec3> edgePoints = new List<IntVec3>();
+
+            for (int x = room.minX; x <= room.maxX; x++)
+            {
+                edgePoints.Add(new IntVec3(x, 0, room.minZ));
+                edgePoints.Add(new IntVec3(x, 0, room.maxZ));
+            }
+
+            for (int z = room.minZ + 1; z <= room.maxZ - 1; z++)
+            {
+                edgePoints.Add(new IntVec3(room.minX, 0, z));
+                edgePoints.Add(new IntVec3(room.maxX, 0, z));
+            }
+
+            return edgePoints;
+        }
+
+        public static CorridorPathBase GetRandomWildCorridorStyle()
+        {
+            var styles = new CorridorPathBase[]
+            {
+                new BranchingCorridorPath { branchCount = Rand.Range(1, 4), branchLength = Rand.Range(3f, 8f) },
+                new OrganicCorridorPath { noise = Rand.Range(0.3f, 0.8f), smoothingPasses = Rand.Range(1, 4) },
+                new ZigzagCorridorPath { segments = Rand.Range(3, 8), zigzagOffset = Rand.Range(2f, 5f) },
+                new CurvedCorridorPath { curvature = Rand.Range(0.4f, 1.0f) },
+                new DrunkWalkCorridorPath { drunkeness = Rand.Range(0.3f, 0.7f) }
+            };
+
+            return styles.RandomElement();
         }
     }
 }

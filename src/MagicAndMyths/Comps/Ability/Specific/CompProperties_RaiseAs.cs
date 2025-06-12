@@ -19,16 +19,17 @@ namespace MagicAndMyths
             compClass = typeof(CompAbilityEffect_RaiseAs);
         }
     }
+
+
     public class CompAbilityEffect_RaiseAs : CompAbilityEffect
     {
         new CompProperties_RaiseAs Props => (CompProperties_RaiseAs)props;
-        Hediff_UndeadMaster master;
+        private Gene_DeathKnight GeneUndeadMaster => this.parent.pawn.genes.GetFirstGeneOfType<Gene_DeathKnight>();
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             base.Apply(target, dest);
             List<Thing> thingsInRadius = GenRadial.RadialDistinctThingsAround(target.Cell, this.parent.pawn.Map, Props.radius, true).ToList();
-            master = this.parent.pawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster) as Hediff_UndeadMaster;
 
             int count = 0;
             foreach (var thing in thingsInRadius)
@@ -100,7 +101,7 @@ namespace MagicAndMyths
 
 
             Hediff_Undead undeadHediff = (Hediff_Undead)newPawn.health.GetOrAddHediff(Props.undeadDef.hediff);
-            master.SummonCreature(newPawn, spawnPosition);
+            GeneUndeadMaster.SummonCreature(newPawn, spawnPosition);
         }
 
         public override void DrawEffectPreview(LocalTargetInfo target)
@@ -133,17 +134,5 @@ namespace MagicAndMyths
 
             return newPawn;
         }
-    }
-
-
-    public class UndeadDef : Def
-    {
-        public int baseWillCost = 1;
-        public float willCostMultiplier = 1f;
-        public HediffDef hediff;
-        public PawnKindDef kind;
-
-        public List<BackstoryDef> childhoodBackstories;
-        public List<BackstoryDef> adulthoodBackstories;
     }
 }

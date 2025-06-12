@@ -7,9 +7,9 @@
     <possessionCount>1</possessionCount>
     <tickerType>Normal</tickerType>
     <graphicData>
-      <texPath>Equipment/Armageddon</texPath>
+      <texPath>Equipment/Weapon_Armageddon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>1.2</drawSize>
+      <drawSize>1.7</drawSize>
       <allowFlip>false</allowFlip>
     </graphicData>
     <drawerType>MapMeshAndRealTime</drawerType>

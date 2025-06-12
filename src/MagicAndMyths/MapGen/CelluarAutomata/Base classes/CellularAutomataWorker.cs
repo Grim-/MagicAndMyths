@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
@@ -8,12 +9,20 @@ namespace MagicAndMyths
         public abstract void Apply(Map map, Dungeon Dungeon, BoolGrid dungeonGrid, BoolGrid currentState);
 
 
+        protected bool CanAffectCell(Map map, Dungeon dungeon, IntVec3 cell)
+        {
+            if (cell.x <= 3 || cell.z <= 3 || cell.x >= map.Size.x - 4 || cell.z >= map.Size.z - 4)
+            {
+                return false;
+            }
 
-        //public virtual bool CanModify(Map map, IntVec3 c)
-        //{
+            if (dungeon.GridManager.ProtectionGrid[cell])
+            {
+                return false;
+            }
 
-        //}
-
+            return true;
+        }
 
         protected int CountWallNeighbors(IntVec3 cell, Map map, BoolGrid grid)
         {

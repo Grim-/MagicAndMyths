@@ -16,9 +16,9 @@
         <DeteriorationRate>5</DeteriorationRate>
         <Flammability>1.0</Flammability>
       </statBases>
-      <comps>
-       <li Class="MagicAndMyths.CompProperties_Portal">
-         <mapGeneratorDef>MapGenEasyDungeon</mapGeneratorDef>
+    <comps Inherit="false">
+       <li Class="MagicAndMyths.CompProperties_PortalMapGenerator">
+         <mapGeneratorDef>UndeadDungeon</mapGeneratorDef>
          <mapSize>(100, 1, 100)</mapSize>
        </li>
      </comps>

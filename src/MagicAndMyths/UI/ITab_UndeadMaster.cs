@@ -14,14 +14,14 @@ namespace MagicAndMyths
         private int CurrentTabIndex = 0;
         private SquadDisplayUtility squadDisplay;
 
-        private Hediff_UndeadMaster _UndeadMaster;
-        private Hediff_UndeadMaster UndeadMaster
+        private Gene_DeathKnight _UndeadMaster;
+        private Gene_DeathKnight UndeadMaster
         {
             get
             {
                 if (_UndeadMaster == null)
                 {
-                    _UndeadMaster = this.SelPawn.health.hediffSet.GetFirstHediffOfDef(MagicAndMythDefOf.DeathKnight_UndeadMaster) as Hediff_UndeadMaster;
+                    _UndeadMaster = this.SelPawn.genes.GetFirstGeneOfType<Gene_DeathKnight>();
                 }
 
                 return _UndeadMaster;

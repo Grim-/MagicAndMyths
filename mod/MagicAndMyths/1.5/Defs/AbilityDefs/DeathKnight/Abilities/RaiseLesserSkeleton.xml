@@ -16,7 +16,7 @@
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
       </targetParams>
-      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+      <nonInterruptingSelfCast>false</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_RaiseAs">

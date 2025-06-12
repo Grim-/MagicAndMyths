@@ -26,7 +26,7 @@ namespace MagicAndMyths
         }
         protected int dungeonID = -1;
         public int DungeonID => dungeonID;
-        protected Dungeon GeneratedDungeon = null;
+        public Dungeon GeneratedDungeon = null;
 
         public bool HasColonistLimit = false;
         public int ColonistLimit = 10;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="BuildingBase">
-    <defName>DungeonWall</defName>
+    <defName>DefaultDungeonWall</defName>
     <label>wall</label>
     <description>It is impervious to damage.</description>
     <useHitPoints>false</useHitPoints>

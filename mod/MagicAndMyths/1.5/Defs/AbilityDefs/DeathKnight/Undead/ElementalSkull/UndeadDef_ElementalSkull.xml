@@ -3,7 +3,7 @@
   <MagicAndMyths.UndeadDef>
     <defName>ElementalSkull</defName>
     <hediff>DeathKnight_UndeadSekeleton</hediff>
-    <kind>MagicAndMyths_JibberingSkull</kind>
+    <kind>MagicAndMyths_ElementalSkull</kind>
     <childhoodBackstories>
       <li>MagicAndMyths_LesserUndead</li>
     </childhoodBackstories>

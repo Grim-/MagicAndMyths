@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <GenStepDef Name="KamiLookout">
+    <defName>KamiLookout</defName>
+    <order>10</order>
+    <genStep Class="MagicAndMyths.GenStep_CircularPlatform"/>
+  </GenStepDef>
+
+</Defs>

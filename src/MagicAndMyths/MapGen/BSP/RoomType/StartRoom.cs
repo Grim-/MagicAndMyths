@@ -1,17 +1,14 @@
 ﻿using RimWorld;
+using System.Collections.Generic;
 using Verse;
 
 namespace MagicAndMyths
 {
     public class StartRoom : RoomTypeWorker
     {
-        public override void ApplyRoom(Map map, DungeonRoom Room)
+        public override void ApplyRoom(Map map, Dungeon Dungeon, DungeonRoom Room)
         {
-            foreach (var item in Room.roomCellRect)
-            {
-                map.terrainGrid.SetTerrain(item, TerrainDefOf.MetalTile);
-                map.terrainGrid.SetUnderTerrain(item, TerrainDefOf.MetalTile);
-            }
+            base.ApplyRoom(map, Dungeon, Room);
 
             if (MagicAndMythDefOf.MagicAndMyths_ReturnPortal != null)
             {

@@ -17,14 +17,9 @@ namespace MagicAndMyths
     public class CompAbilityEffect_BindDeadAOE : CompAbilityEffect
     {
         new CompProperties_BindDeadAOE Props => (CompProperties_BindDeadAOE)props;
-        Hediff_UndeadMaster master;
 
 
-        public override void Initialize(AbilityCompProperties props)
-        {
-            base.Initialize(props);
-            master = (Hediff_UndeadMaster)this.parent.pawn.health.GetOrAddHediff(MagicAndMythDefOf.DeathKnight_UndeadMaster);
-        }
+        private Gene_DeathKnight GeneUndeadMaster => this.parent.pawn.genes.GetFirstGeneOfType<Gene_DeathKnight>();
 
         public override void DrawEffectPreview(LocalTargetInfo target)
         {
@@ -51,7 +46,7 @@ namespace MagicAndMyths
                     if (ResurrectionUtility.TryResurrect(deadPawn))
                     {
                         IntVec3 position = thing.Position;
-                        master.SummonCreature(deadPawn, position);
+                        GeneUndeadMaster.SummonCreature(deadPawn, position);
                     }
                 }
             }

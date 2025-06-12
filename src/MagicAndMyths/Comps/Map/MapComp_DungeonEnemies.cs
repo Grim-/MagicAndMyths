@@ -7,6 +7,8 @@ namespace MagicAndMyths
     public class MapComp_DungeonEnemies : MapComponent
     {
         private Dictionary<int, Lord> dungeonLords = new Dictionary<int, Lord>();
+        private List<int> dungeonLordWorkingKeys = new List<int>();
+        private List<Lord> dungeonLordWorkingValues = new List<Lord>();
 
         public MapComp_DungeonEnemies(Map map) : base(map)
         {
@@ -39,7 +41,7 @@ namespace MagicAndMyths
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look(ref dungeonLords, "dungeonLords", LookMode.Value, LookMode.Reference);
+            Scribe_Collections.Look(ref dungeonLords, "dungeonLords", LookMode.Value, LookMode.Reference, ref dungeonLordWorkingKeys, ref dungeonLordWorkingValues);
         }
     }
 }

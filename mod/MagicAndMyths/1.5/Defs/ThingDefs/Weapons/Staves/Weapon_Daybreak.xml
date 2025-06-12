@@ -6,7 +6,7 @@
     <label>daybreak (staff)</label>
     <description>A staff with a name of Day Break.</description>
     <graphicData>
-      <texPath>Equipment/staff_2</texPath>
+      <texPath>Equipment/Weapon_StaffOfDawn</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>Transparent</shaderType>
       <drawSize>2</drawSize>

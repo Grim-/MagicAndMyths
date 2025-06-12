@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <MagicAndMyths.GenStepDef_BspDungeon>
+      <defName>GenerateUndeadDungeon</defName>
+      <order>10000</order>
+      <genStep Class="MagicAndMyths.GenStep_BspDungeon"/>
+      <dungeonGenDef>UndeadDungeon</dungeonGenDef>
+    </MagicAndMyths.GenStepDef_BspDungeon>
+
+    <MagicAndMyths.DungeonGenDef>
+      <defName>UndeadDungeon</defName>
+        <randomCorridoorAmount>4~5</randomCorridoorAmount>
+        <maxDepth>150</maxDepth>
+        <minRoomSize>6</minRoomSize>
+        <minRoomPadding>1</minRoomPadding>
+        <roomSizeFactor>1</roomSizeFactor>
+        <noRoomChanceCriticalPath>0.3</noRoomChanceCriticalPath>
+        <noRoomChanceSidePath>0.5</noRoomChanceSidePath>
+        <minSizeMultiplier>1</minSizeMultiplier>
+        <aspectRatioThreshold>1.1</aspectRatioThreshold>
+        <edgeMarginDivisor>1.1</edgeMarginDivisor>
+        <roomAmount>5~15</roomAmount>
+        <sideRoomCount>9~25</sideRoomCount>
+        <addRandomCorridoors>false</addRandomCorridoors>
+        <availableRoomTypes>
+          <li>StartRoom</li>
+          <li>EndRoom</li>
+          <li>BasicFightRoom</li>
+          <li>ObstacleRoom</li>
+        </availableRoomTypes>
+        <availableSideRoomTypes>
+          <li>TreasureRoom</li>
+          <li>TreasureRoomMiningChunk</li>
+          <li>EncounterRoom_Fight</li>
+          <li>RecoveryRoom</li>
+        </availableSideRoomTypes>
+        <earlyAutomata>
+        </earlyAutomata>
+        <postGenAutomata>
+          <!-- <li>
+            <automataDef>AddAlcoves</automataDef>
+            <iterations>10</iterations>
+          </li>
+          <li>
+            <automataDef>RemoveIslands</automataDef>
+            <iterations>2</iterations>
+          </li> -->
+        </postGenAutomata>
+        <indestructibleWall>DungeonWall</indestructibleWall>
+        <wall>DungeonWall</wall>
+        <wallStuff>Stone</wallStuff>
+        <floor>MetalTile</floor>
+        <difficultyRange>1~1</difficultyRange>
+        <genSteps>
+          <li>ElevationFertility</li>
+          <li>Terrain</li>
+          <li>Plants</li>
+          <li>GenerateUndeadDungeon</li>
+        </genSteps>
+        <pocketMapProperties>
+            <biome>HiddenForest</biome>
+            <temperature>21</temperature>
+        </pocketMapProperties>
+    </MagicAndMyths.DungeonGenDef>
+</Defs>

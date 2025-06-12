@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ClassGeneDef>
+    <defName>MagicAndMyths_DeathKnightGene</defName>
+    <label>death knight</label>
+    <description>The dawdawdadaw</description>
+    <iconPath>UI/Icons/Genes/Gene_ElementalMastery</iconPath>
+    <geneClass>MagicAndMyths.Gene_DeathKnight</geneClass>
+    <primaryResourceDef>Mana</primaryResourceDef>
+    <displayOrderInCategory>100</displayOrderInCategory>
+    <biostatCpx>2</biostatCpx>
+    <biostatMet>-3</biostatMet>
+    <abilities>
+      <li>RaiseLesserSkeleton</li>
+      <li>RaiseLesserZombie</li>
+      <li>RaiseElementalSkull</li>
+    </abilities>
+    <prerequisite>MagicAndMyths_ManaGene</prerequisite>
+  </MagicAndMyths.ClassGeneDef>
+</Defs>

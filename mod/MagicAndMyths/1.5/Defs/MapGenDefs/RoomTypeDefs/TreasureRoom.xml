@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.RoomTypeDef>
+  <MagicAndMyths.TreasureRoomDef>
     <defName>TreasureRoom</defName>
     <roomType>Normal</roomType>
-    <roomTypeWorker>MagicAndMyths.TreasureRoom</roomTypeWorker>
     <maxSize>(4,4)</maxSize>
-  </MagicAndMyths.RoomTypeDef>
-
+    <potentialTreasure>
+      <li>
+        <thingDef>Silver</thingDef>
+        <count>100~5000</count>
+      </li>
+      <li>
+        <thingDef>Gold</thingDef>
+        <count>10~500</count>
+      </li>
+    </potentialTreasure>
+    <roomObstacles>
+    </roomObstacles>
+    <roomIsOnCriticalPath>false</roomIsOnCriticalPath>
+  </MagicAndMyths.TreasureRoomDef>
 </Defs>

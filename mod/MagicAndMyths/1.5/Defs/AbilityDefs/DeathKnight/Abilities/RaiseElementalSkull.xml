@@ -2,7 +2,7 @@
 <Defs>
   <AbilityDef>
     <defName>RaiseElementalSkull</defName>
-    <label>RaiseElementalSkull</label>
+    <label>Raise Elemental Skull</label>
     <description>Resurrect all nearby corpses as a lesser skeleton, these retain nothing of their formerselves, twisted to fight and perform simple labour.</description>
     <hostile>false</hostile>
     <targetRequired>true</targetRequired>
@@ -16,7 +16,7 @@
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
       </targetParams>
-      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+      <nonInterruptingSelfCast>false</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_RaiseAs">

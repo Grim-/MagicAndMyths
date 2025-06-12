@@ -19,17 +19,24 @@ namespace MagicAndMyths
             if (pawn == null || !pawn.IsColonist || deadColonists.Any(x=> x.Pawn == pawn))
                 return;
 
-            DeadColonistRecord record = new DeadColonistRecord
+            try
             {
-                Pawn = pawn,
-                PawnCorpse = pawn.Corpse,
-                DeathTick = Find.TickManager.TicksGame,
-                DeathReason = culprit.combatLogText,
-                Killer = info.InstigatorGuilty ? info.Instigator : null
-            };
+                DeadColonistRecord record = new DeadColonistRecord
+                {
+                    Pawn = pawn,
+                    PawnCorpse = pawn.Corpse,
+                    DeathTick = Find.TickManager.TicksGame,
+                    DeathReason = culprit.combatLogText,
+                    Killer = info.InstigatorGuilty && info.Instigator != null ? info.Instigator : null
+                };
 
-            deadColonists.Add(record);
-            //Log.Message($"Colonist {record.Pawn.Name} added to heaven registry at tick {record.DeathTick}.");
+                deadColonists.Add(record);
+                //Log.Message($"Colonist {record.Pawn.Name} added to heaven registry at tick {record.DeathTick}.");
+            }
+            catch (System.Exception e)
+            {
+                Log.Message(e);
+            }
         }
 
         public void UnTrackColonist(Pawn pawn)

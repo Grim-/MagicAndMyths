@@ -5,6 +5,14 @@ using Verse;
 
 namespace MagicAndMyths
 {
+    public class GenStepDef_BspDungeon : GenStepDef
+    {
+        public DungeonGenDef dungeonGenDef;
+        public GenStepDef_BspDungeon()
+        {
+          
+        }
+    }
 
     public class GenStep_BspDungeon : GenStep
     {

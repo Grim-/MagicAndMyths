@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <GenStepDef>
+    <defName>PopulateHeaven</defName>
+    <order>13</order>
+    <genStep Class="MagicAndMyths.GenStep_PopulateHeaven"/>
+  </GenStepDef>
+
+</Defs>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
-    <defName>Thor_BrickHammer</defName>
+    <defName>MagicAndMyths_BrickHammer</defName>
     <label>Brick Hammer</label>
     <description>Brick Hammer</description>
     <possessionCount>1</possessionCount>

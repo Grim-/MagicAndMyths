@@ -5,13 +5,9 @@ namespace MagicAndMyths
 {
     public class EndRoom : RoomTypeWorker
     {
-        public override void ApplyRoom(Map map, DungeonRoom Room)
+        public override void ApplyRoom(Map map, Dungeon Dungeon, DungeonRoom Room)
         {
-            foreach (var item in Room.roomCellRect.Cells)
-            {
-                map.terrainGrid.SetTerrain(item, TerrainDefOf.FlagstoneSandstone);
-                map.terrainGrid.SetUnderTerrain(item, TerrainDefOf.FlagstoneSandstone);
-            }
+            base.ApplyRoom(map, Dungeon, Room);
 
             if (MagicAndMythDefOf.MagicAndMyths_ReturnPortal != null)
             {

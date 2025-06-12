@@ -19,19 +19,19 @@ namespace MagicAndMyths
         {
             foreach (IntVec3 cell in map.AllCells)
             {
-                if (cell.x <= 3 || cell.z <= 3 || cell.x >= map.Size.x - 4 || cell.z >= map.Size.z - 4)
+                if (!CanAffectCell(map, Dungeon, cell))
                 {
                     continue;
                 }
 
                 if (currentState[cell])
                 {
-                    if (!IsNearRoomEdge(cell, map, currentState))
+                    if (!Dungeon.SpatialAnalyzer.IsNearRoomEdge(cell, map, currentState))
                     {
                         continue;
                     }
 
-                    if (IsPathCell(cell, map, currentState) || IsAdjacentToPath(cell, map, currentState))
+                    if (IsPathCell(cell, map, currentState))
                     {
                         continue;
                     }
@@ -50,7 +50,7 @@ namespace MagicAndMyths
                 {
                     if (wallNeighbors <= deathThreshold && Rand.Chance(randomChance * 0.7f))
                     {
-                        if (CountFloorNeighbors(cell, map, currentState) >= 1)
+                        if (Dungeon.SpatialAnalyzer.CountFloorNeighbors(cell, map, currentState) >= 1)
                         {
                             dungeonGrid[cell] = true;
                         }
@@ -59,45 +59,6 @@ namespace MagicAndMyths
             }
         }
 
-        private bool IsNearRoomEdge(IntVec3 cell, Map map, BoolGrid grid)
-        {
-            for (int dx = -2; dx <= 2; dx++)
-            {
-                for (int dz = -2; dz <= 2; dz++)
-                {
-                    IntVec3 checkCell = new IntVec3(cell.x + dx, cell.y, cell.z + dz);
-                    if (checkCell.InBounds(map) && !grid[checkCell])
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        private bool IsAdjacentToPath(IntVec3 cell, Map map, BoolGrid grid)
-        {
-            foreach (IntVec3 dir in GenAdjFast.AdjacentCells8Way(cell).ToArray())
-            {
-                if (dir.InBounds(map) && grid[dir] && IsPathCell(dir, map, grid))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private int CountFloorNeighbors(IntVec3 cell, Map map, BoolGrid grid)
-        {
-            int count = 0;
-            foreach (IntVec3 neighbor in GenAdjFast.AdjacentCells8Way(cell).ToArray())
-            {
-                if (neighbor.InBounds(map) && grid[neighbor])
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
+       
     }
 }

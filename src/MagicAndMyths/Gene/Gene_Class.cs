@@ -1,10 +1,13 @@
-﻿using Verse;
+﻿using System.Collections.Generic;
+using Verse;
 
 namespace MagicAndMyths
 {
     public class ClassGeneDef : GeneDef
     {
         public AbilityResourceDef primaryResourceDef;
+
+        public List<ClassGeneDef> incompatibleClasses = new List<ClassGeneDef>();
 
         public ClassGeneDef()
         {

@@ -26,8 +26,10 @@ namespace MagicAndMyths
                 if (existingParent.HasMap)
                     return existingParent.Map;
 
+                IntVec3 actualMapSize = mapGeneratorDef is DungeonGenDef dungeonGenDef ? dungeonGenDef.mapSize : mapSize;
+
                 Map map = MapGenerator.GenerateMap(
-                    mapSize,
+                    actualMapSize,
                     existingParent,
                     mapGeneratorDef,
                     null,

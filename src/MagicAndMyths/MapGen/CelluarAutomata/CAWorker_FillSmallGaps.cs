@@ -14,7 +14,7 @@ namespace MagicAndMyths
         {
             foreach (IntVec3 cell in map.AllCells)
             {
-                if (cell.x <= 2 || cell.z <= 2 || cell.x >= map.Size.x - 3 || cell.z >= map.Size.z - 3)
+                if (!CanAffectCell(map, Dungeon, cell))
                 {
                     continue;
                 }

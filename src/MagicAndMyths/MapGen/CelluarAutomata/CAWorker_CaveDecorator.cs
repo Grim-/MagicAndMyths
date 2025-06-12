@@ -17,16 +17,16 @@ namespace MagicAndMyths
         {
             foreach (IntVec3 cell in map.AllCells)
             {
-                if (cell.x <= 3 || cell.z <= 3 || cell.x >= map.Size.x - 4 || cell.z >= map.Size.z - 4)
+                if (!CanAffectCell(map, Dungeon, cell))
                 {
                     continue;
                 }
 
-                if (!currentState[cell] && IsWallNearFloor(cell, map, currentState))
+                if (!currentState[cell] && Dungeon.SpatialAnalyzer.IsWallNearFloor(cell, map, currentState))
                 {
                     if (Rand.Chance(randomChance))
                     {
-                        IntVec3 nearestFloor = FindNearestFloor(cell, map, currentState);
+                        IntVec3 nearestFloor = Dungeon.SpatialAnalyzer.FindNearestFloor(cell, map, currentState);
                         if (nearestFloor.IsValid)
                         {
                             IntVec3 direction = new IntVec3(
@@ -35,6 +35,12 @@ namespace MagicAndMyths
                                 Math.Sign(nearestFloor.z - cell.z));
 
                             IntVec3 nextCell = cell + direction;
+
+                            if (!CanAffectCell(map, Dungeon, nextCell))
+                            {
+                                continue;
+                            }
+
                             if (nextCell.InBounds(map) && !currentState[nextCell])
                             {
                                 dungeonGrid[nextCell] = true;
@@ -45,38 +51,6 @@ namespace MagicAndMyths
             }
         }
 
-        private bool IsWallNearFloor(IntVec3 cell, Map map, BoolGrid grid)
-        {
-            foreach (IntVec3 neighbor in GenAdjFast.AdjacentCells8Way(cell))
-            {
-                if (neighbor.InBounds(map) && grid[neighbor])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
-        private IntVec3 FindNearestFloor(IntVec3 cell, Map map, BoolGrid grid)
-        {
-            for (int radius = 1; radius <= 3; radius++)
-            {
-                for (int dx = -radius; dx <= radius; dx++)
-                {
-                    for (int dz = -radius; dz <= radius; dz++)
-                    {
-                        if (Math.Abs(dx) + Math.Abs(dz) <= radius)
-                        {
-                            IntVec3 checkCell = new IntVec3(cell.x + dx, cell.y, cell.z + dz);
-                            if (checkCell.InBounds(map) && grid[checkCell])
-                            {
-                                return checkCell;
-                            }
-                        }
-                    }
-                }
-            }
-            return IntVec3.Invalid;
-        }
     }
 }

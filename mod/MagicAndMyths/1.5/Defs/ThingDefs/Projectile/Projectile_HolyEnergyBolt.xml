@@ -4,7 +4,7 @@
     <defName>Projectile_HolyEnergyBolt</defName>
     <label>holy energy bolt</label>
     <graphicData>
-      <texPath>Projectiles/HolyEnergyBolt</texPath>
+      <texPath>Projectiles/HolyEnergyBolt2</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <projectile>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ObstacleRoomDef>
+    <defName>ObstacleRoom</defName>
+    <roomType>Normal</roomType>
+    <obstacles>
+      <li>KeyAndLockObstacle</li>
+      <li>PlaceDesecratedAltar</li>
+    </obstacles>
+  </MagicAndMyths.ObstacleRoomDef>
+</Defs>

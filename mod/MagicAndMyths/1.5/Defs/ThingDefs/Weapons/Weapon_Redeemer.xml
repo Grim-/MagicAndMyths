@@ -9,7 +9,7 @@
     <graphicData>
       <texPath>Equipment/Redeemer</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>1.2</drawSize>
+      <drawSize>1.6</drawSize>
       <allowFlip>false</allowFlip>
     </graphicData>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -29,32 +29,18 @@
       <li>
         <label>blade</label>
         <capacities>
-          <li>Cut</li>
+          <li>Smite</li>
         </capacities>
         <power>16</power>
         <cooldownTime>1.9</cooldownTime>
-        <extraMeleeDamages>
-          <li>
-            <def>Radiant</def>
-            <amount>2</amount>
-            <chance>1</chance>
-          </li>
-        </extraMeleeDamages>
       </li>
       <li>
         <label>pommel</label>
         <capacities>
-          <li>Blunt</li>
+          <li>Smite</li>
         </capacities>
         <power>10</power>
         <cooldownTime>2.5</cooldownTime>
-        <extraMeleeDamages>
-          <li>
-            <def>Radiant</def>
-            <amount>1</amount>
-            <chance>1</chance>
-          </li>
-        </extraMeleeDamages>
       </li>
     </tools>
     <modExtensions>

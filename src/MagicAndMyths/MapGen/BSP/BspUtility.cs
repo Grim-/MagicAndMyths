@@ -7,7 +7,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class BspNode
+    public class BspNode : IExposable
     {
         public CellRect rect;
         public BspNode left;
@@ -95,29 +95,50 @@ namespace MagicAndMyths
 
             return new CellRect(x, z, roomWidth, roomHeight);
         }
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref rect, "rect");
+            Scribe_Values.Look(ref roomRect, "roomRect");
+            Scribe_Deep.Look(ref left, "left");
+            Scribe_Deep.Look(ref right, "right");
+
+            Scribe_Collections.Look(ref tags, "tags", LookMode.Value);
+            Scribe_Collections.Look(ref connectedNodes, "connectedNodes", LookMode.Reference);
+        }
     }
-    public class BspNodePair
+    public class BspNodePair : IExposable
     {
         public BspNode NodeOne;
         public BspNode NodeTwo;
+
+        public BspNodePair()
+        {
+
+        }
 
         public BspNodePair(BspNode nodeOne, BspNode nodeTwo)
         {
             NodeOne = nodeOne;
             NodeTwo = nodeTwo;
         }
+
+        public void ExposeData()
+        {
+            Scribe_Deep.Look(ref NodeOne, "NodeOne");
+            Scribe_Deep.Look(ref NodeTwo, "NodeTwo");
+        }
     }
 
     public static class BspUtility
     {
         public static BspNode GenerateBspTreeWithSideRooms(
-                    CellRect rootRect, int mainRoomCount, int sideRoomCount,
+                    CellRect rootRect, int totalRoomCount, int mainRoomCount, int sideRoomCount,
                     int minRoomSize = 8, int maxSplitAttempts = 100,
                     float aspectRatioThreshold = 1.2f,
                     float edgeMarginDivisor = 2f)
         {
             // Calculate the total number of rooms we want to generate
-            int totalRooms = mainRoomCount + sideRoomCount;
+            int totalRooms = totalRoomCount;
 
             // Use original algorithm to generate enough rooms
             int initialMaxDepth = (int)Math.Ceiling(Math.Log(totalRooms, 2)) + 1;
@@ -154,7 +175,7 @@ namespace MagicAndMyths
                     SplitNode(largestNode, 0, 1, minRoomSize, aspectRatioThreshold, edgeMarginDivisor);
                     leafNodes.Clear();
                     GetLeafNodes(rootNode, leafNodes);
-                   // Log.Message($"After split attempt {attempts + 1}: now {leafNodes.Count} rooms");
+                    // Log.Message($"After split attempt {attempts + 1}: now {leafNodes.Count} rooms");
                 }
                 else
                 {
@@ -220,75 +241,6 @@ namespace MagicAndMyths
             return rootNode;
         }
 
-
-
-        public static BspNode GenerateBspTreeWithRoomCount(CellRect rootRect, int minRooms, int maxRooms, int minRoomSize = 8, int maxSplitAttempts = 100, float aspectRatioThreshold = 1.2f, float edgeMarginDivisor = 2f)
-        {
-            int initialMaxDepth = (int)Math.Ceiling(Math.Log(maxRooms, 2)) + 1;
-
-            BspNode rootNode = new BspNode { rect = rootRect };
-            SplitNode(rootNode, 0, initialMaxDepth, minRoomSize, aspectRatioThreshold, edgeMarginDivisor);
-
-            List<BspNode> leafNodes = new List<BspNode>();
-            GetLeafNodes(rootNode, leafNodes);
-
-            //Log.Message($"BSP generated {leafNodes.Count} potential rooms, target: {minRooms}-{maxRooms}");
-
-            int attempts = 0;
-            while (leafNodes.Count < minRooms && attempts < maxSplitAttempts)
-            {
-                BspNode largestNode = null;
-                int largestArea = 0;
-
-                foreach (var node in leafNodes)
-                {
-                    int area = node.rect.Width * node.rect.Height;
-                    if (area > largestArea &&
-                        node.rect.Width >= minRoomSize &&
-                        node.rect.Height >= minRoomSize)
-                    {
-                        largestArea = area;
-                        largestNode = node;
-                    }
-                }
-
-                if (largestNode != null)
-                {
-                    SplitNode(largestNode, 0, 1, minRoomSize, aspectRatioThreshold, edgeMarginDivisor);
-
-                    leafNodes.Clear();
-                    GetLeafNodes(rootNode, leafNodes);
-                    //Log.Message($"After split attempt {attempts + 1}: now {leafNodes.Count} rooms");
-                }
-                else
-                {
-                    break;
-                }
-
-                attempts++;
-            }
-
-            if (leafNodes.Count > maxRooms)
-            {
-                //Log.Message($"Too many rooms ({leafNodes.Count}), pruning to {maxRooms}");
-                leafNodes.Shuffle();
-                var nodesToKeep = leafNodes.Take(maxRooms).ToList();
-
-                foreach (var node in nodesToKeep)
-                {
-                    node.AddTag("keep");
-                }
-
-                PruneNonMarkedLeafNodes(rootNode);
-
-                leafNodes.Clear();
-                GetLeafNodes(rootNode, leafNodes);
-                //Log.Message($"After pruning: {leafNodes.Count} rooms");
-            }
-
-            return rootNode;
-        }
-
         public static void SplitNode(BspNode node, int depth, int maxDepth, int minRoomSize, float aspectRatioThreshold = 1.5f, float edgeMarginDivisor = 2f)
         {
             if (!ShouldSplit(node, depth, maxDepth, minRoomSize))
@@ -297,7 +249,7 @@ namespace MagicAndMyths
             int minMargin = (int)(minRoomSize / edgeMarginDivisor);
             bool splitHorizontal = DetermineSplitOrientation(node.rect, aspectRatioThreshold, minMargin);
 
-            if (!CanSplit(node.rect, splitHorizontal, minRoomSize,  minMargin))
+            if (!CanSplit(node.rect, splitHorizontal, minRoomSize, minMargin))
                 return;
 
             int splitPos = GetSplitPosition(node.rect, splitHorizontal, minMargin);
@@ -307,7 +259,7 @@ namespace MagicAndMyths
             node.right = new BspNode { rect = rightRect };
 
             SplitNode(node.left, depth + 1, maxDepth, minRoomSize, aspectRatioThreshold, edgeMarginDivisor);
-            SplitNode(node.right, depth + 1, maxDepth, minRoomSize,  aspectRatioThreshold, edgeMarginDivisor);
+            SplitNode(node.right, depth + 1, maxDepth, minRoomSize, aspectRatioThreshold, edgeMarginDivisor);
         }
 
         private static bool ShouldSplit(BspNode node, int depth, int maxDepth, int minRoomSize)
@@ -436,5 +388,8 @@ namespace MagicAndMyths
 
             return possibleWaypoints.Take(count).ToList();
         }
+
     }
+
+
 }

@@ -1,74 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
-    // Drunk Walk Corridor
     public class DrunkWalkCorridorPath : CorridorPathBase
     {
+        public float drunkeness = 0.3f;
+        public int maxSteps = 1000;
+
         public override List<IntVec3> GeneratePath(IntVec3 start, IntVec3 end, Map map)
         {
-            List<IntVec3> path = new List<IntVec3> { start };
+            List<IntVec3> path = new List<IntVec3>();
             IntVec3 current = start;
+            path.Add(current);
 
-            // Cardinal directions
-            IntVec3[] directions = new IntVec3[] {
-                new IntVec3(0, 0, 1),   // North
-                new IntVec3(1, 0, 0),   // East
-                new IntVec3(0, 0, -1),  // South
-                new IntVec3(-1, 0, 0)   // West
-            };
-
-            int maxSteps = (int)(start.DistanceTo(end) * 3);
             int steps = 0;
-
             while (current != end && steps < maxSteps)
             {
+                Vector2 toTarget = new Vector2(end.x - current.x, end.z - current.z).normalized;
+                Vector2 randomDir = new Vector2(Rand.Range(-1f, 1f), Rand.Range(-1f, 1f)).normalized;
+
+                Vector2 finalDir = Vector2.Lerp(toTarget, randomDir, drunkeness).normalized;
+
+                IntVec3 next = new IntVec3(
+                    current.x + Mathf.RoundToInt(finalDir.x),
+                    0,
+                    current.z + Mathf.RoundToInt(finalDir.y)
+                );
+
+                if (next != current)
+                {
+                    path.Add(next);
+                    current = next;
+                }
+
                 steps++;
-
-                // 40% chance of random move, 30% chance of directed move
-                if (Rand.Value < 0.4f)
-                {
-                    // Random move in cardinal direction
-                    IntVec3 dir = directions[Rand.RangeInclusive(0, 3)];
-                    current += dir;
-                }
-                else
-                {
-                    // Move toward end
-                    IntVec3 toEnd = end - current;
-
-                    if (Math.Abs(toEnd.x) > Math.Abs(toEnd.z))
-                        current += new IntVec3(Math.Sign(toEnd.x), 0, 0);
-                    else
-                        current += new IntVec3(0, 0, Math.Sign(toEnd.z));
-                }
-
-                path.Add(current);
-
-                // If we're close to the end, make a direct line
-                if (current.DistanceTo(end) <= 3)
-                {
-                    // Add direct line to end
-                    int endDx = end.x - current.x;
-                    int endDz = end.z - current.z;
-                    int endSteps = Math.Max(Math.Abs(endDx), Math.Abs(endDz));
-
-                    for (int i = 1; i <= endSteps; i++)
-                    {
-                        float t = (float)i / endSteps;
-                        int x = current.x + (int)Math.Round(endDx * t);
-                        int z = current.z + (int)Math.Round(endDz * t);
-
-                        path.Add(new IntVec3(x, 0, z));
-                    }
-
-                    break;
-                }
             }
 
-            return path;
+            // Ensure we reach the end
+            if (current != end)
+            {
+                AddPointsAlongLine(path, current, end);
+            }
+
+            return path.Distinct().ToList();
         }
     }
 }

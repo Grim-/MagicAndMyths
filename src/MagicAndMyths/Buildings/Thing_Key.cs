@@ -16,7 +16,7 @@ namespace MagicAndMyths
             {
                 if (doorReference != null)
                 {
-                    return $"Key ({doorReference}";
+                    return $"Key";
                 }
                 return base.Label;
             }

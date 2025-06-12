@@ -11,5 +11,4 @@
     <defaultDamage>15</defaultDamage>
     <scaleDamageToBuildingsBasedOnFlammability>false</scaleDamageToBuildingsBasedOnFlammability>
   </DamageDef>
-
 </Defs>

@@ -14,6 +14,20 @@
     </children>
   </EffecterDef>
 
+  <EffecterDef>
+    <defName>MagicAndMyths_PortalLong</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>1.4</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_MotePortal</moteDef>
+      </li>
+    </children>
+  </EffecterDef>
+
   <ThingDef ParentName="MoteBase">
       <defName>MagicAndMyths_MotePortal</defName>
       <thingClass>MoteAttached</thingClass>

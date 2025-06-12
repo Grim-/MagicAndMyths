@@ -20,7 +20,10 @@ namespace MagicAndMyths
             }
         }
 
+        public IntRange iterations = new IntRange(5, 6);
+
         public Type workerClass;
+
 
         public void Apply(Map map, Dungeon Dungeon, BoolGrid dungeonGrid, BoolGrid currentState)
         {

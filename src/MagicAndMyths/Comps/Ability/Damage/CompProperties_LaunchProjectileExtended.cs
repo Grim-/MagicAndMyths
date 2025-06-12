@@ -6,6 +6,7 @@ namespace MagicAndMyths
     public class CompProperties_LaunchProjectileExtended : CompProperties_AbilityEffect
     {
         public ThingDef projectileDef;
+        public IntRange launchAmount = new IntRange(1, 1);
 
         public CompProperties_LaunchProjectileExtended()
         {
@@ -28,16 +29,19 @@ namespace MagicAndMyths
             {
                 Pawn pawn = this.parent.pawn;
 
-
-                Projectile projectile = (Projectile)GenSpawn.Spawn(this.Props.projectileDef, pawn.Position, pawn.Map, WipeMode.Vanish);
-
-                if (projectile is Projectile_Extended projectile_Extended && parent is ResourceAbility resourceAbility)
+                for (int i = 0; i < Props.launchAmount.RandomInRange; i++)
                 {
-                    projectile_Extended.OverrideDamageAmount = (int)(projectile.DamageAmount * resourceAbility.GetDamageScalingMultiplier());
+                    IntVec3 spawnCell = pawn.Position.RandomAdjacentCell8Way();
+
+                    Projectile projectile = (Projectile)GenSpawn.Spawn(this.Props.projectileDef, spawnCell, pawn.Map, WipeMode.Vanish);
+
+                    if (projectile is Projectile_Extended projectile_Extended && parent is ResourceAbility resourceAbility)
+                    {
+                        projectile_Extended.OverrideDamageAmount = (int)(projectile.DamageAmount * resourceAbility.GetDamageScalingMultiplier());
+                    }
+
+                    projectile.Launch(pawn, spawnCell.ToVector3Shifted(), target, target, ProjectileHitFlags.IntendedTarget, false, null, null);
                 }
-
-                projectile.Launch(pawn, pawn.DrawPos, target, target, ProjectileHitFlags.IntendedTarget, false, null, null);
-
             }
         }
 

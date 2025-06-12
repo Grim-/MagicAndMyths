@@ -2,8 +2,8 @@
 <Defs>
   <ThingDef ParentName="BasePawn">
     <defName>MagicAndMyths_LesserSkeleton</defName>
-    <label>human</label>
-    <description>A baseline human, mostly unmodified by gene engineering and mostly unchanged by evolutionary pressures on non-Earth planets.</description>
+    <label>lesser skeleton</label>
+    <description>A corpse risen from the dead, long since has all the flesh rotted away.</description>
     <statBases>
       <MarketValue>1750</MarketValue>
       <MoveSpeed>4.6</MoveSpeed>

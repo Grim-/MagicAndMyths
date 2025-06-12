@@ -27,4 +27,8 @@
     <workerClass>MagicAndMyths.CAWorker_FillSmallGaps</workerClass>
   </MagicAndMyths.CelluarAutomataDef>
 
+  <MagicAndMyths.CelluarAutomataDef>
+    <defName>RemoveIslands</defName>
+    <workerClass>MagicAndMyths.CAWorker_RemoveIslands</workerClass>
+  </MagicAndMyths.CelluarAutomataDef>
 </Defs>

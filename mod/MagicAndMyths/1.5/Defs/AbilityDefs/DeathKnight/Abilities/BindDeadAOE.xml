@@ -13,7 +13,7 @@
       <warmupTime>0</warmupTime>
       <soundCast>FireSpew_Resolve</soundCast>
       <targetable>False</targetable>
-      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+      <nonInterruptingSelfCast>false</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_BindDeadAOE">

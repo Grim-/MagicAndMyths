@@ -39,6 +39,7 @@
       <trainability>Advanced</trainability>
       <petness>0</petness>
       <lifeExpectancy>1000</lifeExpectancy>
+      <overrideShouldHaveAbilityTracker>true</overrideShouldHaveAbilityTracker>
       <lifeStageAges>
         <li>
           <def>AnimalAdult</def>
