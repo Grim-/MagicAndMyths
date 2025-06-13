@@ -2,7 +2,7 @@
 
 **A comprehensive magic system overhaul bringing new RPG mechanics to RimWorld**
 
-Aside from adding items, equipment and more from various sources of fantasy media most of us know and love, I am adding some systems on top that can be used by other modders, almost every system available has components that can be used, or defs, classes and other things that can be expanded upon to suit needs.
+Aside from adding items, equipment and more from various sources of fantasy media most of us know and love, I am adding some systems on top that can be used by other modders, almost every system available has components that can be used, or defs, classes, workers and other things that can be expanded upon to suit needs.
 
 ## Core Magic Systems
 
@@ -17,6 +17,27 @@ Examples:
   - Fire Tongue (adds flame damage on hit), 
   - Sunlight (boosts armor and strength during day, weakens at night)
   - Lifedrinking (heals on damage dealt)
+
+
+## Magical Items & Structures
+
+### Core Buildings
+- **Phylactery**: Soul storage device preventing death while intact - essential for Lich survival
+- **Philosophers Alchemical Array**: Large magical circle that harvests energy from deaths within radius, produces philosopher's stones that reduce ability costs
+
+### Magical Equipment  
+- **Invisibility Cloak**: Elegant cape granting invisibility abilities
+- **The One Ring**: Cursed ring providing invisibility but cannot be removed once equipped
+- **Simple Bomb**: Basic throwable explosive - detonates on impact, damage, or heat
+
+### Equipment Systems
+- **Cursed Items**: Cannot be unequipped, provide powerful benefits with dangerous drawbacks
+- **Soul-bound Weapons**: Bind to specific owners, return through space and time, become worthless to others until owner dies
+
+---
+
+
+
 
 ### Leveled Abilities & Mastery
 - Spells and abilities grow stronger through use
