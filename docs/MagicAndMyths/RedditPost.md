@@ -3,16 +3,13 @@
 **A comprehensive magic system overhaul bringing new RPG mechanics to RimWorld**
 
 
-
 **Magic and myths is a work in progress, there will be bugs, problems that did not even occour to me to fix, and other fun things, it's a large mod with some complex systems, so for the moment while I dont believe it will ruin your save, you're probably best making back up before hand.**
 
 Aside from adding items, equipment and more from various sources of fantasy media most of us know and love, I am adding some systems on top that can be used by other modders, almost every system available has components that can be used, or defs, classes, workers and other things that can be expanded upon to suit needs.
 
 
-
-A little about me, I'm Emo. 
-I have been programming for over 10 years, some large portion of that spent in solo game development, I am a full time carer and do this in my spare time for fun, I enjoy fantasy stories, media of almost any description.
-
+#### A little about me
+Hi, I'm emo, I have been programming for over 10 years, some large portion of that spent in solo game development, I am a full time carer and do this in my spare time for fun, I enjoy fantasy stories, media of almost any description.
 
 I am aiming to make this a comprehensive mod for magical systems, mythology creatures, items and more, but I could do with some help! 
 
@@ -25,10 +22,7 @@ Help with any of the following would be a massive boon!
 
 I am ofcourse willing to get people upto speed on what is/isnt possible and how you might go about certain things.
 
-People of any experience level can apply, but be warned this is likely still months from release with much work left to be done, if you still feel you'd like to contribute then please get in touch at `.emo_` on discord, or join the LifeIsGame.Inc discord server `https://discord.gg/vqeXhTCXrx` where I am being graciously hosted by the author of the Saiyans and Naruto mods.
-
-
-## Core Magic Systems
+**People of any experience level can apply, but be warned this is likely still months from release with much work left to be done**, if you still feel you'd like to contribute then please get in touch at `.emo_` on discord, or join the LifeIsGame.Inc discord server `https://discord.gg/vqeXhTCXrx` where I am being graciously hosted by the author of the Saiyans and Naruto mods.
 
 
 ## World & Environment Features
