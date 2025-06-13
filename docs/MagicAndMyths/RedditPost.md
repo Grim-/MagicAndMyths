@@ -23,6 +23,7 @@ Completely customizable projectiles with interchangeable components for varied m
 
 ### Throwing Mechanics
 Full throwing system with effect-on-impact capabilities, supporting both items and specialized throwables.
+
 https://streamable.com/zc3rh8
 
 ### Innate Jumping
@@ -44,6 +45,8 @@ Characters and objects can transform into different forms, opening possibilities
 
 ### Growable Buildings
 Magical structures that develop and expand over time, with a prefab system for creating custom growth patterns.
+
+https://streamable.com/9scyza
 
 ## Quality of Life Improvements
 
