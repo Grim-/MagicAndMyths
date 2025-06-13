@@ -1,6 +1,6 @@
 # Magic and Myths - RimWorld Mod Overview
 
-**A comprehensive magic system overhaul bringing deep RPG mechanics to RimWorld**
+**A comprehensive magic system overhaul bringing new RPG mechanics to RimWorld**
 
 Aside from adding items, equipment and more from various sources of fantasy media most of us know and love, I am adding some systems on top that can be used by other modders, almost every system available has components that can be used, or defs, classes and other things that can be expanded upon to suit needs.
 
