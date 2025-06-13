@@ -8,7 +8,7 @@ Aside from adding items, equipment and more from various sources of fantasy medi
 
 ### Enchantment Framework
 - Every item and piece of equipment can be enchanted with magical properties
-- Multiple effect types: on-hit damage, stat modifications, damage nullification, time-based effects
+- Multiple effect types: on-hit damage, stat modifications, damage nullification, time-based effects, effects based on the time of time
 - Categorized enchantments (melee, armor, etc.) with configurable rarity
 - Visual effects and complex conditional triggers like daylight-dependent bonuses
 - Auto-slotting enchantment system for specific items
@@ -132,7 +132,7 @@ https://streamable.com/9scyza
 
 ### ThingFlyers
 - Improved object trajectory system
-- Enhanced physics for thrown items and magical projectiles
+- thrown items, pawns and weapons.
 
 ---
 
