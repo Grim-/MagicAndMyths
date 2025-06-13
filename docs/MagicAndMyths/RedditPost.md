@@ -36,7 +36,17 @@ Examples:
 
 ---
 
+## Classes & Abilities
+Magic and myths is also attempting to implement a range of classes and archetypes, will hopefully more tactically interesting choices to make, or just fun.
 
+
+### Classes
+- **Death Knight**: Kill your foes raise them as servants and soldiers, using another mod I created SquadBehaviours, this allows you to organise pawns into squads, you can assign specific objectives to squads, such as patrolling, defending or attacking a target, upon finding a dark heart and recieving the quest to kill a fellow colonist you being your descent into un-death, you slowly lose all mental breaks and inspiriations, death no longer concerns you, creative 
+
+Squad behaviours also allows them to use abilities automatically (unless toggled) while called to arms and in an active squad.
+https://streamable.com/mgm13v
+
+- **SpellBlade**: A class with four elemental stances, each providing access to their respective damage type and a few abilities, spell blades are warriors who pick up magic to enhance their fighting skills.
 
 
 ### Leveled Abilities & Mastery
