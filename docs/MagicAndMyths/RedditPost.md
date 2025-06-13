@@ -25,6 +25,10 @@ I am ofcourse willing to get people upto speed on what is/isnt possible and how 
 **People of any experience level can apply, but be warned this is likely still months from release with much work left to be done**, if you still feel you'd like to contribute then please get in touch at `.emo_` on discord, or join the LifeIsGame.Inc discord server `https://discord.gg/vqeXhTCXrx` where I am being graciously hosted by the author of the Saiyans and Naruto mods.
 
 
+Poorly organised and updated Trello : https://trello.com/b/dSOcr2WW/magicandmyths
+
+
+
 ## World & Environment Features
 
 ### Procedural Dungeon Generation
