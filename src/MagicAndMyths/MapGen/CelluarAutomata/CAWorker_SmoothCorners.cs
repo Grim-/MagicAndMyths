@@ -22,7 +22,7 @@ namespace MagicAndMyths
 
                 if (!currentState[cell]) // Wall cell
                 {
-                    if (Dungeon.SpatialAnalyzer.IsCornerWall(cell, map, currentState) && Rand.Chance(randomChance))
+                    if (Dungeon.QueryManager.IsCornerWall(cell, map, currentState) && Rand.Chance(randomChance))
                     {
                         dungeonGrid[cell] = true;
                     }

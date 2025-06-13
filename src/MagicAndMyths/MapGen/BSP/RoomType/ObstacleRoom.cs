@@ -12,6 +12,7 @@ namespace MagicAndMyths
             this.roomTypeWorker = typeof(ObstacleRoom);
         }
     }
+
     public class ObstacleRoom : RoomTypeWorker
     {
         ObstacleRoomDef Def => (ObstacleRoomDef)def;

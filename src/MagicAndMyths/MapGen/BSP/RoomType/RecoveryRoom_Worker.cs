@@ -57,7 +57,7 @@ namespace MagicAndMyths
             {
                 if (Rand.Value < 0.3f)
                 {
-                    Thing shelf = ThingMaker.MakeThing(DefDatabase<ThingDef>.GetNamed("Shelf"), GenStuff.DefaultStuffFor(DefDatabase<ThingDef>.GetNamed("Shelf"))); ;
+                    Thing shelf = ThingMaker.MakeThing(DefDatabase<ThingDef>.GetNamed("Shelf"), GenStuff.DefaultStuffFor(DefDatabase<ThingDef>.GetNamed("Shelf")));
                     GenSpawn.Spawn(shelf, cell, map);
 
                     SpawnItemsOnShelf(map, cell);

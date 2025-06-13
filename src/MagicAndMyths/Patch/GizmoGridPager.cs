@@ -26,21 +26,21 @@ namespace MagicAndMyths
             );
         }
 
+
         public static bool GizmoGridPatchPrefix(ref IEnumerable<Gizmo> gizmos, float startX, out Gizmo mouseoverGizmo,
             Func<Gizmo, bool> customActivatorFunc, Func<Gizmo, bool> highlightFunc, Func<Gizmo, bool> lowlightFunc, bool multipleSelected)
         {
             mouseoverGizmo = null;
-            if (Event.current.type == EventType.Layout || !(Find.Selector.SingleSelectedObject is Pawn) || Find.Selector.SelectedPawns.Count > 1 || (Settings != null && !Settings.IsEnabled))
+            if (Event.current.type == EventType.Layout || Find.CurrentMap == null || (Settings != null && !Settings.IsEnabled))
+                return true;
+
+            if (!(Find.Selector.SingleSelectedObject is Pawn) || Find.Selector.SelectedPawns.Count > 1)
                 return true;
 
             Pawn selectedPawn = Find.Selector.SelectedPawns[0];
-            if (selectedPawn == null)
-            {
-                return true;
-            }
 
             var gizmoList = gizmos.ToList();
-            var abilityGizmos = gizmoList.Where(x => IsAbilityGizmo(x)).Cast<Command>().ToList();
+            var abilityGizmos = gizmoList.Where(x => IsAbilityGizmo(x)).Cast<Command_Ability>().ToList();
             var nonAbilityGizmos = gizmoList.Where(g => !IsAbilityGizmo(g)).ToList();
 
             if (abilityGizmos.Any())
@@ -64,7 +64,7 @@ namespace MagicAndMyths
             return gizmo is Command_Ability || (TMFAbilityHelper.IsTMFLoaded && TMFAbilityHelper.IsTMFCommand(gizmo));
         }
 
-        private static Command_Action CreateRadialMenuGizmo(Pawn pawn, List<Command> abilityGizmos)
+        private static Command_Action CreateRadialMenuGizmo(Pawn pawn, List<Command_Ability> abilityGizmos)
         {
             return new Command_Action
             {
@@ -77,7 +77,7 @@ namespace MagicAndMyths
             };
         }
 
-        private static Command_Action CreateFavouriteRadialMenuGizmo(Pawn pawn, List<Command> abilityGizmos)
+        private static Command_Action CreateFavouriteRadialMenuGizmo(Pawn pawn, List<Command_Ability> abilityGizmos)
         {
             return new Command_Action
             {
@@ -90,7 +90,7 @@ namespace MagicAndMyths
             };
         }
 
-        private static void OpenRadialMenu(Pawn pawn, List<Command> abilityGizmos)
+        private static void OpenRadialMenu(Pawn pawn, List<Command_Ability> abilityGizmos)
         {
             if (abilityGizmos.Any())
             {
@@ -98,7 +98,7 @@ namespace MagicAndMyths
             }
         }
 
-        private static void OpenFavoritesMenu(Pawn pawn, List<Command> abilityGizmos)
+        private static void OpenFavoritesMenu(Pawn pawn, List<Command_Ability> abilityGizmos)
         {
             var favoritesTracker = Current.Game.GetComponent<GameComp_RadialFavouritesTracker>();
             var favoriteDefNames = favoritesTracker.PawnAbilityFavourites.ContainsKey(pawn)
@@ -137,9 +137,9 @@ namespace MagicAndMyths
             }
         }
 
-        private static string GetGizmoLabel(Command gizmo) => gizmo.Label;
+        private static string GetGizmoLabel(Command_Ability gizmo) => gizmo.Label;
 
-        public static string GetAbilityDescription(Command command)
+        public static string GetAbilityDescription(Command_Ability command)
         {
             if (TMFAbilityHelper.IsTMFLoaded && TMFAbilityHelper.IsTMFCommand(command))
             {
@@ -152,7 +152,7 @@ namespace MagicAndMyths
             return "";
         }
 
-        public static void ExecuteAbilityGizmo(Command abilityGizmo)
+        public static void ExecuteAbilityGizmo(Command_Ability abilityGizmo)
         {
             if (!abilityGizmo.Disabled)
             {
@@ -164,7 +164,7 @@ namespace MagicAndMyths
             }
         }
 
-        public static string GetAbilityCategory(Command command)
+        public static string GetAbilityCategory(Command_Ability command)
         {
             if (TMFAbilityHelper.IsTMFLoaded && TMFAbilityHelper.IsTMFCommand(command))
             {
@@ -178,7 +178,7 @@ namespace MagicAndMyths
             return "Unknown";
         }
 
-        public static string GetAbilityDefName(Command command)
+        public static string GetAbilityDefName(Command_Ability command)
         {
             if (TMFAbilityHelper.IsTMFLoaded && TMFAbilityHelper.IsTMFCommand(command))
             {
@@ -195,7 +195,6 @@ namespace MagicAndMyths
 
     public static class TMFAbilityHelper
     {
-        // Cache all the reflection info we need at startup
         private static readonly Type TMFCommandAbilityType;
         private static readonly PropertyInfo AbilityProperty;
         private static readonly FieldInfo DefField;

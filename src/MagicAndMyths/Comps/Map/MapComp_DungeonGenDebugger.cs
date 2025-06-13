@@ -127,16 +127,16 @@ namespace MagicAndMyths
                 return;
             }
 
-            var automataList = new List<CelluarAutomataData>
+            var automataList = new List<CelluarAutomataSteps>
             {
-                new CelluarAutomataData()
+                new CelluarAutomataSteps()
                 {
                     automataDef = automataDef,
-                    iterations = 1
+                    iterations = 5
                 }
             };
 
-            CellularAutomataManager.ApplyRules(map, Dungeon, automataList, 1);
+            CellularAutomataManager.ApplyRules(map, Dungeon, automataList, 5);
             Messages.Message($"Applied {automataDef.defName} to dungeon", MessageTypeDefOf.TaskCompletion);
         }
 
@@ -295,7 +295,12 @@ namespace MagicAndMyths
             string label = room.def?.defName ?? "Unassigned";
             if (room.IsOnCriticalPath)
             {
-                label = $"[{room.CriticalPathIndex}] {label}";
+                label = $"{label} [{room.CriticalPathIndex}]";
+            }
+
+            if (GetRoomTags(room).Count() > 0)
+            {
+                label += $"\r\ntags : {GetRoomTags(room)}";
             }
             return label;
         }
@@ -325,7 +330,7 @@ namespace MagicAndMyths
             GUI.color = Color.white;
         }
 
-        private void DrawCriticalPathLine(System.Collections.Generic.List<DungeonRoom> allRooms)
+        private void DrawCriticalPathLine(List<DungeonRoom> allRooms)
         {
             var criticalPathRooms = allRooms.Where(r => r.IsOnCriticalPath)
                                            .OrderBy(r => r.CriticalPathIndex)

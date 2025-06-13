@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
@@ -6,7 +7,7 @@ namespace MagicAndMyths
     public class TreasureRoomDef : RoomTypeDef
     {
         public List<TreasureDrop> potentialTreasure = new List<TreasureDrop>();
-
+        public int rollsPerTier = 5;
         public TreasureRoomDef()
         {
             this.roomTypeWorker = typeof(TreasureRoom);
@@ -26,17 +27,23 @@ namespace MagicAndMyths
                 return;
             }
 
-            TreasureDrop treasureDrop = Def.potentialTreasure.RandomElement();
 
-            if (treasureDrop != null)
+            for (int i = 0; i < Def.rollsPerTier; i++)
             {
-                Thing thing = ThingMaker.MakeThing(treasureDrop.thingDef, treasureDrop.thingStuffDef);
-                thing.stackCount = treasureDrop.count.RandomInRange;
-                if (GenPlace.TryPlaceThing(thing, Room.roomCellRect.CenterCell, map, ThingPlaceMode.Direct))
-                {
+                TreasureDrop treasureDrop = Def.potentialTreasure.RandomElement();
 
+                if (treasureDrop != null)
+                {
+                    Thing thing = ThingMaker.MakeThing(treasureDrop.thingDef, treasureDrop.thingStuffDef);
+                    thing.stackCount = treasureDrop.count.RandomInRange;
+                    if (GenPlace.TryPlaceThing(thing, Room.roomCellRect.CenterCell, map, ThingPlaceMode.Direct))
+                    {
+
+                    }
                 }
-            }      
+            }
+
+     
         }
     }
 
@@ -45,5 +52,7 @@ namespace MagicAndMyths
         public ThingDef thingDef;
         public ThingDef thingStuffDef;
         public IntRange count = new IntRange(1, 1);
+        public FloatRange chance = new FloatRange(0.2f, 0.2f);
+        public float minProgression = 0f;
     }
 }

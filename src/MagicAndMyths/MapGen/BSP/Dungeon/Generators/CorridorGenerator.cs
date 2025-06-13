@@ -7,7 +7,7 @@ namespace MagicAndMyths
     {
         public List<Corridoor> GenerateCorridors(Map map, DungeonRoom roomA, DungeonRoom roomB)
         {
-            CorridorPathBase pathGenerator = new LShapedCorridorPath();
+            CorridorPathBase pathGenerator = GetRandomWildCorridorStyle();
 
             ConnectionPoints connectionPoints = FindOptimalConnectionPoints(roomA, roomB);
             IntVec3 startPoint = connectionPoints.Start;

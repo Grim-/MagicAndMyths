@@ -27,7 +27,7 @@ namespace MagicAndMyths
         public IntRange enemyCountRange = new IntRange(1, 4);
         public List<PawnKindDef> possibleEnemies;
         public List<SpecificEncounter> specificEncounters = new List<SpecificEncounter>();
-        public bool useProgressionScaling = true;
+        public bool useProgressionScaling = false;
 
         public EncounterRoomDef_Fight()
         {
@@ -43,10 +43,7 @@ namespace MagicAndMyths
         {
             base.ApplyRoom(map, dungeon, room);
 
-            var validEncounters = Def.specificEncounters
-                .Where(e => room.ProgressionValue >= e.progressionRange.min &&
-                           room.ProgressionValue <= e.progressionRange.max)
-                .ToList();
+            var validEncounters = Def.specificEncounters;
 
             if (validEncounters.Count > 0)
             {

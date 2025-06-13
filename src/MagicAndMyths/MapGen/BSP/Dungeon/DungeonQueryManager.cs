@@ -3,8 +3,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    // Handles spatial analysis of the dungeon grid
-    public class DungeonSpatialAnalyzer
+    public class DungeonQueryManager
     {
         public bool IsNearRoomEdge(IntVec3 cell, Map map, BoolGrid grid)
         {

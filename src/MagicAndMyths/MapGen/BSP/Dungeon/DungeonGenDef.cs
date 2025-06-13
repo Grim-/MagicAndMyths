@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
@@ -29,7 +30,7 @@ namespace MagicAndMyths
         public IntRange randomCorridoorAmount = new IntRange(1, 2);
         public int maxDepth = 8;
         public int minRoomSize = 8;
-        public int minRoomPadding = 3;
+        public int minRoomPadding = 2;
 
         public IntVec3 mapSize = new IntVec3(80, 1, 80);
 
@@ -57,14 +58,29 @@ namespace MagicAndMyths
         public List<RoomTypeDef> availableSideRoomTypes;
 
 
-        public List<CelluarAutomataData> earlyAutomata;
-        public List<CelluarAutomataData> postGenAutomata;
+        public List<CelluarAutomataSteps> earlyAutomata;
+        public List<CelluarAutomataSteps> postGenAutomata;
+
+
+
+        public RoomTypeDef GetRoomTypeDef(Dungeon Dungeon, DungeonRoom DungeonRoom)
+        {
+            List<RoomTypeDef> rooms = availableRoomTypes.Where(x => x.roomType == RoomType.Normal).ToList();
+            return rooms.RandomElement();
+        }
+
+        public RoomTypeDef GetSideRoomTypeDef(Dungeon Dungeon, DungeonRoom DungeonRoom)
+        {
+            List<RoomTypeDef> rooms = availableSideRoomTypes.Where(x => x.roomType == RoomType.Normal).ToList();
+            return rooms.RandomElement();
+        }
     }
 
 
-    public class CelluarAutomataData
+    public class CelluarAutomataSteps
     {
         public CelluarAutomataDef automataDef;
         public int iterations = 1;
+        public int order = 100;
     }
 }

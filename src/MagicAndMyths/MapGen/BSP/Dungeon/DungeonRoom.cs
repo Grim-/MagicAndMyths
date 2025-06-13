@@ -24,9 +24,6 @@ namespace MagicAndMyths
         {
             get
             {
-
-                return 1f;
-
                 if (ParentDungeon == null)
                     return 0f;
 
@@ -107,7 +104,6 @@ namespace MagicAndMyths
                 }
 
                 connections.Add(newConnection);
-                //ParentDungeon.MarkCellsProtected(newConnection.GetAllCells(), true);
             }
         }
 

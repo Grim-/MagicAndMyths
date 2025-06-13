@@ -7,15 +7,15 @@ namespace MagicAndMyths
 {
     public abstract class CorridorPathBase
     {
-        public int width = 3;
         public bool smoothCorners = true;
 
         public abstract List<IntVec3> GeneratePath(IntVec3 start, IntVec3 end, Map map);
 
-        public virtual List<IntVec3> GeneratePathWithWidth(IntVec3 start, IntVec3 end, Map map)
+        public virtual List<IntVec3> GeneratePathWithWidth(IntVec3 start, IntVec3 end, Map map, int width = 2)
         {
             var spinePath = GeneratePath(start, end, map);
-            if (width <= 1) return spinePath;
+            if (width <= 1) 
+                return spinePath;
 
             var widePath = ExpandPathToWidth(spinePath, width);
             return smoothCorners ? SmoothCorners(widePath) : widePath;

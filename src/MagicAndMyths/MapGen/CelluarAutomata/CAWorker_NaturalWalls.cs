@@ -26,7 +26,7 @@ namespace MagicAndMyths
 
                 if (currentState[cell])
                 {
-                    if (!Dungeon.SpatialAnalyzer.IsNearRoomEdge(cell, map, currentState))
+                    if (!Dungeon.QueryManager.IsNearRoomEdge(cell, map, currentState))
                     {
                         continue;
                     }
@@ -50,7 +50,7 @@ namespace MagicAndMyths
                 {
                     if (wallNeighbors <= deathThreshold && Rand.Chance(randomChance * 0.7f))
                     {
-                        if (Dungeon.SpatialAnalyzer.CountFloorNeighbors(cell, map, currentState) >= 1)
+                        if (Dungeon.QueryManager.CountFloorNeighbors(cell, map, currentState) >= 1)
                         {
                             dungeonGrid[cell] = true;
                         }

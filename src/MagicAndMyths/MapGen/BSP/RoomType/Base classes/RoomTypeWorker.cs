@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using System.Linq;
+using Verse;
 
 namespace MagicAndMyths
 {
@@ -28,6 +29,17 @@ namespace MagicAndMyths
             {
                 ModifyRoomWalls();
             }
+        }
+
+
+        public virtual bool CanApply(Dungeon Dungeon, DungeonRoom DungeonRoom)
+        {
+            if (def.maxRoomTypeCount > 0 && Dungeon.GetRoomTypeCount(def) >= def.maxRoomTypeCount)
+            {
+                return false;
+            }
+
+            return true;
         }
 
 

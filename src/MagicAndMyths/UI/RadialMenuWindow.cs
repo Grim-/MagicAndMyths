@@ -95,7 +95,7 @@ namespace MagicAndMyths
             this.drawShadow = false;
         }
 
-        public RadialMenuWindow(Pawn pawn, List<Command> abilityGizmos, bool isFavoritesMenu = false)
+        public RadialMenuWindow(Pawn pawn, List<Command_Ability> abilityGizmos, bool isFavoritesMenu = false)
         {
             this.sourcePawn = pawn;
             this.allMenuItems = BuildAbilityMenuItems(pawn, abilityGizmos);
@@ -118,7 +118,7 @@ namespace MagicAndMyths
 
         public override Vector2 InitialSize => currentWindowSize;
 
-        private List<RadialMenuItem> BuildAbilityMenuItems(Pawn pawn, List<Command> abilityGizmos)
+        private List<RadialMenuItem> BuildAbilityMenuItems(Pawn pawn, List<Command_Ability> abilityGizmos)
         {
             var categoryGroups = abilityGizmos
                 .GroupBy(g => AbilityRadialPager.GetAbilityCategory(g))
@@ -633,7 +633,7 @@ namespace MagicAndMyths
             window.windowRect.y = (UI.screenHeight / 2f - window.currentWindowSize.y / 2f) - window.Settings.heightOffset;
         }
 
-        public static void ShowFromGizmos(Pawn pawn, List<Command> abilityGizmos, bool isFavoritesMenu = false)
+        public static void ShowFromGizmos(Pawn pawn, List<Command_Ability> abilityGizmos, bool isFavoritesMenu = false)
         {
             RadialMenuWindow window = new RadialMenuWindow(pawn, abilityGizmos, isFavoritesMenu);
             Find.WindowStack.Add(window);

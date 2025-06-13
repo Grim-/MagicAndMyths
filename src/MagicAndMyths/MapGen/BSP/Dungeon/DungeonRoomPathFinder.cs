@@ -5,7 +5,7 @@ using Verse;
 namespace MagicAndMyths
 {
     // Handles pathfinding and room accessibility
-    public class DungeonPathfinder
+    public class DungeonRoomPathFinder
     {
         public DungeonRoom GetFurthestRoom(DungeonRoom start)
         {

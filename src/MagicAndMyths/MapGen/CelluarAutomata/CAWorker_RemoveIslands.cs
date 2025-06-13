@@ -23,7 +23,7 @@ namespace MagicAndMyths
 
                 if (!currentState[cell])
                 {
-                    int wallNeighborCount = Dungeon.SpatialAnalyzer.CountCardinalWallNeighbors(cell, map, currentState);
+                    int wallNeighborCount = Dungeon.QueryManager.CountCardinalWallNeighbors(cell, map, currentState);
                     if (wallNeighborCount < neighbourKillCount)
                     {
                         dungeonGrid[cell] = true;

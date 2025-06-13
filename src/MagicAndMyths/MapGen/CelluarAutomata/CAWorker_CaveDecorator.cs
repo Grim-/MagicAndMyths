@@ -22,11 +22,11 @@ namespace MagicAndMyths
                     continue;
                 }
 
-                if (!currentState[cell] && Dungeon.SpatialAnalyzer.IsWallNearFloor(cell, map, currentState))
+                if (!currentState[cell] && Dungeon.QueryManager.IsWallNearFloor(cell, map, currentState))
                 {
                     if (Rand.Chance(randomChance))
                     {
-                        IntVec3 nearestFloor = Dungeon.SpatialAnalyzer.FindNearestFloor(cell, map, currentState);
+                        IntVec3 nearestFloor = Dungeon.QueryManager.FindNearestFloor(cell, map, currentState);
                         if (nearestFloor.IsValid)
                         {
                             IntVec3 direction = new IntVec3(

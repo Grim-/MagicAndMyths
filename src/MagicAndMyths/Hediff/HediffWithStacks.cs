@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using RimWorld;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 namespace MagicAndMyths
@@ -15,6 +17,7 @@ namespace MagicAndMyths
         public int ticksBetweenStackLoss = 300;
         public int stacksLostPerTickInterval = 1;
         public bool removeOnZeroStacks = true;
+
         public StackingHediffDef()
         {
             hediffClass = typeof(HediffWithStacks);

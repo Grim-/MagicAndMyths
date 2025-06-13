@@ -46,5 +46,13 @@ namespace MagicAndMyths
             RoomTypeWorker.ApplyRoom(map, Dungeon, Room);
             return RoomTypeWorker;
         }
+
+        public bool CanApply(Dungeon Dungeon, DungeonRoom Room)
+        {
+            RoomTypeWorker RoomTypeWorker = (RoomTypeWorker)Activator.CreateInstance(roomTypeWorker);
+            RoomTypeWorker.def = Room.def;
+            RoomTypeWorker.currentRoom = Room;
+            return true;
+        }
     }
 }

@@ -4,7 +4,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    // Core dungeon data container - focused on data management only
     public class Dungeon : IExposable
     {
         public Map Map;
@@ -19,10 +18,11 @@ namespace MagicAndMyths
         private HashSet<DungeonRoom> hiddenRooms = new HashSet<DungeonRoom>();
 
         public DungeonGridManager GridManager { get; private set; }
-        public DungeonPathfinder Pathfinder { get; private set; }
-        public DungeonSpatialAnalyzer SpatialAnalyzer { get; private set; }
-
+        public DungeonRoomPathFinder Pathfinder { get; private set; }
+        public DungeonQueryManager QueryManager { get; private set; }
         public DungeonConnectionManager ConnectionManager { get; private set; }
+
+
 
         private List<BspNode> nodeToRoomMapWorkingKeys = new List<BspNode>();
         private List<DungeonRoom> nodeToRoomMapWorkingValues = new List<DungeonRoom>();
@@ -46,8 +46,8 @@ namespace MagicAndMyths
         {
             Map = map;
             GridManager = new DungeonGridManager(map);
-            Pathfinder = new DungeonPathfinder();
-            SpatialAnalyzer = new DungeonSpatialAnalyzer();
+            Pathfinder = new DungeonRoomPathFinder();
+            QueryManager = new DungeonQueryManager();
             ConnectionManager = new DungeonConnectionManager(this, map);
         }
 
@@ -115,7 +115,7 @@ namespace MagicAndMyths
                 .ToList();
         }
 
-        // Hidden Room Management
+
         public void MarkRoomAsHidden(DungeonRoom room)
         {
             if (!hiddenRooms.Contains(room))
@@ -130,14 +130,12 @@ namespace MagicAndMyths
             return hiddenRooms.Any() ? hiddenRooms.RandomElement() : null;
         }
 
-        // Room Connection Management
         public void ConnectRooms(DungeonRoom roomA, DungeonRoom roomB)
         {
             roomA.AddConnectionTo(Map, roomB);
             roomB.AddConnectionTo(Map, roomA);
         }
 
-        // Grid Operations (delegated to GridManager)
         public void MarkCellAsFloor(IntVec3 cell)
         {
             GridManager.MarkCellAsFloor(cell);
@@ -173,9 +171,23 @@ namespace MagicAndMyths
             return Rooms.Any(x => x.connections.Any(y => y.CellIsOnCorridoor(c)));
         }
 
+
+
+        public int GetRoomTypeCount(RoomTypeDef roomTypeDef)
+        {
+            return Rooms.Count(x => x.def == roomTypeDef);
+        }
+
         // Pathfinding (delegated to Pathfinder)
-        public DungeonRoom GetFurthestRoom(DungeonRoom start) => Pathfinder.GetFurthestRoom(start);
-        public List<DungeonRoom> FindPathBetween(DungeonRoom start, DungeonRoom end) => Pathfinder.FindPathBetween(start, end);
+        public DungeonRoom GetFurthestRoom(DungeonRoom start)
+        {
+            return Pathfinder.GetFurthestRoom(start);
+        }
+
+        public List<DungeonRoom> FindPathBetween(DungeonRoom start, DungeonRoom end)
+        {
+            return Pathfinder.FindPathBetween(start, end);
+        }
 
         // Complex room analysis methods
         public RoomPair FindRoomPairForDoor(DungeonRoom currentRoom)

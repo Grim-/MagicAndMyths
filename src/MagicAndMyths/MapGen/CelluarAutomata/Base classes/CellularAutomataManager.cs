@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
 {
     public static class CellularAutomataManager
     {
-        public static void ApplyRules(Map map, Dungeon Dungeon, List<CelluarAutomataData> workers, int iterations = 1)
+        public static void ApplyRules(Map map, Dungeon Dungeon, List<CelluarAutomataSteps> workers, int iterations = 1)
         {
             BoolGrid dungeonGrid = Dungeon.GridManager.dungeonGrid;
             BoolGrid originalGrid = new BoolGrid(map);
@@ -13,6 +14,8 @@ namespace MagicAndMyths
             {
                 originalGrid[cell] = dungeonGrid[cell];
             }
+
+            workers = workers.OrderBy(x => x.order).ToList();
 
             foreach (var worker in workers)
             {
@@ -29,8 +32,6 @@ namespace MagicAndMyths
 
             }
 
-
-            ////just return the boolgrid let generator do this
             foreach (IntVec3 cell in map.AllCells)
             {
                 if (dungeonGrid[cell])
