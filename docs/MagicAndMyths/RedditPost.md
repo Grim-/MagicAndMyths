@@ -2,11 +2,69 @@
 
 **A comprehensive magic system overhaul bringing new RPG mechanics to RimWorld**
 
+
+
+**Magic and myths is a work in progress, there will be bugs, problems that did not even occour to me to fix, and other fun things, it's a large mod with some complex systems, so for the moment while I dont believe it will ruin your save, you're probably best making back up before hand.**
+
 Aside from adding items, equipment and more from various sources of fantasy media most of us know and love, I am adding some systems on top that can be used by other modders, almost every system available has components that can be used, or defs, classes, workers and other things that can be expanded upon to suit needs.
+
+
+
+A little about me, I'm Emo. 
+I have been programming for over 10 years, some large portion of that spent in solo game development, I am a full time carer and do this in my spare time for fun, I enjoy fantasy stories, media of almost any description.
+
+
+I am aiming to make this a comprehensive mod for magical systems, mythology creatures, items and more, but I could do with some help! 
+
+Help with any of the following would be a massive boon!
+- Art for various pawns, items and visual effects. 
+- Creating new abilities, items, artifacts and other things using the various mod systems, this requires understanding what the mod provides, any interesting systems that do not exist, I am willing to add within reason.
+- Designing system interactions, dungeon obstacles or themes
+- Programmers are welcome also!
+
+
+I am ofcourse willing to get people upto speed on what is/isnt possible and how you might go about certain things.
+
+People of any experience level can apply, but be warned this is likely still months from release with much work left to be done, if you still feel you'd like to contribute then please get in touch at `.emo_` on discord, or join the LifeIsGame.Inc discord server `https://discord.gg/vqeXhTCXrx` where I am being graciously hosted by the author of the Saiyans and Naruto mods.
+
 
 ## Core Magic Systems
 
-Enchantment Framework
+
+## World & Environment Features
+
+### Procedural Dungeon Generation
+- Portal system using paintings/artifacts to access pocket dimensions
+- Binary Space Partitioning (BSP) algorithm for realistic layouts
+- Configurable dungeon parameters:
+  - Room count, size constraints, corridor generation
+  - Wall/floor materials and structural elements
+  - Difficulty scaling and progression systems
+
+![image](https://github.com/user-attachments/assets/e9686dce-b143-4d5b-87cd-262754708995)
+
+### Encounter Room System
+- Multiple room types: combat, treasure, obstacles, recovery
+- Progression-based enemy scaling
+- Specific encounter configurations:
+  - Early game: basic animals
+  - Mid game: mixed encounters with explosives
+  - Late game: golems and apex predators
+- Weight-based random selection with progression ranges
+
+### Transformation System
+- Characters and objects transform into different forms
+- Shapeshifting magic and cursed item possibilities
+
+### Growable Buildings
+- Magical structures that develop and expand over time
+- Prefab system for creating custom growth patterns
+
+https://streamable.com/9scyza
+
+
+
+### Enchantment Framework
 
 Every item and piece of equipment can be enchanted with magical properties
 Multiple effect types: on-hit damage, stat modifications, damage nullification, time-based effects
@@ -19,34 +77,7 @@ Examples:
   - Lifedrinking (heals on damage dealt)
 
 
-## Magical Items & Structures
 
-### Core Buildings
-- **Phylactery**: Soul storage device preventing death while intact - essential for Lich survival
-- **Philosophers Alchemical Array**: Large magical circle that harvests energy from deaths within radius, produces philosopher's stones that reduce ability costs
-
-### Magical Equipment  
-- **Invisibility Cloak**: Elegant cape granting invisibility abilities
-- **The One Ring**: Cursed ring providing invisibility but cannot be removed once equipped
-- **Simple Bomb**: Basic throwable explosive - detonates on impact, damage, or heat
-
-### Equipment Systems
-- **Cursed Items**: Cannot be unequipped, provide powerful benefits with dangerous drawbacks
-- **Soul-bound Weapons**: Bind to specific owners, return through space and time, become worthless to others until owner dies
-
----
-
-## Classes & Abilities
-Magic and myths is also attempting to implement a range of classes and archetypes, will hopefully more tactically interesting choices to make, or just fun.
-
-
-### Classes
-- **Death Knight**: Kill your foes raise them as servants and soldiers, using another mod I created SquadBehaviours, this allows you to organise pawns into squads, you can assign specific objectives to squads, such as patrolling, defending or attacking a target, upon finding a dark heart and recieving the quest to kill a fellow colonist you being your descent into un-death, you slowly lose all mental breaks and inspiriations, death no longer concerns you, creative 
-
-Squad behaviours also allows them to use abilities automatically (unless toggled) while called to arms and in an active squad.
-https://streamable.com/mgm13v
-
-- **SpellBlade**: A class with four elemental stances, each providing access to their respective damage type and a few abilities, spell blades are warriors who pick up magic to enhance their fighting skills.
 
 
 ### Leveled Abilities & Mastery
@@ -75,6 +106,40 @@ https://streamable.com/mgm13v
 - Wearable spellbooks that grant abilities
 - Built-in enchantment provider slots
 - Auto-slotted enchantments for specific magical themes
+
+
+
+## Magical Items & Structures
+
+### Buildings
+- **Phylactery**: Soul storage device preventing death while intact - essential for Lich survival
+- **Philosophers Alchemical Array**: Large magical circle that harvests energy from deaths within radius, produces philosopher's stones that reduce ability costs
+- **Lockable doors**: Mostly used for the dungeon obstacles, but can be used anywhere really.
+
+### Magical Equipment  
+- **Invisibility Cloak**: Elegant cape granting invisibility abilities
+- **The One Ring**: Cursed ring providing invisibility but cannot be removed once equipped
+- **Simple Bomb**: Basic throwable explosive - detonates on impact, damage, or heat
+
+### Equipment Systems
+- **Cursed Items**: Cannot be unequipped, provide powerful benefits with dangerous drawbacks
+- **Soul-bound Weapons**: Bind to specific owners, return through space and time, become worthless to others until owner dies
+
+---
+
+## Classes & Abilities
+Magic and myths is also attempting to implement a range of classes and archetypes, will hopefully more tactically interesting choices to make, or just fun.
+
+
+### Classes
+- **Death Knight**: Kill your foes raise them as servants and soldiers, using another mod I created SquadBehaviours, this allows you to organise pawns into squads, you can assign specific objectives to squads, such as patrolling, defending or attacking a target, upon finding a dark heart and recieving the quest to kill a fellow colonist you being your descent into un-death, you slowly lose all mental breaks and inspiriations, death no longer concerns you, creative 
+
+Squad behaviours also allows them to use abilities automatically (unless toggled) while called to arms and in an active squad.
+https://streamable.com/mgm13v
+
+- **SpellBlade**: A class with four elemental stances, each providing access to their respective damage type and a few abilities, spell blades are warriors who pick up magic to enhance their fighting skills.
+
+
 
 ## Advanced Combat & Movement
 
@@ -123,36 +188,6 @@ https://streamable.com/t50e4e
 - Custom damage workers with unique effects
 - Specialized hediffs for each damage type
 
-## World & Environment Features
-
-### Procedural Dungeon Generation
-- Portal system using paintings/artifacts to access pocket dimensions
-- Binary Space Partitioning (BSP) algorithm for realistic layouts
-- Configurable dungeon parameters:
-  - Room count, size constraints, corridor generation
-  - Wall/floor materials and structural elements
-  - Difficulty scaling and progression systems
-
-![image](https://github.com/user-attachments/assets/e9686dce-b143-4d5b-87cd-262754708995)
-
-### Encounter Room System
-- Multiple room types: combat, treasure, obstacles, recovery
-- Progression-based enemy scaling
-- Specific encounter configurations:
-  - Early game: basic animals
-  - Mid game: mixed encounters with explosives
-  - Late game: golems and apex predators
-- Weight-based random selection with progression ranges
-
-### Transformation System
-- Characters and objects transform into different forms
-- Shapeshifting magic and cursed item possibilities
-
-### Growable Buildings
-- Magical structures that develop and expand over time
-- Prefab system for creating custom growth patterns
-
-https://streamable.com/9scyza
 
 ## Quality of Life Improvements
 
@@ -194,5 +229,9 @@ https://streamable.com/syw1jw
 
 
 ---
+
+
+
+If you made it this far, you're a trooper! -- Emo
 
 *Magic and Myths is an expansion of RimWorld's systems, adding layers of magical depth while maintaining the game's core survival elements. Looking for collaborators interested in content creation, balancing, and expanding the magical world.*
