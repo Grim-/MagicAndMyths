@@ -56,6 +56,8 @@ Examples:
   - Sub-projectile spawning for chain reactions
 - Independent configuration with custom targeting and friendly fire settings
 
+https://streamable.com/8qzhz4
+
 ### Throwing Mechanics
 - Full throwing system with effect-on-impact capabilities
 - Dual-purpose items: different effects when thrown vs used directly
@@ -81,6 +83,9 @@ https://streamable.com/zc3rh8
   - Place temporary structures with restoration on removal
 - Spawnable by projectiles, spells, or other triggers
 - Configurable lifetimes and multiple simultaneous effects
+
+https://streamable.com/t50e4e
+
 
 ### Custom Damage Types
 - Necrotic damage that applies stacking debuffs
@@ -138,6 +143,18 @@ https://streamable.com/9scyza
 ### ThingFlyers
 - Improved object trajectory system
 - thrown items, pawns and weapons.
+
+
+Here are a collection of gifs ive recorded 
+
+https://streamable.com/fb98nr
+https://streamable.com/6ln3x8
+https://streamable.com/kph5kb
+https://streamable.com/jg7et0
+https://streamable.com/0chs0d
+https://streamable.com/7lirie
+https://streamable.com/syw1jw
+
 
 ---
 
