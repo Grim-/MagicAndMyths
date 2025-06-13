@@ -16,6 +16,7 @@ Auto-slotting enchantment system for specific items
 Examples: 
   - Fire Tongue (adds flame damage on hit), 
   - Sunlight (boosts armor and strength during day, weakens at night)
+  - Lifedrinking (heals on damage dealt)
 
 ### Leveled Abilities & Mastery
 - Spells and abilities grow stronger through use
