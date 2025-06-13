@@ -148,11 +148,17 @@ https://streamable.com/9scyza
 Here are a collection of gifs ive recorded 
 
 https://streamable.com/fb98nr
+
 https://streamable.com/6ln3x8
+
 https://streamable.com/kph5kb
+
 https://streamable.com/jg7et0
+
 https://streamable.com/0chs0d
+
 https://streamable.com/7lirie
+
 https://streamable.com/syw1jw
 
 
