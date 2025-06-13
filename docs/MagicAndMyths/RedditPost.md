@@ -7,64 +7,132 @@ Aside from adding items, equipment and more from various sources of fantasy medi
 ## Core Magic Systems
 
 ### Enchantment Framework
-Every item and piece of equipment in the game can be enchanted with various magical properties, creating endless customization possibilities for gear progression. The system supports multiple effect types including on-hit damage, stat modifications, damage nullification, and time-based effects. Enchantments can be categorized (melee, armor, etc.) and feature configurable rarity, visual effects, and complex conditional triggers like daylight-dependent bonuses.
+- Every item and piece of equipment can be enchanted with magical properties
+- Multiple effect types: on-hit damage, stat modifications, damage nullification, time-based effects
+- Categorized enchantments (melee, armor, etc.) with configurable rarity
+- Visual effects and complex conditional triggers like daylight-dependent bonuses
+- Auto-slotting enchantment system for specific items
 
 ### Leveled Abilities & Mastery
-Spells and abilities grow stronger through use, with mastery levels that unlock enhanced effects and new capabilities as colonists develop their magical skills.
+- Spells and abilities grow stronger through use
+- Mastery levels unlock enhanced effects and new capabilities
+- Progression system for colonist magical skill development
 
 ### AbilityResource System
-Flexible mana/energy framework supporting multiple resource types and sub-resources, allowing for complex spell casting costs and requirements.
+- Flexible mana/energy framework supporting multiple resource types
+- Sub-resources and complex spell casting costs
+- Easy integration for modders to add custom resource types
 
 ### Elemental Combinations
-Dynamic hediff system where different magical effects can combine and interact, creating emergent gameplay through elemental synergies. Status effects can react to specific damage types - for example, wet pawns become vulnerable to lightning attacks, triggering stunning effects and electrical damage that can chain to nearby enemies. Each combo reaction supports custom damage, effects, targeting parameters, and visual feedback.
+- Dynamic hediff system where magical effects combine and interact
+- Status effects react to specific damage types (wet + lightning = stun + chain damage)
+- Custom damage, effects, targeting parameters, and visual feedback
+- Emergent gameplay through elemental synergies
 
 ### Artifact System
-Magical items with charges, cooldowns, and dual-purpose functionality. Artifacts can be used directly on targets or thrown for different effects, with configurable targeting parameters, usage durations, and charge restoration systems. Supports complex effects like pawn storage, healing with customizable parameters, and multi-target AOE impacts.
+- Magical items with charges, cooldowns, and dual-purpose functionality
+- Items behave differently when used directly vs thrown
+- Configurable targeting parameters, usage durations, charge restoration
+- Complex effects: pawn storage, healing with custom parameters, multi-target AOE
+
+### Magical Tomes
+- Wearable spellbooks that grant abilities
+- Built-in enchantment provider slots
+- Auto-slotted enchantments for specific magical themes
 
 ## Advanced Combat & Movement
 
 ### Modular Projectile System
-Completely customizable projectiles with interchangeable components for varied magical effects and behaviors, makes projectiles much more flexible in behaviour. Components include AOE damage on impact, fire starting/stopping, camera shake effects, and sub-projectile spawning for chain reactions. Each component can be configured independently with custom targeting, friendly fire settings, and visual effects.
+- Completely customizable projectiles with interchangeable components
+- Available components:
+  - AOE damage on impact
+  - Fire starting/stopping effects
+  - Camera shake effects
+  - Sub-projectile spawning for chain reactions
+- Independent configuration with custom targeting and friendly fire settings
 
 ### Throwing Mechanics
-Full throwing system with effect-on-impact capabilities, supporting both items and specialized throwables. Items can have completely different effects when thrown versus used directly - such as potions that heal the user when consumed but create AOE healing when thrown, or prison seals that capture targets on impact.
+- Full throwing system with effect-on-impact capabilities
+- Dual-purpose items: different effects when thrown vs used directly
+- Examples: potions heal user when consumed, create AOE healing when thrown
+- Prison seals capture targets on impact
 
 https://streamable.com/zc3rh8
 
 ### Innate Jumping
-Natural movement enhancement allowing characters to leap over obstacles and traverse terrain in new ways.
+- Natural movement enhancement for leaping over obstacles
+- New terrain traversal possibilities
 
 ### Staged Visual Effects
-Time-based visual systems for effects like expanding spell radiuses and evolving magical phenomena.
+- Time-based visual systems for expanding spell radiuses
+- Evolving magical phenomena over time
+
+### ActiveZone System
+- Performance-optimized persistent area-of-effect zones
+- Zone capabilities:
+  - Apply ongoing buffs/debuffs to pawns in area
+  - Trigger periodic effects (lightning strikes, healing pulses)
+  - Dynamically modify terrain (floors, walls, filth)
+  - Place temporary structures with restoration on removal
+- Spawnable by projectiles, spells, or other triggers
+- Configurable lifetimes and multiple simultaneous effects
+
+### Custom Damage Types
+- Necrotic damage that applies stacking debuffs
+- Custom damage workers with unique effects
+- Specialized hediffs for each damage type
 
 ## World & Environment Features
 
 ### Procedural Dungeon Generation
-Randomly generated underground complexes and magical locations for exploration and adventure.
+- Portal system using paintings/artifacts to access pocket dimensions
+- Binary Space Partitioning (BSP) algorithm for realistic layouts
+- Configurable dungeon parameters:
+  - Room count, size constraints, corridor generation
+  - Wall/floor materials and structural elements
+  - Difficulty scaling and progression systems
 
 ![image](https://github.com/user-attachments/assets/e9686dce-b143-4d5b-87cd-262754708995)
 
+### Encounter Room System
+- Multiple room types: combat, treasure, obstacles, recovery
+- Progression-based enemy scaling
+- Specific encounter configurations:
+  - Early game: basic animals
+  - Mid game: mixed encounters with explosives
+  - Late game: golems and apex predators
+- Weight-based random selection with progression ranges
+
 ### Transformation System
-Characters and objects can transform into different forms, opening possibilities for shapeshifting magic and cursed items.
+- Characters and objects transform into different forms
+- Shapeshifting magic and cursed item possibilities
 
 ### Growable Buildings
-Magical structures that develop and expand over time, with a prefab system for creating custom growth patterns.
+- Magical structures that develop and expand over time
+- Prefab system for creating custom growth patterns
 
 https://streamable.com/9scyza
 
 ## Quality of Life Improvements
 
 ### Radial Menu System
-Streamlined UI that organizes abilities and actions into intuitive radial menus, reducing gizmo bar clutter.
+- Streamlined UI organizing abilities into intuitive radial menus
+- Reduces gizmo bar clutter significantly
 
 ![image](https://github.com/user-attachments/assets/940d13c2-90e2-486b-be2e-fae129c6fad8)
 ![image](https://github.com/user-attachments/assets/b8ba0f20-d586-4f56-98c4-99c85b10f5eb)
 
 ### Enhanced Hediff Types
-New status effect categories including stacking effects for more nuanced magical conditions. Features mergeable injuries, custom capacity modifications, stat factors/offsets, and complex interaction systems. Hediffs can have timed durations, combo reactions to damage types, and multiple simultaneous effects with configurable intensity and targeting.
+- Stacking hediffs with custom behavior:
+  - Maximum stack limits with severity scaling
+  - Stack loss over time intervals
+  - Stack refresh on new applications
+- Mergeable injuries with custom capacity modifications
+- Complex interaction systems and timed durations
 
 ### ThingFlyers
-Improved object trajectory system for thrown items and magical projectiles.
+- Improved object trajectory system
+- Enhanced physics for thrown items and magical projectiles
 
 ---
 
