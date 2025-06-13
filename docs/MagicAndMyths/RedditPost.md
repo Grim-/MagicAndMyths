@@ -6,12 +6,16 @@ Aside from adding items, equipment and more from various sources of fantasy medi
 
 ## Core Magic Systems
 
-### Enchantment Framework
-- Every item and piece of equipment can be enchanted with magical properties
-- Multiple effect types: on-hit damage, stat modifications, damage nullification, time-based effects, effects based on the time of time
-- Categorized enchantments (melee, armor, etc.) with configurable rarity
-- Visual effects and complex conditional triggers like daylight-dependent bonuses
-- Auto-slotting enchantment system for specific items
+Enchantment Framework
+
+Every item and piece of equipment can be enchanted with magical properties
+Multiple effect types: on-hit damage, stat modifications, damage nullification, time-based effects
+Categorized enchantments (melee, armor, etc.) with configurable rarity
+Visual effects and complex conditional triggers like daylight-dependent bonuses
+Auto-slotting enchantment system for specific items
+Examples: 
+  - Fire Tongue (adds flame damage on hit), 
+  - Sunlight (boosts armor and strength during day, weakens at night)
 
 ### Leveled Abilities & Mastery
 - Spells and abilities grow stronger through use
