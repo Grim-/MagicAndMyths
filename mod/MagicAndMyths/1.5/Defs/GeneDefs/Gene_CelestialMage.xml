@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.BasicResourceGeneDef>
+    <defName>MagicAndMyths_CelestialMage</defName>
+    <label>Celestial Mage</label>
+    <primaryResourceDef>Mana</primaryResourceDef>
+    <description>A mage that is able to harness the power of Stars and Plantets.</description>
+    <customEffectDescriptions>
+      <li>A mage that is able to harness the power of Stars and Plantets.</li>
+    </customEffectDescriptions>
+    <abilities>
+      <li>MagicAndMyths_StarCall</li>
+      <li>MagicAndMyths_StarPull</li>
+      <li>MagicAndMyths_StarPush</li>
+      <li>MagicAndMyths_StarPush</li>
+      <li>MagicAndMyths_CelestialRain</li>
+      <li>MagicAndMyths_CelestialHolding</li>
+    </abilities>
+    <resourceGizmoThresholds>
+      <li>0.25</li>
+      <li>0.5</li>
+      <li>0.75</li>
+    </resourceGizmoThresholds>
+    <resourceGizmoType>MagicAndMyths.GeneGizmo_PrimaryResource</resourceGizmoType>
+    <showGizmoOnWorldView>false</showGizmoOnWorldView>
+    <showGizmoWhenDrafted>true</showGizmoWhenDrafted>
+    <iconPath>Skills/ManaUser</iconPath>
+    <selectionWeight>0.2</selectionWeight>
+    <displayCategory>Hemogen</displayCategory>
+    <displayOrderInCategory>-2</displayOrderInCategory>
+    <minAgeActive>3</minAgeActive>
+    <resourceLossPerDay>0</resourceLossPerDay>
+    <biostatCpx>0</biostatCpx>
+    <biostatMet>0</biostatMet>
+  </MagicAndMyths.BasicResourceGeneDef>
+</Defs>

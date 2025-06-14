@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- Idea to use MagicAndMyths.CompProperties_MapWideApplyHediff" in order to slow moving and manulpulation inside zone!-->
+  <!--right now its using Burn, I assume something needs to change in the class for it to be able to use other
+  damage defs but getting to late for me to take a look at that !-->
+  <AbilityDef>
+    <defName>MagicAndMyths_CelestialHolding</defName>
+    <label>Celestial Holding</label>
+    <description>CelestialHolding.</description>
+    <iconPath>Projectiles/Projectile_Fireball</iconPath>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>20</range>
+      <warmupTime>0.5</warmupTime>
+      <soundCast>PiercingSpine_Launch</soundCast>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>true</canTargetItems>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_SpawnRadialZoneEffect">
+        <zoneDef>MagicAndMyths_CelestialHoldingZone</zoneDef>
+        <zoneLifetime>1000</zoneLifetime>
+      </li>
+    </comps>
+  </AbilityDef>
+
+
+
+
+
+
+  <MagicAndMyths.ActiveZoneDef ParentName="EtherealThingBase">
+    <defName>MagicAndMyths_CelestialHoldingZone</defName>
+    <label>Holding Zone</label>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <thingClass>MagicAndMyths.ActiveZone</thingClass>
+    <ZoneLifeTime>800</ZoneLifeTime>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <passability>Standable</passability>
+    <pathCost>0</pathCost>
+    <fillPercent>0</fillPercent>
+    <graphicData>
+      <texPath>VFX/LightningSpear</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>4</drawSize>
+    </graphicData>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_ActiveZoneDamage">
+        <damageDef>Burn</damageDef>
+        <damage>3~5</damage>
+        <ticksBetweenDamage>200</ticksBetweenDamage>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_DomainZone">
+        <FilthDef>Filth_LooseGround</FilthDef>
+        <WallDef>DungeonWall</WallDef>
+        <FloorDef>Gravel</FloorDef>
+      </li>
+    </comps>
+  </MagicAndMyths.ActiveZoneDef>
+</Defs>
