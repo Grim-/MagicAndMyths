@@ -205,9 +205,7 @@ https://streamable.com/t50e4e
 - Complex interaction systems and timed durations
 
 ### ThingFlyers
-- Improved object trajectory system
-- thrown items, pawns and weapons.
-
+- thrown things!
 
 Here are a collection of gifs ive recorded 
 
