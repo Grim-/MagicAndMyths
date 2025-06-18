@@ -26,6 +26,23 @@
       <DeteriorationRate>0</DeteriorationRate>
     </statBases>
     <comps>
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Use {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>false</destroyOnUse>
+        <cooldownTickRange>2400~2400</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
+        <charges>-1</charges>
+        <targetSelf>true</targetSelf>
+        <requiresTarget>true</requiresTarget>
+        <moveToTarget>true</moveToTarget>
+        <targetParams>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+      </li>
       <li Class="MagicAndMyths.CompProperties_PyreRuby">
         <absorptionRadius>30</absorptionRadius>
       </li>

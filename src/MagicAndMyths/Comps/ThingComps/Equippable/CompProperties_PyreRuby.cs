@@ -21,7 +21,7 @@ namespace MagicAndMyths
         }
     }
 
-    public class Comp_PyreRuby : ThingComp
+    public class Comp_PyreRuby : Comp_BaseAritfactEffect
     {
         private int absorbedFireCount = 0;
         private bool HasAbsorbed => absorbedFireCount > 0;
@@ -40,6 +40,14 @@ namespace MagicAndMyths
             base.PostDeSpawn(map);
 
             EventManager.Instance.OnThingDamageTaken -= EventManager_OnDamageTaken;
+        }
+
+
+        public override void Apply(Pawn user, LocalTargetInfo target, Thing item)
+        {
+            base.Apply(user, target, item);
+
+            AbsorbAllFires();
         }
 
         private void EventManager_OnDamageTaken(Thing arg1, DamageInfo arg2)

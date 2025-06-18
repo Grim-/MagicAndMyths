@@ -58,7 +58,6 @@ namespace MagicAndMyths
                 BspNode bestNode2 = null;
                 float shortestDistance = float.MaxValue;
 
-                // Find closest unconnected node to any connected node
                 foreach (var connectedNode in connectedNodes)
                 {
                     foreach (var unconnectedNode in nonCriticalNodes)
@@ -93,9 +92,6 @@ namespace MagicAndMyths
         // Helper method to check if two nodes are adjacent on the critical path
         private static bool IsCriticalPathAdjacent(BspNode node1, BspNode node2)
         {
-            // This would check path index stored in tags
-            // For example: "path_index_0", "path_index_1" etc.
-
             int GetPathIndex(BspNode node)
             {
                 foreach (var tag in node.tags)

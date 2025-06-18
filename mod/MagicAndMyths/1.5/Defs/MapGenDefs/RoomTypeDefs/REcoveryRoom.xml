@@ -13,6 +13,10 @@
       <li>Luciferium</li>
       <li>HerbalMedicine</li>
     </healingItems>
+    <perferredLayouts>
+      <li>Circular</li>
+      <li>Square</li>
+    </perferredLayouts>
   </MagicAndMyths.RecoveryRoomDef>
 
 </Defs>

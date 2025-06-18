@@ -6,11 +6,60 @@ using RimWorld;
 
 namespace MagicAndMyths
 {
+    public struct OverlayToggle
+    {
+        public string Label { get; }
+        public bool CurrentValue { get; }
+        public System.Action<bool> Setter { get; }
+
+        public OverlayToggle(string label, bool currentValue, System.Action<bool> setter)
+        {
+            Label = label;
+            CurrentValue = currentValue;
+            Setter = setter;
+        }
+    }
+
     public class MapComp_DungeonGenDebugger : MapComponent
     {
+        private const float TOGGLE_BUTTON_WIDTH = 150f;
+        private const float TOGGLE_BUTTON_HEIGHT = 30f;
+        private const float PANEL_WIDTH = 400f;
+        private const float PANEL_HEIGHT = 500f;
+        private const float PANEL_PADDING = 10f;
+        private const float SCROLL_PADDING = 20f;
+        private const float LINE_HEIGHT = 25f;
+        private const float ITEM_HEIGHT = 20f;
+        private const float BUTTON_HEIGHT = 30f;
+        private const float SECTION_SPACING = 10f;
+        private const float INDENT = 10f;
+        private const float LABEL_SHADOW_EXPAND = 1f;
+
+        private const string PROTECTION_SYMBOL = "P";
+        private const string CORRIDOR_SYMBOL = "C";
+        private const string ROOM_SYMBOL = "R";
+        private const string BSP_SYMBOL = "B";
+
+
+        private const float BASE_HEIGHT = 300f;
+        private const float EXTRA_HEIGHT = 100f;
+
+
+        private static readonly Color PROTECTION_COLOR = Color.blue;
+        private static readonly Color CORRIDOR_COLOR = Color.cyan;
+        private static readonly Color CRITICAL_PATH_COLOR = Color.red;
+        private static readonly Color HIDDEN_ROOM_COLOR = Color.green;
+        private static readonly Color SIDE_PATH_COLOR = Color.yellow;
+        private static readonly Color DEFAULT_ROOM_COLOR = Color.white;
+        private static readonly Color BSP_NODE_COLOR = Color.magenta;
+        private static readonly Color SHADOW_COLOR = Color.black;
+
         protected Dungeon Dungeon;
         private bool showDebugInfo = false;
         private bool showProtectionOverlay = false;
+        private bool showCorridorOverlay = false;
+        private bool showRoomOverlay = false;
+        private bool showBspOverlay = false;
         private Vector2 scrollPos = Vector2.zero;
 
         public MapComp_DungeonGenDebugger(Map map) : base(map)
@@ -45,7 +94,7 @@ namespace MagicAndMyths
 
         private void DrawDebugToggle()
         {
-            Rect toggleRect = new Rect(10f, 10f, 150f, 30f);
+            Rect toggleRect = new Rect(PANEL_PADDING, PANEL_PADDING, TOGGLE_BUTTON_WIDTH, TOGGLE_BUTTON_HEIGHT);
             if (Widgets.ButtonText(toggleRect, showDebugInfo ? "Hide Debug" : "Show Debug"))
             {
                 showDebugInfo = !showDebugInfo;
@@ -54,56 +103,148 @@ namespace MagicAndMyths
 
         private void DrawDebugPanel()
         {
-            Rect panelRect = new Rect(10f, 50f, 400f, 500f);
+            Rect panelRect = new Rect(PANEL_PADDING, PANEL_PADDING + TOGGLE_BUTTON_HEIGHT + PANEL_PADDING, PANEL_WIDTH, PANEL_HEIGHT);
             Widgets.DrawWindowBackground(panelRect);
 
-            Rect viewRect = new Rect(0f, 0f, 380f, CalculateContentHeight());
-            Rect scrollRect = new Rect(panelRect.x + 10f, panelRect.y + 10f, panelRect.width - 20f, panelRect.height - 20f);
+            float contentWidth = PANEL_WIDTH - SCROLL_PADDING;
+            Rect viewRect = new Rect(0f, 0f, contentWidth, CalculateContentHeight());
+            Rect scrollRect = new Rect(panelRect.x + PANEL_PADDING, panelRect.y + PANEL_PADDING, panelRect.width - SCROLL_PADDING, panelRect.height - SCROLL_PADDING);
 
             Widgets.BeginScrollView(scrollRect, ref scrollPos, viewRect);
 
-            float curY = DrawHeader(viewRect.width);
-            curY = DrawAutomataButton(viewRect.width, curY);
-            curY = DrawOverlayToggles(viewRect.width, curY);
-            curY = DrawSummaryInfo(viewRect.width, curY);
-            curY = DrawCriticalPathInfo(viewRect.width, curY);
-            curY = DrawSideRoomsInfo(viewRect.width, curY);
-            DrawConnectionsInfo(viewRect.width, curY);
+            float curY = DrawHeader(contentWidth);
+            curY = DrawAutomataButton(contentWidth, curY);
+            curY = DrawOverlayToggles(contentWidth, curY);
+            curY = DrawSummaryInfo(contentWidth, curY);
+            curY = DrawCriticalPathInfo(contentWidth, curY);
+            DrawSideRoomsInfo(contentWidth, curY);
 
             Widgets.EndScrollView();
         }
 
-        private float DrawOverlayToggles(float width, float startY)
+        private float DrawHeader(float width)
         {
-            Widgets.Label(new Rect(0f, startY, width, 25f), "Overlays:");
-            startY += 25f;
-
-            Rect protectionToggleRect = new Rect(10f, startY, width - 10f, 25f);
-            bool newProtectionOverlay = showProtectionOverlay;
-            Widgets.CheckboxLabeled(protectionToggleRect, "Show Protection Grid", ref newProtectionOverlay);
-            if (newProtectionOverlay != showProtectionOverlay)
-            {
-                showProtectionOverlay = newProtectionOverlay;
-            }
-            startY += 30f;
-
-            return startY + 10f;
+            Text.Font = GameFont.Medium;
+            DrawLabel(0f, 0f, width, BUTTON_HEIGHT, "Dungeon Debug Info");
+            Text.Font = GameFont.Small;
+            return BUTTON_HEIGHT + SECTION_SPACING;
         }
 
         private float DrawAutomataButton(float width, float startY)
         {
-            Rect buttonRect = new Rect(0f, startY, width, 30f);
+            Rect buttonRect = new Rect(0f, startY, width, BUTTON_HEIGHT);
             if (Widgets.ButtonText(buttonRect, "Apply Cellular Automata"))
             {
                 ShowCellularAutomataMenu();
             }
-            return startY + 40f;
+            return startY + BUTTON_HEIGHT + SECTION_SPACING;
+        }
+
+        private float DrawOverlayToggles(float width, float startY)
+        {
+            startY = DrawSectionHeader(width, startY, "Overlays:");
+
+            var overlayToggles = new[]
+            {
+                new OverlayToggle("Show Protection Grid", showProtectionOverlay, value => showProtectionOverlay = value),
+                new OverlayToggle("Show Corridor Cells", showCorridorOverlay, value => showCorridorOverlay = value),
+                new OverlayToggle("Show Room Cells", showRoomOverlay, value => showRoomOverlay = value),
+                new OverlayToggle("Show BSP Nodes", showBspOverlay, value => showBspOverlay = value)
+            };
+
+            foreach (var toggle in overlayToggles)
+            {
+                startY = DrawCheckbox(width, startY, toggle.Label, toggle.CurrentValue, toggle.Setter);
+            }
+
+            return startY + SECTION_SPACING;
+        }
+
+        private float DrawSummaryInfo(float width, float startY)
+        {
+            var allRooms = Dungeon.GetAllRooms().ToList();
+            var criticalPathRooms = allRooms.Where(r => r.IsOnCriticalPath).ToList();
+            var sidePathRooms = allRooms.Where(r => !r.IsOnCriticalPath).ToList();
+
+            var summaryItems = new[]
+            {
+                $"Total Rooms: {allRooms.Count}",
+                $"Critical Path Rooms: {criticalPathRooms.Count}",
+                $"Side Path Rooms: {sidePathRooms.Count}"
+            };
+
+            foreach (var item in summaryItems)
+            {
+                startY = DrawLabel(0f, startY, width, LINE_HEIGHT, item);
+            }
+
+            return startY + SECTION_SPACING;
+        }
+
+        private float DrawCriticalPathInfo(float width, float startY)
+        {
+            startY = DrawSectionHeader(width, startY, "Critical Path:");
+
+            var criticalPathRooms = Dungeon.GetAllRooms()
+                .Where(r => r.IsOnCriticalPath)
+                .OrderBy(r => r.CriticalPathIndex)
+                .ToList();
+
+            foreach (var room in criticalPathRooms)
+            {
+                string roomInfo = $"[{room.CriticalPathIndex}] {room.def?.defName ?? "Unassigned"} at {room.Center}";
+                startY = DrawIndentedLabel(width, startY, roomInfo);
+            }
+
+            return startY + SECTION_SPACING;
+        }
+
+        private float DrawSideRoomsInfo(float width, float startY)
+        {
+            startY = DrawSectionHeader(width, startY, "Side Rooms:");
+
+            var sidePathRooms = Dungeon.GetAllRooms().Where(r => !r.IsOnCriticalPath).ToList();
+
+            foreach (var room in sidePathRooms)
+            {
+                string roomInfo = $"{room.def?.defName ?? "Unassigned"} at {room.Center}{GetRoomTags(room)}";
+                startY = DrawIndentedLabel(width, startY, roomInfo);
+            }
+
+            return startY + SECTION_SPACING;
+        }
+
+        private float DrawSectionHeader(float width, float startY, string text)
+        {
+            return DrawLabel(0f, startY, width, LINE_HEIGHT, text);
+        }
+
+        private float DrawLabel(float x, float y, float width, float height, string text)
+        {
+            Widgets.Label(new Rect(x, y, width, height), text);
+            return y + height;
+        }
+
+        private float DrawIndentedLabel(float width, float startY, string text)
+        {
+            return DrawLabel(INDENT, startY, width - INDENT, ITEM_HEIGHT, text);
+        }
+
+        private float DrawCheckbox(float width, float startY, string label, bool currentValue, System.Action<bool> setter)
+        {
+            Rect checkboxRect = new Rect(INDENT, startY, width - INDENT, LINE_HEIGHT);
+            bool newValue = currentValue;
+            Widgets.CheckboxLabeled(checkboxRect, label, ref newValue);
+            if (newValue != currentValue)
+            {
+                setter(newValue);
+            }
+            return startY + BUTTON_HEIGHT;
         }
 
         private void ShowCellularAutomataMenu()
         {
             var automataOptions = new List<FloatMenuOption>();
-
             var allAutomataDefs = DefDatabase<CelluarAutomataDef>.AllDefsListForReading;
 
             foreach (var automataDef in allAutomataDefs)
@@ -140,89 +281,12 @@ namespace MagicAndMyths
             Messages.Message($"Applied {automataDef.defName} to dungeon", MessageTypeDefOf.TaskCompletion);
         }
 
-        private float DrawHeader(float width)
-        {
-            Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(0f, 0f, width, 30f), "Dungeon Debug Info");
-            Text.Font = GameFont.Small;
-            return 35f;
-        }
-
-        private float DrawSummaryInfo(float width, float startY)
-        {
-            var allRooms = Dungeon.GetAllRooms().ToList();
-            var criticalPathRooms = allRooms.Where(r => r.IsOnCriticalPath).ToList();
-            var sidePathRooms = allRooms.Where(r => !r.IsOnCriticalPath).ToList();
-
-            Widgets.Label(new Rect(0f, startY, width, 25f), $"Total Rooms: {allRooms.Count}");
-            startY += 25f;
-            Widgets.Label(new Rect(0f, startY, width, 25f), $"Critical Path Rooms: {criticalPathRooms.Count}");
-            startY += 25f;
-            Widgets.Label(new Rect(0f, startY, width, 25f), $"Side Path Rooms: {sidePathRooms.Count}");
-            return startY + 35f;
-        }
-
-        private float DrawCriticalPathInfo(float width, float startY)
-        {
-            Widgets.Label(new Rect(0f, startY, width, 25f), "Critical Path:");
-            startY += 25f;
-
-            var criticalPathRooms = Dungeon.GetAllRooms()
-                .Where(r => r.IsOnCriticalPath)
-                .OrderBy(r => r.CriticalPathIndex)
-                .ToList();
-
-            foreach (var room in criticalPathRooms)
-            {
-                string roomInfo = $"  [{room.CriticalPathIndex}] {room.def?.defName ?? "Unassigned"} at {room.Center}";
-                Widgets.Label(new Rect(10f, startY, width - 10f, 20f), roomInfo);
-                startY += 20f;
-            }
-
-            return startY + 10f;
-        }
-
-        private float DrawSideRoomsInfo(float width, float startY)
-        {
-            Widgets.Label(new Rect(0f, startY, width, 25f), "Side Rooms:");
-            startY += 25f;
-
-            var sidePathRooms = Dungeon.GetAllRooms().Where(r => !r.IsOnCriticalPath).ToList();
-
-            foreach (var room in sidePathRooms)
-            {
-                string roomInfo = $"  {room.def?.defName ?? "Unassigned"} at {room.Center}";
-                roomInfo += GetRoomTags(room);
-                Widgets.Label(new Rect(10f, startY, width - 10f, 20f), roomInfo);
-                startY += 20f;
-            }
-
-            return startY + 10f;
-        }
-
         private string GetRoomTags(DungeonRoom room)
         {
-            string tags = "";
-            if (room.HasTag("side_path")) tags += " [SIDE_PATH]";
-            if (room.HasTag("hidden")) tags += " [HIDDEN]";
-            return tags;
-        }
-
-        private void DrawConnectionsInfo(float width, float startY)
-        {
-            Widgets.Label(new Rect(0f, startY, width, 25f), "Room Connections:");
-            startY += 25f;
-
-            var allRooms = Dungeon.GetAllRooms().ToList();
-            foreach (var room in allRooms)
-            {
-                if (room.connectedRooms?.Count > 0)
-                {
-                    string connectionInfo = $"  {room.def?.defName ?? "Room"} -> {room.connectedRooms.Count} connections";
-                    Widgets.Label(new Rect(10f, startY, width - 10f, 20f), connectionInfo);
-                    startY += 20f;
-                }
-            }
+            var tags = new List<string>();
+            if (room.HasTag("side_path")) tags.Add("[SIDE_PATH]");
+            if (room.HasTag("hidden")) tags.Add("[HIDDEN]");
+            return tags.Any() ? " " + string.Join(" ", tags) : "";
         }
 
         private void DrawMapOverlays()
@@ -232,56 +296,146 @@ namespace MagicAndMyths
             DrawRoomLabels(allRooms);
 
             if (showProtectionOverlay)
-            {
-                DrawProtectionOverlay();
-            }
+                DrawCellOverlay(GetProtectedCells(), PROTECTION_SYMBOL, PROTECTION_COLOR);
+
+            if (showCorridorOverlay)
+                DrawCellOverlay(GetAllCorridorCells(), CORRIDOR_SYMBOL, CORRIDOR_COLOR);
+
+            if (showRoomOverlay)
+                DrawRoomOverlay();
+
+            if (showBspOverlay)
+                DrawBspOverlay();
         }
 
-        private void DrawProtectionOverlay()
+        private void DrawCellOverlay(IEnumerable<IntVec3> cells, string symbol, Color color)
         {
-            if (Dungeon?.GridManager.ProtectionGrid == null) return;
-
-            foreach (IntVec3 cell in map.AllCells)
+            foreach (IntVec3 cell in cells)
             {
                 if (!cell.InBounds(map)) continue;
 
-                bool isProtected = Dungeon.GridManager.ProtectionGrid[cell];
-                if (!isProtected) continue;
-
-                Vector3 worldPos = cell.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays);
-                Vector2 screenPos = Find.Camera.WorldToScreenPoint(worldPos);
-                screenPos.y = Screen.height - screenPos.y;
-
+                Vector2 screenPos = GetCellScreenPosition(cell);
                 if (!IsPositionVisible(screenPos)) continue;
 
-                Vector2 labelSize = Text.CalcSize("P");
-                Rect labelRect = new Rect(screenPos.x - labelSize.x / 2f, screenPos.y - labelSize.y / 2f, labelSize.x, labelSize.y);
-
-                GUI.color = Color.blue;
-                Widgets.Label(labelRect, "P");
-                GUI.color = Color.white;
+                DrawSymbolAtPosition(screenPos, symbol, color);
             }
         }
 
-        private void DrawRoomLabels(System.Collections.Generic.List<DungeonRoom> allRooms)
+        private void DrawRoomOverlay()
+        {
+            var allRooms = Dungeon.GetAllRooms().ToList();
+
+            foreach (var room in allRooms)
+            {
+                Color roomColor = GetRoomOverlayColor(room);
+                DrawCellOverlay(room.roomCells, ROOM_SYMBOL, roomColor);
+            }
+        }
+
+        private void DrawBspOverlay()
+        {
+            if (Dungeon?.LeafNodes == null) return;
+
+            foreach (var node in Dungeon.LeafNodes)
+            {
+                DrawBspNodeRect(node.rect);
+            }
+        }
+
+        private void DrawBspNodeRect(CellRect rect)
+        {
+            var corners = new[]
+            {
+                new IntVec3(rect.minX, 0, rect.minZ),
+                new IntVec3(rect.maxX, 0, rect.minZ),
+                new IntVec3(rect.maxX, 0, rect.maxZ),
+                new IntVec3(rect.minX, 0, rect.maxZ)
+            };
+
+            for (int i = 0; i < corners.Length; i++)
+            {
+                var start = corners[i];
+                var end = corners[(i + 1) % corners.Length];
+
+                if (start.InBounds(map) && end.InBounds(map))
+                {
+                    Vector3 startPos = start.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays);
+                    Vector3 endPos = end.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays);
+
+                    GenDraw.DrawLineBetween(startPos, endPos, SimpleColor.Magenta);
+                }
+            }
+
+            DrawCellOverlay(rect.Cells, BSP_SYMBOL, BSP_NODE_COLOR);
+        }
+
+        private void DrawSymbolAtPosition(Vector2 screenPos, string symbol, Color color)
+        {
+            Vector2 labelSize = Text.CalcSize(symbol);
+            Rect labelRect = new Rect(screenPos.x - labelSize.x / 2f, screenPos.y - labelSize.y / 2f, labelSize.x, labelSize.y);
+
+            GUI.color = color;
+            Widgets.Label(labelRect, symbol);
+            GUI.color = Color.white;
+        }
+
+        private Vector2 GetCellScreenPosition(IntVec3 cell)
+        {
+            Vector3 worldPos = cell.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays);
+            Vector2 screenPos = Find.Camera.WorldToScreenPoint(worldPos);
+            screenPos.y = Screen.height - screenPos.y;
+            return screenPos;
+        }
+
+        private Color GetRoomOverlayColor(DungeonRoom room)
+        {
+            if (room.IsOnCriticalPath) return CRITICAL_PATH_COLOR;
+            if (room.HasTag("hidden")) return HIDDEN_ROOM_COLOR;
+            if (room.HasTag("side_path")) return SIDE_PATH_COLOR;
+            return DEFAULT_ROOM_COLOR;
+        }
+
+        private IEnumerable<IntVec3> GetProtectedCells()
+        {
+            if (Dungeon?.GridManager.ProtectionGrid == null)
+                yield break;
+
+            foreach (IntVec3 cell in map.AllCells)
+            {
+                if (cell.InBounds(map) && Dungeon.GridManager.ProtectionGrid[cell])
+                    yield return cell;
+            }
+        }
+
+        private HashSet<IntVec3> GetAllCorridorCells()
+        {
+            var corridorCells = new HashSet<IntVec3>();
+
+            if (Dungeon?.ConnectionManager?.AllConnections == null)
+                return corridorCells;
+
+            foreach (var connection in Dungeon.ConnectionManager.AllConnections)
+            {
+                foreach (var cell in connection.GetAllCells())
+                {
+                    corridorCells.Add(cell);
+                }
+            }
+
+            return corridorCells;
+        }
+
+        private void DrawRoomLabels(List<DungeonRoom> allRooms)
         {
             foreach (var room in allRooms)
             {
-                Vector2 screenPos = GetRoomScreenPosition(room);
+                Vector2 screenPos = GetCellScreenPosition(room.Center);
                 if (!IsPositionVisible(screenPos)) continue;
 
                 string label = GetRoomLabel(room);
                 Color labelColor = GetRoomLabelColor(room);
                 DrawLabelWithShadow(screenPos, label, labelColor);
             }
-        }
-
-        private Vector2 GetRoomScreenPosition(DungeonRoom room)
-        {
-            Vector3 worldPos = room.Center.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays);
-            Vector2 screenPos = Find.Camera.WorldToScreenPoint(worldPos);
-            screenPos.y = Screen.height - screenPos.y;
-            return screenPos;
         }
 
         private bool IsPositionVisible(Vector2 screenPos)
@@ -298,22 +452,17 @@ namespace MagicAndMyths
                 label = $"{label} [{room.CriticalPathIndex}]";
             }
 
-            if (GetRoomTags(room).Count() > 0)
+            string tags = GetRoomTags(room);
+            if (!string.IsNullOrEmpty(tags))
             {
-                label += $"\r\ntags : {GetRoomTags(room)}";
+                label += $"\r\ntags : {tags}";
             }
             return label;
         }
 
         private Color GetRoomLabelColor(DungeonRoom room)
         {
-            if (room.IsOnCriticalPath)
-                return Color.red;
-            if (room.HasTag("hidden"))
-                return Color.green;
-            if (room.HasTag("side_path"))
-                return Color.yellow;
-            return Color.white;
+            return GetRoomOverlayColor(room);
         }
 
         private void DrawLabelWithShadow(Vector2 screenPos, string label, Color labelColor)
@@ -321,8 +470,8 @@ namespace MagicAndMyths
             Vector2 labelSize = Text.CalcSize(label);
             Rect labelRect = new Rect(screenPos.x - labelSize.x / 2f, screenPos.y - labelSize.y / 2f, labelSize.x, labelSize.y);
 
-            GUI.color = Color.black;
-            Widgets.Label(labelRect.ExpandedBy(1f, 1f), label);
+            GUI.color = SHADOW_COLOR;
+            Widgets.Label(labelRect.ExpandedBy(LABEL_SHADOW_EXPAND, LABEL_SHADOW_EXPAND), label);
 
             GUI.color = labelColor;
             Widgets.Label(labelRect, label);
@@ -355,7 +504,11 @@ namespace MagicAndMyths
             var criticalPathRooms = allRooms.Where(r => r.IsOnCriticalPath).ToList();
             var sidePathRooms = allRooms.Where(r => !r.IsOnCriticalPath).ToList();
 
-            return 240f + (criticalPathRooms.Count * 20f) + (sidePathRooms.Count * 20f) + (allRooms.Count * 20f) + 100f;
+
+            return BASE_HEIGHT +
+                   (criticalPathRooms.Count * ITEM_HEIGHT) +
+                   (sidePathRooms.Count * ITEM_HEIGHT) +
+                   EXTRA_HEIGHT;
         }
 
         public override void ExposeData()
@@ -363,6 +516,9 @@ namespace MagicAndMyths
             base.ExposeData();
             Scribe_Values.Look(ref showDebugInfo, "showDebugInfo", false);
             Scribe_Values.Look(ref showProtectionOverlay, "showProtectionOverlay", false);
+            Scribe_Values.Look(ref showCorridorOverlay, "showCorridorOverlay", false);
+            Scribe_Values.Look(ref showRoomOverlay, "showRoomOverlay", false);
+            Scribe_Values.Look(ref showBspOverlay, "showBspOverlay", false);
         }
     }
 }

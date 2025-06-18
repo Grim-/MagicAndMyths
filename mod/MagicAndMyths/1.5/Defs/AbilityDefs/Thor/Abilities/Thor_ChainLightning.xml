@@ -14,8 +14,9 @@
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_ChainLightning">
+        <damageDef>Lightning</damageDef>
+        <damageAmount>15</damageAmount>
       </li>
     </comps>
   </AbilityDef>
-
 </Defs>

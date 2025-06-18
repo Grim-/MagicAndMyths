@@ -5,7 +5,7 @@ namespace MagicAndMyths
 {
     public class Thing_Key : ThingWithComps
     {
-        private Building_LockableDoor doorReference = null;
+        private Building doorReference = null;
         private Color? pairingColor;
 
         public override Color DrawColor => pairingColor != null ? pairingColor.Value : base.DrawColor;
@@ -22,7 +22,7 @@ namespace MagicAndMyths
             }
         }
 
-        public void SetDoorReference(Building_LockableDoor door, Color color)
+        public void SetDoorReference(Building door, Color color)
         {
             doorReference = door;
             pairingColor = color;

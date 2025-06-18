@@ -60,6 +60,8 @@ namespace MagicAndMyths
             {
                 if (!base.CanCast)
                     return false;
+                if (this.pawn.HasMagicDisabled())
+                    return false;
                 if (ResourceDef == null || ResourceDef.resourceDef == null)
                     return true;
                 if (resourceGene == null)
@@ -70,21 +72,21 @@ namespace MagicAndMyths
             }
         }
 
-        public override bool CanQueueCast
-        {
-            get
-            {
-                if (!base.CanQueueCast)
-                    return false;
-                if (ResourceDef.resourceDef == null)
-                    return true;
-                if (resourceGene == null)
-                    return false;
-                if (resourceGene.ResourceIsUnavailable(out string reason))
-                    return false;
-                return resourceGene.Has(ResourceDef.resourceDef, ResourceDef.resourceCost);
-            }
-        }
+        //public override bool CanQueueCast
+        //{
+        //    get
+        //    {
+        //        if (!base.CanQueueCast)
+        //            return false;
+        //        if (ResourceDef.resourceDef == null)
+        //            return true;
+        //        if (resourceGene == null)
+        //            return false;
+        //        if (resourceGene.ResourceIsUnavailable(out string reason))
+        //            return false;
+        //        return resourceGene.Has(ResourceDef.resourceDef, ResourceDef.resourceCost);
+        //    }
+        //}
 
         new public virtual void Initialize()
         {
@@ -122,6 +124,29 @@ namespace MagicAndMyths
                 this.maxCharges = this.def.charges;
                 this.RemainingCharges = this.maxCharges;
             }
+        }
+
+        public override bool GizmoDisabled(out string reason)
+        {
+            if (this.pawn.HasMagicDisabled())
+            {
+                reason = "Magic Disabled";
+                return true;
+            }
+
+            if (resourceGene == null)
+            {
+                reason = "no available resource gene";
+                return true;
+            }
+
+            if (resourceGene.ResourceIsUnavailable(out string noresourceReason) || !resourceGene.Has(ResourceDef.resourceDef, ResourceDef.resourceCost))
+            {
+                reason = "no available resource";
+                return true;
+            }
+            return base.GizmoDisabled(out reason);
+
         }
 
         protected override void PreActivate(LocalTargetInfo? target)

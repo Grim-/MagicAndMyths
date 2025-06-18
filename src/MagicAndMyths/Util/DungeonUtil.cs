@@ -33,7 +33,7 @@ namespace MagicAndMyths
         {
             foreach (var room in rooms)
             {
-                foreach (var item in room.roomCellRect.EdgeCells)
+                foreach (var item in room.RoomCellRect.EdgeCells)
                 {
                     if (item.GetFirstBuilding(map) == null)
                     {

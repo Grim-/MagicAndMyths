@@ -8,7 +8,6 @@
     <possibleEnemies>
       <li>Bear_Grizzly</li>
     </possibleEnemies>
-    <requiresExactSize>true</requiresExactSize>
     <roomIsOnCriticalPath>true</roomIsOnCriticalPath>
   </MagicAndMyths.EncounterRoomDef_Fight>
 
@@ -19,6 +18,9 @@
     <roomType>Normal</roomType>
     <roomIsOnCriticalPath>true</roomIsOnCriticalPath>
     <enemyCountRange>2~4</enemyCountRange>
+    <perferredLayouts>
+      <li>Circular</li>
+    </perferredLayouts>
     <possibleEnemies>
       <li>WildBoar</li>
       <li>Warg</li>

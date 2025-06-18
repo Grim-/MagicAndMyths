@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.RoomLayoutDef>
+    <defName>Cross</defName>
+    <workerClass>MagicAndMyths.CrossRoomShape</workerClass>
+  </MagicAndMyths.RoomLayoutDef>
+</Defs>

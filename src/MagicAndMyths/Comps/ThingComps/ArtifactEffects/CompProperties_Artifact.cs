@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Verse;
 using Verse.AI;
@@ -8,7 +9,7 @@ using Verse.Sound;
 
 namespace MagicAndMyths
 {
-    public class CompProperties_Artifact : CompProperties
+    public class CompProperties_Artifact : CompProperties_Usable
     {
         public string useLabel = "Activate {0}";
         public JobDef useJob;
@@ -47,13 +48,29 @@ namespace MagicAndMyths
         }
     }
 
-    public class Comp_Artifact : ThingComp
+    public class Comp_Artifact : CompUsable
     {
         private int chargesRemaining;
         private int cooldownTicksRemaining = -1;
         protected bool UsesCharges => Props.charges > 0;
 
         protected bool ChargesInitiallySet = false;
+
+
+
+        private List<Comp_BaseAritfactEffect> _Comps;
+        private List<Comp_BaseAritfactEffect> Comps
+        {
+            get
+            {
+                if (_Comps == null)
+                {
+                    _Comps = this.parent.GetComps<Comp_BaseAritfactEffect>().ToList();
+                }
+
+                return _Comps;
+            }
+        }
 
         public CompProperties_Artifact Props => (CompProperties_Artifact)props;
 
@@ -90,10 +107,37 @@ namespace MagicAndMyths
             }
         }
 
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (var item in base.CompGetGizmosExtra())
+            {
+                yield return item;
+            }
+
+
+            if (Comps != null && Comps.Count > 0)
+            {
+                yield return new Command_Action
+                {
+                    icon = this.parent.def.uiIcon,
+                    defaultLabel = string.Format("{0} {1}...", "UseGizmo".Translate(), this.parent.def.label),
+                    defaultDesc = "UseGizmoTooltip".Translate(this.parent.def.label),
+                    action = delegate ()
+                    {
+                        SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                        Find.Targeter.BeginTargeting(this, null, false, null, null, true);
+                    }
+                };
+            }
+        }
+
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             if (parent.IsForbidden(selPawn) || !selPawn.CanReach(parent, PathEndMode.Touch, Danger.Deadly))
                 yield break;
+
+            //if (Comps == null || Comps.Count == 0)
+            //    yield break;
 
             if (chargesRemaining <= 0)
                 yield break;
@@ -163,11 +207,27 @@ namespace MagicAndMyths
             }
         }
 
-        public bool CanBeUsedNow(Pawn pawn)
+
+        public override AcceptanceReport CanBeUsedBy(Pawn p, bool forced = false, bool ignoreReserveAndReachable = false)
         {
-            return !parent.IsForbidden(pawn) && chargesRemaining > 0 && cooldownTicksRemaining <= 0;
+            return base.CanBeUsedBy(p, forced, ignoreReserveAndReachable) && !parent.IsForbidden(p) && chargesRemaining > 0 && cooldownTicksRemaining <= 0;
         }
 
+        //public bool CanBeUsedNow(Pawn pawn)
+        //{
+        //    return !parent.IsForbidden(pawn) && chargesRemaining > 0 && cooldownTicksRemaining <= 0;
+        //}
+
+
+        public override void UsedBy(Pawn p)
+        {
+           // base.UsedBy(p);
+        }
+
+        public override void TryStartUseJob(Pawn pawn, LocalTargetInfo extraTarget, bool forced = false)
+        {
+           // base.TryStartUseJob(pawn, extraTarget, forced);
+        }
 
         public void UseEffects(Pawn user, LocalTargetInfo target)
         {
@@ -207,7 +267,7 @@ namespace MagicAndMyths
                 Props.targetEffectDef.Spawn(target.Cell, user.Map, 1);
             }
 
-            foreach (var effect in this.parent.GetComps<Comp_BaseAritfactEffect>())
+            foreach (var effect in Comps)
             {
                 effect.Apply(user, target, parent);
             }

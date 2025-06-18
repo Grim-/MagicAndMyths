@@ -76,7 +76,7 @@ namespace MagicAndMyths
                 DungeonRoom startRoom = GeneratedDungeon.GetRoom(GeneratedDungeon.StartNode);
                 if (startRoom != null)
                 {
-                    entryPoint = startRoom.roomCellRect.RandomCell;
+                    entryPoint = startRoom.RoomCellRect.RandomCell;
                 }
                 else
                 {

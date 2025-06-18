@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <ThingDef Name="MMArtifactBase" ParentName="ArtifactBase" Abstract="true">
+  <ThingDef Name="MMArtifactBase" ParentName="ResourceBase" Abstract="true">
+    <thingClass>ThingWithComps</thingClass>
+    <techLevel>Archotech</techLevel>
+    <thingCategories>
+      <li>Artifacts</li>
+    </thingCategories>
+    <tradeTags>
+      <li>Artifact</li>
+    </tradeTags>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
     <stackLimit>1</stackLimit>
     <orderedTakeGroup>Artifact</orderedTakeGroup>

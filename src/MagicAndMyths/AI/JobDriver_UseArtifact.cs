@@ -40,7 +40,7 @@ namespace MagicAndMyths
 
             this.FailOn(() => ArtifactComp == null);
 
-            this.FailOn(() => !ArtifactComp.CanBeUsedNow(this.pawn));
+            this.FailOn(() => !ArtifactComp.CanBeUsedBy(this.pawn));
 
             yield return Toils_Goto.GotoThing(TargetIndex.A, TargetThing.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch);
 

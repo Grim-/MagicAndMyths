@@ -42,5 +42,16 @@ namespace MagicAndMyths
                 //target.Thing.Notify_Teleported(false, true);
             }
         }
+
+        public override bool GizmoDisabled(out string reason)
+        {
+            if (this.parent.pawn.HasTeleportingDisabled())
+            {
+                reason = "Teleporting is disabled by a condition";
+                return false;
+            }
+
+            return base.GizmoDisabled(out reason);
+        }
     }
 }

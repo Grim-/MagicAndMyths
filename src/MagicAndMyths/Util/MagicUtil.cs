@@ -81,6 +81,49 @@ namespace MagicAndMyths
             return false;
         }
 
+        public static bool HasMagicDisabled(this Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet?.hediffs == null) return false;
+
+            for (int i = 0; i < pawn.health.hediffSet.hediffs.Count; i++)
+            {
+                var hediff = pawn.health.hediffSet.hediffs[i];
+                if (hediff.TryGetComp<HediffComp>() is IDisableMagic magicComp && magicComp.DisablesMagic)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool HasTeleportingDisabled(this Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet?.hediffs == null)
+                return false;
+
+            for (int i = 0; i < pawn.health.hediffSet.hediffs.Count; i++)
+            {
+                var hediff = pawn.health.hediffSet.hediffs[i];
+                if (hediff.TryGetComp<HediffComp>() is IDisableTeleportingAbilities magicComp && magicComp.DisablesTeleporting)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool HasRessurectionDisabled(this Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet?.hediffs == null) return false;
+
+            for (int i = 0; i < pawn.health.hediffSet.hediffs.Count; i++)
+            {
+                var hediff = pawn.health.hediffSet.hediffs[i];
+                if (hediff.TryGetComp<HediffComp>() is IDisableRessurection resComp && resComp.DisablesRessurection)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public static IntVec3 CalculatePushDirection(IntVec3 Origin, IntVec3 Position, float minPushDistance, float maxPushDistance)
         {
