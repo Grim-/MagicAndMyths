@@ -109,9 +109,11 @@
   <ItemGroup>
     <Compile Include="Ability\LevelingResourceAbility.cs" />
     <Compile Include="Buildings\Building_FireControlCenter.cs" />
+    <Compile Include="Buildings\Building_LockableMultiTileDoor.cs" />
     <Compile Include="Buildings\Building_TurretGun_Controlled.cs" />
     <Compile Include="Buildings\Dialog_ManageGroups.cs" />
     <Compile Include="Buildings\Dialog_RenameGroup.cs" />
+    <Compile Include="Buildings\ILockableDoor.cs" />
     <Compile Include="Buildings\ScheduledBarrage.cs" />
     <Compile Include="Buildings\TurretBatteryGroup.cs" />
     <Compile Include="Comps\Ability\CompProperties_GrantHediffStackForValidTargetsInRadius.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_ModifyDamage.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_OnMeleeAttackComboHediff.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_OnMeleeAttackDealDamageResourceBoost.cs" />
+    <Compile Include="Hediff\Comps\HediffCompProperties_DisableHealing.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_DisableMagic.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_DisableRessurection.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_DisableTeleporting.cs" />
@@ -166,8 +169,10 @@
     <Compile Include="Hediff\Comps\Stack\HediffCompProperties_RemoveSelfAtMaxStacks.cs" />
     <Compile Include="Hediff\HediffInjuryWithStacks.cs" />
     <Compile Include="Hediff\IStackableHediff.cs" />
+    <Compile Include="Interfaces\IDisableHealing.cs" />
     <Compile Include="Interfaces\IDisableMagic.cs" />
     <Compile Include="Interfaces\IDisableRessurection.cs" />
+    <Compile Include="Interfaces\IDisableTeleportingAbilities.cs" />
     <Compile Include="Interfaces\IToggleableAbility.cs" />
     <Compile Include="Comps\Ability\Toggle Comps\BaseToggleAbilityComp.cs" />
     <Compile Include="Comps\Ability\Hediff\CompProperties_AbilityAddStacks.cs" />
@@ -235,7 +240,6 @@
     <Compile Include="MapGen\Dungeon\DunGENSteps\MapInitializationStep.cs" />
     <Compile Include="MapGen\Dungeon\Generators\MinimumSpanningTreeGenerator.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\MinimumSpanningTreeStep.cs" />
-    <Compile Include="MapGen\Dungeon\DunGENSteps\PlannedRoomProcessingStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\PostAutomataStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\RoomCreationStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\RoomTypeAssignmentStep.cs" />

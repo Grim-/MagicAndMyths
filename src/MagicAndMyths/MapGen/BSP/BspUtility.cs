@@ -30,9 +30,7 @@ namespace MagicAndMyths
                 foreach (var node in leafNodes)
                 {
                     int area = node.rect.Width * node.rect.Height;
-                    if (area > largestArea &&
-                        node.rect.Width >= minRoomSize &&
-                        node.rect.Height >= minRoomSize)
+                    if (area > largestArea)
                     {
                         largestArea = area;
                         largestNode = node;

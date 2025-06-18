@@ -244,48 +244,7 @@ namespace MagicAndMyths
         {
             return tags.Contains(tag);
         }
-        public List<IntVec3> GetDoorPositions()
-        {
-            var doorPositions = new List<IntVec3>();
 
-            foreach (var connection in connections)
-            {
-                if (connection.Corridoor != null)
-                {
-                    var edgePoints = GetRoomEdgePoints();
-                    var corridorPoints = new List<IntVec3> { connection.Corridoor.Start, connection.Corridoor.End };
-
-                    if (connection.Corridoor.path != null)
-                        corridorPoints.AddRange(connection.Corridoor.path);
-
-                    foreach (var edgePoint in edgePoints)
-                    {
-                        foreach (var corridorPoint in corridorPoints)
-                        {
-                            if ((edgePoint - corridorPoint).LengthHorizontalSquared <= 2)
-                            {
-                                foreach (var dir in GenAdj.CardinalDirections)
-                                {
-                                    IntVec3 doorCandidate = edgePoint + dir;
-                                    if (!roomCells.Contains(doorCandidate) &&
-                                        !doorPositions.Contains(doorCandidate))
-                                    {
-                                        doorPositions.Add(doorCandidate);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return doorPositions.Distinct().ToList();
-        }
-
-        public bool HasDoorToRoom(DungeonRoom otherRoom)
-        {
-            return connections.Any(c => c.DestinationRoom == otherRoom);
-        }
         public static string GetConnectionId(DungeonRoom room1, DungeonRoom room2)
         {
             ulong id1 = (ulong)System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(room1);

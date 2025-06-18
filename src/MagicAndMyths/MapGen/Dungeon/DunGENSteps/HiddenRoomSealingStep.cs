@@ -1,15 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace MagicAndMyths
 {
-
-
     public class HiddenRoomSealingStep : IDungeonGenerationStep
     {
         public void Execute(DungeonGenerationContext context)
         {
-             var hiddenRooms = context.Dungeon.GetAllRooms()
+            var hiddenRooms = context.Dungeon.GetAllRooms()
                 .Where(room => room.HasTag("hidden"))
                 .ToList();
 
@@ -19,7 +18,6 @@ namespace MagicAndMyths
             foreach (var hiddenRoom in hiddenRooms)
             {
                 SealRoomConnections(context, hiddenRoom);
-                context.Map.fogGrid.Refog(hiddenRoom.RoomCellRect.ExpandedBy(2));
             }
         }
 
@@ -38,22 +36,49 @@ namespace MagicAndMyths
         private void SealConnection(DungeonGenerationContext context, RoomConnection connection, DungeonRoom hiddenRoom)
         {
             DungeonRoom visibleRoom = connection.roomA == hiddenRoom ? connection.roomB : connection.roomA;
-            IntVec3 sealCell = DetermineClosestSealPoint(connection.Corridoor.Start, connection.Corridoor.End, visibleRoom, hiddenRoom);
-            PlaceWallAtCell(context, sealCell);
-            context.Map.fogGrid.Refog(connection.Corridoor.CellRect.ExpandedBy(2));
+
+            var corridorCells = new HashSet<IntVec3>(connection.Corridoor.path ?? new List<IntVec3>());
+            var visibleRoomCells = new HashSet<IntVec3>(visibleRoom.roomCells);
+
+            List<IntVec3> sealPoints = new List<IntVec3>();
+
+            foreach (var corridorCell in corridorCells)
+            {
+                foreach (var dir in GenAdj.CardinalDirections)
+                {
+                    IntVec3 adjacentCell = corridorCell + dir;
+                    if (visibleRoomCells.Contains(adjacentCell))
+                    {
+                        sealPoints.Add(corridorCell);
+                        break;
+                    }
+                }
+            }
+
+            foreach (var sealPoint in sealPoints)
+            {
+                SealCorridorAtPoint(context, sealPoint, connection.Corridoor, corridorCells);
+            }
         }
 
-        private IntVec3 DetermineClosestSealPoint(IntVec3 startCell, IntVec3 endCell, DungeonRoom visibleRoom, DungeonRoom hiddenRoom)
+        private void SealCorridorAtPoint(DungeonGenerationContext context, IntVec3 sealPoint, Corridoor corridor, HashSet<IntVec3> corridorCells)
         {
-            float distanceStartToVisible = (startCell - visibleRoom.Center).LengthHorizontalSquared;
-            float distanceEndToVisible = (endCell - visibleRoom.Center).LengthHorizontalSquared;
+            PlaceEmptyWall(context, sealPoint);
 
-            return distanceStartToVisible < distanceEndToVisible ? startCell : endCell;
+            if (corridor.Width > 1)
+            {
+                foreach (var dir in GenAdj.CardinalDirections)
+                {
+                    context.Constructor.BuildWallsToEdge(sealPoint, dir, corridorCells, MagicAndMythDefOf.EmptyDungeonWall);
+                }
+            }
         }
 
-        private void PlaceWallAtCell(DungeonGenerationContext context, IntVec3 cell)
+        private void PlaceEmptyWall(DungeonGenerationContext context, IntVec3 cell)
         {
+            context.Constructor.ClearCell(cell);
             context.Constructor.PlaceThing(cell, MagicAndMythDefOf.EmptyDungeonWall);
+            context.Dungeon.GridManager.MarkCellAsWall(cell);
         }
     }
 }

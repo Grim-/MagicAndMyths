@@ -59,13 +59,14 @@ namespace MagicAndMyths
                 new CriticalPathDesignationStep(),
                 new SidePathProcessingStep(),
                 new RoomTypeAssignmentStep(),
+                new SideRoomTypeUpdateStep(),
                 new GenerateCorridoorsStep(),
                 new GridApplicationStep(),
                 new DoorPlacementStep(),
                 new PostAutomataStep(),
                 new RoomWorkerApplicationStep(),
-                new HiddenRoomSealingStep(),
-                new ApplyFogStep()
+                new HiddenRoomSealingStep()
+                //new ApplyFogStep()
             };
         }
     }

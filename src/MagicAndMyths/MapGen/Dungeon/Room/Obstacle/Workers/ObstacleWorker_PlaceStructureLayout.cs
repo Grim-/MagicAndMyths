@@ -25,13 +25,6 @@ namespace MagicAndMyths
 
             StructureLayoutDef structureLayoutDef = Def.structureToPlace;
             IntVec3 position = Room.Center;
-
-            ////too small to fit
-            //if (Room.roomCellRect.Width < structureLayoutDef.MaxBuildSize.x || Room.roomCellRect.Height < structureLayoutDef.MaxBuildSize.z)
-            //{
-            //    return false;
-            //}
-
             CellRect neededRect = structureLayoutDef.GetCellRect(position);
 
             if (neededRect.FullyContainedWithin(Room.RoomCellRect))

@@ -135,7 +135,42 @@ namespace MagicAndMyths
                 ClearCell(cell);
             }
         }
+        public void BuildWallsToEdge(IntVec3 startCell, IntVec3 direction, HashSet<IntVec3> validCells, ThingDef thingToBuild = null)
+        {
+            IntVec3 currentCell = startCell;
+            while (validCells.Contains(currentCell) && currentCell.InBounds(context.Map))
+            {
+                bool hasWall = false;
+                var things = context.Map.thingGrid.ThingsAt(currentCell);
+                foreach (var thing in things)
+                {
+                    if (thing.def.category == ThingCategory.Building && thing.def.passability == Traversability.Impassable)
+                    {
+                        hasWall = true;
+                        break;
+                    }
+                }
 
+                if (!hasWall)
+                {
+                    context.Dungeon.GridManager.MarkCellAsWall(currentCell);
+
+
+                    if (thingToBuild != null)
+                    {
+                        ThingDef stuffDef = context.Def.WallStuffDef;
+                        PlaceThing(currentCell, thingToBuild, stuffDef);
+                    }
+                    else
+                    {
+                        PlaceWall(currentCell);
+                    }
+                   
+                }
+
+                currentCell += direction;
+            }
+        }
         public void CreateFloorArea(IEnumerable<IntVec3> cells)
         {
             ClearCells(cells);

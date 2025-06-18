@@ -16,6 +16,8 @@ namespace MagicAndMyths
         public int fuelAmountRequired = 0;
         public string displayString = "Enter Portal";
 
+        public ThingDef activePortalEffecter;
+
         public CompProperties_Portal()
         {
             this.compClass = typeof(Comp_Portal);
@@ -26,7 +28,7 @@ namespace MagicAndMyths
     {
         protected bool isPortalOpen = false;
         protected int lastUsedTick = -1;
-        protected Effecter portalEffect = null;
+        protected Mote portalEffect = null;
 
         public CompProperties_Portal Props => (CompProperties_Portal)props;
         private bool CooldownActive => Props.cooldownTicks > 0 &&
@@ -41,7 +43,8 @@ namespace MagicAndMyths
 
             if (portalEffect != null && isPortalOpen)
             {
-                portalEffect.EffectTick(this.parent, this.parent);
+                portalEffect.Tick();
+                portalEffect.Maintain();
             }
         }
 
@@ -74,7 +77,11 @@ namespace MagicAndMyths
 
         protected virtual void OnOpened() 
         {
-        
+            if (Props.activePortalEffecter != null)
+            {
+                this.portalEffect = MoteMaker.MakeStaticMote(this.parent.Position, this.parent.Map, Props.activePortalEffecter);
+                this.portalEffect = (Mote)GenSpawn.Spawn(this.portalEffect, this.parent.Position, this.parent.Map);
+            }
         }
 
         protected virtual void OnClosed()
@@ -131,7 +138,7 @@ namespace MagicAndMyths
 
             if (portalEffect != null)
             {
-                portalEffect.Cleanup();
+                portalEffect.Destroy();
                 portalEffect = null;
             }
 

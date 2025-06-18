@@ -6,6 +6,7 @@
     <obstacles>
       <li>KeyAndLockObstacle</li>
       <li>PlaceDesecratedAltar</li>
+      <li>TurretStructurePlacement</li>
     </obstacles>
   </MagicAndMyths.ObstacleRoomDef>
 </Defs>

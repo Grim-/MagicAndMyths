@@ -4,10 +4,4 @@
     {
         bool DisablesMagic { get; }
     }
-
-
-    public interface IDisableTeleportingAbilities
-    {
-        bool DisablesTeleporting { get; }
-    }
 }

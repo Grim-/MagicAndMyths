@@ -10,16 +10,17 @@
     <MagicAndMyths.DungeonGenDef>
       <defName>UndeadDungeon</defName>
         <randomCorridoorAmount>3</randomCorridoorAmount>
-        <maxDepth>250</maxDepth>
-        <roomSize>8</roomSize>
+        <maxDepth>350</maxDepth>
+        <roomSize>10</roomSize>
+        <mapSize>(120, 1, 120)</mapSize>
         <minRoomPadding>3</minRoomPadding>
         <roomSizeFactor>1</roomSizeFactor>
         <noRoomChanceCriticalPath>0.1</noRoomChanceCriticalPath>
         <noRoomChanceSidePath>0.3</noRoomChanceSidePath>
         <minSizeMultiplier>1</minSizeMultiplier>
         <aspectRatioThreshold>1.13</aspectRatioThreshold>
-        <edgeMarginDivisor>1.14</edgeMarginDivisor>
-        <roomAmount>5~7</roomAmount>
+        <edgeMarginDivisor>1.5</edgeMarginDivisor>
+        <roomAmount>5~70</roomAmount>
         <sideRoomCount>9~25</sideRoomCount>
         <addRandomCorridoors>false</addRandomCorridoors>
         <availableRoomTypes>
@@ -81,22 +82,6 @@
         <earlyAutomata>
         </earlyAutomata>
         <postGenAutomata>
-          <!-- <li>
-            <automataDef>AddAlcoves</automataDef>
-            <iterations>10</iterations>
-          </li>
-          <li>
-            <automataDef>RemoveIslands</automataDef>
-            <iterations>2</iterations>
-          </li>
-          <li>
-            <automataDef>AddAlcoves</automataDef>
-            <iterations>2</iterations>
-          </li>
-          <li>
-            <automataDef>RemoveIslands</automataDef>
-            <iterations>1</iterations>
-          </li> -->
         </postGenAutomata>
         <indestructibleWall>DungeonWall</indestructibleWall>
         <wall>DungeonWall</wall>

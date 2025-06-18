@@ -13,12 +13,10 @@ namespace MagicAndMyths
             ConnectionPoints connectionPoints = FindOptimalConnectionPoints(roomA, roomB);
             IntVec3 startPoint = connectionPoints.Start;
             IntVec3 endPoint = connectionPoints.End;
-
             CorridorPathBase pathGenerator = GetRandomWildCorridorStyle(startPoint, endPoint, map);
             pathGenerator.smoothCorners = smoothCorners;
             List<IntVec3> corridorPath = pathGenerator.GeneratePathWithWidth(startPoint, endPoint, map, width);
 
-            //remove all cells that clip into the rooms for any reason.
             List<IntVec3> clippedPath = corridorPath.Where(cell =>
             {
                 foreach (DungeonRoom room in Dungeon.Rooms)
@@ -28,6 +26,12 @@ namespace MagicAndMyths
                 }
                 return true;
             }).ToList();
+
+            if (clippedPath.Count > 0)
+            {
+                startPoint = clippedPath.OrderBy(cell => cell.DistanceToSquared(roomA.Center)).First();
+                endPoint = clippedPath.OrderBy(cell => cell.DistanceToSquared(roomB.Center)).First();
+            }
 
             Corridoor mainCorridor = new Corridoor(startPoint, endPoint, width);
             mainCorridor.SetPath(clippedPath);
@@ -46,10 +50,6 @@ namespace MagicAndMyths
             var styles = new CorridorPathBase[]
             {
                 new StraightCorridorPath(),
-                //new BranchingCorridorPath { branchCount = Rand.Range(1, 3), branchLength = Rand.Range(3f, 8f) },
-                //new OrganicCorridorPath { noise = Rand.Range(0.5f, 0.8f), smoothingPasses = Rand.Range(5, 14) },
-                //new ZigzagCorridorPath { segments = Rand.Range(1, 3), zigzagOffset = Rand.Range(2f, 5f) },
-                //new CurvedCorridorPath { curvature = Rand.Range(0.6f, 1.0f) }
             };
             return styles.Where(x => x.FitnessTest(start, end, map)).RandomElement();
         }

@@ -48,7 +48,7 @@ namespace MagicAndMyths
             if (validEncounters.Count > 0)
             {
                 var encounter = validEncounters.RandomElementByWeight(e => e.weight);
-                GenerateSpecificEncounter(map, room.RoomCellRect, encounter, room.ProgressionValue);
+                GenerateSpecificEncounter(map, room, encounter, room.ProgressionValue);
             }
             else
             {
@@ -56,7 +56,7 @@ namespace MagicAndMyths
             }
         }
 
-        private void GenerateSpecificEncounter(Map map, CellRect roomRect, SpecificEncounter encounter, float progression)
+        private void GenerateSpecificEncounter(Map map, DungeonRoom roomRect, SpecificEncounter encounter, float progression)
         {
             List<Pawn> spawn = new List<Pawn>();
 
@@ -77,12 +77,13 @@ namespace MagicAndMyths
                 for (int i = 0; i < count; i++)
                 {
                     Pawn pawn = PawnGenerator.GeneratePawn(enemy.kindDef, Faction.OfAncientsHostile);
-                    GenSpawn.Spawn(pawn, roomRect.Cells.RandomElement(), map);
+                    pawn.health.GetOrAddHediff(MagicAndMythDefOf.MagicAndMyths_DungeonMobHediff);
+                    GenSpawn.Spawn(pawn, roomRect.roomCells.RandomElement(), map);
                     spawn.Add(pawn);
                 }
             }
 
-            LordJob_DefendPoint lordJob = new LordJob_DefendPoint(roomRect.CenterCell, 0, 1, false, false);
+            LordJob_DefendPoint lordJob = new LordJob_DefendPoint(roomRect.RoomCellRect.CenterCell, roomRect.RoomCellRect.Width / 2, roomRect.RoomCellRect.Width / 2, false, false);
             Lord enemyLord = LordMaker.MakeNewLord(Faction.OfAncientsHostile, lordJob, map, spawn);
             map.GetComponent<MapComp_DungeonEnemies>().AddLord(map.uniqueID, enemyLord);
         }

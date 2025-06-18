@@ -42,13 +42,79 @@ namespace MagicAndMyths
                                 dungeonGenerationContext.Constructor.PlaceDoor(doorInfo.Position, doorInfo.Rotation);
                             }
 
-                            Log.Message($"<color=yellow>Placed door at {doorInfo.Position} with rotation {doorInfo.Rotation}</color>");
+                            //Log.Message($"<color=yellow>Placed door at {doorInfo.Position} with rotation {doorInfo.Rotation}</color>");
+
+                            // Check and seal any gaps
+                            SealCorridorGaps(doorInfo.Position, doorInfo.Rotation, connection.Corridoor);
                         }
                     }
                 }
             }
         }
 
+        private void SealCorridorGaps(IntVec3 doorPosition, Rot4 doorRotation, Corridoor corridor)
+        {
+            var corridorCells = new HashSet<IntVec3>(corridor.path ?? new List<IntVec3> { corridor.Start, corridor.End });
+
+            // Get perpendicular directions to door facing
+            var perpendicularDirs = GetPerpendicularDirections(doorRotation);
+
+            // Get all cells occupied by the door
+            var doorCells = GetActualDoorCells(doorPosition, doorRotation);
+
+            // From each door cell, check perpendicular directions for gaps
+            foreach (var doorCell in doorCells)
+            {
+                foreach (var dir in perpendicularDirs)
+                {
+                    IntVec3 currentCell = doorCell + dir;
+
+                    if (doorCells.Contains(currentCell))
+                        continue;
+
+                    if (corridorCells.Contains(currentCell) && currentCell.InBounds(dungeonGenerationContext.Map))
+                    {
+                        dungeonGenerationContext.Constructor.BuildWallsToEdge(currentCell, dir, corridorCells);
+                    }
+                }
+            }
+        }
+
+        private List<IntVec3> GetActualDoorCells(IntVec3 doorPosition, Rot4 rotation)
+        {
+            List<IntVec3> doorCells = new List<IntVec3>();
+
+            IEnumerable<Thing> things = dungeonGenerationContext.Map.thingGrid.ThingsAt(doorPosition);
+            ILockableDoor door = null;
+
+            foreach (var thing in things)
+            {
+                if (thing is ILockableDoor)
+                {
+                    door = (ILockableDoor)thing;
+                    break;
+                }
+            }
+
+            if (door != null)
+            {
+                doorCells.AddRange(door.Thing.OccupiedRect().Cells);
+            }
+
+            return doorCells;
+        }
+
+        private List<IntVec3> GetPerpendicularDirections(Rot4 rotation)
+        {
+            if (rotation == Rot4.North || rotation == Rot4.South)
+            {
+                return new List<IntVec3> { IntVec3.East, IntVec3.West };
+            }
+            else
+            {
+                return new List<IntVec3> { IntVec3.North, IntVec3.South };
+            }
+        }
         private struct DoorPlacementInfo
         {
             public IntVec3 Position;
@@ -66,14 +132,12 @@ namespace MagicAndMyths
             var doorPlacements = new List<DoorPlacementInfo>();
             var corridorCells = new HashSet<IntVec3>(corridor.path ?? new List<IntVec3> { corridor.Start, corridor.End });
 
-            // Find door placement near source room
             var sourceDoor = FindDoorNearRoom(sourceRoom, corridorCells, corridor);
             if (sourceDoor.HasValue)
             {
                 doorPlacements.Add(sourceDoor.Value);
             }
 
-            // Find door placement near destination room
             var destinationDoor = FindDoorNearRoom(destinationRoom, corridorCells, corridor);
             if (destinationDoor.HasValue)
             {

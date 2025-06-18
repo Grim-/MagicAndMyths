@@ -42,7 +42,8 @@ namespace MagicAndMyths
                 {
                     foreach (var connectionCell in connection.GetAllCells())
                     {
-                        context.Dungeon.GridManager.MarkCellProtected(connectionCell, true);
+                        context.Dungeon.MarkCellAsFloor(connectionCell);
+                        //context.Dungeon.GridManager.MarkCellProtected(connectionCell, true);
                     }
                 }
             }

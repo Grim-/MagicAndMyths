@@ -60,6 +60,7 @@ namespace MagicAndMyths
 
         protected override void OnOpened()
         {
+            base.OnOpened();
             linkedMap = GetOrCreatePortalMap();
 
             if (linkedMap == null)
@@ -72,6 +73,7 @@ namespace MagicAndMyths
 
         protected override void OnClosed()
         {
+            base.OnClosed();
             linkedMap = null;
 
             if (DungeonManager != null)
@@ -82,6 +84,8 @@ namespace MagicAndMyths
 
         protected override void OnDestroyed()
         {
+            base.OnDestroyed();
+
             if (DungeonManager != null && DungeonManager.TryGetMapWithID(uniqueMapId, out DungeonMapParent dungeonMapParent))
             {
                 DungeonManager.TryCloseMap(uniqueMapId);

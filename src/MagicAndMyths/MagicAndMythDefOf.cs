@@ -89,6 +89,8 @@ namespace MagicAndMyths
         public static EffecterDef MagicAndMyths_EffectSingularityAura;
 
 
+        public static HediffDef MagicAndMyths_DungeonMobHediff;
+
 
         public static EnchantCategoryDef EnchantCategory_Universal;
         public static EnchantCategoryDef EnchantCategory_Melee;

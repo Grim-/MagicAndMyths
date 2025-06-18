@@ -3,60 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 
 namespace MagicAndMyths
 {
-    public static class LockableDoorHelper
-    {
-        public static IEnumerable<FloatMenuOption> GetLockingFloatMenuOptions(ILockableDoor door, Pawn selPawn)
-        {
-            if (door.IsLocked)
-            {
-                if (door.PawnHasRequiredKey(selPawn))
-                {
-                    yield return new FloatMenuOption("Unlock", () =>
-                    {
-                        Job job = JobMaker.MakeJob(MagicAndMythDefOf.MagicAndMyths_UnlockDoor, door as Building);
-                        selPawn.jobs.StartJob(job, JobCondition.InterruptOptional);
-                    });
-                }
-                else
-                {
-                    yield return new FloatMenuOption($"{DCUtility.FormatDCCheck(5, DCUtility.CalculateSkillBonus(selPawn, SkillDefOf.Crafting))}", () =>
-                    {
-                    });
-                    yield return new FloatMenuOption($"Key Required {door.KeyReference}", () =>
-                    {
-                    }, MenuOptionPriority.DisabledOption);
-                }
-            }
-        }
-
-        public static string GetLockingInspectString(ILockableDoor door)
-        {
-            return $"Is Locked ? {door.IsLocked}";
-        }
-
-        public static void ExposeLockingData(ILockableDoor door)
-        {
-            bool isLocked = door.IsLocked;
-            Thing_Key keyRef = door.KeyReference;
-
-            Scribe_Values.Look(ref isLocked, "isLocked", false);
-            Scribe_References.Look(ref keyRef, "keyReference");
-
-            door.IsLocked = isLocked;
-            door.KeyReference = keyRef;
-        }
-    }
-
-    public class Building_LockableDoor : Building_Door, ILockableDoor
+    public class Building_LockableMultiTileDoor : Building_MultiTileDoor, ILockableDoor
     {
         private bool _IsLocked = false;
         private Thing_Key keyReference = null;
         private Color? pairingColor;
-        public Thing Thing => this;
+
         public bool IsLocked
         {
             get => _IsLocked;
@@ -74,6 +29,9 @@ namespace MagicAndMyths
             get => pairingColor;
             set => pairingColor = value;
         }
+
+
+        public Thing Thing => this;
 
         public override Color DrawColor => pairingColor ?? base.DrawColor;
 
