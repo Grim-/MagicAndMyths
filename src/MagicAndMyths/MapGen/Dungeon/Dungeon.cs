@@ -89,7 +89,12 @@ namespace MagicAndMyths
 
         public IEnumerable<DungeonRoom> GetAllRooms()
         {
-            return nodeToRoomMap.Values;
+            if (nodeToRoomMap.Values != null)
+            {
+                return nodeToRoomMap.Values;
+            }
+
+            return new Dictionary<BspNode, DungeonRoom>().Values;
         }
 
         public IEnumerable<DungeonRoom> GetAllCriticalPathRooms()

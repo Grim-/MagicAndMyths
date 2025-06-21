@@ -30,6 +30,7 @@
     <Publicize Include="Assembly-CSharp:RimWorld.Building_TurretGun.ResetCurrentTarget" />
     <Publicize Include="Assembly-CSharp:RimWorld.Building_TurretGun.holdFire" />
     <Publicize Include="Assembly-CSharp:RimWorld.Building_TurretGun.CanToggleHoldFire" />
+    <Publicize Include="Assembly-CSharp:Verse.LinkGrid.linkGrid" />
   </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -114,6 +115,7 @@
     <Compile Include="Buildings\Dialog_ManageGroups.cs" />
     <Compile Include="Buildings\Dialog_RenameGroup.cs" />
     <Compile Include="Buildings\ILockableDoor.cs" />
+    <Compile Include="Buildings\Plant_Building.cs" />
     <Compile Include="Buildings\ScheduledBarrage.cs" />
     <Compile Include="Buildings\TurretBatteryGroup.cs" />
     <Compile Include="Comps\Ability\CompProperties_GrantHediffStackForValidTargetsInRadius.cs" />

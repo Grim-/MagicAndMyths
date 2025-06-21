@@ -8,12 +8,13 @@ namespace MagicAndMyths
     public class DungeonGenerator
     {
         //private readonly DungeonGenerationPipeline pipeline;
-        private readonly Dungeon dungeon;
+        private Dungeon dungeon;
         private readonly Map map;
 
-        private readonly List<IDungeonGenerationStep> steps;
         private readonly DungeonGenerationContext context;
-
+        private List<IDungeonGenerationStep> generationSteps;
+        private int currentStepIndex = 0;
+        public bool GenerationComplete => currentStepIndex >= generationSteps.Count;
         public Dungeon GeneratedDungeon => dungeon;
 
         public DungeonGenerator(Map map, DungeonGenDef def)
@@ -21,23 +22,24 @@ namespace MagicAndMyths
             this.map = map;
             this.dungeon = new Dungeon(map);
             this.dungeon.Def = def;
-   
+
+            context = new DungeonGenerationContext(dungeon, dungeon.Def, map);
+            generationSteps = CreateGenerationSteps();
             if (map.Parent is DungeonMapParent dungeonMapParent)
             {
                 dungeonMapParent.SetDungeon(this.dungeon);
+                dungeonMapParent.DungeonGen = this;
             }
-
-            context = new DungeonGenerationContext(dungeon, dungeon.Def, map);
-            steps = CreateGenerationSteps();
         }
 
         public void Generate()
         {
+            //StepGeneration();
             Log.Message($"<color=cyan>Beginning Dungeon generation...</color>");
 
 
             int index = 0;
-            foreach (var step in steps)
+            foreach (var step in CreateGenerationSteps())
             {
                 Log.Message($"<color=cyan>Step {index + 1} {step.GetType()}</color>");
                 try
@@ -55,6 +57,52 @@ namespace MagicAndMyths
 
 
             Log.Message($"<color=cyan>Dungeon generation complete</color>");
+        }
+
+        public void Regenerate()
+        {
+            ResetGeneration();
+            Generate();
+        }
+
+        public void StepGeneration()
+        {
+            if (GenerationComplete)
+            {
+                Log.Message("<color=green>Dungeon generation already complete.</color>");
+                return;
+            }
+
+            var step = generationSteps[currentStepIndex];
+            Log.Message($"<color=yellow>Executing Step {currentStepIndex + 1}: {step.GetType().Name}</color>");
+
+            try
+            {
+                step.Execute(context);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"<color=red>Dungeon Generation Error at Step {currentStepIndex + 1}</color>\n{e}");
+            }
+
+            if (dungeon != null)
+            {
+                GridApplicationStep.DrawGrid(context);
+            }
+
+            currentStepIndex++;
+
+            if (GenerationComplete)
+            {
+                Log.Message("<color=cyan>Dungeon generation complete</color>");
+            }
+        }
+
+        public void ResetGeneration()
+        {
+            currentStepIndex = 0;
+            generationSteps = CreateGenerationSteps();
+            dungeon = new Dungeon(map);
         }
 
         private List<IDungeonGenerationStep> CreateGenerationSteps()

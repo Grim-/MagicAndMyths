@@ -28,6 +28,9 @@ namespace MagicAndMyths
         public int DungeonID => dungeonID;
         public Dungeon GeneratedDungeon = null;
 
+
+        public DungeonGenerator DungeonGen;
+
         public bool HasColonistLimit = false;
         public int ColonistLimit = 10;
 
@@ -45,6 +48,7 @@ namespace MagicAndMyths
         {
             GeneratedDungeon = dungeon;
         }
+
 
         public override void Tick()
         {
@@ -136,8 +140,6 @@ namespace MagicAndMyths
             alsoRemoveWorldObject = true;
             return ShouldDestroy && !this.Map.mapPawns.AnyPawnBlockingMapRemoval;
         }
-
-
 
         public override void ExposeData()
         {

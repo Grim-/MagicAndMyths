@@ -8,7 +8,6 @@ namespace MagicAndMyths
     {
         public DungeonRoom roomA;
         public DungeonRoom roomB;
-        //public List<Corridoor> corridors = new List<Corridoor>();
         private Corridoor _Corridoor = null;
         public Corridoor Corridoor
         {

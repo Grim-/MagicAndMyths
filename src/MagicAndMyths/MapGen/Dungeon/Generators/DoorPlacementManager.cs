@@ -161,6 +161,11 @@ namespace MagicAndMyths
                     {
                         Rot4 doorRotation = GetDoorRotation(direction);
 
+                        if (doorRotation == Rot4.Invalid)
+                        {
+
+                        }
+
                         if (IsValidDoorPlacement(corridorCell, doorRotation, corridor))
                         {
                             return new DoorPlacementInfo(corridorCell, doorRotation);
@@ -174,13 +179,13 @@ namespace MagicAndMyths
 
         private Rot4 GetDoorRotation(IntVec3 corridorDirection)
         {
-            if (corridorDirection == IntVec3.North)
+            if (corridorDirection == IntVec3.North || corridorDirection == IntVec3.NorthEast)
                 return Rot4.North;
-            if (corridorDirection == IntVec3.South)
+            if (corridorDirection == IntVec3.South || corridorDirection == IntVec3.SouthWest)
                 return Rot4.South;
-            if (corridorDirection == IntVec3.East)
+            if (corridorDirection == IntVec3.East || corridorDirection == IntVec3.SouthEast)
                 return Rot4.East;
-            if (corridorDirection == IntVec3.West)
+            if (corridorDirection == IntVec3.West ||corridorDirection == IntVec3.NorthWest)
                 return Rot4.West;
             return Rot4.North;
         }

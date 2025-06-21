@@ -7,6 +7,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
     public class Building_FireControlCenter : Building
     {
         private List<Building_TurretGun_Controlled> controlledTurrets = new List<Building_TurretGun_Controlled>();

@@ -8,7 +8,7 @@ namespace MagicAndMyths
     {
         private Dungeon dungeon;
         private Map map;
-        private Dictionary<string, RoomConnection> connections;
+        private Dictionary<string, RoomConnection> connections = new Dictionary<string, RoomConnection>();
         public IReadOnlyCollection<RoomConnection> AllConnections => connections.Values;
 
         public DungeonConnectionManager(Dungeon dungeon, Map map)
@@ -28,8 +28,6 @@ namespace MagicAndMyths
             }
 
             RoomConnection connection = new RoomConnection(roomA, roomB);
-            //probably should be a dungeon gen step
-            //connection.corridors = CorridoorUtility.GenerateCorridors(map, roomA, roomB, 1);
             connections[connectionId] = connection;
 
             if (!roomA.connectedRooms.Contains(roomB))
@@ -74,6 +72,11 @@ namespace MagicAndMyths
 
         public List<RoomConnection> GetConnectionsForRoom(DungeonRoom room)
         {
+            if (connections == null || connections.Values == null)
+            {
+                return new List<RoomConnection>();
+            }
+
             return connections.Values
                 .Where(c => c.SourceRoom == room || c.DestinationRoom == room)
                 .ToList();
@@ -87,8 +90,18 @@ namespace MagicAndMyths
         }
         public void ApplyConnectionsToGrid()
         {
+            if (connections == null || connections.Values == null)
+            {
+                return;
+            }
+
             foreach (var connection in connections.Values)
             {
+                if (connection.Corridoor == null)
+                {
+                    continue;
+                }
+
                 foreach (IntVec3 cell in connection.Corridoor.GetAllCorridorCells())
                 {
                     dungeon.MarkCellAsFloor(cell);
@@ -105,6 +118,12 @@ namespace MagicAndMyths
                     ConnectRooms(room, connectedRoom);
                 }
             }
+        }
+
+
+        public void Reset()
+        {
+            connections.Clear();
         }
 
         private string GetConnectionId(DungeonRoom roomA, DungeonRoom roomB)

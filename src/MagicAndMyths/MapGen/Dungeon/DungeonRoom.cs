@@ -24,7 +24,7 @@ namespace MagicAndMyths
             set => _roomCellRect = value;
         }
 
-        public CellRect roomWalls;
+        public CellRect roomWalls = CellRect.Empty;
         public List<string> tags = new List<string>();
         public List<DungeonRoom> connectedRooms = new List<DungeonRoom>();
         public List<RoomConnection> connections = new List<RoomConnection>();
@@ -32,7 +32,7 @@ namespace MagicAndMyths
         public RoomTypeDef def;
         public float distanceFromStart;
         public RoomShapeBase roomShape;
-        public List<IntVec3> roomCells;
+        public List<IntVec3> roomCells = new List<IntVec3>();
 
         public bool IsOnCriticalPath => CriticalPathIndex >= 0;
         public int CriticalPathIndex = -1;

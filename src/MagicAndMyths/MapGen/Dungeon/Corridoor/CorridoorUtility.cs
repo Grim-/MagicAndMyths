@@ -45,8 +45,8 @@ namespace MagicAndMyths
         {
             var styles = new CorridorPathBase[]
             {
-                new StraightCorridorPath(),
-                new CurvedCorridorPath()
+                new StraightCorridorPath()
+                //new CurvedCorridorPath()
             };
             return styles.Where(x => x.FitnessTest(start, end, map)).RandomElement();
         }

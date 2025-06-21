@@ -16,40 +16,53 @@ namespace MagicAndMyths
             ClearFloorCell(context);
         }
 
-        private void ApplyRoomsToGrid(DungeonGenerationContext context)
-        {
-            //FillMapWithWalls(context);
 
-            foreach (var room in context.Dungeon.GetAllRooms())
+        public static void DrawGrid(DungeonGenerationContext context)
+        {
+            if (context !=null && context.Dungeon != null && context.Dungeon.Rooms != null && context.Dungeon.GridManager.dungeonGrid != null)
             {
+                Log.Message("Drawing connections");
+                context.Dungeon.ConnectionManager.ApplyConnectionsToGrid();
+                ApplyRoomsToGrid(context);
+                ClearFloorCell(context);
+            }
+        }
+
+        private static void ApplyRoomsToGrid(DungeonGenerationContext context)
+        {
+            foreach (var room in context.Dungeon.Rooms)
+            {
+                if (room?.roomCells == null)
+                    continue;
+
                 foreach (IntVec3 cell in room.roomCells)
                 {
                     context.Dungeon.MarkCellAsFloor(cell);
                 }
 
+                if (context.Dungeon.ConnectionManager == null)
+                    continue;
 
-                //foreach (var item in room.GetRoomEdgePoints())
-                //{
-                //    context.Dungeon.MarkCellAsWall(item);
-                //}
+                var connections = context.Dungeon.ConnectionManager.GetConnectionsForRoom(room);
 
-                //foreach (IntVec3 cell in room.roomWalls.EdgeCells)
-                //{
-                //    context.Dungeon.GridManager.MarkCellProtected(cell, true);
-                //}
-
-                foreach (var connection in context.Dungeon.ConnectionManager.GetConnectionsForRoom(room))
+                foreach (var connection in connections)
                 {
-                    foreach (var connectionCell in connection.GetAllCells())
+                    if (connection?.Corridoor == null)
+                        continue;
+
+                    var connectionCells = connection.GetAllCells();
+                    if (connectionCells == null)
+                        continue;
+
+                    foreach (var connectionCell in connectionCells)
                     {
                         context.Dungeon.MarkCellAsFloor(connectionCell);
-                        //context.Dungeon.GridManager.MarkCellProtected(connectionCell, true);
                     }
                 }
             }
         }
 
-        private void ClearFloorCell(DungeonGenerationContext context)
+        private static void ClearFloorCell(DungeonGenerationContext context)
         {
             foreach (IntVec3 cell in context.Map.AllCells)
             {

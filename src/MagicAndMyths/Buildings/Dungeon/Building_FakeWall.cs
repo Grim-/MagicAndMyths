@@ -11,9 +11,26 @@ namespace MagicAndMyths
         private bool HasBeenDiscovered = false;
         public override Color DrawColor => HasBeenDiscovered ? Color.white * 0.4f : base.DrawColor;
 
+        public override string GetInspectString()
+        {
+
+            return base.GetInspectString() + (HasBeenDiscovered ? "discovered" : "undiscovered");
+        }
+
+
         public void SetDiscovered(bool newValue)
         {
             HasBeenDiscovered = newValue;
+
+            if (HasBeenDiscovered)
+            {
+                this.Map.linkGrid.linkGrid[this.Map.cellIndices.CellToIndex(this.Position)] = LinkFlags.None;
+            }
+            else
+            {
+                this.Map.linkGrid.Notify_LinkerCreatedOrDestroyed(this);
+            }
+            this.Map.mapDrawer.RegenerateEverythingNow();
         }
 
         public override bool BlocksPawn(Pawn p)
@@ -25,6 +42,7 @@ namespace MagicAndMyths
 
             return !p.Drafted;
         }
+
 
         public override bool IsDangerousFor(Pawn pawn)
         {
@@ -63,6 +81,16 @@ namespace MagicAndMyths
             }
         }
 
+        public override void DynamicDrawPhaseAt(DrawPhase phase, Vector3 drawLoc, bool flip = false)
+        {
+
+            if (!HasBeenDiscovered)
+            {
+                base.DynamicDrawPhaseAt(phase, drawLoc, flip);
+            }
+
+       
+        }
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
@@ -76,7 +104,7 @@ namespace MagicAndMyths
                 defaultLabel = "Toggle Discovered",
                 action = () =>
                 {
-                    HasBeenDiscovered = !HasBeenDiscovered;
+                    SetDiscovered(!HasBeenDiscovered);
                 }
             };
         }

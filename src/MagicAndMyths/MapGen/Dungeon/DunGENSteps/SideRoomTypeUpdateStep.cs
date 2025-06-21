@@ -7,12 +7,10 @@ namespace MagicAndMyths
     {
         public void Execute(DungeonGenerationContext context)
         {
-            // Skip if no side room types are configured
             if (context.Def.availableSideRoomTypes == null || context.Def.availableSideRoomTypes.Count == 0)
                 return;
 
-            // Get all side path rooms
-            var sidePathRooms = context.Dungeon.GetAllSidePathRooms();
+            var sidePathRooms = context.Dungeon.GetAllSidePathRooms().Where(x=> x.def == null).ToList();
             if (!sidePathRooms.Any())
                 return;
 
@@ -28,7 +26,7 @@ namespace MagicAndMyths
             {
                 RoomLayoutData newRoomType = null;
 
-                // Check if any side room type with size requirements fits
+                //any side room type with size requirements fits
                 if (sideRoomTypesWithRequirements.Any())
                 {
                     newRoomType = sideRoomTypesWithRequirements.FirstOrDefault(roomType =>
@@ -36,19 +34,18 @@ namespace MagicAndMyths
                         room.RoomCellRect.Height >= roomType.minSizeRequired.z);
                 }
 
-                // If no sized room fits, pick a random flexible one
+                //no sized room fits
                 if (newRoomType == null && flexibleSideRoomTypes.Any())
                 {
                     newRoomType = flexibleSideRoomTypes.RandomElement();
                 }
 
-                // If no side room type available, pick from all available
+
                 if (newRoomType == null && context.Def.availableSideRoomTypes.Any())
                 {
                     newRoomType = context.Def.availableSideRoomTypes.RandomElement();
                 }
 
-                // Update the room type
                 if (newRoomType != null)
                 {
                     room.def = newRoomType.def;

@@ -19,7 +19,7 @@ namespace MagicAndMyths
 
         }
 
-        public Map GetOrCreateDungeonMap(int uniqueId, Map originMap, DungeonGenDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
+        public Map GetOrCreateDungeonMap(int uniqueId, Map originMap, MapGeneratorDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
         {
             IntVec3 actualMapSize = mapSize;
             if (mapGeneratorDef is DungeonGenDef dungeonGenDef)
@@ -49,10 +49,11 @@ namespace MagicAndMyths
         }
 
 
-        private Map CreateNewDungeoMap(int uniqueId, Map originMap, DungeonGenDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
+        private Map CreateNewDungeoMap(int uniqueId, Map originMap, MapGeneratorDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
         {
             DungeonMapParent mapParent = (DungeonMapParent)WorldObjectMaker.MakeWorldObject(MagicAndMythDefOf.DungeonMapParent);
             mapParent.SetDungeonID(uniqueId);
+
             mapParent.SetOriginMap(originMap);
             mapParent.Tile = sourceTile;
             Find.WorldObjects.Add(mapParent);
@@ -66,8 +67,14 @@ namespace MagicAndMyths
                 true
             );
 
-            DungeonGenerator generator = new DungeonGenerator(customMap, mapGeneratorDef);
-            generator.Generate();
+            if (mapGeneratorDef is DungeonGenDef genDef)
+            {
+                DungeonGenerator generator = new DungeonGenerator(customMap, genDef);
+                generator.Generate();
+            }
+
+
+
             DungeonMaps[uniqueId] = mapParent;
             return customMap;
         }
