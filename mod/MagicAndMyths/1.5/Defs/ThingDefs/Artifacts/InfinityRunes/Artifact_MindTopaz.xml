@@ -26,10 +26,8 @@
       <DeteriorationRate>0</DeteriorationRate>
     </statBases>
     <equippedStatOffsets>
-    </equippedStatOffsets>
-    <equippedStatFactors>
       <MentalBreakThreshold>10</MentalBreakThreshold>
-    </equippedStatFactors>
+    </equippedStatOffsets>
   </ThingDef>
 
 </Defs>

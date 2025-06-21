@@ -20,7 +20,7 @@ namespace MagicAndMyths
 
         public CompProperties_Portal()
         {
-            this.compClass = typeof(Comp_Portal);
+            compClass = typeof(Comp_Portal);
         }
     }
 
@@ -43,8 +43,7 @@ namespace MagicAndMyths
 
             if (portalEffect != null && isPortalOpen)
             {
-                portalEffect.Tick();
-                portalEffect.Maintain();
+                portalEffect.ForceSpawnTick(Find.TickManager.TicksGame);
             }
         }
 
@@ -77,11 +76,25 @@ namespace MagicAndMyths
 
         protected virtual void OnOpened() 
         {
-            if (Props.activePortalEffecter != null)
+            SpawnPortalVisual();
+        }
+
+        protected virtual void SpawnPortalVisual()
+        {
+            if (Props.activePortalEffecter != null && this.portalEffect == null)
             {
                 this.portalEffect = MoteMaker.MakeStaticMote(this.parent.Position, this.parent.Map, Props.activePortalEffecter);
-                this.portalEffect = (Mote)GenSpawn.Spawn(this.portalEffect, this.parent.Position, this.parent.Map);
             }
+        }
+
+        protected virtual void DestroyPortalVisual()
+        {
+            if (portalEffect != null && !portalEffect.Destroyed)
+            {
+                portalEffect.Destroy();
+                portalEffect = null;
+            }
+
         }
 
         protected virtual void OnClosed()
@@ -136,14 +149,9 @@ namespace MagicAndMyths
             if (!isPortalOpen)
                 return;
 
-            if (portalEffect != null)
-            {
-                portalEffect.Destroy();
-                portalEffect = null;
-            }
 
             isPortalOpen = false;
-
+            DestroyPortalVisual();
             OnClosed();
 
             Messages.Message("Portal closed", MessageTypeDefOf.NeutralEvent);

@@ -20,7 +20,7 @@ namespace MagicAndMyths
                 context.Dungeon.Map.Size.x - context.MapMargin,
                 context.Dungeon.Map.Size.z - context.MapMargin);
 
-            int mainRoomCount = context.Def.roomAmount.RandomInRange;
+            int mainRoomCount = context.MainPathLength;
             int sideRoomcount = context.Def.sideRoomCount.RandomInRange;
             int minRoomsRequired = mainRoomCount + sideRoomcount;
 
@@ -30,7 +30,7 @@ namespace MagicAndMyths
                 mainRoomCount: mainRoomCount,
                 sideRoomCount: sideRoomcount,
                 minRoomSize: context.Def.roomSize.RandomInRange,
-                maxSplitAttempts: 200);
+                maxSplitAttempts: 400);
 
             List<BspNode> leafNodes = new List<BspNode>();
             BspUtility.GetLeafNodes(rootNode, leafNodes);

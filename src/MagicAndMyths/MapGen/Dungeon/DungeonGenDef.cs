@@ -37,25 +37,20 @@ namespace MagicAndMyths
         public int minRoomPadding = 2;
 
         public IntVec3 mapSize = new IntVec3(80, 1, 80);
-
-        //larger factor more of its BSP partition it takes
         public FloatRange roomSizeFactor = new FloatRange(0.9f, 1f);
-
         public IntRange roomAmount = new IntRange(4, 5);
-        public float minSizeMultiplier = 1.2f;
-        public float aspectRatioThreshold = 1.3f;
-        public float edgeMarginDivisor = 1.5f;
+
+
         public IntRange sideRoomCount = new IntRange(3, 6);
         public bool allowHiddenSidePaths = true;
         public float hiddenSidePathChance = 0.3f;
         public bool addRandomCorridoors = true;
 
-
-        public IntRange sidePathLength = new IntRange(1, 8);
+        public IntRange sidePathLength = new IntRange(1, 3);
         public float longSidePathChance = 0.4f;
         public float meanderingChance = 0.3f;
         public bool allowBranchingSidePaths = true;
-        public float branchingChance = 0.5f;
+        public float branchingChance = 0.7f;
         public int maxSidePathBranches = 4;
 
         public List<RoomLayoutData> availableRoomTypes;
@@ -65,15 +60,15 @@ namespace MagicAndMyths
         public List<CelluarAutomataSteps> earlyAutomata;
         public List<CelluarAutomataSteps> postGenAutomata;
 
-        public RoomTypeDef GetRoomTypeDef(Dungeon Dungeon, DungeonRoom DungeonRoom)
+        public RoomLayoutData GetRoomTypeDef(DungeonGenerationContext generationContext, DungeonRoom DungeonRoom)
         {
-            List<RoomTypeDef> rooms = availableRoomTypes.Where(x => x.def.roomType == RoomType.Normal).Select(x=> x.def).ToList();
+            List<RoomLayoutData> rooms = availableRoomTypes.Where(x => x.def.roomType == RoomType.Normal && x.def.CanApply(generationContext, DungeonRoom)).ToList();
             return rooms.RandomElement();
         }
 
-        public RoomTypeDef GetSideRoomTypeDef(Dungeon Dungeon, DungeonRoom DungeonRoom)
+        public RoomLayoutData GetSideRoomTypeDef(DungeonGenerationContext generationContext, DungeonRoom DungeonRoom)
         {
-            List<RoomTypeDef> rooms = availableSideRoomTypes.Where(x => x.def.roomType == RoomType.Normal).Select(x => x.def).ToList();
+            List<RoomLayoutData> rooms = availableSideRoomTypes.Where(x => x.def.roomType == RoomType.Normal && x.def.CanApply(generationContext, DungeonRoom)).ToList();
             return rooms.RandomElement();
         }
     }

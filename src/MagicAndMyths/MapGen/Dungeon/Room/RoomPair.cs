@@ -1,6 +1,6 @@
 ﻿namespace MagicAndMyths
 {
-    public class RoomPair
+    public struct RoomPair
     {
         public DungeonRoom RoomA;
         public DungeonRoom RoomB;
@@ -9,6 +9,12 @@
         {
             RoomA = roomA;
             RoomB = roomB;
+        }
+
+
+        public bool IsValid()
+        {
+            return RoomA != null && RoomB != null;
         }
     }
 }

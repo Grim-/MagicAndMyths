@@ -22,15 +22,15 @@ namespace MagicAndMyths
     {
         RecoveryRoomDef Def => (RecoveryRoomDef)def;
 
-        public override void ApplyRoom(Map map, Dungeon dungeon, DungeonRoom room)
+        public override void ApplyRoom(DungeonGenerationContext dungeonGenerationContext, DungeonRoom room)
         {
-            base.ApplyRoom(map, dungeon, room);
+            base.ApplyRoom(dungeonGenerationContext, room);
 
             var roomRect = room.RoomCellRect;
             var innerRect = roomRect.ContractedBy(1);
 
-            SpawnBeds(map, room, innerRect);
-            SpawnShelves(map, room, roomRect, innerRect);
+            SpawnBeds(dungeonGenerationContext.Map, room, innerRect);
+            SpawnShelves(dungeonGenerationContext.Map, room, roomRect, innerRect);
         }
 
         private void SpawnBeds(Map map, DungeonRoom room, CellRect innerRect)

@@ -18,9 +18,23 @@ namespace MagicAndMyths
     {
         TreasureRoomDef Def => (TreasureRoomDef)def;
 
-        public override void ApplyRoom(Map map, Dungeon Dungeon, DungeonRoom Room)
+
+        public override bool CanApply(DungeonGenerationContext dungeonGenerationContext, DungeonRoom DungeonRoom)
         {
-            base.ApplyRoom(map, Dungeon, Room);
+
+            if (DungeonRoom.HasAnyForwardConnections())
+            {
+                Log.Message($"Cannot apply {this.Def.defName} to room, can only be applied to leaf nodes");
+                return false;
+            }
+
+            return base.CanApply(dungeonGenerationContext, DungeonRoom);
+        }
+
+
+        public override void ApplyRoom(DungeonGenerationContext dungeonGenerationContext, DungeonRoom Room)
+        {
+            base.ApplyRoom(dungeonGenerationContext, Room);
 
             if (!Def.potentialTreasure.Any())
             {
@@ -36,7 +50,7 @@ namespace MagicAndMyths
                 {
                     Thing thing = ThingMaker.MakeThing(treasureDrop.thingDef, treasureDrop.thingStuffDef);
                     thing.stackCount = treasureDrop.count.RandomInRange;
-                    if (GenPlace.TryPlaceThing(thing, Room.RoomCellRect.CenterCell, map, ThingPlaceMode.Direct))
+                    if (GenPlace.TryPlaceThing(thing, Room.RoomCellRect.CenterCell, dungeonGenerationContext.Map, ThingPlaceMode.Direct))
                     {
 
                     }

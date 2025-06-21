@@ -8,7 +8,7 @@ namespace MagicAndMyths
         public RoomTypeDef def;
         public DungeonRoom currentRoom;
 
-        public virtual void ApplyRoom(Map map, Dungeon Dungeon, DungeonRoom Room)
+        public virtual void ApplyRoom(DungeonGenerationContext dungeonGenerationContext, DungeonRoom Room)
         {
             //if (def.roomIsFogged)
             //{
@@ -32,9 +32,9 @@ namespace MagicAndMyths
         }
 
 
-        public virtual bool CanApply(Dungeon Dungeon, DungeonRoom DungeonRoom)
+        public virtual bool CanApply(DungeonGenerationContext dungeonGenerationContext, DungeonRoom DungeonRoom)
         {
-            if (def.maxRoomTypeCount > 0 && Dungeon.GetRoomTypeCount(def) >= def.maxRoomTypeCount)
+            if (def.maxRoomTypeCount > 0 && dungeonGenerationContext.Dungeon.GetRoomTypeCount(def) >= def.maxRoomTypeCount)
             {
                 return false;
             }

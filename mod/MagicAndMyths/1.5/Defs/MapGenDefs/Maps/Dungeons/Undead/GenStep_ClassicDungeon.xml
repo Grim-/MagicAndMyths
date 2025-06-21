@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <MagicAndMyths.GenStepDef_BspDungeon>
+    <!-- <MagicAndMyths.GenStepDef_BspDungeon>
       <defName>GenerateUndeadDungeon</defName>
       <order>10000</order>
       <genStep Class="MagicAndMyths.GenStep_BspDungeon"/>
       <dungeonGenDef>UndeadDungeon</dungeonGenDef>
-    </MagicAndMyths.GenStepDef_BspDungeon>
+    </MagicAndMyths.GenStepDef_BspDungeon> -->
 
     <MagicAndMyths.DungeonGenDef>
       <defName>UndeadDungeon</defName>
         <randomCorridoorAmount>3</randomCorridoorAmount>
-        <maxDepth>350</maxDepth>
+        <maxDepth>250</maxDepth>
         <roomSize>10</roomSize>
-        <mapSize>(120, 1, 120)</mapSize>
-        <minRoomPadding>3</minRoomPadding>
-        <roomSizeFactor>1</roomSizeFactor>
+        <roomSizeFactor>1.0</roomSizeFactor>
+        <mapSize>(150, 1, 150)</mapSize>
+        <minRoomPadding>1</minRoomPadding>
         <noRoomChanceCriticalPath>0.1</noRoomChanceCriticalPath>
         <noRoomChanceSidePath>0.3</noRoomChanceSidePath>
-        <minSizeMultiplier>1</minSizeMultiplier>
-        <aspectRatioThreshold>1.13</aspectRatioThreshold>
-        <edgeMarginDivisor>1.5</edgeMarginDivisor>
-        <roomAmount>5~70</roomAmount>
-        <sideRoomCount>9~25</sideRoomCount>
+        <roomAmount>10</roomAmount>
+        <sidePathLength>1~6</sidePathLength>
+        <sideRoomCount>20~25</sideRoomCount>
+         <allowHiddenSidePaths>true</allowHiddenSidePaths>
+         <hiddenSidePathChance>0.3</hiddenSidePathChance>
+         <longSidePathChance>0.4</longSidePathChance>
+         <meanderingChance>0.3</meanderingChance>
+         <allowBranchingSidePaths>true</allowBranchingSidePaths>
+         <branchingChance>0.7</branchingChance>
+         <maxSidePathBranches>4</maxSidePathBranches>
         <addRandomCorridoors>false</addRandomCorridoors>
         <availableRoomTypes>
           <li>
@@ -30,6 +35,7 @@
             <perferredLayouts>
               <li>Square</li>
               <li>Circular</li>
+              <li>Blob</li>
             </perferredLayouts>
           </li>
           <li>
@@ -38,10 +44,19 @@
             <perferredLayouts>
               <li>Square</li>
               <li>Circular</li>
+              <li>Blob</li>
             </perferredLayouts>
           </li>
         </availableRoomTypes>
         <availableSideRoomTypes>
+          <li>
+            <def>EmptyRoom</def>
+            <perferredLayouts>
+              <li>Square</li>
+              <li>Circular</li>
+              <li>Blob</li>
+            </perferredLayouts>
+          </li>
           <li>
             <def>TreasureRoom_Basic</def>
             <minSizeRequired>(8, 8)</minSizeRequired>
@@ -90,10 +105,7 @@
         <largeDoor>Dungeon_SecurityDoor</largeDoor>
         <difficultyRange>1~1</difficultyRange>
         <genSteps>
-          <li>ElevationFertility</li>
           <li>Terrain</li>
-          <li>Plants</li>
-          <li>GenerateUndeadDungeon</li>
         </genSteps>
         <pocketMapProperties>
             <biome>HiddenForest</biome>

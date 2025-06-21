@@ -21,9 +21,9 @@ namespace MagicAndMyths
     {
         BossRoomDef Def => (BossRoomDef)def;
 
-        public override void ApplyRoom(Map map, Dungeon dungeon, DungeonRoom room)
+        public override void ApplyRoom(DungeonGenerationContext dungeonGenerationContext, DungeonRoom room)
         {
-            base.ApplyRoom(map, dungeon, room);
+            base.ApplyRoom(dungeonGenerationContext, room);
 
             var validBosses = Def.bossEncounters
                 .Where(e => room.ProgressionValue >= e.progressionRange.min &&
@@ -33,7 +33,7 @@ namespace MagicAndMyths
             if (validBosses.Count > 0)
             {
                 var bossEncounter = validBosses.RandomElementByWeight(e => e.weight);
-                GenerateBossEncounter(map, room.RoomCellRect, bossEncounter, room.ProgressionValue);
+                GenerateBossEncounter(dungeonGenerationContext.Map, room.RoomCellRect, bossEncounter, room.ProgressionValue);
             }
         }
 

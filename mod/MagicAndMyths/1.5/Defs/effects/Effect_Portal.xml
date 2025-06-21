@@ -33,14 +33,14 @@
       <thingClass>MoteAttached</thingClass>
       <graphicData>
         <texPath>VFX/Portal3</texPath>
-        <graphicClass>Graphic_Single_SquashNStretch</graphicClass>
+        <graphicClass>Graphic_Single</graphicClass>
         <drawSize>2</drawSize>
         <color>(0.004, 0.843, 1)</color>
         <shaderType>MoteGlowDistorted</shaderType>
         <shaderParameters>
           <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
           <_distortionScale>0.17</_distortionScale>
-          <_distortionIntensity>0.44</_distortionIntensity>
+          <_distortionIntensity>0.04</_distortionIntensity>
           <_brightnessMultiplier>1.1</_brightnessMultiplier>
           <_pulseSpeed>50</_pulseSpeed>
         </shaderParameters>
@@ -48,7 +48,7 @@
       <altitudeLayer>MoteOverhead</altitudeLayer>
       <mote>
         <fadeInTime>0.1</fadeInTime>
-        <solidTime>20</solidTime>
+        <solidTime>99999</solidTime>
         <fadeOutTime>0.4</fadeOutTime>
       </mote>
     </ThingDef>
@@ -58,14 +58,14 @@
         <thingClass>MoteAttached</thingClass>
         <graphicData>
           <texPath>VFX/Portal</texPath>
-          <graphicClass>Graphic_Single_SquashNStretch</graphicClass>
+          <graphicClass>Graphic_Single</graphicClass>
           <drawSize>2</drawSize>
           <color>(0.104, 0.843, 1)</color>
           <shaderType>MoteGlowDistorted</shaderType>
           <shaderParameters>
             <_DistortionTex>/Things/Mote/RadiationDistortion_A</_DistortionTex>
             <_distortionScale>0.17</_distortionScale>
-            <_distortionIntensity>0.14</_distortionIntensity>
+            <_distortionIntensity>0.04</_distortionIntensity>
             <_brightnessMultiplier>1.1</_brightnessMultiplier>
             <_pulseSpeed>50</_pulseSpeed>
           </shaderParameters>

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -22,11 +23,11 @@ namespace MagicAndMyths
 
                 if (room.IsOnCriticalPath)
                 {
-                    AssignCriticalPathRoomType(context, room);
+                    AssignCriticalPathRoomType(context, node, room);
                 }
                 else
                 {
-                    AssignSidePathRoomType(context, room);
+                    AssignSidePathRoomType(context, node, room);
                 }
 
                 if (context.Dungeon.StartNode != null)
@@ -39,14 +40,14 @@ namespace MagicAndMyths
             }
         }
 
-        private void AssignCriticalPathRoomType(DungeonGenerationContext context, DungeonRoom room)
+        private void AssignCriticalPathRoomType(DungeonGenerationContext context, BspNode node, DungeonRoom room)
         {
             if (!Rand.Chance(context.Def.noRoomChanceCriticalPath))
             {
-                var criticalRooms = context.Def.GetRoomTypeDef(context.Dungeon, room);
+                var criticalRooms = context.Def.GetRoomTypeDef(context, room);
                 if (criticalRooms != null)
                 {
-                    room.def = criticalRooms;
+                    room.def = criticalRooms.def;
                 }
                 else
                 {
@@ -55,21 +56,28 @@ namespace MagicAndMyths
             }
         }
 
-        private void AssignSidePathRoomType(DungeonGenerationContext context, DungeonRoom room)
+        private void AssignSidePathRoomType(DungeonGenerationContext context, BspNode node, DungeonRoom room)
         {
             if (!Rand.Chance(context.Def.noRoomChanceSidePath))
             {
-                var sideRooms = context.Def.GetSideRoomTypeDef(context.Dungeon, room);
+                var sideRooms = context.Def.GetSideRoomTypeDef(context, room);
 
                 if (sideRooms != null)
                 {
-                    room.def = sideRooms;
+                    room.def = sideRooms.def;
+                    CreateAndAddRoom(context, node, sideRooms);
                 }
                 else
                 {
                     Log.Error("No side path room types found!");
                 }
             }
+        }
+
+        private void CreateAndAddRoom(DungeonGenerationContext context, BspNode node, RoomLayoutData roomType)
+        {
+            var room = DungeonRoom.FromBspNode(context.Dungeon, node, context, roomType);
+            context.Dungeon.AddRoom(node, room);
         }
     }
 }

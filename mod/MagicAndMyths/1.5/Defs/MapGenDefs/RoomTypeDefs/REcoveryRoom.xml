@@ -11,7 +11,7 @@
     <addMedicine>true</addMedicine>
     <healingItems>
       <li>Luciferium</li>
-      <li>HerbalMedicine</li>
+      <li>MedicineHerbal</li>
     </healingItems>
     <perferredLayouts>
       <li>Circular</li>

@@ -9,6 +9,10 @@
     <tradeTags>
       <li>Artifact</li>
     </tradeTags>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Mass>1</Mass>
+    </statBases>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
     <stackLimit>1</stackLimit>
     <orderedTakeGroup>Artifact</orderedTakeGroup>

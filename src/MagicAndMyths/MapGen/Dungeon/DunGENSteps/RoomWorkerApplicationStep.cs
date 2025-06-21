@@ -20,9 +20,9 @@ namespace MagicAndMyths
             {
                 if (room.def != null)
                 {
-                    if (room.def.CanApply(context.Dungeon, room))
+                    if (room.def.CanApply(context, room))
                     {
-                        room.def.DoWorker(context.Dungeon.Map, context.Dungeon, room);
+                        room.def.DoWorker(context, room);
                     }
                     else
                     {

@@ -6,102 +6,68 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public static class ObstacleGenerator
-    {
+    //public static class ObstacleGenerator
+    //{
 
-        static Dictionary<ObstacleDef, int> placedObstacles = new Dictionary<ObstacleDef, int>();
-        /// <summary>
-        /// Places obstacles throughout the dungeon after room generation is complete
-        /// </summary>
-        public static void GenerateObstacles(Map map, Dungeon Dungeon, List<ObstacleDef> obstacles)
-        {
-            //if (Dungeon.nodeToRoomMap.Count <= 1)
-            //    return;
+    //    static Dictionary<ObstacleDef, int> placedObstacles = new Dictionary<ObstacleDef, int>();
+    //    /// <summary>
+    //    /// Places obstacles throughout the dungeon after room generation is complete
+    //    /// </summary>
+    //    public static void GenerateObstacles(Map map, Dungeon Dungeon, List<ObstacleDef> obstacles)
+    //    {
+    //        //if (Dungeon.nodeToRoomMap.Count <= 1)
+    //        //    return;
 
-            int obstacleCount = DetermineObstacleCount(Dungeon.nodeToRoomMap.Count);
-            Log.Message($"Attempting to place {obstacleCount} obstacles in dungeon with {Dungeon.nodeToRoomMap.Count} rooms");
+    //        int obstacleCount = DetermineObstacleCount(Dungeon.nodeToRoomMap.Count);
+    //        Log.Message($"Attempting to place {obstacleCount} obstacles in dungeon with {Dungeon.nodeToRoomMap.Count} rooms");
 
-            int reattempCount = 0;
+    //        int reattempCount = 0;
 
-            for (int i = 0; i < obstacleCount; i++)
-            {
-                DungeonRoom dungeonRoom = Dungeon.Rooms.Where(x=> x.def.roomType != RoomType.Start && x.def.roomType != RoomType.End).ToList().RandomElement();
+    //        for (int i = 0; i < obstacleCount; i++)
+    //        {
+    //            DungeonRoom dungeonRoom = Dungeon.NormalRooms.RandomElement();
 
-                if (dungeonRoom == null || dungeonRoom.def == null)
-                {
-                    continue;
-                }
+    //            if (dungeonRoom == null || dungeonRoom.def == null)
+    //            {
+    //                continue;
+    //            }
 
-                ObstacleDef obstacleDef = SelectObstacleDef(DefDatabase<ObstacleDef>.AllDefsListForReading);
+    //            ObstacleDef obstacleDef = SelectObstacleDef(DefDatabase<ObstacleDef>.AllDefsListForReading);
 
-                if (TryPlaceObstacle(map, Dungeon, dungeonRoom, obstacleDef))
-                {
-                    Log.Message($"Successfully placed {obstacleDef.defName} in {dungeonRoom}");
-                }
-                else
-                {
-                    reattempCount++;
-                    //Log.Message($"failed to place {obstacleDef.defName} in {dungeonRoom}");
-                }
-            }
+    //            if (TryPlaceObstacle(map, Dungeon, dungeonRoom, obstacleDef))
+    //            {
+    //                Log.Message($"Successfully placed {obstacleDef.defName} in {dungeonRoom}");
+    //            }
+    //            else
+    //            {
+    //                reattempCount++;
+    //                //Log.Message($"failed to place {obstacleDef.defName} in {dungeonRoom}");
+    //            }
+    //        }
 
-            for (int i = 0; i < reattempCount; i++)
-            {
-                DungeonRoom dungeonRoom = Dungeon.Rooms.Where(x => x.def.roomType != RoomType.Start && x.def.roomType != RoomType.End).ToList().RandomElement();
+    //        for (int i = 0; i < reattempCount; i++)
+    //        {
+    //            DungeonRoom dungeonRoom = Dungeon.NormalRooms.RandomElement();
 
-                if (dungeonRoom == null || dungeonRoom.def == null)
-                {
-                    continue;
-                }
+    //            if (dungeonRoom == null || dungeonRoom.def == null)
+    //            {
+    //                continue;
+    //            }
 
-                ObstacleDef obstacleDef = SelectObstacleDef(DefDatabase<ObstacleDef>.AllDefsListForReading);
+    //            ObstacleDef obstacleDef = SelectObstacleDef(DefDatabase<ObstacleDef>.AllDefsListForReading);
 
-                if (TryPlaceObstacle(map, Dungeon, dungeonRoom, obstacleDef))
-                {
-                    Log.Message($"Successfully placed {obstacleDef.defName} in {dungeonRoom}");
-                }
-            }
+    //            if (TryPlaceObstacle(map, Dungeon, dungeonRoom, obstacleDef))
+    //            {
+    //                Log.Message($"Successfully placed {obstacleDef.defName} in {dungeonRoom}");
+    //            }
+    //        }
 
-            placedObstacles.Clear();
-        }
+    //        placedObstacles.Clear();
+    //    }
 
-        /// <summary>
-        /// Determines how many obstacles to place based on dungeon size
-        /// </summary>
-        private static int DetermineObstacleCount(int roomCount)
-        {
-            int baseCount = Mathf.Max(1, roomCount / 3);
-
-            int variance = Mathf.Max(1, baseCount / 2);
-            int finalCount = baseCount + Rand.RangeInclusive(-variance, variance);
-
-            return Mathf.Min(finalCount, roomCount - 1);
-        }
-         
-        /// <summary>
-        /// Attempts to place a specific obstacle in the dungeon
-        /// </summary>
-        public static bool TryPlaceObstacle(Map map, Dungeon Dungeon, DungeonRoom Room, ObstacleDef obstacleDef)
-        {
-            try
-            {
-                return obstacleDef.DoWorker(map, Dungeon, Room);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Error placing obstacle {obstacleDef.defName}: {ex}");
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Selects an obstacle def based on weighted probability
-        /// </summary>
-        private static ObstacleDef SelectObstacleDef(List<ObstacleDef> availableObstacles)
-        {
-            if (availableObstacles.Count == 0)
-                return null;
-            return availableObstacles.Where(x=> placedObstacles.ContainsKey(x) && placedObstacles[x] < x.maxCount || !placedObstacles.ContainsKey(x)).RandomElementByWeight(x => x.commonality);
-        }
-    }
+    //    /// <summary>
+    //    /// Determines how many obstacles to place based on dungeon size
+    //    /// </summary>
+     
+    //}
 }

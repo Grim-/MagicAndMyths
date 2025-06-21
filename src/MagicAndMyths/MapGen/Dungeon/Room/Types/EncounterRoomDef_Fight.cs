@@ -39,24 +39,24 @@ namespace MagicAndMyths
     {
         EncounterRoomDef_Fight Def => (EncounterRoomDef_Fight)def;
 
-        public override void ApplyRoom(Map map, Dungeon dungeon, DungeonRoom room)
+        public override void ApplyRoom(DungeonGenerationContext dungeonGenerationContext, DungeonRoom room)
         {
-            base.ApplyRoom(map, dungeon, room);
+            base.ApplyRoom(dungeonGenerationContext, room);
 
             var validEncounters = Def.specificEncounters;
 
             if (validEncounters.Count > 0)
             {
                 var encounter = validEncounters.RandomElementByWeight(e => e.weight);
-                GenerateSpecificEncounter(map, room, encounter, room.ProgressionValue);
+                GenerateSpecificEncounter(dungeonGenerationContext, room, encounter, room.ProgressionValue);
             }
             else
             {
-                Generate(map, Def.enemyCountRange.RandomInRange, room.RoomCellRect, Def.possibleEnemies, Faction.OfAncientsHostile, room.ProgressionValue);
+                Generate(dungeonGenerationContext, Def.enemyCountRange.RandomInRange, room.RoomCellRect, Def.possibleEnemies, Faction.OfAncientsHostile, room.ProgressionValue);
             }
         }
 
-        private void GenerateSpecificEncounter(Map map, DungeonRoom roomRect, SpecificEncounter encounter, float progression)
+        private void GenerateSpecificEncounter(DungeonGenerationContext dungeonGenerationContext, DungeonRoom roomRect, SpecificEncounter encounter, float progression)
         {
             List<Pawn> spawn = new List<Pawn>();
 
@@ -78,17 +78,17 @@ namespace MagicAndMyths
                 {
                     Pawn pawn = PawnGenerator.GeneratePawn(enemy.kindDef, Faction.OfAncientsHostile);
                     pawn.health.GetOrAddHediff(MagicAndMythDefOf.MagicAndMyths_DungeonMobHediff);
-                    GenSpawn.Spawn(pawn, roomRect.roomCells.RandomElement(), map);
+                    GenSpawn.Spawn(pawn, roomRect.roomCells.RandomElement(), dungeonGenerationContext.Map);
                     spawn.Add(pawn);
                 }
             }
 
             LordJob_DefendPoint lordJob = new LordJob_DefendPoint(roomRect.RoomCellRect.CenterCell, roomRect.RoomCellRect.Width / 2, roomRect.RoomCellRect.Width / 2, false, false);
-            Lord enemyLord = LordMaker.MakeNewLord(Faction.OfAncientsHostile, lordJob, map, spawn);
-            map.GetComponent<MapComp_DungeonEnemies>().AddLord(map.uniqueID, enemyLord);
+            Lord enemyLord = LordMaker.MakeNewLord(Faction.OfAncientsHostile, lordJob, dungeonGenerationContext.Map, spawn);
+            dungeonGenerationContext.Map.GetComponent<MapComp_DungeonEnemies>().AddLord(dungeonGenerationContext.Map.uniqueID, enemyLord);
         }
 
-        public void Generate(Map map, int numEnemies, CellRect roomRect, List<PawnKindDef> possibleEnemies, Faction faction, float progression)
+        public void Generate(DungeonGenerationContext dungeonGenerationContext, int numEnemies, CellRect roomRect, List<PawnKindDef> possibleEnemies, Faction faction, float progression)
         {
 
             if (possibleEnemies == null || possibleEnemies.Count == 0)
@@ -109,13 +109,13 @@ namespace MagicAndMyths
             {
                 PawnKindDef enemyKind = possibleEnemies.RandomElement();
                 Pawn enemy = PawnGenerator.GeneratePawn(enemyKind, faction);
-                GenSpawn.Spawn(enemy, roomRect.Cells.RandomElement(), map);
+                GenSpawn.Spawn(enemy, roomRect.Cells.RandomElement(), dungeonGenerationContext.Map);
                 spawn.Add(enemy);
             }
 
             LordJob_DefendPoint lordJob = new LordJob_DefendPoint(roomRect.CenterCell, 0, 1, false, false);
-            Lord enemyLord = LordMaker.MakeNewLord(faction, lordJob, map, spawn);
-            map.GetComponent<MapComp_DungeonEnemies>().AddLord(map.uniqueID, enemyLord);
+            Lord enemyLord = LordMaker.MakeNewLord(faction, lordJob, dungeonGenerationContext.Map, spawn);
+            dungeonGenerationContext.Map.GetComponent<MapComp_DungeonEnemies>().AddLord(dungeonGenerationContext.Map.uniqueID, enemyLord);
         }
     }
 }

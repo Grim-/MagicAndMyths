@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.RoomTypeDef>
+    <defName>EmptyRoom</defName>
+    <roomType>Normal</roomType>
+    <roomTypeWorker>MagicAndMyths.EmptyRoom</roomTypeWorker>
+  </MagicAndMyths.RoomTypeDef>
+
+</Defs>

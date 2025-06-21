@@ -5,7 +5,7 @@ namespace MagicAndMyths
 {
     public class CompProperties_PortalMapGenerator : CompProperties_Portal
     {
-        public MapGeneratorDef mapGeneratorDef;
+        public DungeonGenDef mapGeneratorDef;
         public IntVec3 mapSize = new IntVec3(75, 1, 75);
 
         public CompProperties_PortalMapGenerator()

@@ -19,8 +19,8 @@
     <comps Inherit="false">
        <li Class="MagicAndMyths.CompProperties_PortalMapGenerator">
          <mapGeneratorDef>UndeadDungeon</mapGeneratorDef>
-         <mapSize>(100, 1, 100)</mapSize>
-         <activePortalEffecter>MagicAndMyths_MotePortalShort</activePortalEffecter>
+         <mapSize>(150, 1, 150)</mapSize>
+         <activePortalEffecter>MagicAndMyths_MotePortal</activePortalEffecter>
        </li>
      </comps>
     </ThingDef>

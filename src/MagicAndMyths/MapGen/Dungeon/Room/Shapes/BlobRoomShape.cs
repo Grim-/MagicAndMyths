@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -67,7 +68,7 @@ namespace MagicAndMyths
             cells = RemoveIsolatedCells(cells);
             cells = EnsureMinimumSize(cells, center);
 
-            return cells;
+            return bounds.Cells.ToList();
         }
 
         private List<IntVec3> RemoveIsolatedCells(List<IntVec3> cells)

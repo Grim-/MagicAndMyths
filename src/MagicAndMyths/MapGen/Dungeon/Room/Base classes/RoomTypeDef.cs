@@ -39,21 +39,21 @@ namespace MagicAndMyths
 
         public TerrainDef RoomFloorDef => roomFloorDef != null ? roomFloorDef : TerrainDefOf.Voidmetal;
 
-        public RoomTypeWorker DoWorker(Map map,  Dungeon Dungeon, DungeonRoom Room)
+        public RoomTypeWorker DoWorker(DungeonGenerationContext generationContext, DungeonRoom Room)
         {
             RoomTypeWorker RoomTypeWorker = (RoomTypeWorker)Activator.CreateInstance(roomTypeWorker);
             RoomTypeWorker.def = Room.def;
             RoomTypeWorker.currentRoom = Room;
-            RoomTypeWorker.ApplyRoom(map, Dungeon, Room);
+            RoomTypeWorker.ApplyRoom(generationContext, Room);
             return RoomTypeWorker;
         }
 
-        public bool CanApply(Dungeon Dungeon, DungeonRoom Room)
+        public bool CanApply(DungeonGenerationContext generationContext, DungeonRoom Room)
         {
             RoomTypeWorker RoomTypeWorker = (RoomTypeWorker)Activator.CreateInstance(roomTypeWorker);
             RoomTypeWorker.def = Room.def;
             RoomTypeWorker.currentRoom = Room;
-            return true;
+            return RoomTypeWorker.CanApply(generationContext, Room);
         }
     }
 }

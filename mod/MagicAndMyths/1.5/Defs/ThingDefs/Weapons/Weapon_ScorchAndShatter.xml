@@ -27,7 +27,7 @@
         <li>
           <label>scorch</label>
           <capacities>
-            <li>Burn</li>
+            <li>Scorch</li>
           </capacities>
           <power>10</power>
           <cooldownTime>1.1</cooldownTime>

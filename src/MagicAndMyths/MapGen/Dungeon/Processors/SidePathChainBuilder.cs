@@ -56,16 +56,18 @@ namespace MagicAndMyths
         {
             var chain = new List<DungeonRoom>();
 
-            if (availableRooms.Count == 0) return chain;
+            if (availableRooms.Count == 0) 
+                return chain;
 
-            var startRoom = availableRooms.RandomElement();
+            var startRoom = availableRooms.Where(x=> x.def.roomType != RoomType.End).RandomElement();
             chain.Add(startRoom);
             var currentRoom = startRoom;
 
             for (int i = 1; i < targetLength && chain.Count < availableRooms.Count; i++)
             {
                 var nextRoom = SelectNextRoomInChain(currentRoom, availableRooms, usedRooms, chain, criticalPathRooms);
-                if (nextRoom == null) break;
+                if (nextRoom == null) 
+                    break;
 
                 context.Dungeon.ConnectRooms(currentRoom, nextRoom);
                 chain.Add(nextRoom);
@@ -73,7 +75,10 @@ namespace MagicAndMyths
 
                 if (context.Def.allowBranchingSidePaths && Rand.Chance(context.Def.branchingChance))
                 {
-                    CreateSidePathBranch(currentRoom, availableRooms, usedRooms, chain, criticalPathRooms);
+                    if (currentRoom.def.roomType != RoomType.End)
+                    {
+                        CreateSidePathBranch(currentRoom, availableRooms, usedRooms, chain, criticalPathRooms);
+                    }
                 }
             }
 
@@ -87,7 +92,8 @@ namespace MagicAndMyths
                 .Where(r => !usedRooms.Contains(r) && !chainSoFar.Contains(r))
                 .ToList();
 
-            if (candidates.Count == 0) return null;
+            if (candidates.Count == 0) 
+                return null;
 
             if (Rand.Value < context.Def.meanderingChance)
             {

@@ -34,7 +34,7 @@ namespace MagicAndMyths
         public IReadOnlyCollection<DungeonRoom> HiddenRooms => hiddenRooms;
         public IReadOnlyList<BspNode> BSPNodes => nodeToRoomMap.Keys.ToList();
         public IReadOnlyList<DungeonRoom> Rooms => nodeToRoomMap.Values.ToList();
-
+        public IReadOnlyList<DungeonRoom> NormalRooms => nodeToRoomMap.Values.Where(x=> x.def.roomType == RoomType.Normal).ToList();
         public Dungeon()
         {
         }
@@ -174,14 +174,11 @@ namespace MagicAndMyths
             return Rooms.Any(x => x.connections.Any(y => y.CellIsOnCorridoor(c)));
         }
 
-
-
         public int GetRoomTypeCount(RoomTypeDef roomTypeDef)
         {
             return Rooms.Count(x => x.def == roomTypeDef);
         }
 
-        // Pathfinding (delegated to Pathfinder)
         public DungeonRoom GetFurthestRoom(DungeonRoom start)
         {
             return Pathfinder.GetFurthestRoom(start);
@@ -190,30 +187,6 @@ namespace MagicAndMyths
         public List<DungeonRoom> FindPathBetween(DungeonRoom start, DungeonRoom end)
         {
             return Pathfinder.FindPathBetween(start, end);
-        }
-
-        // Complex room analysis methods
-        public RoomPair FindRoomPairForDoor(DungeonRoom currentRoom)
-        {
-            if (currentRoom.IsOnCriticalPath)
-            {
-                foreach (var connectedRoom in currentRoom.connectedRooms)
-                {
-                    if (connectedRoom.IsOnCriticalPath &&
-                        connectedRoom.CriticalPathIndex > currentRoom.CriticalPathIndex)
-                    {
-                        return new RoomPair(currentRoom, connectedRoom);
-                    }
-                }
-            }
-
-            if (currentRoom.connectedRooms.Count > 0)
-            {
-                var connectedRoom = currentRoom.connectedRooms.RandomElement();
-                return new RoomPair(currentRoom, connectedRoom);
-            }
-
-            return null;
         }
 
         public DungeonRoom FindRoomBefore(DungeonRoom targetRoom)
@@ -240,11 +213,6 @@ namespace MagicAndMyths
             }
 
             return Pathfinder.FindAccessibleRoomsBefore(targetRoom, GetRoom(StartNode));
-        }
-
-        public HashSet<DungeonRoom> RoomsAccessibleFrom(DungeonRoom roomAfter)
-        {
-            return Pathfinder.GetRoomsAccessibleFrom(roomAfter, excludeRoom: roomAfter);
         }
 
         public void ExposeData()

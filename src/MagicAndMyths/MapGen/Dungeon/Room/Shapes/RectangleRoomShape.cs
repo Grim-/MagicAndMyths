@@ -6,24 +6,17 @@ namespace MagicAndMyths
 {
     public class RectangleRoomShape : RoomShapeBase
     {
-        public float randomVariation = 0.2f;
-        public int seed = 54321;
 
         public override List<IntVec3> GenerateRoomCells(DungeonGenerationContext context, CellRect bounds, float sizeMultiplier)
         {
             List<IntVec3> cells = new List<IntVec3>();
             IntVec3 center = bounds.CenterCell;
 
-            Random rand = new Random(seed + center.x + center.z);
+            int scaledWidth = (int)(bounds.Width);
+            int scaledHeight = (int)(bounds.Height);
 
-            float widthVariation = 1.0f + (float)(rand.NextDouble() * 2.0 - 1.0) * randomVariation;
-            float heightVariation = 1.0f + (float)(rand.NextDouble() * 2.0 - 1.0) * randomVariation;
-
-            int scaledWidth = (int)(bounds.Width * sizeMultiplier * widthVariation);
-            int scaledHeight = (int)(bounds.Height * sizeMultiplier * heightVariation);
-
-            scaledWidth = Math.Max(1, Math.Min(scaledWidth, bounds.Width));
-            scaledHeight = Math.Max(1, Math.Min(scaledHeight, bounds.Height));
+            scaledWidth = Math.Max(9, bounds.Width);
+            scaledHeight = Math.Max(9, bounds.Height);
 
             int minX = center.x - scaledWidth / 2;
             int maxX = center.x + scaledWidth / 2;
@@ -42,6 +35,8 @@ namespace MagicAndMyths
                 }
             }
 
+
+            //Log.Message($"Generating Rectangle \r\nRoom Bounds : {bounds.Width} x {bounds.Height}\r\n Actual {scaledWidth} x {scaledHeight}");
             return cells;
         }
     }

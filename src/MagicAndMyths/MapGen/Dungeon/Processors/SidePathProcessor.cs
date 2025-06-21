@@ -55,31 +55,53 @@ namespace MagicAndMyths
         {
             foreach (var room in context.Dungeon.GetAllRooms())
             {
-                if (room.connectedRooms == null || room.connectedRooms.Count == 0)
+                for (int i = 0; i < 2; i++)
                 {
-                    var otherRoom = context.Dungeon.GetAllRooms()
-                        .Where(r => r != room && !r.IsOnCriticalPath)
-                        .RandomElement();
-                    room.connectedRooms = new List<DungeonRoom> { otherRoom };
-                    otherRoom.connectedRooms.Add(room);
+                    if (context.Dungeon.ConnectionManager.GetConnectionCount(room) < 2)
+                    {
+                        var otherRoom = context.Dungeon.GetAllRooms()
+                            .Where(r => r != room && !r.IsOnCriticalPath && !r.IsConnectedTo(room))
+                            .RandomElement();
+
+                        if (otherRoom != null)
+                        {
+                            context.Dungeon.ConnectRooms(room, otherRoom);
+                        }
+
+                        
+                    }
                 }
+
             }
         }
 
 
         public void HideRandomSidePathChains(List<List<DungeonRoom>> chains, float hiddenChance)
         {
-            foreach (var chain in chains)
+            foreach (var chain in context.Dungeon.Pathfinder.GetEndRooms(context.Dungeon.Rooms.First( x=> x.def.roomType == RoomType.Start)))
             {
-                DungeonRoom lastRoomInChain = chain.Last();
-                if (lastRoomInChain != null)
+
+                //skip THE end room
+                if (chain.def.roomType == RoomType.End)
                 {
-                    if (Rand.Value < hiddenChance)
-                    {
-                        context.Dungeon.MarkRoomAsHidden(lastRoomInChain);
-                    }
+                    continue;
                 }
+
+                if (Rand.Value < hiddenChance)
+                {
+                    context.Dungeon.MarkRoomAsHidden(chain);
+                }
+
+                //DungeonRoom lastRoomInChain = chain.Last();
+                //if (lastRoomInChain != null)
+                //{
+                //    if (Rand.Value < hiddenChance)
+                //    {
+                //        context.Dungeon.MarkRoomAsHidden(lastRoomInChain);
+                //    }
+                //}
             }
         }
     }
+
 }

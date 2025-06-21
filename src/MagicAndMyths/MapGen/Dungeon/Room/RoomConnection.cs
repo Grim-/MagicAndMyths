@@ -9,7 +9,11 @@ namespace MagicAndMyths
         public DungeonRoom roomA;
         public DungeonRoom roomB;
         //public List<Corridoor> corridors = new List<Corridoor>();
-        public Corridoor Corridoor = null;
+        private Corridoor _Corridoor = null;
+        public Corridoor Corridoor
+        {
+            get => _Corridoor;
+        }
 
         public DungeonRoom SourceRoom => roomA;
         public DungeonRoom DestinationRoom => roomB;
@@ -20,14 +24,20 @@ namespace MagicAndMyths
             this.roomB = roomB;
         }
 
+
+        public void SetCorridoor(Corridoor corridoor)
+        {
+            this._Corridoor = corridoor;
+        }
+
         public IEnumerable<IntVec3> GetAllCells()
         {
-            return Corridoor.path;
+            return _Corridoor.path;
         }
 
         public bool CellIsOnCorridoor(IntVec3 c)
         {
-            return Corridoor.path.Contains(c);
+            return _Corridoor.path.Contains(c);
         }
     }
 }

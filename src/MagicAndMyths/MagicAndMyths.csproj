@@ -131,7 +131,11 @@
     <Compile Include="Comps\Ability\CompProperties_PushBackInCone.cs" />
     <Compile Include="Comps\Ability\CompProperties_ThrowFilthInRadius.cs" />
     <Compile Include="Comps\Ability\Specific\UndeadDef.cs" />
-    <Compile Include="Comps\Map\MapComp_DungeonGenDebugger.cs" />
+    <Compile Include="MapGen\Debug\BspOverlay.cs" />
+    <Compile Include="MapGen\Debug\BspTreeTraversalOverlay.cs" />
+    <Compile Include="MapGen\Debug\CorridorOverlay.cs" />
+    <Compile Include="MapGen\Debug\DungeonOverlay.cs" />
+    <Compile Include="MapGen\Debug\MapComp_DungeonGenDebugger.cs" />
     <Compile Include="Comps\ThingComps\Portal\CompProperties_PortalMapGenerator.cs" />
     <Compile Include="Damage\Comps\DamageWorkerCompProperties_AddHediff.cs" />
     <Compile Include="Damage\Comps\DamageWorkerCompProperties_ChainOnKill.cs" />
@@ -150,6 +154,7 @@
     <Compile Include="Gene\Gene_Class.cs" />
     <Compile Include="Gene\Gene_DeathKnight.cs" />
     <Compile Include="Gene\ResourceData.cs" />
+    <Compile Include="Gene\StatPart_CelestalRegenBoost.cs" />
     <Compile Include="Gizmo\Command_MultiAction.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_ChainLightningOnHediff.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_DisappearsStacks.cs" />
@@ -204,6 +209,8 @@
     <Compile Include="MapGen\BSP\BspNodePair.cs" />
     <Compile Include="Buildings\Command_BatteryTarget.cs" />
     <Compile Include="MapGen\BSP\ConnectionPoints.cs" />
+    <Compile Include="MapGen\Debug\ProtectionOverlay.cs" />
+    <Compile Include="MapGen\Debug\RoomOverlay.cs" />
     <Compile Include="MapGen\Dungeon\CelluarAutomataSteps.cs" />
     <Compile Include="MapGen\Dungeon\Corridoor\BranchingCorridorPath.cs" />
     <Compile Include="MapGen\Dungeon\Corridoor\CurvedCorridorPath.cs" />
@@ -212,9 +219,10 @@
     <Compile Include="MapGen\Dungeon\Corridoor\ZigzagCorridorPath.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\ApplyFogStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\GenerateCorridoorsStep.cs" />
-    <Compile Include="MapGen\Dungeon\DunGENSteps\RoomAssignmentStep.cs" />
+    <Compile Include="MapGen\Dungeon\DunGENSteps\RoomCreationStep.cs" />
+    <Compile Include="MapGen\Dungeon\DunGENSteps\SideRoomTypeUpdateStep.cs" />
     <Compile Include="MapGen\Dungeon\Generators\DoorPlacementManager.cs" />
-    <Compile Include="MapGen\Dungeon\Generators\DoorPlacementStep.cs" />
+    <Compile Include="MapGen\Dungeon\DunGENSteps\DoorPlacementStep.cs" />
     <Compile Include="MapGen\Dungeon\Processors\SidePathChainBuilder.cs" />
     <Compile Include="MapGen\Dungeon\Processors\SidePathChainConnector.cs" />
     <Compile Include="MapGen\Dungeon\RoomLayoutData.cs" />
@@ -241,7 +249,6 @@
     <Compile Include="MapGen\Dungeon\Generators\MinimumSpanningTreeGenerator.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\MinimumSpanningTreeStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\PostAutomataStep.cs" />
-    <Compile Include="MapGen\Dungeon\DunGENSteps\RoomCreationStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\RoomTypeAssignmentStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\RoomWorkerApplicationStep.cs" />
     <Compile Include="MapGen\Dungeon\DunGENSteps\SidePathProcessingStep.cs" />
@@ -249,6 +256,7 @@
     <Compile Include="MapGen\Dungeon\Room\Shapes\RectangleRoomShape.cs" />
     <Compile Include="MapGen\Dungeon\Room\Shapes\RoomShapeBase.cs" />
     <Compile Include="MapGen\Dungeon\Room\Types\BossRoom_Worker.cs" />
+    <Compile Include="MapGen\Dungeon\Room\Types\EmptyRoom.cs" />
     <Compile Include="MapGen\Dungeon\Room\Types\ObstacleRoom.cs" />
     <Compile Include="MapGen\Dungeon\Room\Types\RecoveryRoom_Worker.cs" />
     <Compile Include="MapGen\CelluarAutomata\CAWorker_RemoveIslands.cs" />

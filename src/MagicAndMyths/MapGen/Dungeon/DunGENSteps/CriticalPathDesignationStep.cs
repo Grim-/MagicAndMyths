@@ -7,8 +7,8 @@ namespace MagicAndMyths
         public void Execute(DungeonGenerationContext context)
         {
             Log.Message("Designating critical path");
-            var pathDesignator = new CriticalPathProcessor(context.Dungeon);
-            pathDesignator.DesignateCriticalPath();
+            var pathDesignator = new CriticalPathProcessorFlexibleLength(context, context.Dungeon);
+            pathDesignator.DesignateCriticalPath(context, context.Dungeon);
         }
     }
 }

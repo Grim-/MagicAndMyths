@@ -58,6 +58,14 @@ namespace MagicAndMyths
             return connections.TryGetValue(connectionId, out var connection) ? connection : null;
         }
 
+        public bool HasAnyConnections(DungeonRoom room)
+        {
+            return room.connections != null && room.connections.Count > 0;
+        }
+        public int GetConnectionCount(DungeonRoom room)
+        {
+            return room.connectedRooms.Count;
+        }
         public bool AreRoomsConnected(DungeonRoom roomA, DungeonRoom roomB)
         {
             string connectionId = GetConnectionId(roomA, roomB);
@@ -67,15 +75,21 @@ namespace MagicAndMyths
         public List<RoomConnection> GetConnectionsForRoom(DungeonRoom room)
         {
             return connections.Values
-                .Where(c => c.roomA == room || c.roomB == room)
+                .Where(c => c.SourceRoom == room || c.DestinationRoom == room)
                 .ToList();
         }
-
+        public List<DungeonRoom> GetConnectedRooms(DungeonRoom room)
+        {
+            return connections.Values
+                .Where(c => c.DestinationRoom == room)
+                .Select(x=> x.SourceRoom)
+                .ToList();
+        }
         public void ApplyConnectionsToGrid()
         {
             foreach (var connection in connections.Values)
             {
-                foreach (IntVec3 cell in connection.Corridoor.path)
+                foreach (IntVec3 cell in connection.Corridoor.GetAllCorridorCells())
                 {
                     dungeon.MarkCellAsFloor(cell);
                 }

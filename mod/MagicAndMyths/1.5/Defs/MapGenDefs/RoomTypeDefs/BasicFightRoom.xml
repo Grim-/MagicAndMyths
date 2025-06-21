@@ -68,7 +68,7 @@
             <maxAmount>0~1</maxAmount>
           </li>
           <li>
-            <kindDef>StoneGolem</kindDef>
+            <kindDef>Bear_Grizzly</kindDef>
             <maxAmount>1~1</maxAmount>
           </li>
         </enemies>

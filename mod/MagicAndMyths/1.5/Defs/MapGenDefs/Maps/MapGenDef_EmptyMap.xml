@@ -3,9 +3,7 @@
     <MapGeneratorDef>
       <defName>MapGenEmpty</defName>
       <genSteps>
-        <li>ElevationFertility</li>
         <li>Terrain</li>
-        <li>Plants</li>
       </genSteps>
       <pocketMapProperties>
           <biome>HiddenForest</biome>

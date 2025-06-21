@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
-    // Handles pathfinding and room accessibility
     public class DungeonRoomPathFinder
     {
         public DungeonRoom GetFurthestRoom(DungeonRoom start)
@@ -70,6 +70,22 @@ namespace MagicAndMyths
 
             return path;
         }
+        public float GetPathDistance(DungeonRoom start, DungeonRoom end)
+        {
+            List<DungeonRoom> path = FindPathBetween(start, end);
+            float totalDistance = 0f;
+
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                Vector3 a = path[i].Center.ToVector3();
+                Vector3 b = path[i + 1].Center.ToVector3();
+
+                float manhattan = Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+                totalDistance += manhattan;
+            }
+
+            return totalDistance;
+        }
 
         public HashSet<DungeonRoom> GetRoomsAccessibleFrom(DungeonRoom start, DungeonRoom excludeRoom = null)
         {
@@ -95,6 +111,37 @@ namespace MagicAndMyths
             }
 
             return accessibleRooms;
+        }
+
+        public HashSet<DungeonRoom> GetEndRooms(DungeonRoom start)
+        {
+            HashSet<DungeonRoom> visited = new HashSet<DungeonRoom>();
+            Queue<DungeonRoom> queue = new Queue<DungeonRoom>();
+            HashSet<DungeonRoom> endRooms = new HashSet<DungeonRoom>();
+
+            queue.Enqueue(start);
+            visited.Add(start);
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+
+                foreach (var neighbor in current.connectedRooms)
+                {
+                    if (!visited.Contains(neighbor))
+                    {
+                        visited.Add(neighbor);
+                        queue.Enqueue(neighbor);
+
+                        if (neighbor.connectedRooms.Count() == 1)
+                        {
+                            endRooms.Add(neighbor);
+                        }
+                    }
+                }
+            }
+
+            return endRooms;
         }
 
         public DungeonRoom FindAccessibleRoomsBefore(DungeonRoom targetRoom, DungeonRoom startRoom)
@@ -131,6 +178,60 @@ namespace MagicAndMyths
             }
 
             return accessibleRooms.Any() ? accessibleRooms.RandomElement() : startRoom;
+        }
+
+        public RoomPair FindRoomsSeparatedByDoor(IntVec3 doorPosition, Dungeon dungeon)
+        {
+            DungeonRoom roomA = null;
+            DungeonRoom roomB = null;
+
+            foreach (var room in dungeon.Rooms)
+            {
+                if (room.RoomCellRect.ExpandedBy(1).Contains(doorPosition))
+                {
+                    if (roomA == null)
+                        roomA = room;
+                    else if (roomB == null)
+                    {
+                        roomB = room;
+                        break;
+                    }
+                }
+            }
+
+            return new RoomPair(roomA, roomB);
+        }
+
+        public HashSet<DungeonRoom> GetRoomsAccessibleFromExcludingDoor(DungeonRoom start, IntVec3 doorPosition, Dungeon dungeon)
+        {
+            RoomPair roomPair = FindRoomsSeparatedByDoor(doorPosition, dungeon);
+
+            if (roomPair.RoomA == null || roomPair.RoomB == null)
+                return GetRoomsAccessibleFrom(start);
+
+            DungeonRoom excludeRoom = null;
+            if (start == roomPair.RoomA)
+                excludeRoom = roomPair.RoomB;
+            else if (start == roomPair.RoomB)
+                excludeRoom = roomPair.RoomA;
+            else
+            {
+                var pathToA = FindPathBetween(start, roomPair.RoomA);
+                var pathToB = FindPathBetween(start, roomPair.RoomB);
+
+                if (pathToA.Count <= pathToB.Count)
+                    excludeRoom = roomPair.RoomB;
+                else
+                    excludeRoom = roomPair.RoomA;
+            }
+
+            return GetRoomsAccessibleFrom(start, excludeRoom);
+        }
+
+        public DungeonRoom FindKeyRoomForDoor(IntVec3 doorPosition, DungeonRoom startRoom, Dungeon dungeon)
+        {
+            var accessibleRooms = GetRoomsAccessibleFromExcludingDoor(startRoom, doorPosition, dungeon);
+            return accessibleRooms.Where(r => r != startRoom).RandomElementWithFallback();
         }
     }
 }

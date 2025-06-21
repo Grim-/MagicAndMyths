@@ -5,7 +5,7 @@
     <label>prison seal</label>
     <description>Speaking the command word then throwing this rune inscribed rock will imprison the first living creature it hits inside a pocket dimension, the target will be not be conscious of any time having passed.</description>
     <graphicData>
-      <texPath>Runestones/Artifact_RunePurple</texPath>
+      <texPath>Runestones/RunePurple</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>

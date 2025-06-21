@@ -5,7 +5,6 @@ using Verse;
 
 namespace MagicAndMyths
 {
-
     public class Corridoor
     {
         public IntVec3 Start;
@@ -14,6 +13,26 @@ namespace MagicAndMyths
         public IntVec3 RoomBEntryPoint;
         public List<IntVec3> path;
         public int Width { get; set; } = 1;
+
+        public IntVec3 CorridoorDirection => End - Start;
+
+        public IntVec3 CorridoorDirectionFrom(IntVec3 origin)
+        {
+            float distToStart = (origin - Start).LengthHorizontalSquared;
+            float distToEnd = (origin - End).LengthHorizontalSquared;
+
+            IntVec3 furthestPoint = distToStart > distToEnd ? Start : End;
+            IntVec3 directionToFurthest = (furthestPoint - origin);
+
+            if (Mathf.Abs(directionToFurthest.x) > Mathf.Abs(directionToFurthest.z))
+            {
+                return IntVec3.East;
+            }
+            else
+            {
+                return IntVec3.South;
+            }
+        }
 
         public CellRect CellRect => new CellRect(
             Mathf.Min(Start.x, End.x),
@@ -36,14 +55,12 @@ namespace MagicAndMyths
         {
             IntVec3 nearest = Start;
             float nearestDist = (Start - cell).LengthHorizontalSquared;
-
             float endDist = (End - cell).LengthHorizontalSquared;
             if (endDist < nearestDist)
             {
                 nearest = End;
                 nearestDist = endDist;
             }
-
             foreach (var pathCell in path)
             {
                 float pathDist = (pathCell - cell).LengthHorizontalSquared;
@@ -71,7 +88,6 @@ namespace MagicAndMyths
             path = pathCells;
         }
 
-        // Get all corridor cells including start, end, and path
         public List<IntVec3> GetAllCorridorCells()
         {
             var allCells = new List<IntVec3> { Start, End };
@@ -80,7 +96,6 @@ namespace MagicAndMyths
             return allCells.Distinct().ToList();
         }
     }
-    ////a the empty cells between rooms
     //public class Corridoor
     //{
     //    public IntVec3 Start;
@@ -88,6 +103,27 @@ namespace MagicAndMyths
     //    public IntVec3 RoomAEntryPoint;
     //    public IntVec3 RoomBEntryPoint;
     //    public List<IntVec3> path;
+    //    public int Width { get; set; } = 1;
+
+    //    public IntVec3 CorridoorDirection => End - Start;
+
+    //    public IntVec3 CorridoorDirectionFrom(IntVec3 origin)
+    //    {
+    //        float distToStart = (origin - Start).LengthHorizontalSquared;
+    //        float distToEnd = (origin - End).LengthHorizontalSquared;
+
+    //        IntVec3 furthestPoint = distToStart > distToEnd ? Start : End;
+    //        IntVec3 directionToFurthest = (furthestPoint - origin);
+
+    //        if (Mathf.Abs(directionToFurthest.x) > Mathf.Abs(directionToFurthest.z))
+    //        {
+    //            return IntVec3.East;
+    //        }
+    //        else
+    //        {
+    //            return IntVec3.South;
+    //        }
+    //    }
 
     //    public CellRect CellRect => new CellRect(
     //        Mathf.Min(Start.x, End.x),
@@ -96,26 +132,26 @@ namespace MagicAndMyths
     //        Mathf.Abs(End.z - Start.z) + 1
     //    );
 
-    //    public Corridoor(IntVec3 start, IntVec3 end)
+    //    public Corridoor(IntVec3 start, IntVec3 end, int width = 1)
     //    {
     //        Start = start;
     //        End = end;
+    //        Width = width;
     //        path = new List<IntVec3>();
     //        RoomAEntryPoint = Start;
     //        RoomBEntryPoint = End;
     //    }
+
     //    public IntVec3 GetNearestCorridorCellTo(IntVec3 cell)
     //    {
     //        IntVec3 nearest = Start;
     //        float nearestDist = (Start - cell).LengthHorizontalSquared;
-
     //        float endDist = (End - cell).LengthHorizontalSquared;
     //        if (endDist < nearestDist)
     //        {
     //            nearest = End;
     //            nearestDist = endDist;
     //        }
-
     //        foreach (var pathCell in path)
     //        {
     //            float pathDist = (pathCell - cell).LengthHorizontalSquared;
@@ -125,9 +161,9 @@ namespace MagicAndMyths
     //                nearestDist = pathDist;
     //            }
     //        }
-
     //        return nearest;
     //    }
+
     //    public bool CellOnPath(IntVec3 c)
     //    {
     //        return Start == c || End == c || path.Contains(c);
@@ -141,6 +177,14 @@ namespace MagicAndMyths
     //    public void SetPath(List<IntVec3> pathCells)
     //    {
     //        path = pathCells;
+    //    }
+
+    //    public List<IntVec3> GetAllCorridorCells()
+    //    {
+    //        var allCells = new List<IntVec3> { Start, End };
+    //        if (path != null)
+    //            allCells.AddRange(path);
+    //        return allCells.Distinct().ToList();
     //    }
     //}
 }

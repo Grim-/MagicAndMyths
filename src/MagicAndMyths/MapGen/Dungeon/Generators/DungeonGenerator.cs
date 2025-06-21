@@ -9,7 +9,6 @@ namespace MagicAndMyths
     {
         //private readonly DungeonGenerationPipeline pipeline;
         private readonly Dungeon dungeon;
-        private readonly DungeonGenDef parentGenStep;
         private readonly Map map;
 
         private readonly List<IDungeonGenerationStep> steps;
@@ -19,7 +18,6 @@ namespace MagicAndMyths
 
         public DungeonGenerator(Map map, DungeonGenDef def)
         {
-            this.parentGenStep = def;
             this.map = map;
             this.dungeon = new Dungeon(map);
             this.dungeon.Def = def;
@@ -37,9 +35,22 @@ namespace MagicAndMyths
         {
             Log.Message($"<color=cyan>Beginning Dungeon generation...</color>");
 
+
+            int index = 0;
             foreach (var step in steps)
             {
-                step.Execute(context);
+                Log.Message($"<color=cyan>Step {index + 1} {step.GetType()}</color>");
+                try
+                {
+                    step.Execute(context);
+                    index++;
+                }
+                catch (Exception e)
+                {
+                    Log.Message($"<color=red>Dungeon Generation Error at Step {index + 1}</color>");
+                    Log.Error(e.Message);
+                    continue;
+                }
             }
 
 
@@ -52,7 +63,7 @@ namespace MagicAndMyths
             {
                 new MapInitializationStep(),
                 new BspStructureGenerationStep(),
-                new RoomAssignmentStep(),
+                new RoomCreationStep(),
                 new EarlyAutomataStep(),
                 new MinimumSpanningTreeStep(),
                 new ConnectionGenerationStep(),

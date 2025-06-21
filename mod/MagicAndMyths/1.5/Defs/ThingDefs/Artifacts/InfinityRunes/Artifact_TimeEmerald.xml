@@ -26,11 +26,9 @@
       <DeteriorationRate>0</DeteriorationRate>
     </statBases>
     <equippedStatOffsets>
+      <LifespanFactor>1</LifespanFactor>
+      <Ability_CastingTime>-0.5</Ability_CastingTime>
     </equippedStatOffsets>
-    <equippedStatFactors>
-      <LifespanFactor>10</LifespanFactor>
-      <Ability_CastingTime>0.5</Ability_CastingTime>
-    </equippedStatFactors>
   </ThingDef>
 
 </Defs>

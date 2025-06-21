@@ -25,7 +25,7 @@ namespace MagicAndMyths
             {
                 if (connection.Corridoor != null)
                 {
-                    var doorInfos = FindOptimalDoorPlacements(connection.SourceRoom, connection.DestinationRoom, connection.Corridoor);
+                    var doorInfos = FindOptimalDoorPlacements(connection, connection.SourceRoom, connection.DestinationRoom, connection.Corridoor);
 
                     foreach (var doorInfo in doorInfos)
                     {
@@ -72,7 +72,7 @@ namespace MagicAndMyths
                     if (doorCells.Contains(currentCell))
                         continue;
 
-                    if (corridorCells.Contains(currentCell) && currentCell.InBounds(dungeonGenerationContext.Map))
+                    if (currentCell.InBounds(dungeonGenerationContext.Map))
                     {
                         dungeonGenerationContext.Constructor.BuildWallsToEdge(currentCell, dir, corridorCells);
                     }
@@ -127,18 +127,18 @@ namespace MagicAndMyths
             }
         }
 
-        private List<DoorPlacementInfo> FindOptimalDoorPlacements(DungeonRoom sourceRoom, DungeonRoom destinationRoom, Corridoor corridor)
+        private List<DoorPlacementInfo> FindOptimalDoorPlacements(RoomConnection connection, DungeonRoom sourceRoom, DungeonRoom destinationRoom, Corridoor corridor)
         {
             var doorPlacements = new List<DoorPlacementInfo>();
             var corridorCells = new HashSet<IntVec3>(corridor.path ?? new List<IntVec3> { corridor.Start, corridor.End });
 
-            var sourceDoor = FindDoorNearRoom(sourceRoom, corridorCells, corridor);
+            var sourceDoor = FindDoorNearRoom(connection, sourceRoom, corridorCells, corridor);
             if (sourceDoor.HasValue)
             {
                 doorPlacements.Add(sourceDoor.Value);
             }
 
-            var destinationDoor = FindDoorNearRoom(destinationRoom, corridorCells, corridor);
+            var destinationDoor = FindDoorNearRoom(connection, destinationRoom, corridorCells, corridor);
             if (destinationDoor.HasValue)
             {
                 doorPlacements.Add(destinationDoor.Value);
@@ -147,7 +147,7 @@ namespace MagicAndMyths
             return doorPlacements;
         }
 
-        private DoorPlacementInfo? FindDoorNearRoom(DungeonRoom room, HashSet<IntVec3> corridorCells, Corridoor corridor)
+        private DoorPlacementInfo? FindDoorNearRoom(RoomConnection connection, DungeonRoom room, HashSet<IntVec3> corridorCells, Corridoor corridor)
         {
             var roomEdges = room.GetRoomEdgePoints();
 

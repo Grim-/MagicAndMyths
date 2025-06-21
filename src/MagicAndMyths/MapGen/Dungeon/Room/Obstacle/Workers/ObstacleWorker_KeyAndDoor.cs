@@ -12,12 +12,10 @@ namespace MagicAndMyths
         public ThingDef keyDef;
         public ThingDef doorDef;
         public ThingDef doorStuffing;
-
         public List<Color> KeyColorChoices = new List<Color>()
         {
             Color.red, Color.green, Color.blue, Color.yellow, Color.magenta, Color.white, Color.cyan
         };
-
         public ObstacleDef_KeyAndDoor()
         {
             workerClass = typeof(ObstacleWorker_KeyAndDoor);
@@ -30,7 +28,6 @@ namespace MagicAndMyths
 
         public override bool TryPlaceObstacles(Map map, Dungeon dungeon, DungeonRoom room)
         {
-            // Find existing doors placed by DoorPlacementManager
             var existingDoors = map.listerBuildings.allBuildingsNonColonist
                 .Where(door => door is ILockableDoor)
                 .ToList();
@@ -41,21 +38,15 @@ namespace MagicAndMyths
                 return false;
             }
 
-            // Select a random door to lock
             var selectedDoor = existingDoors.RandomElement();
-
             if (selectedDoor is ILockableDoor lockableDoor)
             {
-                Log.Message($"ObstacleWorker_KeyAndDoor: Locked door at {lockableDoor.Position}.");
-                lockableDoor.Lock();
+                Log.Message($"ObstacleWorker_KeyAndDoor: Attempting to lock door at {lockableDoor.Position}.");
 
-
-                // Find room to place key (accessible from start but not requiring going through the locked door)
                 DungeonRoom keyRoom = FindKeyRoom(dungeon, lockableDoor.Position, room);
                 if (keyRoom == null)
                 {
                     Log.Message($"ObstacleWorker_KeyAndDoor: Could not find a suitable room for the key.");
-                    lockableDoor.Unlock();
                     return false;
                 }
 
@@ -65,17 +56,17 @@ namespace MagicAndMyths
                 if (!keyPos.IsValid)
                 {
                     Log.Message($"ObstacleWorker_KeyAndDoor: Could not find a valid placement position for the key in {keyRoom.RoomCellRect.CenterCell}.");
-                    lockableDoor.Unlock();
                     return false;
                 }
 
-                // Place the key
+                lockableDoor.Lock();
                 Thing_Key keyThing = (Thing_Key)GenSpawn.Spawn(MagicAndMythDefOf.DungeonTestKey, keyPos, map);
                 lockableDoor.SetKeyReference(keyThing, Def.KeyColorChoices.RandomElement());
-                Log.Message($"ObstacleWorker_KeyAndDoor: Placed key at {keyPos} in {keyRoom.RoomCellRect.CenterCell}.");
 
+                Log.Message($"ObstacleWorker_KeyAndDoor: Successfully placed key at {keyPos} in room {keyRoom.RoomCellRect.CenterCell} for door at {lockableDoor.Position}.");
                 return true;
             }
+
             return false;
         }
 
@@ -83,18 +74,40 @@ namespace MagicAndMyths
         {
             if (startRoom == null)
                 return null;
-            var accessibleRooms = dungeon.RoomsAccessibleFrom(startRoom).ToList();
 
-            if (accessibleRooms.Count > 1)
+            RoomPair roomPair = dungeon.Pathfinder.FindRoomsSeparatedByDoor(doorPosition, dungeon);
+            if (!roomPair.IsValid())
             {
-                return accessibleRooms.Where(r => r != startRoom).RandomElement();
+                Log.Warning($"Could not find rooms separated by door at {doorPosition}");
+                return null;
             }
 
-            return null;
+            var accessibleRooms = dungeon.Pathfinder.GetRoomsAccessibleFrom(startRoom);
+            var keyRoomCandidates = accessibleRooms.Where(r => r != startRoom && r != roomPair.RoomA && r != roomPair.RoomB).ToList();
+
+            if (!keyRoomCandidates.Any())
+            {
+                keyRoomCandidates = accessibleRooms.Where(r => r != startRoom).ToList();
+            }
+
+            if (!keyRoomCandidates.Any())
+            {
+                Log.Warning($"No accessible rooms found for key placement from start room {startRoom?.RoomCellRect.CenterCell}");
+                return null;
+            }
+
+            return keyRoomCandidates.RandomElement();
         }
 
         private IntVec3 FindKeyPlacementPosition(Map map, DungeonRoom keyRoom)
         {
+            var walkableCells = keyRoom.roomCells.Where(c => c.InBounds(map) && c.Walkable(map)).ToList();
+
+            if (walkableCells.Any())
+            {
+                return walkableCells.RandomElement();
+            }
+
             for (int i = 0; i < 20; i++)
             {
                 IntVec3 randomCell = keyRoom.roomCells.RandomElement();
@@ -103,6 +116,7 @@ namespace MagicAndMyths
                     return randomCell;
                 }
             }
+
             return IntVec3.Invalid;
         }
     }

@@ -63,8 +63,8 @@ namespace MagicAndMyths
                     foreach (var unconnectedNode in nonCriticalNodes)
                     {
                         float distance = Vector3.Distance(
-                            connectedNode.roomRect.CenterCell.ToVector3(),
-                            unconnectedNode.roomRect.CenterCell.ToVector3());
+                            connectedNode.rect.CenterCell.ToVector3(),
+                            unconnectedNode.rect.CenterCell.ToVector3());
 
                         if (distance < shortestDistance)
                         {

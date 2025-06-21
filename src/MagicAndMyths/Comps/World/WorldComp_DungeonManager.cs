@@ -19,14 +19,19 @@ namespace MagicAndMyths
 
         }
 
-        public Map GetOrCreateDungeonMap(int uniqueId, Map originMap, MapGeneratorDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
+        public Map GetOrCreateDungeonMap(int uniqueId, Map originMap, DungeonGenDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
         {
+            IntVec3 actualMapSize = mapSize;
+            if (mapGeneratorDef is DungeonGenDef dungeonGenDef)
+            {
+                actualMapSize = dungeonGenDef.mapSize;
+            }
+
             if (DungeonMaps.TryGetValue(uniqueId, out DungeonMapParent existingParent))
             {
                 if (existingParent.HasMap)
                     return existingParent.Map;
 
-                IntVec3 actualMapSize = mapGeneratorDef is DungeonGenDef dungeonGenDef ? dungeonGenDef.mapSize : mapSize;
 
                 Map map = MapGenerator.GenerateMap(
                     actualMapSize,
@@ -36,15 +41,15 @@ namespace MagicAndMyths
                     null,
                     true
                 );
+
                 return map;
             }
 
-  
-            return CreateNewDungeoMap(uniqueId, originMap, mapGeneratorDef, mapSize, sourceTile);
+            return CreateNewDungeoMap(uniqueId, originMap, mapGeneratorDef, actualMapSize, sourceTile);
         }
 
 
-        private Map CreateNewDungeoMap(int uniqueId, Map originMap, MapGeneratorDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
+        private Map CreateNewDungeoMap(int uniqueId, Map originMap, DungeonGenDef mapGeneratorDef, IntVec3 mapSize, int sourceTile)
         {
             DungeonMapParent mapParent = (DungeonMapParent)WorldObjectMaker.MakeWorldObject(MagicAndMythDefOf.DungeonMapParent);
             mapParent.SetDungeonID(uniqueId);
@@ -60,6 +65,9 @@ namespace MagicAndMyths
                 null,
                 true
             );
+
+            DungeonGenerator generator = new DungeonGenerator(customMap, mapGeneratorDef);
+            generator.Generate();
             DungeonMaps[uniqueId] = mapParent;
             return customMap;
         }

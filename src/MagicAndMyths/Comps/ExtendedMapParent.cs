@@ -90,7 +90,7 @@ namespace MagicAndMyths
             }
             else
             {
-                Log.Warning("No colonists found to eject in dungeon map");
+                //Log.Warning("No colonists found to eject in dungeon map");
             }
         }
 
