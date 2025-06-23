@@ -18,6 +18,8 @@
       <AccuracyLong>0.75</AccuracyLong>
       <RangedWeapon_Cooldown>1.65</RangedWeapon_Cooldown>
     </statBases>
+    <recipeMaker Inherit="false">
+    </recipeMaker>
     <weaponClasses>
       <li>Ranged</li>
       <li>RangedLight</li>

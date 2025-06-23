@@ -34,7 +34,7 @@ namespace MagicAndMyths
 
         public void Generate()
         {
-            //StepGeneration();
+            // StepGeneration();
             Log.Message($"<color=cyan>Beginning Dungeon generation...</color>");
 
 

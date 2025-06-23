@@ -3,8 +3,8 @@
   <MagicAndMyths.MagicTattooDef>
     <defName>MinorWardingTattoo</defName>
     <label>none</label>
-    <texPath>Tattoo/TattooSakunaBody</texPath>
-    <iconPath>Tattoo/TattooSakunaBody</iconPath>
+    <texPath>Tatoos/Sukuna/TattooSakunaBody</texPath>
+    <iconPath>Tatoos/Sukuna/TattooSakunaBody</iconPath>
     <tattooType>Body</tattooType>
     <category>Minimal</category>
     <noGraphic>false</noGraphic>

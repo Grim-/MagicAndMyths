@@ -34,9 +34,7 @@ namespace MagicAndMyths
 
         #region Abstract Methods
 
-        /// <summary>
-        /// Perform main growing tick action
-        /// </summary>
+
         public virtual void DoGrowerTick()
         {
             if (LayoutDef == null)
@@ -128,22 +126,17 @@ namespace MagicAndMyths
                 FleckMaker.ThrowMetaPuffs(new TargetInfo(pos, ParentBuilding.Map));
             }
         }
-        /// <summary>
-        /// Initialize comp with parent building
-        /// </summary>
+
+
         public abstract void Initialize();
 
-        /// <summary>
-        /// Perform any necessary actions when moving to a new stage
-        /// </summary>
+
         protected virtual void OnStageStarted(int stageIndex)
         {
             //Messages.Message($"{ParentBuilding.Label} has started building stage {stageIndex + 1}", MessageTypeDefOf.PositiveEvent);
         }
 
-        /// <summary>
-        /// Perform any necessary actions when a stage is completed
-        /// </summary>
+
         protected virtual void OnStageBuildComplete(int stageIndex)
         {
             //Messages.Message($"{ParentBuilding.Label} has finished building stage {stageIndex + 1}", MessageTypeDefOf.PositiveEvent);

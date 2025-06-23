@@ -86,10 +86,10 @@ namespace MagicAndMyths
             GenSpawn.Spawn(door, cell, context.Map, rotation);
         }
 
-        public void PlaceDoubleDoor(IntVec3 cell, Rot4 rotation, ThingDef doorDef = null, ThingDef stuffDef = null)
+        public Thing PlaceDoubleDoor(IntVec3 cell, Rot4 rotation, ThingDef doorDef = null, ThingDef stuffDef = null)
         {
             if (!cell.InBounds(context.Map))
-                return;
+                return null;
 
             ClearCell(cell);
 
@@ -98,6 +98,8 @@ namespace MagicAndMyths
 
             Thing door = ThingMaker.MakeThing(doorDef, stuffDef);
             GenSpawn.Spawn(door, cell, context.Map, rotation);
+
+            return door;
         }
 
         public void SetTerrain(IntVec3 cell, TerrainDef terrain = null)

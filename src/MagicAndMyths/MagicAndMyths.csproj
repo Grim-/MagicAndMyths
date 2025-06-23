@@ -112,6 +112,8 @@
     <Compile Include="Buildings\Building_FireControlCenter.cs" />
     <Compile Include="Buildings\Building_LockableMultiTileDoor.cs" />
     <Compile Include="Buildings\Building_TurretGun_Controlled.cs" />
+    <Compile Include="Buildings\CompProperties_PowerManaCore.cs" />
+    <Compile Include="Comps\CompProperties_AppendageComp.cs" />
     <Compile Include="Buildings\Dialog_ManageGroups.cs" />
     <Compile Include="Buildings\Dialog_RenameGroup.cs" />
     <Compile Include="Buildings\ILockableDoor.cs" />
@@ -133,6 +135,9 @@
     <Compile Include="Comps\Ability\CompProperties_PushBackInCone.cs" />
     <Compile Include="Comps\Ability\CompProperties_ThrowFilthInRadius.cs" />
     <Compile Include="Comps\Ability\Specific\UndeadDef.cs" />
+    <Compile Include="Game Conditions\GameCondition_ManaPurge.cs" />
+    <Compile Include="Game Conditions\GameCondition_ManaSurge.cs" />
+    <Compile Include="Comps\Map\MapComp_ManaManager.cs" />
     <Compile Include="MapGen\Debug\BspOverlay.cs" />
     <Compile Include="MapGen\Debug\BspTreeTraversalOverlay.cs" />
     <Compile Include="MapGen\Debug\CorridorOverlay.cs" />

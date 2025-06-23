@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
@@ -9,18 +10,21 @@ namespace MagicAndMyths
     {
         private readonly Dungeon dungeon;
         private readonly DungeonGenerationContext dungeonGenerationContext;
-        public List<IntVec3> PlacedDoors { get; private set; }
+        public List<IntVec3> PlacedDoorPositions { get; private set; }
+        public List<Building_Door> PlacedDoors { get; private set; }
+
 
         public DoorPlacementManager(DungeonGenerationContext generationContext)
         {
             this.dungeon = generationContext.Dungeon;
-            this.PlacedDoors = new List<IntVec3>();
+            this.PlacedDoorPositions = new List<IntVec3>();
+            this.PlacedDoors = new List<Building_Door>();
             this.dungeonGenerationContext = generationContext;
         }
 
         public void PlaceAllDoors()
         {
-            PlacedDoors.Clear();
+            PlacedDoorPositions.Clear();
             foreach (var connection in dungeonGenerationContext.Dungeon.ConnectionManager.AllConnections)
             {
                 if (connection.Corridoor != null)
@@ -29,13 +33,13 @@ namespace MagicAndMyths
 
                     foreach (var doorInfo in doorInfos)
                     {
-                        if (!PlacedDoors.Contains(doorInfo.Position))
+                        if (!PlacedDoorPositions.Contains(doorInfo.Position))
                         {
-                            PlacedDoors.Add(doorInfo.Position);
+                            PlacedDoorPositions.Add(doorInfo.Position);
 
                             if (connection.Corridoor.Width >= 2)
                             {
-                                dungeonGenerationContext.Constructor.PlaceDoubleDoor(doorInfo.Position, doorInfo.Rotation, dungeonGenerationContext.Def.DoorDef);
+                               Building_Door doubleDoor = (Building_Door)dungeonGenerationContext.Constructor.PlaceDoubleDoor(doorInfo.Position, doorInfo.Rotation, dungeonGenerationContext.Def.DoorDef);
                             }
                             else
                             {

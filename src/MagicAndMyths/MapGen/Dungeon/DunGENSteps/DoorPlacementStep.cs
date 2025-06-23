@@ -10,12 +10,12 @@ namespace MagicAndMyths
             doorManager.PlaceAllDoors();
             context.DoorManager = doorManager;
 
-            Log.Message($"<color=yellow>Placed {doorManager.PlacedDoors.Count} doors in dungeon</color>");
+            Log.Message($"<color=yellow>Placed {doorManager.PlacedDoorPositions.Count} doors in dungeon</color>");
 
-            foreach (var doorCell in doorManager.PlacedDoors)
+            foreach (var doorCell in doorManager.PlacedDoorPositions)
             {
                 context.Dungeon.MarkCellProtected(doorCell, true);
-            }
+            }            
         }
     }
 }

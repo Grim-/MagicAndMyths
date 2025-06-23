@@ -6,6 +6,7 @@
     <thingClass>MagicAndMyths.Building_Phylactery</thingClass>
     <description>Phylacteries are often used by Liches, aslong as it remains, they cannot die..</description>
     <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
     <graphicData>
       <texPath>Potions/Phylacterycentered</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -24,7 +25,6 @@
       <Flammability>0.2</Flammability>
       <Mass>5</Mass>
     </statBases>
-    <drawerType>MapMeshAndRealTime</drawerType>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <fillPercent>0.15</fillPercent>
     <costList>

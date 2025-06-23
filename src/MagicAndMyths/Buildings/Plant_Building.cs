@@ -1,4 +1,6 @@
 ﻿using RimWorld;
+using System.Collections.Generic;
+using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
@@ -14,7 +16,7 @@ namespace MagicAndMyths
         {
             if (this.LifeStage == PlantLifeStage.Mature)
             {
-                GenSpawn.Spawn(ThingMaker.MakeThing(ThingDefOf.Wall, ThingDefOf.WoodLog), this.Position, this.Map);
+                GenSpawn.Spawn(ThingMaker.MakeThing(ThingDefOf.Wall, ThingDefOf.Steel), this.Position, this.Map);
 
                 if (!this.Destroyed)
                 {
@@ -28,4 +30,5 @@ namespace MagicAndMyths
             base.TickLong();
         }
     }
+
 }

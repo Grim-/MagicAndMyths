@@ -30,7 +30,7 @@ namespace MagicAndMyths
             {
                 this.Map.linkGrid.Notify_LinkerCreatedOrDestroyed(this);
             }
-            this.Map.mapDrawer.RegenerateEverythingNow();
+            this.Map.mapDrawer.MapMeshDirty(this.Position, MapMeshFlagDefOf.Buildings);
         }
 
         public override bool BlocksPawn(Pawn p)
