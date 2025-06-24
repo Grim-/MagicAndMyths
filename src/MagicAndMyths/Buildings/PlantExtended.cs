@@ -5,8 +5,29 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public class Plant_Building : Plant
+    public class PlantExtended : Plant
     {
+        public override bool FireBulwark => base.FireBulwark;
+        public override void CropBlighted()
+        {
+            base.CropBlighted();
+        }
+
+        public override bool CanYieldNow()
+        {
+            return base.CanYieldNow();
+        }
+
+        public override float GetBeauty(bool outside)
+        {
+            return base.GetBeauty(outside);
+        }
+
+        public override void PlantCollected(Pawn by, PlantDestructionMode plantDestructionMode)
+        {
+            base.PlantCollected(by, plantDestructionMode);
+        }
+
         public override int YieldNow()
         {
             return 0;
