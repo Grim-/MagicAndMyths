@@ -49,7 +49,7 @@ namespace MagicAndMyths
         // Constructor to initialize ThingOwner
         public Hediff_UndeadMaster()
         {
-            storedCreature = new ThingOwner<Pawn>(this, false, LookMode.Deep);;
+            storedCreature = new ThingOwner<Pawn>(this, false, LookMode.Deep); ;
         }
 
         public override void Tick()
@@ -84,96 +84,96 @@ namespace MagicAndMyths
         #endregion
 
 
-        public void SetupCreature(Pawn pawn)
-        {
-            if (!pawn.TryGetComp(out Comp_PawnSquadMember squadMember))
-            {
-                Log.Message($"Cannot set up creature {pawn.Label} it has no squad member comp");
-                return;
-            }
+        //public void SetupCreature(Pawn pawn)
+        //{
+        //    if (!pawn.TryGetComp(out Comp_PawnSquadMember squadMember))
+        //    {
+        //        Log.Message($"Cannot set up creature {pawn.Label} it has no squad member comp");
+        //        return;
+        //    }
 
-            if (SquadLeaderComp == null)
-            {
-                Log.Message($"Cannot set up creature {pawn.Label} it's master {this.pawn.Label} has no squad leader comp");
-                return;
-            }
-
-
-            Log.Message($"{pawn.Label} setting squad leader to {this.pawn.Label}");
+        //    if (SquadLeaderComp == null)
+        //    {
+        //        Log.Message($"Cannot set up creature {pawn.Label} it's master {this.pawn.Label} has no squad leader comp");
+        //        return;
+        //    }
 
 
-            squadMember.SetSquadLeader(this.pawn);
+        //    Log.Message($"{pawn.Label} setting squad leader to {this.pawn.Label}");
 
 
-
-
-            Log.Message($"{this.pawn.Label} adding {pawn.Label} to squad");
-            SquadLeaderComp.AddToSquad(pawn);
+        //    squadMember.SetSquadLeader(this.pawn);
 
 
 
-            Log.Message($"Assigned Squad : {squadMember.AssignedSquad}");
 
-            if (pawn.Faction != Faction.OfPlayer)
-            {
-                pawn.SetFaction(Faction.OfPlayer);
-            }
-
-            DraftingUtility.MakeDraftable(pawn);
+        //    Log.Message($"{this.pawn.Label} adding {pawn.Label} to squad");
+        //    SquadLeaderComp.AddToSquad(pawn);
 
 
-            if (pawn.RaceProps.Humanlike)
-            {
-                //pawn.guest.Recruitable = true;
-                ////pawn.guest.SetGuestStatus(Faction.OfPlayer, GuestStatus.Slave);
-                //pawn.needs.AddOrRemoveNeedsAsAppropriate();
-            }
-            else
-            {
-                MagicUtil.TrainPawn(pawn, this.pawn);
-            }
 
-            if (pawn.playerSettings != null)
-            {
-                pawn.playerSettings.hostilityResponse = HostilityResponseMode.Attack;
-            }
-        }
+        //    Log.Message($"Assigned Squad : {squadMember.AssignedSquad}");
 
-        /// <summary>
-        /// Summons a stored creature to the specified position.
-        /// Removes it from stored list and adds to active list.
-        /// </summary>
-        /// <param name="pawn">The pawn to summon</param>
-        /// <param name="position">The position to summon at</param>
-        /// <returns>True if successful, false otherwise</returns>
-        public bool SummonCreature(Pawn pawn, IntVec3 position)
-        {
-            storedCreature.RemoveAll(x => x == pawn);
+        //    if (pawn.Faction != Faction.OfPlayer)
+        //    {
+        //        pawn.SetFaction(Faction.OfPlayer);
+        //    }
 
-            if (SquadLeaderComp.AddToSquad(pawn))
-            {
-                Pawn summonedPawn = pawn;
-                SetupCreature(summonedPawn);
+        //    DraftingUtility.MakeDraftable(pawn);
 
-                if (!summonedPawn.Spawned)
-                {
-                    GenSpawn.Spawn(summonedPawn, position, this.pawn.Map);
-                }
 
-                if (summonedPawn.abilities == null)
-                {
-                    summonedPawn.abilities = new Pawn_AbilityTracker(summonedPawn);
-                }
+        //    if (pawn.RaceProps.Humanlike)
+        //    {
+        //        //pawn.guest.Recruitable = true;
+        //        ////pawn.guest.SetGuestStatus(Faction.OfPlayer, GuestStatus.Slave);
+        //        //pawn.needs.AddOrRemoveNeedsAsAppropriate();
+        //    }
+        //    else
+        //    {
+        //        MagicUtil.TrainPawn(pawn, this.pawn);
+        //    }
 
-                Log.Message($"Successfully summoned creature {pawn.Label}");
-                return true;
-            }
-            else
-            {
-                Log.Message($"Failed to add {pawn.Label} to {this.pawn.Label} squad.");
-                return false;
-            }
-        }
+        //    if (pawn.playerSettings != null)
+        //    {
+        //        pawn.playerSettings.hostilityResponse = HostilityResponseMode.Attack;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Summons a stored creature to the specified position.
+        ///// Removes it from stored list and adds to active list.
+        ///// </summary>
+        ///// <param name="pawn">The pawn to summon</param>
+        ///// <param name="position">The position to summon at</param>
+        ///// <returns>True if successful, false otherwise</returns>
+        //public bool SummonCreature(Pawn pawn, IntVec3 position)
+        //{
+        //    storedCreature.RemoveAll(x => x == pawn);
+
+        //    if (SquadLeaderComp.AddToSquad(pawn))
+        //    {
+        //        Pawn summonedPawn = pawn;
+        //        SetupCreature(summonedPawn);
+
+        //        if (!summonedPawn.Spawned)
+        //        {
+        //            GenSpawn.Spawn(summonedPawn, position, this.pawn.Map);
+        //        }
+
+        //        if (summonedPawn.abilities == null)
+        //        {
+        //            summonedPawn.abilities = new Pawn_AbilityTracker(summonedPawn);
+        //        }
+
+        //        Log.Message($"Successfully summoned creature {pawn.Label}");
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        Log.Message($"Failed to add {pawn.Label} to {this.pawn.Label} squad.");
+        //        return false;
+        //    }
+        //}
 
         public override void ExposeData()
         {

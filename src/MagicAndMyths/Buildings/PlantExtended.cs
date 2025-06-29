@@ -5,6 +5,7 @@ using Verse;
 
 namespace MagicAndMyths
 {
+
     public class PlantExtended : Plant
     {
         public override bool FireBulwark => base.FireBulwark;

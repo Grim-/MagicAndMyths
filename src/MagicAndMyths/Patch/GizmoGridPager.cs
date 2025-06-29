@@ -1,15 +1,17 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using System;
-using System.Collections; // Required for IEnumerable
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection; // Required for reflection
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
 namespace MagicAndMyths
 {
+
+
     [StaticConstructorOnStartup]
     public static class AbilityRadialPager
     {

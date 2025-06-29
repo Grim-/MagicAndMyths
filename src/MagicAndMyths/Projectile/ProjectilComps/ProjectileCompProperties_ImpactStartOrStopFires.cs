@@ -28,6 +28,11 @@ namespace MagicAndMyths
             if (blockedByShield)
                 return;
 
+            if (this.parent.Map == null)
+            {
+                return;
+            }
+
             StageVisualEffect.CreateRadialStageEffect(this.parent.Position, Props.radius.RandomInRange, this.parent.Map, Props.sections.RandomInRange, (IntVec3 cell, Map map, int currentSection) =>
             {
                 if (cell.IsValid)

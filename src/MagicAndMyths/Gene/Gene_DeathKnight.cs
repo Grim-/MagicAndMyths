@@ -38,6 +38,10 @@ namespace MagicAndMyths
         public IThingHolder ParentHolder => this.pawn.ParentHolder;
         #endregion
 
+
+        protected int FixedSquadID = -666;
+
+
         public Gene_DeathKnight()
         {
             storedCreature = new ThingOwner<Pawn>(this, false, LookMode.Deep);
@@ -50,11 +54,11 @@ namespace MagicAndMyths
 
             if (this.pawn.TryGetComp(out Comp_PawnSquadLeader pawnSquadLeader))
             {
-                pawnSquadLeader.SetAsActiveSquadLeader();
+                pawnSquadLeader.SetSquadLeader(true);
                 if (!pawnSquadLeader.HasAnySquad())
                 {
                     pawnSquadLeader.AddSquad(666);
-                    pawnSquadLeader.GetSquadByID(666).squadName = "Legion of the damned";
+                    pawnSquadLeader.GetSquadByID(FixedSquadID).squadName = "Legion of the damned";
                 }
             }
         }
@@ -113,10 +117,11 @@ namespace MagicAndMyths
 
 
 
-
-            Log.Message($"{this.pawn.Label} adding {pawn.Label} to squad");
-            SquadLeaderComp.AddToSquad(pawn);
-
+            if (SquadLeaderComp.TryGetSquadByID(FixedSquadID, out Squad legionSquad))
+            {
+                Log.Message($"{this.pawn.Label} adding {pawn.Label} to squad");
+                legionSquad.AddMember(pawn);
+            }
 
 
             Log.Message($"Assigned Squad : {squadMember.AssignedSquad}");
@@ -157,8 +162,11 @@ namespace MagicAndMyths
         {
             storedCreature.RemoveAll(x => x == pawn);
 
-            if (SquadLeaderComp.AddToSquad(pawn))
+            if (SquadLeaderComp.TryGetSquadByID(FixedSquadID, out Squad legionSquad))
             {
+                Log.Message($"{this.pawn.Label} adding {pawn.Label} to squad");
+                legionSquad.AddMember(pawn);
+
                 Pawn summonedPawn = pawn;
                 SetupCreature(summonedPawn);
 

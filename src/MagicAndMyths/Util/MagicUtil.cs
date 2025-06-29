@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using LudeonTK;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace MagicAndMyths
         {
 
         }
+
+
 
 
         public static ThingFlyer QuickFlyer(this Thing thing, Map map, IntVec3 destination, Pawn throwerPawn = null)
@@ -69,9 +72,14 @@ namespace MagicAndMyths
 
         public static bool TryExtinguishFireAt(IntVec3 cell, Map map, float extinguishAmount = 100f)
         {
+            if (!cell.IsValid || map == null)
+            {
+                return false;
+            }
+
             if (FireUtility.NumFiresAt(cell, map) > 0)
             {
-                foreach (var item in cell.GetFiresNearCell(map))
+                foreach (var item in cell.GetFiresNearCell(map).ToArray())
                 {
                     item.TakeDamage(new DamageInfo(DamageDefOf.Extinguish, extinguishAmount, 0f, -1f));
                 }
@@ -421,8 +429,44 @@ namespace MagicAndMyths
             return false;
         }
 
+        [DebugAction("Magic And Myths", "Spawn in grid", false, false, false, false, 0, false, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 100)]
+        private static List<DebugActionNode> SetTerrainRect()
+        {
+            List<DebugActionNode> list = new List<DebugActionNode>();
+            foreach (ThingDef localDef2 in DefDatabase<ThingDef>.AllDefs)
+            {
+                ThingDef localDef = localDef2;
+                if (localDef2.BuildableByPlayer)
+                {
+                    list.Add(new DebugActionNode(localDef.defName, DebugActionType.Action, () =>
+                    {
+                        ThingDef defName = localDef;
 
+                        DebugToolsGeneral.GenericRectTool(defName.defName, (CellRect cellRect) =>
+                        {
+                            IntVec2 sizePerCell = defName.Size;
+                            int stepX = sizePerCell.x + 1;
+                            int stepZ = sizePerCell.z + 1;
 
+                            for (int x = cellRect.minX; x + sizePerCell.x <= cellRect.maxX + 1; x += stepX)
+                            {
+                                for (int z = cellRect.minZ; z + sizePerCell.z <= cellRect.maxZ + 1; z += stepZ)
+                                {
+                                    IntVec3 spawnPos = new IntVec3(x, 0, z);
+                                    if (cellRect.Contains(spawnPos))
+                                    {
+                                        Thing thing = ThingMaker.MakeThing(defName, defName.MadeFromStuff ? ThingDefOf.Steel : null);
+                                        thing.SetFaction(Faction.OfPlayer);
+                                        GenSpawn.Spawn(thing, spawnPos, Find.CurrentMap);
+                                    }
+                                }
+                            }
+                        });
+                    }));
+                }
+            }
+            return list;
+        }
         public static bool IsControlledSummon(this Pawn pawn)
         {
             return pawn.health.hediffSet.HasHediff<Hediff_Undead>();

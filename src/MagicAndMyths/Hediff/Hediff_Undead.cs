@@ -13,7 +13,7 @@ namespace MagicAndMyths
 
         public Pawn Master => this.pawn;
         public override string Label => base.Label;
-        public override string Description => base.Description + $"\nSquad Leader: {SquadLeader.SquadLeaderPawn.Name}";
+        public override string Description => base.Description + $"\nSquad Leader: {SquadLeader.Pawn.Name}";
 
         public Comp_PawnSquadLeader SquadLeader
         {
@@ -84,8 +84,12 @@ namespace MagicAndMyths
         {
             if (this.SquadLeader != null)
             {
-                this.SquadLeader.RemoveFromSquad(this.pawn, true);
+                if (this.SquadLeader.IsPartOfAnySquad(pawn, out Squad squad))
+                {
+                    squad.RemoveMember(pawn);
+                }
             }
+
             base.Notify_PawnDied(dinfo, culprit);
         }
 
