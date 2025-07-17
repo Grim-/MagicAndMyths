@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Xml;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 
 namespace MagicAndMyths
 {
+
     [StaticConstructorOnStartup]
     public static class MagicAndMythPatchClass
     {
@@ -19,6 +21,74 @@ namespace MagicAndMyths
         {
             var harmony = new Harmony("com.emo.magicandmyths");
             harmony.PatchAll();
+        }
+
+
+        [HarmonyPatch(typeof(MaterialPool), "MatFrom", new Type[] { typeof(MaterialRequest) })]
+        public static class MaterialPool_MatFrom_Debug
+        {
+            public static void Prefix(MaterialRequest req)
+            {
+                if (req.shader?.name == "Custom/MystiqueColorWave")
+                {
+                    Log.Warning($"MatFrom called with shader {req.shader.name}, params count: {req.shaderParameters?.Count ?? 0}");
+                    if (req.shaderParameters != null)
+                    {
+                        foreach (var param in req.shaderParameters)
+                        {
+                            Log.Warning($"  Param: {param}");
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(Graphic_Multi), "GetColoredVersion")]
+        public static class Graphic_Multi_GetColoredVersion_Fix
+        {
+            public static bool Prefix(Graphic_Multi __instance, Shader newShader, Color newColor, Color newColorTwo, ref Graphic __result)
+            {
+                __result = GraphicDatabase.Get(__instance.GetType(), __instance.path, newShader, __instance.drawSize, newColor, newColorTwo, __instance.data, __instance.data?.shaderParameters, null);
+                return false;
+            }
+        }
+
+        [HarmonyPatch(typeof(Graphic_Single), "GetColoredVersion")]
+        public static class Graphic_Single_GetColoredVersion_Fix
+        {
+            public static bool Prefix(Graphic_Single __instance, Shader newShader, Color newColor, Color newColorTwo, ref Graphic __result)
+            {
+                __result = GraphicDatabase.Get(__instance.GetType(), __instance.path, newShader, __instance.drawSize, newColor, newColorTwo, __instance.data, __instance.data?.shaderParameters, __instance.maskPath);
+                return false;
+            }
+        }
+
+
+
+
+        [HarmonyPatch(typeof(Graphic_Single), "Init")]
+        public static class Graphic_Single_Init_Fix
+        {
+            public static void Prefix(GraphicRequest req)
+            {
+                if (req.graphicData?.shaderParameters != null && req.shaderParameters == null)
+                {
+                    req.shaderParameters = req.graphicData.shaderParameters;
+                }
+            }
+        }
+        [HarmonyPatch(typeof(Graphic_Multi), "Init")]
+        public static class Graphic_Multie_Init_Fix
+        {
+            public static void Prefix(GraphicRequest req)
+            {
+                if (req.graphicData?.shaderParameters != null && req.shaderParameters == null)
+                {
+                    req.shaderParameters = req.graphicData.shaderParameters;
+                }
+            }
         }
 
         [HarmonyPatch(typeof(ThingSelectionUtility))]
@@ -210,21 +280,21 @@ namespace MagicAndMyths
             }
         }
 
-        [HarmonyPatch(typeof(ApparelGraphicRecordGetter))]
-        [HarmonyPatch("TryGetGraphicApparel")]
-        public static class Patch_ApparelGraphicRecordGetter_TryGetGraphicApparel
-        {
-            [HarmonyPostfix]
-            public static void Postfix(Apparel apparel, BodyTypeDef bodyType, ref ApparelGraphicRecord rec)
-            {
-                if (apparel.def.graphicData is GraphicDataWithShader graphicDataWithShader)
-                {
-                    Graphic_MultiWithShader graphic = (Graphic_MultiWithShader)GraphicDatabase.Get<Graphic_MultiWithShader>(graphicDataWithShader.texPath, AssetBundleShaderManager.GetShaderByAssetName(graphicDataWithShader.customShaderName), apparel.def.graphicData.drawSize, apparel.DrawColor, apparel.DrawColor, graphicDataWithShader);
-                    rec = new ApparelGraphicRecord(graphic, apparel);
+        //[HarmonyPatch(typeof(ApparelGraphicRecordGetter))]
+        //[HarmonyPatch("TryGetGraphicApparel")]
+        //public static class Patch_ApparelGraphicRecordGetter_TryGetGraphicApparel
+        //{
+        //    [HarmonyPostfix]
+        //    public static void Postfix(Apparel apparel, BodyTypeDef bodyType, ref ApparelGraphicRecord rec)
+        //    {
+        //        if (apparel.def.graphicData is GraphicDataWithShader graphicDataWithShader)
+        //        {
+        //            Graphic_MultiWithShader graphic = (Graphic_MultiWithShader)GraphicDatabase.Get<Graphic_MultiWithShader>(graphicDataWithShader.texPath, AssetBundleShaderManager.GetShaderByAssetName(graphicDataWithShader.customShaderName), apparel.def.graphicData.drawSize, apparel.DrawColor, apparel.DrawColor, graphicDataWithShader);
+        //            rec = new ApparelGraphicRecord(graphic, apparel);
   
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
         [HarmonyPatch(typeof(Thing), "TakeDamage")]
         public static class Thing_TakeDamage_Patch

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MagicAndMyths_BaseDungeonWall">
+     <defName>MagicAndMyths_SelectiveWall</defName>
+     <label>faction wall</label>
+     <description>A special wall that allows friendly pawns to pass through but blocks enemies.</description>
+     <thingClass>MagicAndMyths.Building_SelectiveWall</thingClass>
+     <useHitPoints>false</useHitPoints>
+     <drawerType>MapMeshAndRealTime</drawerType>
+     <designationCategory>Misc</designationCategory>
+     <graphicData>
+       <shaderType>Transparent</shaderType>
+     </graphicData>
+     <statBases>
+       <Flammability>0</Flammability>
+     </statBases>
+      <drawStyleCategory>Floors</drawStyleCategory>
+     <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+     <blockWind>true</blockWind>
+     <castEdgeShadows>true</castEdgeShadows>
+     <fillPercent>1</fillPercent>
+     <coversFloor>true</coversFloor>
+     <holdsRoof>true</holdsRoof>
+     <staticSunShadowHeight>1.0</staticSunShadowHeight>
+     <blockLight>true</blockLight>
+     <rotatable>false</rotatable>
+     <selectable>true</selectable>
+     <neverMultiSelect>false</neverMultiSelect>
+     <canOverlapZones>false</canOverlapZones>
+     <mineable>false</mineable>
+     <building>
+       <ai_chillDestination>false</ai_chillDestination>
+       <isInert>true</isInert>
+       <repairable>false</repairable>
+       <claimable>false</claimable>
+       <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+       <deconstructible>false</deconstructible>
+       <isTargetable>false</isTargetable>
+       <supportsWallAttachments>true</supportsWallAttachments>
+     </building>
+   </ThingDef>
+</Defs>

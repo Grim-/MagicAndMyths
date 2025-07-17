@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.RecoveryRoomDef>
+    <defName>RecoveryRoom</defName>
+    <label>recovery chamber</label>
+    <roomType>Normal</roomType>
+    <roomIsOnCriticalPath>false</roomIsOnCriticalPath>
+    <maxRoomTypeCount>1</maxRoomTypeCount>
+    <bedCount>2</bedCount>
+    <addFood>true</addFood>
+    <addMedicine>true</addMedicine>
+    <healingItems>
+      <li>Luciferium</li>
+      <li>MedicineHerbal</li>
+    </healingItems>
+    <perferredLayouts>
+      <li>Circular</li>
+      <li>Square</li>
+    </perferredLayouts>
+  </MagicAndMyths.RecoveryRoomDef>
+
+</Defs>

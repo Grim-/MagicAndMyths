@@ -20,7 +20,7 @@ namespace MagicAndMyths
             float currentAvgTemp = 0f;
             int cellCount = 0;
 
-            foreach (Room room in map.regionGrid.allRooms)
+            foreach (Room room in map.regionGrid.AllRooms)
             {
                 if (!room.TouchesMapEdge)
                 {
@@ -68,7 +68,7 @@ namespace MagicAndMyths
             float currentAvgTemp = 0f;
             int cellCount = 0;
 
-            foreach (Room room in map.regionGrid.allRooms)
+            foreach (Room room in map.regionGrid.AllRooms)
             {
                 if (!room.TouchesMapEdge)
                 {

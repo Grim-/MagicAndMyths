@@ -30,7 +30,7 @@ namespace MagicAndMyths
             }
 
             TraverseParms traverseParms = TraverseParms.For(TraverseMode.PassDoors | TraverseMode.PassAllDestroyableThings);
-            PawnPath pawnPath = map.pathFinder.FindPath(start, end, traverseParms);
+            PawnPath pawnPath = map.pathFinder.FindPathNow(start, end, traverseParms);
 
             if (!pawnPath.Found)
             {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.StanceDef>
+    <defName>Spellblade_FireStance</defName>
+    <label>Fire Stance</label>
+    <description>Aggressive stance focused on dealing damage. Grants access to fire abilities.</description>
+    <iconPath>Skills/Spellblade/Skill_FireArmour</iconPath>
+    <iconColor>(1, 0.3, 0.1)</iconColor>
+    <cooldownTicks>300</cooldownTicks>
+    <upkeepCost>15</upkeepCost>
+    <hediffsToApply>
+      <li>Spellblade_FireStanceHediff</li>
+    </hediffsToApply>
+    <abilitiesToGain>
+      <li>MagicAndMyths_ElementalArmour_Fire</li>
+      <li>MagicAndMyths_FlamingSword</li>
+      <li>MagicAndMyths_FireHammer</li>
+    </abilitiesToGain>
+    <hediffsToRemoveOnExit>
+      <li>SpellBlade_ElementalArmour_Fire</li>
+    </hediffsToRemoveOnExit>
+  </MagicAndMyths.StanceDef>
+
+</Defs>

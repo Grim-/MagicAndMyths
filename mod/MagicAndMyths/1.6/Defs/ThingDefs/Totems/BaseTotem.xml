@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.TotemDef Name="BaseTotem" ParentName="BuildingBase" Abstract="true">
+    <thingClass>MagicAndMyths.Building_Totem</thingClass>
+    <lifetimeTicks>-1</lifetimeTicks>
+    <effectRadius>3</effectRadius>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <tickerType>Normal</tickerType>
+    <rotatable>false</rotatable>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <deconstructible>false</deconstructible>
+      <neverBuildable>true</neverBuildable>
+    </building>
+  </MagicAndMyths.TotemDef>
+</Defs>

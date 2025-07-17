@@ -40,7 +40,6 @@ namespace MagicAndMyths
                 canTargetFires = true,
                 canTargetItems = true,
                 canTargetMechs = true,
-                canTargetMutants = true,
                 canTargetBloodfeeders = true,
                 canTargetSelf = false,
                 canTargetPlants = false,

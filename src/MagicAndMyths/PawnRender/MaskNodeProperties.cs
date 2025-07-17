@@ -60,7 +60,8 @@ namespace MagicAndMyths
         public override void AppendDrawRequests(PawnRenderNode node, PawnDrawParms parms, List<PawnGraphicDrawRequest> requests)
         {
             MaskRenderNode maskNode = node as MaskRenderNode;
-            if (maskNode == null || maskNode.Graphic == null) return;
+            if (maskNode == null || !maskNode.HasGraphic(parms.pawn)) 
+                return;
 
             Mesh mesh = node.GetMesh(parms);
             if (mesh == null) return;

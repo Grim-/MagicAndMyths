@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <TerrainDef ParentName="WaterDeepBase">
+  <defName>KamiSkyTile</defName>
+  <label>deep ocean water</label>
+  <renderPrecedence>397</renderPrecedence>
+  <tags>
+    <li>Ocean</li>
+  </tags>
+</TerrainDef>
+</Defs>

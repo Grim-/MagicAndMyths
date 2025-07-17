@@ -47,7 +47,7 @@ namespace MagicAndMyths
             }
         }
 
-        public override void PostDeSpawn(Map map)
+        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             if (isPortalOpen)
             {

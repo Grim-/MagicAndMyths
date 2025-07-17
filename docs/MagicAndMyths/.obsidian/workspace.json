@@ -34,21 +34,9 @@
               "icon": "lucide-file",
               "title": "Equipment"
             }
-          },
-          {
-            "id": "89f5dab5f822976d",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.8.10"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.8.10"
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -195,7 +183,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "89f5dab5f822976d",
+  "active": "98679b484e11c059",
   "lastOpenFiles": [
     "Items.md",
     "Tatoos.md",

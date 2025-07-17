@@ -35,10 +35,9 @@ namespace MagicAndMyths
             EventManager.Instance.OnThingDamageTaken += EventManager_OnDamageTaken;
         }
 
-        public override void PostDeSpawn(Map map)
+        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
-            base.PostDeSpawn(map);
-
+            base.PostDeSpawn(map, mode);
             EventManager.Instance.OnThingDamageTaken -= EventManager_OnDamageTaken;
         }
 

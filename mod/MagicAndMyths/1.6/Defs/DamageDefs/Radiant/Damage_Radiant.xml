@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageDef>
+    <defName>Radiant</defName>
+    <label>radiant</label>
+    <workerClass>MagicAndMyths.DamageWorker_HolyDamage</workerClass>
+    <deathMessage>{0} has burnt in divine fire.</deathMessage>
+    <hediff>MagicAndMyths_Censure</hediff>
+    <hediffSkin>MagicAndMyths_Censure</hediffSkin>
+    <hediffSolid>MagicAndMyths_Censure</hediffSolid>
+    <defaultDamage>15</defaultDamage>
+    <scaleDamageToBuildingsBasedOnFlammability>false</scaleDamageToBuildingsBasedOnFlammability>
+  </DamageDef>
+</Defs>

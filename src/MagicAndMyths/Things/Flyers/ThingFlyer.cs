@@ -155,7 +155,7 @@ namespace MagicAndMyths
         }
 
 
-		public override void Tick()
+		protected override void Tick()
 		{
 			if (this.flightEffecter == null && this.flightEffecterDef != null)
 			{
@@ -188,20 +188,20 @@ namespace MagicAndMyths
 				{
 					this.CheckDestination();
 				}
-				this.innerContainer.ThingOwnerTick(true);
+				this.innerContainer.DoTick();
 			}
 			this.ticksFlying++;
 		}
 
 		private void CheckDestination()
 		{
-			if (!JumpUtility.ValidJumpTarget(base.Map, this.destCell))
+			if (!JumpUtility.ValidJumpTarget(this, base.Map, this.destCell))
 			{
 				int num = GenRadial.NumCellsInRadius(3.9f);
 				for (int i = 0; i < num; i++)
 				{
 					IntVec3 cell = this.destCell + GenRadial.RadialPattern[i];
-					if (JumpUtility.ValidJumpTarget(base.Map, cell))
+					if (JumpUtility.ValidJumpTarget(this, base.Map, cell))
 					{
 						this.destCell = cell;
 						return;

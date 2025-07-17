@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_LightningSpear</defName>
+    <label>lightning spear</label>
+    <thingClass>MagicAndMyths.Projectile_Extended</thingClass>
+    <graphicData>
+      <texPath>VFX/LightningSpear</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.8</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Lightning</damageDef>
+      <damageAmountBase>12</damageAmountBase>
+      <speed>120</speed>
+    </projectile>
+    <comps>
+      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactLightningStrike">
+        <strikeDamageDef>Lightning</strikeDamageDef>
+        <strikeRadius>2</strikeRadius>
+      </li>
+      <li Class="MagicAndMyths.ProjectileCompProperties_SpawnsActiveZoneRadius">
+        <spawnsThingDef>LightningSpearZone</spawnsThingDef>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

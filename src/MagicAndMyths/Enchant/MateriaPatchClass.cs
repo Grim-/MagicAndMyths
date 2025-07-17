@@ -161,7 +161,7 @@ namespace MagicAndMyths
         {
             if (__instance.CasterIsPawn && __instance.CasterPawn != null)
             {
-                Log.Message("Patch : ApplyMeleeDamageToTarget");
+                //Log.Message("Patch : ApplyMeleeDamageToTarget");
                 var pawnEnchantComp = __instance.CasterPawn.GetComp<Comp_PawnEnchant>();
                 if (pawnEnchantComp != null)
                 {

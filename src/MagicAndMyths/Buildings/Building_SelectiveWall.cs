@@ -77,14 +77,7 @@ namespace MagicAndMyths
             return (ushort)10;
         }
 
-        public override ushort PathFindCostFor(Pawn p)
-        {
-            if (CanPassThrough(p))
-            {
-                return (ushort)0;
-            }
-            return (ushort)10;
-        }
+
 
         public virtual bool CanPassThrough(Pawn p)
         {

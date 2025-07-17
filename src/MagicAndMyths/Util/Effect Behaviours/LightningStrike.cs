@@ -28,11 +28,11 @@ namespace MagicAndMyths
 
                     affectedCells = GenRadial.RadialCellsAround(Position, Radius, true);
 
-                    GenExplosion.DoExplosion(Position, map, Radius,
-                        OverrideDamage != null ? OverrideDamage : DamageDefOf.Flame, null,
-                        Damage > 0 ? Damage : -1,
-                        ArmourPen,
-                        null, null, null, null, null, 0f, 1, null, false, null, 0f, 1, 0f, false, null, null, null, true, 1f, 0f, true, null, 1f, null, null);
+                    //GenExplosion.DoExplosion(Position, map, Radius,
+                    //    OverrideDamage != null ? OverrideDamage : DamageDefOf.Flame, null,
+                    //    Damage > 0 ? Damage : -1,
+                    //    ArmourPen,
+                    //    null, null, null, null, null, 0f, 1, null, false, null, 0f, 1, 0f, false, null, null, null, true, 1f, 0f, true, null, 1f, null, null);
 
                     Vector3 loc = Position.ToVector3Shifted();
                     for (int x = 0; x < repeatVisualCount; x++)

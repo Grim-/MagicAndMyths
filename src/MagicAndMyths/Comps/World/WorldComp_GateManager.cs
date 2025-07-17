@@ -96,7 +96,7 @@ namespace MagicAndMyths
             return tile != null
                 && !tile.WaterCovered
                 && tile.hilliness != Hilliness.Impassable
-                && tile.biome != null;
+                && tile.PrimaryBiome != null;
         }
 
         private int HashCombine(int hash1, int hash2)

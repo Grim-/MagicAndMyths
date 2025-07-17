@@ -50,7 +50,7 @@ namespace MagicAndMyths
             get => _IsActive;
         }
 
-        public override bool CanCast
+        public override AcceptanceReport CanCast
         {
             get
             {

@@ -228,7 +228,7 @@ namespace MagicAndMyths
             //DamageWorker.DamageResult damageResult = new DamageWorker.DamageResult();
             //if (activeEnchants == null)
             //    return damageResult;
-            Log.Message("Comp_PawnEnchant ApplyMeleeDamageToTarget");
+            //Log.Message("Comp_PawnEnchant ApplyMeleeDamageToTarget");
             foreach (var enchantData in activeEnchants)
             {
                 if (enchantData != null && enchantData.IsActive && enchantData.EnchantInstance != null)
@@ -420,15 +420,15 @@ namespace MagicAndMyths
                 }
 
                 // Then list inactive ones
-                if (activeEnchants.Any(x => x != null && !x.IsActive))
-                {
-                    sb.AppendLine("Inactive enchantments:");
-                    foreach (var enchantData in activeEnchants.Where(x => x != null && !x.IsActive &&
-                                                                          x.EnchantInstance != null))
-                    {
-                        sb.AppendLine($"[INACTIVE] - [{enchantData.EnchantSource?.LabelShortCap ?? "Unknown"}] [{enchantData.EnchantInstance.def?.GetColouredLabel() ?? "Unknown"}]");
-                    }
-                }
+                //if (activeEnchants.Any(x => x != null && !x.IsActive))
+                //{
+                //    sb.AppendLine("Inactive enchantments:");
+                //    foreach (var enchantData in activeEnchants.Where(x => x != null && !x.IsActive &&
+                //                                                          x.EnchantInstance != null))
+                //    {
+                //        sb.AppendLine($"[INACTIVE] - [{enchantData.EnchantSource?.LabelShortCap ?? "Unknown"}] [{enchantData.EnchantInstance.def?.GetColouredLabel() ?? "Unknown"}]");
+                //    }
+                //}
 
                 return sb.ToString().TrimEnd();
             }

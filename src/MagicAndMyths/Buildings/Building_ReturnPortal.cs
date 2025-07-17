@@ -45,7 +45,7 @@ namespace MagicAndMyths
             PortalThingOrigin = thing;
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
             if (portalEffect != null)

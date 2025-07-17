@@ -56,6 +56,12 @@
           <chanceFactor>0.2</chanceFactor>
         </li>
       </tools>
+      <modExtensions>
+        <li Class="SquadBehaviour.SquadMemberExtension">
+          <canEverJoinSquad>true</canEverJoinSquad>
+          <overrideDefaultChecks>true</overrideDefaultChecks>
+        </li>
+      </modExtensions>
     </ThingDef>
 
     <BodyDef>

@@ -81,14 +81,14 @@ namespace MagicAndMyths
             return 0;
         }
 
-        public override ushort PathFindCostFor(Pawn p)
-        {
-            if (!_IsPassable)
-            {
-                return 10000;
-            }
-            return base.PathFindCostFor(p);
-        }
+        //public override ushort PathFindCostFor(Pawn p)
+        //{
+        //    if (!_IsPassable)
+        //    {
+        //        return 10000;
+        //    }
+        //    return base.PathFindCostFor(p);
+        //}
 
 
 

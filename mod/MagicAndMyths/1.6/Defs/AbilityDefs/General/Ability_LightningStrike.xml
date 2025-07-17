@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_LightningStrike</defName>
+    <label>LightningStrike</label>
+    <description>Many big boom</description>
+    <iconPath>Projectiles/FireRain</iconPath>
+    <cooldownTicksRange>8600</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>45</range>
+      <warmupTime>1</warmupTime>
+      <soundCast>PiercingSpine_Launch</soundCast>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_AbilityLightningStrike">
+        <strikeRadius>1</strikeRadius>
+        <strikeDamage>5</strikeDamage>
+        <strikeDamageDef>Lightning</strikeDamageDef>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

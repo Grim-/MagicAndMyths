@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+  <PawnRenderTreeDef>
+    <defName>AnimalColored</defName>
+    <root Class="PawnRenderNodeProperties_Parent">
+      <debugLabel>Root</debugLabel>
+      <tagDef>Root</tagDef>
+      <children>
+        <li>
+          <debugLabel>Body</debugLabel>
+          <tagDef>Body</tagDef>
+          <nodeClass>PawnRenderNode_AnimalPart</nodeClass>
+          <useRottenColor>true</useRottenColor>
+          <children>
+            <li>
+              <debugLabel>Wounds</debugLabel>
+              <nodeClass>PawnRenderNode_AnimalPart</nodeClass>
+              <workerClass>PawnRenderNodeWorker_OverlayWounds</workerClass>
+              <overlayLayer>Body</overlayLayer>
+              <useGraphic>false</useGraphic>
+              <baseLayer>3</baseLayer>
+            </li>
+            <li>
+              <debugLabel>Pack</debugLabel>
+              <nodeClass>PawnRenderNode_AnimalPack</nodeClass>
+              <workerClass>PawnRenderNodeWorker_AnimalPack</workerClass>
+              <rotDrawMode>Fresh, Rotting</rotDrawMode>
+              <baseLayer>5</baseLayer>
+            </li>
+            <li>
+              <debugLabel>Firefoam</debugLabel>
+              <nodeClass>PawnRenderNode_AnimalPart</nodeClass>
+              <workerClass>PawnRenderNodeWorker_OverlayFirefoam</workerClass>
+              <overlayLayer>Body</overlayLayer>
+              <useGraphic>false</useGraphic>
+              <baseLayer>10</baseLayer>
+            </li>
+            <li>
+              <debugLabel>color</debugLabel>
+              <nodeClass>PawnRenderNode_AnimalPart</nodeClass>
+              <workerClass>MagicAndMyths.PawnRenderNodeWorker_GraphicColorable</workerClass>
+              <overlayLayer>Body</overlayLayer>
+              <baseLayer>10</baseLayer>
+            </li>
+          </children>
+        </li>
+        <li Class="PawnRenderNodeProperties_Carried">
+          <debugLabel>Carried thing</debugLabel>
+          <workerClass>PawnRenderNodeWorker_Carried</workerClass>
+        </li>
+      </children>
+    </root>
+  </PawnRenderTreeDef>
+
   <ThingDef ParentName="ThingBaseWolf">
-      <defName>Blink_Hound</defName>
-      <label>blink hound</label>
-      <description>A mystical predator capable of short-range teleportation. These intelligent pack hunters can phase in and out of reality, making them formidable and unpredictable opponents.</description>
-      <race>
-        <meatLabel>blink hound meat</meatLabel>
+    <defName>Blink_Hound</defName>
+    <label>blink hound</label>
+    <thingClass>MagicAndMyths.BlinkDog</thingClass>
+    <description>A mystical predator capable of short-range teleportation. These intelligent pack hunters can phase in and out of reality, making them formidable and unpredictable opponents.</description>
+    <race>
+      <meatLabel>blink hound meat</meatLabel>
+      <renderTree>AnimalColored</renderTree>
       </race>
+      <comps>
+        <li Class="MagicAndMyths.CompProperties_GraphicColorableLerpSmooth">
+          <lerpDurationTicks>1250</lerpDurationTicks>
+          <colorChangeInterval>2500</colorChangeInterval>
+        </li>
+      </comps>
     </ThingDef>
-    
+
     <PawnKindDef ParentName="AnimalKindBaseWolf">
       <defName>Blink_Hound</defName>
       <label>blink hound</label>
@@ -19,43 +79,49 @@
           <label>blink hound pup</label>
           <labelPlural>blink hound pups</labelPlural>
           <bodyGraphicData>
-            <texPath>Things/Pawn/Animal/Wolf_Timber/Wolf_Timber</texPath>
+            <texPath>Blinkdog/Blinkdog</texPath>
             <drawSize>1.05</drawSize>
+            <graphicClass>Graphic_Multi</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
           </bodyGraphicData>
           <dessicatedBodyGraphicData>
-            <texPath>Things/Pawn/Animal/Wolf_Timber/Dessicated_Wolf_Timber</texPath>
+            <texPath>Blinkdog/Dessicated_Blinkdog</texPath>
             <drawSize>1.05</drawSize>
           </dessicatedBodyGraphicData>
         </li>
         <li>
           <bodyGraphicData>
-            <texPath>Things/Pawn/Animal/Wolf_Timber/Wolf_Timber</texPath>
+            <texPath>Blinkdog/Blinkdog</texPath>
             <drawSize>1.5</drawSize>
             <shadowData>
               <volume>(0.25, 0.3, 0.25)</volume>
               <offset>(0,0,-0.15)</offset>
             </shadowData>
+            <graphicClass>Graphic_Multi</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
           </bodyGraphicData>
           <dessicatedBodyGraphicData>
-            <texPath>Things/Pawn/Animal/Wolf_Timber/Dessicated_Wolf_Timber</texPath>
+            <texPath>Blinkdog/Dessicated_Blinkdog</texPath>
             <drawSize>1.5</drawSize>
           </dessicatedBodyGraphicData>
         </li>
         <li>
           <bodyGraphicData>
-            <texPath>Things/Pawn/Animal/Wolf_Timber/Wolf_Timber</texPath>
+            <texPath>Blinkdog/Blinkdog</texPath>
             <drawSize>1.95</drawSize>
             <shadowData>
               <volume>(0.3, 0.4, 0.3)</volume>
               <offset>(0,0,-0.15)</offset>
             </shadowData>
+            <graphicClass>Graphic_Multi</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
           </bodyGraphicData>
           <dessicatedBodyGraphicData>
-            <texPath>Things/Pawn/Animal/Wolf_Timber/Dessicated_Wolf_Timber</texPath>
+            <texPath>Blinkdog/Dessicated_Blinkdog</texPath>
             <drawSize>1.95</drawSize>
           </dessicatedBodyGraphicData>
         </li>
       </lifeStages>
     </PawnKindDef>
 
-</Defs>
+  </Defs>

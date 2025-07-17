@@ -2,6 +2,9 @@
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using UnityEngine;
+using UnityEngine.Rendering;
 using Verse;
 
 namespace MagicAndMyths
@@ -110,6 +113,79 @@ namespace MagicAndMyths
                 }
             }
             );
+        }
+
+        [DebugAction("Magic And Myths", "DebugPawnShaderProperties", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void DebugPawnShaderProperties()
+        {
+            Find.Targeter.BeginTargeting(new TargetingParameters()
+            {
+                canTargetPawns = true
+            },
+            (LocalTargetInfo target) =>
+            {
+                if (target.Pawn?.Graphic?.MatSouth == null) return;
+
+                var material = target.Pawn.Drawer.renderer.BodyGraphic.MatAt(target.Pawn.Rotation);
+                var shader = material.shader;
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine($"=== Shader Properties for '{target.Pawn.LabelShort}' ===");
+                sb.AppendLine($"Shader: {shader.name}");
+                sb.AppendLine($"Total Properties: {shader.GetPropertyCount()}");
+                sb.AppendLine();
+
+                for (int i = 0; i < shader.GetPropertyCount(); i++)
+                {
+                    string propName = shader.GetPropertyName(i);
+                    ShaderPropertyType propType = shader.GetPropertyType(i);
+                    string propDesc = shader.GetPropertyDescription(i);
+
+                    sb.AppendLine($"[{i}] {propName}");
+                    sb.AppendLine($"    Type: {propType}");
+                    if (!string.IsNullOrEmpty(propDesc))
+                        sb.AppendLine($"    Description: {propDesc}");
+
+                    sb.Append("    Value: ");
+                    switch (propType)
+                    {
+                        case ShaderPropertyType.Color:
+                            sb.AppendLine(material.GetColor(propName).ToString());
+                            break;
+                        case ShaderPropertyType.Vector:
+                            sb.AppendLine(material.GetVector(propName).ToString());
+                            break;
+                        case ShaderPropertyType.Float:
+                        case ShaderPropertyType.Range:
+                            sb.AppendLine(material.GetFloat(propName).ToString("F3"));
+                            break;
+                        case ShaderPropertyType.Texture:
+                            var tex = material.GetTexture(propName);
+                            sb.AppendLine(tex != null ? $"{tex.name} ({tex.width}x{tex.height})" : "null");
+                            break;
+                        default:
+                            sb.AppendLine($"Unknown type: {propType}");
+                            break;
+                    }
+
+                    if (propType == ShaderPropertyType.Range)
+                    {
+                        Vector2 range = shader.GetPropertyRangeLimits(i);
+                        sb.AppendLine($"    Range: [{range.x}, {range.y}]");
+                    }
+
+                    if (propType == ShaderPropertyType.Texture)
+                    {
+                        Vector2 offset = material.GetTextureOffset(propName);
+                        Vector2 scale = material.GetTextureScale(propName);
+                        sb.AppendLine($"    Offset: {offset}, Scale: {scale}");
+                    }
+
+                    sb.AppendLine();
+                }
+
+                Log.Message(sb.ToString());
+            });
         }
 
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <MagicAndMyths.ResourceAbilityDef>
+      <defName>Spellblade_ToggleEarthStance</defName>
+      <label>Bedrock Form</label>
+      <description>Toggle the defensive earth stance. Provides protection and cleaving attacks but reduces mobility.</description>
+      <iconPath>Skills/Spellblade/Skill_EarthArmour</iconPath>
+      <cooldownTicksRange>0</cooldownTicksRange>
+      <aiCanUse>false</aiCanUse>
+      <resourceCost>0</resourceCost>
+      <resourceDef>Mana</resourceDef>
+      <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+      <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+      <verbProperties>
+        <verbClass>Verb_CastAbility</verbClass>
+        <range>0</range>
+        <warmupTime>0</warmupTime>
+        <soundCast>FireSpew_Resolve</soundCast>
+        <targetable>False</targetable>
+        <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+      </verbProperties>
+      <comps>
+        <li Class="MagicAndMyths.CompProperties_AbilityToggleStance">
+          <stance>Spellblade_EarthStance</stance>
+          <allowDeactivation>true</allowDeactivation>
+        </li>
+      </comps>
+    </MagicAndMyths.ResourceAbilityDef>
+</Defs>

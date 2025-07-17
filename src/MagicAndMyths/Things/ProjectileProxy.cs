@@ -30,7 +30,7 @@ namespace MagicAndMyths
             offset = this.Position - caster.Position;
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             if (!target.IsValid)
             {

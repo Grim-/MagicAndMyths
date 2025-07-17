@@ -181,7 +181,7 @@ namespace MagicAndMyths
             }
         }
 
-        public override bool CanCast
+        public override AcceptanceReport CanCast
         {
             get
             {

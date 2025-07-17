@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DamageArmorCategoryDef>
+    <defName>Energy</defName>
+    <multStat>EnergyDamageMultiplier</multStat>
+    <armorRatingStat>ArmorRating_Energy</armorRatingStat>
+  </DamageArmorCategoryDef>
+
+  <StatDef>
+    <defName>ArmorRating_Energy</defName>
+    <label>Magical Energy Resistance</label>
+    <category>PawnMisc</category>
+    <description>The mutable energy that is present throughout.</description>
+    <defaultBaseValue>0</defaultBaseValue>
+    <minValue>0</minValue>
+    <maxValue>1</maxValue>
+    <toStringStyle>PercentOne</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+
+  <StatDef>
+    <defName>EnergyDamageMultiplier</defName>
+    <label>Magical Energy Resistance Multiplier</label>
+    <category>PawnMisc</category>
+    <description>The mutable energy that is present throughout.</description>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>-1</minValue>
+    <maxValue>1</maxValue>
+    <toStringStyle>PercentOne</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+</Defs>

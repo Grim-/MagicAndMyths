@@ -26,20 +26,6 @@ namespace MagicAndMyths
             ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, thing, destination, map, null, null, throwerPawn, thing.DrawPos, false);
             return ThingFlyer.LaunchFlyer(thingFlyer, thing, thing.Position, map);
         }
-        public static void ListShaderProperties(string shaderPath)
-        {
-            Shader shader = ShaderDatabase.LoadShader(shaderPath);
-
-            if (shader != null)
-            {
-                for (int i = 0; i < shader.GetPropertyCount(); i++)
-                {
-                    string propertyName = shader.GetPropertyName(i);
-                    ShaderPropertyType propertyType = shader.GetPropertyType(i);
-                    Log.Message($"Property {i}: {propertyName} (Type: {propertyType})");
-                }
-            }
-        }
 
         public static bool IsInvisible(this Thing t)
         {
@@ -429,7 +415,7 @@ namespace MagicAndMyths
             return false;
         }
 
-        [DebugAction("Magic And Myths", "Spawn in grid", false, false, false, false, 0, false, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 100)]
+        [DebugAction("Magic And Myths", "Spawn in grid", false, false, false, false, false, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 100)]
         private static List<DebugActionNode> SetTerrainRect()
         {
             List<DebugActionNode> list = new List<DebugActionNode>();

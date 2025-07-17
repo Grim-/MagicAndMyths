@@ -6,121 +6,121 @@ using Verse;
 namespace MagicAndMyths
 {
 
-    [StaticConstructorOnStartup]
-    public static class AssetBundleShaderManager
-    {
-        private static Dictionary<string, Shader> ShaderCache = new Dictionary<string, Shader>();
+    //[StaticConstructorOnStartup]
+    //public static class AssetBundleShaderManager
+    //{
+    //    private static Dictionary<string, Shader> ShaderCache = new Dictionary<string, Shader>();
 
-        public static bool Cached = false;
-
-
-
-        static AssetBundleShaderManager()
-        {
-            if (!AssetBundleShaderManager.Cached)
-            {
-                AssetBundleShaderManager.CacheAllLoadedShaders();
-            }
-        }
-
-
-        public static bool HasShader(string ShaderName)
-        {
-            return ShaderCache.ContainsKey(ShaderName);
-        }
+    //    public static bool Cached = false;
 
 
 
+    //    static AssetBundleShaderManager()
+    //    {
+    //        if (!AssetBundleShaderManager.Cached)
+    //        {
+    //            AssetBundleShaderManager.CacheAllLoadedShaders();
+    //        }
+    //    }
 
-        public static bool TryGet(string ShaderName, out Shader shader)
-        {
-            shader = null;
-            if (ShaderCache.ContainsKey(ShaderName))
-            {
-                shader = GetShaderByAssetName(ShaderName);
-                return true;
-            }
-            else
-            {
-                foreach (var mod in LoadedModManager.RunningMods)
-                {
-                    foreach (var bundle in mod.assetBundles.loadedAssetBundles)
-                    {
-                        foreach (var item in bundle.LoadAllAssets())
-                        {
-                            if (item is Shader foundshader)
-                            {
-                                RegisterShader(item.name, foundshader);
-                                shader = foundshader;
-                                return true;
-                            }
-                        }
-                    }
-                }
 
-            }
-            return false;
-        }
+    //    public static bool HasShader(string ShaderName)
+    //    {
+    //        return ShaderCache.ContainsKey(ShaderName);
+    //    }
 
 
 
 
-        public static void RegisterShader(string ShaderName, Shader Shader)
-        {
-            if (!HasShader(ShaderName))
-            {
-                Log.Message($"Shader Cache registering Shader {ShaderName}");
-                ShaderCache.Add(ShaderName, Shader);
-            }
-            else
-            {
-                Log.Message($"Shader Cache updating Shader {ShaderName}");
-                ShaderCache[ShaderName] = Shader;
-            }
-        }
+    //    public static bool TryGet(string ShaderName, out Shader shader)
+    //    {
+    //        shader = null;
+    //        if (ShaderCache.ContainsKey(ShaderName))
+    //        {
+    //            shader = GetShaderByAssetName(ShaderName);
+    //            return true;
+    //        }
+    //        else
+    //        {
+    //            foreach (var mod in LoadedModManager.RunningMods)
+    //            {
+    //                foreach (var bundle in mod.assetBundles.loadedAssetBundles)
+    //                {
+    //                    foreach (var item in bundle.LoadAllAssets())
+    //                    {
+    //                        if (item is Shader foundshader)
+    //                        {
+    //                            RegisterShader(item.name, foundshader);
+    //                            shader = foundshader;
+    //                            return true;
+    //                        }
+    //                    }
+    //                }
+    //            }
 
-        public static Shader GetShaderByAssetName(string ShaderName)
-        {
-            //Log.Message($"Attemping to retrieving Shader with name {ShaderName} from cache");
-            if (HasShader(ShaderName))
-            {
-               // Log.Message($"{ShaderName} found.");
-                return ShaderCache[ShaderName];
-            }
-            Log.Message($"{ShaderName} not found.");
-            return null;
-        }
+    //        }
+    //        return false;
+    //    }
 
 
-        public static void CacheAllLoadedShaders()
-        {
-            Log.Message("Beginning Shader Cache");
 
-            foreach (var mod in LoadedModManager.RunningMods)
-            {
-                foreach (var bundle in mod.assetBundles.loadedAssetBundles)
-                {
-                    foreach (var item in bundle.LoadAllAssets())
-                    {
-                        if (item is Shader shader)
-                        {
-                            RegisterShader(item.name, shader);
 
-                        }
-                    }
-                }
-            }
+    //    public static void RegisterShader(string ShaderName, Shader Shader)
+    //    {
+    //        if (!HasShader(ShaderName))
+    //        {
+    //            Log.Message($"Shader Cache registering Shader {ShaderName}");
+    //            ShaderCache.Add(ShaderName, Shader);
+    //        }
+    //        else
+    //        {
+    //            Log.Message($"Shader Cache updating Shader {ShaderName}");
+    //            ShaderCache[ShaderName] = Shader;
+    //        }
+    //    }
 
-            Cached = true;
-            Log.Message("Shader Cache complete");
-        }
+    //    public static Shader GetShaderByAssetName(string ShaderName)
+    //    {
+    //        //Log.Message($"Attemping to retrieving Shader with name {ShaderName} from cache");
+    //        if (HasShader(ShaderName))
+    //        {
+    //           // Log.Message($"{ShaderName} found.");
+    //            return ShaderCache[ShaderName];
+    //        }
+    //        Log.Message($"{ShaderName} not found.");
+    //        return null;
+    //    }
 
-        public static void RemoveShader(string ShaderName)
-        {
-            if (HasShader(ShaderName))
-            {
-                ShaderCache.Remove(ShaderName);
-            }
-        }
-    }
+
+    //    public static void CacheAllLoadedShaders()
+    //    {
+    //        Log.Message("Beginning Shader Cache");
+
+    //        foreach (var mod in LoadedModManager.RunningMods)
+    //        {
+    //            foreach (var bundle in mod.assetBundles.loadedAssetBundles)
+    //            {
+    //                foreach (var item in bundle.LoadAllAssets())
+    //                {
+    //                    if (item is Shader shader)
+    //                    {
+    //                        RegisterShader(item.name, shader);
+
+    //                    }
+    //                }
+    //            }
+    //        }
+
+    //        Cached = true;
+    //        Log.Message("Shader Cache complete");
+    //    }
+
+    //    public static void RemoveShader(string ShaderName)
+    //    {
+    //        if (HasShader(ShaderName))
+    //        {
+    //            ShaderCache.Remove(ShaderName);
+    //        }
+    //    }
+    //}
 }

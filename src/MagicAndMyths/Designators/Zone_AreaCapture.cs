@@ -84,15 +84,15 @@ namespace MagicAndMyths
             this.Map.mapDrawer.MapMeshDirty(c, MapMeshFlagDefOf.Zone);
         }
 
-        public override void Delete()
+
+        public override void Delete(bool playSound)
         {
             if (instances.ContainsKey(Map))
             {
                 instances.Remove(Map);
             }
-            base.Delete();
+            base.Delete(playSound);
         }
-
 
 
         public override IEnumerable<Gizmo> GetZoneAddGizmos()

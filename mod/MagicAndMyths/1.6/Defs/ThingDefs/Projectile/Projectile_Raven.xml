@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_Raven</defName>
+    <label>raven</label>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Raven</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <damageDef>Bite</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <speed>70</speed>
+    </projectile>
+  </ThingDef>
+
+</Defs>

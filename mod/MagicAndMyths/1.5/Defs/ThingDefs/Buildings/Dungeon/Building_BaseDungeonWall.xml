@@ -28,16 +28,6 @@
       </damageData>
     </graphicData>
     <uiIconPath>Things/Building/Linked/WallSmooth_MenuIcon</uiIconPath>
-    <uiIconPathsStuff>
-      <li>
-        <appearance>Planks</appearance>
-        <iconPath>Things/Building/Linked/WallPlanks_MenuIcon</iconPath>
-      </li>
-      <li>
-        <appearance>Bricks</appearance>
-        <iconPath>Things/Building/Linked/WallBricks_MenuIcon</iconPath>
-      </li>
-    </uiIconPathsStuff>
     <statBases>
       <MaxHitPoints>300</MaxHitPoints>
       <WorkToBuild>135</WorkToBuild>

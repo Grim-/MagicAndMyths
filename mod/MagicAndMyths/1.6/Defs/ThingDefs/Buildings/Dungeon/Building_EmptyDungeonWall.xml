@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MagicAndMyths_BaseDungeonWall">
+    <defName>EmptyDungeonWall</defName>
+    <label>wall</label>
+    <description>It is impervious to damage.</description>
+    <thingClass>MagicAndMyths.Building_FakeWall</thingClass>
+    <useHitPoints>false</useHitPoints>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Standable</passability>
+    <blockWind>true</blockWind>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0</fillPercent>
+    <coversFloor>true</coversFloor>
+    <holdsRoof>false</holdsRoof>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+    <blockLight>false</blockLight>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <canOverlapZones>false</canOverlapZones>
+    <mineable>false</mineable>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <isInert>true</isInert>
+      <repairable>false</repairable>
+      <claimable>false</claimable>
+      <canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+      <deconstructible>false</deconstructible>
+      <isTargetable>false</isTargetable>
+      <isAirtight>false</isAirtight>
+      <isStuffableAirtight>false</isStuffableAirtight>
+      <supportsWallAttachments>true</supportsWallAttachments>
+    </building>
+  </ThingDef>
+
+</Defs>

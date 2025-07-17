@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+      <GameConditionDef>
+        <defName>ManaSurge</defName>
+        <conditionClass>MagicAndMyths.GameCondition_ManaSurge</conditionClass>
+        <label>mana surge</label>
+        <description>mana surge.</description>
+        <endMessage>The mana surge is ending.</endMessage>
+        <letterText>A mana surge has begun..</letterText>
+        <letterDef>NegativeEvent</letterDef>
+        <canBePermanent>true</canBePermanent>
+        <allowUnderground>false</allowUnderground>
+      </GameConditionDef>
+
+</Defs>

@@ -27,7 +27,7 @@ namespace MagicAndMyths
             this.ticksRemaining = ticksPerSection;
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             ticksRemaining--;
 

@@ -447,7 +447,6 @@ namespace MagicAndMyths
             curY = DrawFloatField(rect, curY, "Distance Attenuation Max:", ref subDef.distanceAttenuationMax);
             curY = DrawFloatField(rect, curY, "Random Weight:", ref subDef.randomWeight);
             curY = DrawBoolField(rect, curY, "Sub Trigger On Spawn:", ref subDef.subTriggerOnSpawn);
-            curY = DrawBoolField(rect, curY, "Is Darkening Effect:", ref subDef.isDarkeningEffect);
 
             // Child SubEffecters
             if (subDef.children != null && subDef.children.Count > 0)
@@ -928,7 +927,7 @@ namespace MagicAndMyths
             copy.distanceAttenuationMax = source.distanceAttenuationMax;
             copy.randomWeight = source.randomWeight;
             copy.subTriggerOnSpawn = source.subTriggerOnSpawn;
-            copy.isDarkeningEffect = source.isDarkeningEffect;
+
 
             if (source.children != null)
             {
@@ -1208,7 +1207,6 @@ namespace MagicAndMyths
             AddBooleanProperty(doc, parent, "makeMoteOnSubtrigger", subDef.makeMoteOnSubtrigger);
             AddBooleanProperty(doc, parent, "destroyMoteOnCleanup", subDef.destroyMoteOnCleanup);
             AddBooleanProperty(doc, parent, "subTriggerOnSpawn", subDef.subTriggerOnSpawn);
-            AddBooleanProperty(doc, parent, "isDarkeningEffect", subDef.isDarkeningEffect);
 
             if (subDef.children != null && subDef.children.Count > 0)
             {

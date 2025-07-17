@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <StatDef>
+    <defName>Stat_MagicPower</defName>
+    <label>Magical Power</label>
+    <category>PawnMisc</category>
+    <description>The mutable energy that is present throughout.</description>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>1</minValue>
+    <maxValue>100000</maxValue>
+    <toStringStyle>PercentOne</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+</Defs>

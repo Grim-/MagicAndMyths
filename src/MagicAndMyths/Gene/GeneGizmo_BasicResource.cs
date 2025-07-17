@@ -21,7 +21,10 @@ namespace MagicAndMyths
             }
         }
 
-   
+
+        private bool IsDraggingBar = false;
+        protected override bool DraggingBar { get => IsDraggingBar; set => IsDraggingBar = value; }
+
 
         public GeneGizmo_BasicResource(Gene_BasicResource gene, ResourceData data, List<IGeneResourceDrain> drainGenes, Color barColor, Color barHighlightColor) : base(gene, drainGenes, barColor, barHighlightColor)
         {

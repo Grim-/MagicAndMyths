@@ -22,6 +22,23 @@ namespace MagicAndMyths
         {
             hediffClass = typeof(HediffWithStacks);
         }
+
+        public override IEnumerable<string> ConfigErrors()
+        {
+            if (this.stages != null)
+            {
+                //hiding the severity not in order error since it doesnt use it at all.
+                if (!typeof(Hediff_Addiction).IsAssignableFrom(this.hediffClass))
+                {
+                    yield break;
+                }
+            }
+
+            foreach (var item in base.ConfigErrors())
+            {
+                yield return item;
+            }
+        }
     }
 
     public class HediffWithStacks : HediffWithComps, IStackableHediff

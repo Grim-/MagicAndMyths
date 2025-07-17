@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>SpellBlade_ElementalArmour_Fire</defName>
+    <label>fire armor</label>
+    <labelNoun>fire armor</labelNoun>
+    <description>Wreathed in protective flames that burn attackers who dare strike in melee.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(1.0, 0.4, 0.0)</defaultLabelColor>
+    <isBad>false</isBad>
+    <maxSeverity>1.0</maxSeverity>
+    <initialSeverity>1.0</initialSeverity>
+    <stages>
+      <li>
+        <statOffsets>
+        </statOffsets>
+        <statFactors>
+          <Flammability>0</Flammability>
+        </statFactors>
+      </li>
+    </stages>
+    <comps>
+      <li Class="MagicAndMyths.HediffCompProperties_MoteMaintainer">
+        <moteDef>MagicAndMyths_FireStanceAura</moteDef>
+      </li>
+      <li Class="MagicAndMyths.HediffCompProperties_DealDamageToAttacker">
+        <damageDef>Flame</damageDef>
+        <damage>3~8</damage>
+        <meleeRangeOnly>true</meleeRangeOnly>
+        <triggerDamageTypes>
+          <li>Blunt</li>
+          <li>Cut</li>
+        </triggerDamageTypes>
+        <minimumDamageToTrigger>1</minimumDamageToTrigger>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>

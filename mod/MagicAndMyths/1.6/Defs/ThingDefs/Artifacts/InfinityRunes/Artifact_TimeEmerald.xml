@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_TimeEmerald</defName>
+    <label>time emerald</label>
+    <description>A radiant green crystal where moments from past and future can be glimpsed swirling within, time itself seems to bend around it. The magic of this emerald can be invoked to manipulate the flow of time across a large area, after which it cannot be used again, the emerald will create temporal chaos if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Runestones/GemEmerald</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>14000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+    <equippedStatOffsets>
+      <LifespanFactor>1</LifespanFactor>
+      <Ability_CastingTime>-0.5</Ability_CastingTime>
+    </equippedStatOffsets>
+  </ThingDef>
+
+</Defs>

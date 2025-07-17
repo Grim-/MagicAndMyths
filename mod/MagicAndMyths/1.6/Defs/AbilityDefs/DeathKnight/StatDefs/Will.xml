@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <StatDef>
+    <defName>MagicAndMyths_Will</defName>
+    <label>Will power</label>
+    <category>PawnMisc</category>
+    <description>The amount of will power this pawn has, used to dominate the undead.</description>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>10</minValue>
+    <maxValue>100</maxValue>
+    <toStringStyle>Integer</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+  </StatDef>
+</Defs>

@@ -128,10 +128,6 @@ namespace MagicAndMyths
             return base.GetStatFactor(stat) * factor;
         }
 
-        public override void GetStatsExplanation(StatDef stat, StringBuilder sb)
-        {
-            base.GetStatsExplanation(stat, sb);
-        }
 
         public override string CompInspectStringExtra()
         {

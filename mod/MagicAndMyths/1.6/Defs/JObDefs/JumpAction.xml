@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <JobDef>
+    <defName>MagicAndMyths_Jump</defName>
+    <driverClass>MagicAndMyths.JobDriver_Jump</driverClass>
+    <reportString>jumping.</reportString>
+    <suspendable>false</suspendable>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+</Defs>

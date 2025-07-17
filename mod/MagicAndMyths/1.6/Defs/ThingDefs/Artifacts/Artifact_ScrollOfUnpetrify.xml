@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>Artifact_EnchantScrollOfUnpetrify</defName>
+    <label>scroll : remove petrification</label>
+    <description>A scroll with sealed with magic that allows you to unpetrify a pawn that has been petrified.</description>
+    <graphicData>
+      <texPath>Scrolls/Quest_42_scrollSpell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>5</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>600</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <relicChance>0</relicChance>
+    <comps Inherit="false">
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Invoke {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>true</destroyOnUse>
+        <targetEffectDef>Skip_EntryNoDelay</targetEffectDef>
+        <userEffectDef>Skip_EntryNoDelay</userEffectDef>
+        <cooldownTickRange>60000</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
+        <charges>1</charges>
+        <targetSelf>false</targetSelf>
+        <requiresTarget>true</requiresTarget>
+        <moveToTarget>true</moveToTarget>
+        <useCompTargetValidator>true</useCompTargetValidator>
+        <targetParams>
+          <canTargetItems>false</canTargetItems>
+          <canTargetLocations>false</canTargetLocations>
+          <canTargetBuildings>true</canTargetBuildings>
+          <canTargetPawns>false</canTargetPawns>
+          <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+        </targetParams>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ArtifactEffectUnPetrify">
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>Artifact_EnchantScrollOfPetrify</defName>
+    <label>scroll : petrification</label>
+    <description>A scroll with sealed with magic that allows you to petrify a pawn.</description>
+    <graphicData>
+      <texPath>Scrolls/Quest_42_scrollSpell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>5</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>600</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <relicChance>0</relicChance>
+    <comps Inherit="false">
+      <li Class="MagicAndMyths.CompProperties_Artifact">
+        <useJob>UseArtifact</useJob>
+        <useLabel>Invoke {0_label}</useLabel>
+        <useDuration>132</useDuration>
+        <destroyOnUse>true</destroyOnUse>
+        <targetEffectDef>Skip_EntryNoDelay</targetEffectDef>
+        <userEffectDef>Skip_EntryNoDelay</userEffectDef>
+        <cooldownTickRange>60000</cooldownTickRange>
+        <cooldownRestoresCharges>false</cooldownRestoresCharges>
+        <chargesRestoredPerCooldown>1~1</chargesRestoredPerCooldown>
+        <charges>1</charges>
+        <targetSelf>false</targetSelf>
+        <requiresTarget>true</requiresTarget>
+        <moveToTarget>true</moveToTarget>
+        <useCompTargetValidator>true</useCompTargetValidator>
+        <targetParams>
+          <canTargetItems>false</canTargetItems>
+          <canTargetLocations>false</canTargetLocations>
+          <canTargetBuildings>false</canTargetBuildings>
+          <canTargetPawns>true</canTargetPawns>
+          <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+        </targetParams>
+      </li>
+      <li Class="MagicAndMyths.CompProperties_ArtifactEffectPetrify">
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

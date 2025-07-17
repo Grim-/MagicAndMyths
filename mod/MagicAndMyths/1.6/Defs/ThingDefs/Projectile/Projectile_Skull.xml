@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="BaseMagicProjectile">
+      <defName>Projectile_Skull</defName>
+      <label>skull missile</label>
+      <graphicData>
+        <texPath>Things/Item/Equipment/WeaponMelee/Knife</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+      </graphicData>
+      <projectile>
+        <damageDef>ToxicBite</damageDef>
+        <damageAmountBase>9</damageAmountBase>
+        <speed>70</speed>
+      </projectile>
+    </ThingDef>
+</Defs>

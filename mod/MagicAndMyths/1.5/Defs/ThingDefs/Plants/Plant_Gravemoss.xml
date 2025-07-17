@@ -4,7 +4,7 @@
     <defName>MagicAndMyths_GraveMoss</defName>
     <label>grave moss</label>
     <category>Plant</category>
-    <thingClass>MagicAndMyths.Plant_Building</thingClass>
+    <thingClass>MagicAndMyths.PlantExtended</thingClass>
     <description>Wild moss that grows in clumps in areas of low light and cool temperatures. Moss takes a long time to grow, but is very frost-resistant.</description>
     <statBases>
       <MaxHitPoints>120</MaxHitPoints>

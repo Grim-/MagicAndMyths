@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MMArtifactBase">
+    <defName>MagicAndMyths_RealityGarnet</defName>
+    <label>reality garnet</label>
+    <description>A deep crimson crystal that shifts and changes when observed, reality seems malleable in its presence. The magic of this garnet can be invoked to fundamentally alter the nature of matter and energy in a wide area, after which it cannot be used again, the garnet will unravel existence itself if destroyed.</description>
+    <possessionCount>1</possessionCount>
+    <orderedTakeGroup>Artifact</orderedTakeGroup>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <selectable>true</selectable>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Runestones/GemRuby</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Standard_Drop</soundInteract>
+    <useHitPoints>true</useHitPoints>
+    <soundDrop>Standard_Drop</soundDrop>
+    <smeltable>false</smeltable>
+    <statBases>
+      <MarketValue>15000</MarketValue>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+    <equippedStatOffsets>
+      <LifespanFactor>10</LifespanFactor>
+      <Ability_CastingTime>0.5</Ability_CastingTime>
+    </equippedStatOffsets>
+  </ThingDef>
+
+</Defs>

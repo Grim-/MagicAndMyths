@@ -86,7 +86,7 @@ namespace MagicAndMyths
             this.damageAmount = damage;
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             if (hasImpacted || !Launched)
                 return;

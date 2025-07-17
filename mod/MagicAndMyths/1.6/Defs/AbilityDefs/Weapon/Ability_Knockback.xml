@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_KnockBack</defName>
+    <label>knock back</label>
+    <description>Deal weapon damage and send a target flying upto 6 tiles away, if the would collide with a structure they are stunned for 1000 ticks.</description>
+    <iconPath>Projectiles/Projectile_Fireball</iconPath>
+    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <category>Sanguophage</category>
+    <displayOrder>200</displayOrder>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>15</range>
+      <warmupTime>0.1</warmupTime>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetItems>true</canTargetItems>
+      </targetParams>
+    </verbProperties>
+    <comps>
+    </comps>
+  </AbilityDef>
+
+</Defs>

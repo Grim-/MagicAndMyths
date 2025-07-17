@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <JobDef>
+    <defName>MagicAndMyths_PickupAndThrow</defName>
+    <driverClass>MagicAndMyths.JobDriver_PickupAndThrow</driverClass>
+    <reportString>picking up and throwing TargetA at TargetB.</reportString>
+    <suspendable>false</suspendable>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+</Defs>

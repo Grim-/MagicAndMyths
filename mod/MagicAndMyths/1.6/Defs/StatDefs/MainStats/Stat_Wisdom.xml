@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <StatDef ParentName="BaseDnDStat">
+      <defName>Stat_Wisdom</defName>
+      <label>wisdom</label>
+      <description>Awareness, intuition, insight, and judgment. Affects medical tending quality, animal taming chance, and social impact.</description>
+      <capacityFactors>
+        <li>
+          <capacity>Consciousness</capacity>
+          <weight>0.5</weight>
+        </li>
+        <li>
+          <capacity>Hearing</capacity>
+          <weight>0.3</weight>
+        </li>
+        <li>
+          <capacity>Sight</capacity>
+          <weight>0.3</weight>
+        </li>
+      </capacityFactors>
+    </StatDef>
+
+</Defs>

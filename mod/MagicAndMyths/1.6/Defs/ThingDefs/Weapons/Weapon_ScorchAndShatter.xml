@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+      <defName>MagicAndMyths_ScorchAndShatter</defName>
+      <label>Hoarfrost</label>
+      <description>Hoarfrost</description>
+      <possessionCount>1</possessionCount>
+      <tickerType>Normal</tickerType>
+      <graphicData>
+        <texPath>Equipment/Weapon_ScorchNShatter2</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+        <drawSize>1.5</drawSize>
+      </graphicData>
+      <recipeMaker>
+      </recipeMaker>
+      <equipmentType>Primary</equipmentType>
+      <techLevel>Spacer</techLevel>
+      <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
+      <statBases>
+        <WorkToMake>25000</WorkToMake>
+        <Mass>1.5</Mass>
+      </statBases>
+      <smeltable>false</smeltable>
+      <equippedAngleOffset>-130</equippedAngleOffset>
+      <equippedDistanceOffset>0</equippedDistanceOffset>
+    <recipeMaker Inherit="False" IsNull="True" />
+      <tools>
+        <li>
+          <label>scorch</label>
+          <capacities>
+            <li>Scorch</li>
+          </capacities>
+          <power>10</power>
+          <cooldownTime>1.1</cooldownTime>
+        </li>
+        <li>
+          <label>shatter</label>
+          <capacities>
+            <li>Freeze</li>
+          </capacities>
+          <power>12</power>
+          <cooldownTime>1.2</cooldownTime>
+        </li>
+      </tools>
+      <comps>
+      </comps>
+      <modExtensions>
+      <li Class="MagicAndMyths.DrawOffsetExt">
+        <offset>(0, 0, 0)</offset>
+      </li>
+    </modExtensions>
+    </ThingDef>
+
+</Defs>

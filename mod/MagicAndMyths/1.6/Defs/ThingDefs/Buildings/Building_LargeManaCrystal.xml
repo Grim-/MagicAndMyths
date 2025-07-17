@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>ManaCore</defName>
+    <label>mana core</label>
+    <description>A crystalline structure that naturally draws mana from the environment and converts it to usable power. This tribal alternative to electric generators requires no fuel but generates power slowly. Can be enhanced through rituals and offerings.</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+        <size>(2,2)</size>
+    <graphicData>
+      <texPath>Things/ManaCrystal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.5</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <rotatable>false</rotatable>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2500</WorkToBuild>
+      <Flammability>0.5</Flammability>
+      <Beauty>2</Beauty>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Power</designationCategory>
+    <constructEffect>ConstructMetal</constructEffect>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_PowerManaCore">
+        <storedEnergyMax>2000</storedEnergyMax>
+        <passiveEnergyGainPerTick>0.083</passiveEnergyGainPerTick>
+        <transmitsPower>true</transmitsPower>
+      </li>
+    </comps>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+
+  </ThingDef>
+
+</Defs>

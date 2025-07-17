@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.ResourceAbilityDef>
+      <defName>MagicAndMyths_EarthenStomp</defName>
+      <label>Earthen Stomp</label>
+      <description>Stomp the ground with earth magic, creating a shockwave that stuns all nearby enemies and deals blunt damage. Has a chance to spread flammable oil across the ground.</description>
+      <iconPath>Skills/Spellblade/Skill_EarthArmour</iconPath>
+      <cooldownTicksRange>6000</cooldownTicksRange>
+      <resourceCost>20</resourceCost>
+      <resourceDef>Mana</resourceDef>
+      <category>Sanguophage</category>
+      <displayOrder>200</displayOrder>
+      <aiCanUse>true</aiCanUse>
+      <verbProperties>
+        <verbClass>Verb_CastAbility</verbClass>
+        <range>3</range>
+        <warmupTime>0</warmupTime>
+        <soundCast>FireSpew_Resolve</soundCast>
+        <targetable>False</targetable>
+        <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+      </verbProperties>
+      <comps>
+        <li Class="MagicAndMyths.CompProperties_AbilityStunInRadius">
+          <radius>3</radius>
+          <stunTicks>100~200</stunTicks>
+        </li>
+        <li Class="MagicAndMyths.CompProperties_ThrowFilthInRadius">
+          <radius>3</radius>
+          <filthDef>Filth_Fuel</filthDef>
+          <chance>0.6~1</chance>
+        </li>
+        <li Class="MagicAndMyths.CompProperties_AbilityDamageInRadius">
+          <radius>3</radius>
+          <damageDef>Blunt</damageDef>
+          <damage>1~2</damage>
+        </li>
+        <li Class="MagicAndMyths.CompProperties_GrantHediffStackForValidTargetsInRadius">
+          <radius>3</radius>
+          <hediffDef>Spellblade_EarthArmourHediff</hediffDef>
+          <stacksPerTarget>1</stacksPerTarget>
+        </li>
+      </comps>
+    </MagicAndMyths.ResourceAbilityDef>
+
+</Defs>

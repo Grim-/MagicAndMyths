@@ -91,7 +91,7 @@ namespace MagicAndMyths
 					flag2 = (((def != null) ? def.projectile : null) != null);
 				}
 				bool flyOverhead = flag2 && projectile2.def.projectile.flyOverhead;
-				shootLine.ChangeDestToMissWild_NewTemp(shotReport.AimOnTargetChance_StandardTarget, flyOverhead, this.caster.Map);
+				shootLine.ChangeDestToMissWild(shotReport.AimOnTargetChance_StandardTarget, flyOverhead, this.caster.Map);
 				ProjectileHitFlags projectileHitFlags2 = ProjectileHitFlags.NonTargetWorld;
 				if (Rand.Chance(0.5f) && this.canHitNonTargetPawnsNow)
 				{

@@ -59,7 +59,7 @@ namespace MagicAndMyths
         }
 
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
             if (portalEffect != null && IsPortalOpen)

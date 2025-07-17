@@ -78,7 +78,7 @@ namespace MagicAndMyths
             }
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             int currentTick = Find.TickManager.TicksGame;
 

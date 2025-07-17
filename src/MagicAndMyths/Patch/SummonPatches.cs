@@ -1,6 +1,10 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Xml;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -9,18 +13,19 @@ namespace MagicAndMyths
     public static class SummonPatches
     {
         // Harmony patches
-        [HarmonyPatch(typeof(FloatMenuMakerMap), "CanTakeOrder")]
-        public static class FloatMenuMakerMap_CanTakeOrder_Patch
-        {
-            [HarmonyPostfix]
-            public static void MakePawnControllable(Pawn pawn, ref bool __result)
-            {
-                if (DraftingUtility.IsDraftableCreature(pawn) && pawn.Faction?.IsPlayer == true)
-                {
-                    __result = true;
-                }
-            }
-        }
+        //[HarmonyPatch(typeof(FloatMenuMakerMap), "CanTakeOrder")]
+        //public static class FloatMenuMakerMap_CanTakeOrder_Patch
+        //{
+        //    [HarmonyPostfix]
+        //    public static void MakePawnControllable(Pawn pawn, ref bool __result)
+        //    {
+        //        if (DraftingUtility.IsDraftableCreature(pawn) && pawn.Faction?.IsPlayer == true)
+        //        {
+        //            __result = true;
+        //        }
+        //    }
+        //}
+
 
         [HarmonyPatch(typeof(Pawn), "WorkTypeIsDisabled")]
         public static class Pawn_WorkTypeIsDisabled_Patch

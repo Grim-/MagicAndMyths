@@ -109,7 +109,7 @@ namespace MagicAndMyths
             base.Destroy(mode);
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <MagicAndMyths.EnchantCategoryDef>
+    <defName>EnchantCategory_Universal</defName>
+    <label>Universal</label>
+    <description>Can be equipped on any type of equipment.</description>
+  </MagicAndMyths.EnchantCategoryDef>
+
+  <MagicAndMyths.EnchantCategoryDef>
+    <defName>EnchantCategory_Weapon</defName>
+    <label>Melee Weapons</label>
+    <description>Can be equipped on any type of weapon.</description>
+  </MagicAndMyths.EnchantCategoryDef>
+
+  <MagicAndMyths.EnchantCategoryDef>
+    <defName>EnchantCategory_Melee</defName>
+    <label>Melee Weapons</label>
+    <description>Can only be equipped on melee weapons.</description>
+  </MagicAndMyths.EnchantCategoryDef>
+
+  <MagicAndMyths.EnchantCategoryDef>
+    <defName>EnchantCategory_Ranged</defName>
+    <label>Ranged Weapons</label>
+    <description>Can only be equipped on ranged weapons.</description>
+  </MagicAndMyths.EnchantCategoryDef>
+
+  <MagicAndMyths.EnchantCategoryDef>
+    <defName>EnchantCategory_Armor</defName>
+    <label>Armor</label>
+    <description>Can only be equipped on armor pieces.</description>
+  </MagicAndMyths.EnchantCategoryDef>
+
+</Defs>

@@ -78,7 +78,7 @@ namespace MagicAndMyths
             Damage = damage;
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
 
