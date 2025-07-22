@@ -30,6 +30,11 @@ namespace MagicAndMyths
         {
             base.Notify_Equipped(pawn);
 
+            if (hediffRef != null)
+            {
+                EquippingPawn.health.RemoveHediff(hediffRef);
+                hediffRef = null;
+            }
 
             if (Def.hediff != null && !EquippingPawn.health.hediffSet.HasHediff(Def.hediff))
             {
@@ -39,9 +44,7 @@ namespace MagicAndMyths
 
         public override void Notify_Unequipped(Pawn pawn)
         {
-
-
-            if (hediffRef != null && EquippingPawn.health.hediffSet.HasHediff(hediffRef.def))
+            if (hediffRef != null)
             {
                 EquippingPawn.health.RemoveHediff(hediffRef);
                 hediffRef = null;

@@ -9,7 +9,7 @@
       <graphicData>
         <texPath>Equipment/ThunderTrident</texPath>
         <graphicClass>Graphic_Single</graphicClass>
-        <drawSize>1.5</drawSize>
+        <drawSize>1.2</drawSize>
       </graphicData>
       <recipeMaker>
       </recipeMaker>

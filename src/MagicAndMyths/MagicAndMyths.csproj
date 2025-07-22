@@ -70,6 +70,7 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>H:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SquadBehaviour">
       <HintPath>D:\Games\RimWorld\Mods\SquadBehaviours\1.5\Assemblies\SquadBehaviour.dll</HintPath>
@@ -120,7 +121,7 @@
     <Compile Include="Comps\ThingComps\Pawn\Race Comps\CompProperties_GraphicColorablePulse.cs" />
     <Compile Include="Comps\ThingComps\Pawn\Race Comps\CompProperties_GraphicColorableSesonal.cs" />
     <Compile Include="Comps\ThingComps\Pawn\Race Comps\CompProperties_RaceBlinkDog.cs" />
-    <Compile Include="Comps\ThingComps\Pawn\Race Comps\PawnRenderNodeWorker_GraphicColorable.cs" />
+    <Compile Include="Graphic\PawnRenderNodeWorker_GraphicColorable.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableStartTimerOnImpact.cs" />
     <Compile Include="Interfaces\ILockableDoor.cs" />
     <Compile Include="Buildings\PlantExtended.cs" />
@@ -142,11 +143,11 @@
     <Compile Include="Game Conditions\GameCondition_ManaPurge.cs" />
     <Compile Include="Game Conditions\GameCondition_ManaSurge.cs" />
     <Compile Include="Comps\Map\MapComp_ManaManager.cs" />
-    <Compile Include="MapGen\Debug\BspOverlay.cs" />
-    <Compile Include="MapGen\Debug\BspTreeTraversalOverlay.cs" />
-    <Compile Include="MapGen\Debug\CorridorOverlay.cs" />
-    <Compile Include="MapGen\Debug\DungeonOverlay.cs" />
-    <Compile Include="MapGen\Debug\MapComp_DungeonGenDebugger.cs" />
+    <Compile Include="MapGen\MapDebug\BspOverlay.cs" />
+    <Compile Include="MapGen\MapDebug\BspTreeTraversalOverlay.cs" />
+    <Compile Include="MapGen\MapDebug\CorridorOverlay.cs" />
+    <Compile Include="MapGen\MapDebug\DungeonOverlay.cs" />
+    <Compile Include="MapGen\MapDebug\MapComp_DungeonGenDebugger.cs" />
     <Compile Include="Comps\ThingComps\Portal\CompProperties_PortalMapGenerator.cs" />
     <Compile Include="Damage\Comps\DamageWorkerCompProperties_AddHediff.cs" />
     <Compile Include="Damage\Comps\DamageWorkerCompProperties_ChainOnKill.cs" />
@@ -165,7 +166,6 @@
     <Compile Include="Gene\Gene_Class.cs" />
     <Compile Include="Gene\Gene_DeathKnight.cs" />
     <Compile Include="Gene\ResourceData.cs" />
-    <Compile Include="Gene\StatPart_CelestalRegenBoost.cs" />
     <Compile Include="Gizmo\Command_MultiAction.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_ChainLightningOnHediff.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_DisappearsStacks.cs" />
@@ -215,12 +215,11 @@
     <Compile Include="Hediff\Comps\Event\Attack\HediffComp_OnMeleeAttackEffect.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_EarthArmour.cs" />
     <Compile Include="Hediff\HediffWithStacks.cs" />
-    <Compile Include="Comps\Game\GameComp_RadialFavouritesTracker.cs" />
     <Compile Include="MapGen\BSP\BspNode.cs" />
     <Compile Include="MapGen\BSP\BspNodePair.cs" />
     <Compile Include="MapGen\BSP\ConnectionPoints.cs" />
-    <Compile Include="MapGen\Debug\ProtectionOverlay.cs" />
-    <Compile Include="MapGen\Debug\RoomOverlay.cs" />
+    <Compile Include="MapGen\MapDebug\ProtectionOverlay.cs" />
+    <Compile Include="MapGen\MapDebug\RoomOverlay.cs" />
     <Compile Include="MapGen\Dungeon\CelluarAutomataSteps.cs" />
     <Compile Include="MapGen\Dungeon\Corridoor\BranchingCorridorPath.cs" />
     <Compile Include="MapGen\Dungeon\Corridoor\CurvedCorridorPath.cs" />
@@ -305,7 +304,6 @@
     <Compile Include="Things\ActiveZone\Comps\CompProperties_ActiveZoneDamage.cs" />
     <Compile Include="Things\ActiveZone\Comps\CompProperties_EffecterActiveZoneComp.cs" />
     <Compile Include="Things\ActiveZone\Comps\CompProperties_DomainZone.cs" />
-    <Compile Include="UI\AbilityRadialPagerSettings.cs" />
     <Compile Include="AI\Conditions\ThinkNode_ConditionalIsTransformation.cs" />
     <Compile Include="AI\JobDriver_JumpOverObstacle.cs" />
     <Compile Include="AI\JobDriver_UnlockDoor.cs" />
@@ -331,9 +329,7 @@
     <Compile Include="MagicAndMythsMod.cs" />
     <Compile Include="UI\ColorWidgets.cs" />
     <Compile Include="UI\EffecterDefEditorWindow.cs" />
-    <Compile Include="Patch\GizmoGridPager.cs" />
     <Compile Include="UI\MoteEditorWindow.cs" />
-    <Compile Include="UI\RadialMenuWindow.cs" />
     <Compile Include="Things\ActiveZone\ActiveZone.cs" />
     <Compile Include="Things\ActiveZone\Comps\ActiveZoneComp.cs" />
     <Compile Include="Util\Effect Behaviours\StageVisualEffect.cs" />

@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Verse;
 using Verse.Sound;
 using Verse.Steam;
 
-namespace Verse
+namespace MagicAndMyths
 {
     public class Command_MultiAction : Command
     {

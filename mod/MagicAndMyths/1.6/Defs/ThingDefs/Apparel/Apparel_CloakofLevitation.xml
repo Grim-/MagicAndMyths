@@ -28,13 +28,6 @@
       <EquipDelay>3</EquipDelay>
     </statBases>
     <apparel>
-      <bodyPartGroups>
-        <li>Torso</li>
-        <li>Neck</li>
-        <li>Shoulders</li>
-        <li>Arms</li>
-        <li>Legs</li>
-      </bodyPartGroups>
       <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Cape/Cape</wornGraphicPath>
       <canBeDesiredForIdeo>false</canBeDesiredForIdeo>
       <canBeGeneratedToSatisfyWarmth>false</canBeGeneratedToSatisfyWarmth>

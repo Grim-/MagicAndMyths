@@ -16,6 +16,12 @@ namespace MagicAndMyths
 
         private void TrackDeadColonist(Pawn pawn, DamageInfo info, Hediff culprit)
         {
+            if (Current.ProgramState != ProgramState.Playing)
+            {
+                return;
+            }
+
+
             if (pawn == null || !pawn.IsColonist || deadColonists.Any(x=> x.Pawn == pawn))
                 return;
 
@@ -26,7 +32,7 @@ namespace MagicAndMyths
                     Pawn = pawn,
                     PawnCorpse = pawn.Corpse,
                     DeathTick = Find.TickManager.TicksGame,
-                    DeathReason = culprit.combatLogText,
+                    DeathReason = culprit != null ? culprit.combatLogText : "died.",
                     Killer = info.InstigatorGuilty && info.Instigator != null ? info.Instigator : null
                 };
 

@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="ApparelBase">
     <defName>Apparel_PortalReturnBelt</defName>
-    <label>shield belt</label>
+    <label>Belt of returning</label>
     <description>A belt that allows you to return to your colony.</description>
     <thingClass>Apparel</thingClass>
     <graphicData>
@@ -59,7 +59,7 @@
       </layers>
       <developmentalStageFilter>Child, Adult</developmentalStageFilter>
     </apparel>
-    <comps>
+    <!-- <comps>
       <li Class="MagicAndMyths.CompProperties_Energy">
         <maxEnergy>100</maxEnergy>
       </li>
@@ -67,7 +67,7 @@
         <rechargeRate>0.2</rechargeRate>
       </li>
       <li Class="MagicAndMyths.CompProperties_PortalEquipmentComp" />
-    </comps>
+    </comps> -->
     <allowedArchonexusCount>0</allowedArchonexusCount>
     <tradeTags>
       <li>Armor</li>

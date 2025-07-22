@@ -2,20 +2,22 @@
 <Defs>
     <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
       <defName>MagicAndMyths_ScorchAndShatter</defName>
-      <label>Hoarfrost</label>
-      <description>Hoarfrost</description>
+      <label>Scorch n Shatter</label>
+      <description>Paired short swords, one of the blades burns the other freezes.</description>
       <possessionCount>1</possessionCount>
       <tickerType>Normal</tickerType>
       <graphicData>
         <texPath>Equipment/Weapon_ScorchNShatter2</texPath>
         <graphicClass>Graphic_Single</graphicClass>
-        <drawSize>1.5</drawSize>
+        <drawSize>1</drawSize>
       </graphicData>
       <recipeMaker>
       </recipeMaker>
       <equipmentType>Primary</equipmentType>
       <techLevel>Spacer</techLevel>
-      <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
+      <thingSetMakerTags>
+        <li>RewardStandardQualitySuper</li>
+      </thingSetMakerTags>
       <statBases>
         <WorkToMake>25000</WorkToMake>
         <Mass>1.5</Mass>
