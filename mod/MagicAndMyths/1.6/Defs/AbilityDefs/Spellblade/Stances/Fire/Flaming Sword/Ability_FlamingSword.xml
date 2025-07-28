@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseSpellBladeManaAbility">
+  <EMF.ResourceAbilityDef ParentName="MagicAndMyths_BaseSpellBladeManaAbility">
     <defName>MagicAndMyths_FlamingSword</defName>
     <label>Flaming Sword</label>
     <description>Unleash a blazing sword strike in a wide cone, dealing fire damage to all targets and significantly increasing the chance to ignite them.</description>
@@ -25,6 +25,6 @@
         <zoneDef>MagicAndMyths_EarthEnclosure</zoneDef>
       </li>
     </comps>
-  </MagicAndMyths.ResourceAbilityDef>
+  </EMF.ResourceAbilityDef>
 
 </Defs>

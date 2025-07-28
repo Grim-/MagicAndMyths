@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <MagicAndMyths.ResourceAbilityDef>
+    <EMF.ResourceAbilityDef>
       <defName>MagicAndMyths_WaterSurge</defName>
       <label>Water Surge</label>
       <description>Unleash a powerful surge of water that erupts in all directions, forcefully pushing back targets and slowing their movement by 40% for 500 ticks.</description>
@@ -28,5 +28,5 @@
           <angle>90</angle>
         </li>
       </comps>
-    </MagicAndMyths.ResourceAbilityDef>
+    </EMF.ResourceAbilityDef>
 </Defs>

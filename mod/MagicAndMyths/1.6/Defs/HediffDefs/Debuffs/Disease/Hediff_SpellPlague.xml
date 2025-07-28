@@ -15,7 +15,7 @@
         <severityPerDayImmune>-0.4</severityPerDayImmune>
         <immunityPerDayNotSick>-0.05</immunityPerDayNotSick>
       </li>
-      <li Class="MagicAndMyths.HediffCompProperties_Propagate">
+      <li Class="EMF.HediffCompProperties_Propagate">
         <initialStack>3</initialStack>
         <removeOnStackEmpty>true</removeOnStackEmpty>
         <ticksBetweenPropogation>900</ticksBetweenPropogation>

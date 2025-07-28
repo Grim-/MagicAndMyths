@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.StackingHediffDef>
+  <EMF.StackingHediffDef>
     <defName>Spellblade_LightningArmorHediff</defName>
     <label>LightningArmor</label>
     <description>LightningArmor</description>
@@ -37,6 +37,6 @@
       </li>
 
     </comps>
-  </MagicAndMyths.StackingHediffDef>
+  </EMF.StackingHediffDef>
 
 </Defs>

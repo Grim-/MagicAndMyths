@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using EMF;
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -49,16 +50,9 @@ namespace MagicAndMyths
                 if (item != this.parent.pawn && item.CanTargetThing(this.parent.pawn.Faction, Props.friendlyFireParms))
                 {
 
-                    if (parent is ResourceAbility resourceAbility)
-                    {
-                        item.TakeDamage(resourceAbility.GetModifiedDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange)));        
-                    }
-                    else
-                    {
-                        item.TakeDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange));
-                    }
+                    item.TakeDamage(new DamageInfo(Props.damageDef, Props.damage.RandomInRange));
 
-                  
+
                 }         
             }
         }

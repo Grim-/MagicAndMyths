@@ -1,20 +1,20 @@
-﻿using Verse;
+﻿//using Verse;
 
-namespace MagicAndMyths
-{
-    public class HediffCompProperties_DisableRessurection : HediffCompProperties
-    {
-        public HediffCompProperties_DisableRessurection()
-        {
-            compClass = typeof(HediffComp_DisableRessurection);
-        }
-    }
+//namespace MagicAndMyths
+//{
+//    public class HediffCompProperties_DisableRessurection : HediffCompProperties
+//    {
+//        public HediffCompProperties_DisableRessurection()
+//        {
+//            compClass = typeof(HediffComp_DisableRessurection);
+//        }
+//    }
 
-    public class HediffComp_DisableRessurection : HediffComp, IDisableRessurection
-    {
-        public bool DisablesRessurection => true;
+//    public class HediffComp_DisableRessurection : HediffComp, IDisableRessurection
+//    {
+//        public bool DisablesRessurection => true;
 
-        public override string CompLabelInBracketsExtra => "resurrection blocked";
-    }
+//        public override string CompLabelInBracketsExtra => "resurrection blocked";
+//    }
 
-}
+//}

@@ -12,7 +12,7 @@
           <disappearsAfterTicks>6000</disappearsAfterTicks>
           <showRemainingTime>true</showRemainingTime>
         </li>
-        <li Class="MagicAndMyths.HediffCompProperties_DisableMagic">
+        <li Class="EMF.HediffCompProperties_DisableMagic">
         </li>
       </comps>
       <stages>

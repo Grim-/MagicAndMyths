@@ -1,7 +1,7 @@
-﻿namespace MagicAndMyths
-{
-    public interface IDisableHealing
-    {
-        bool DisablesHealing { get; }
-    }
-}
+﻿//namespace MagicAndMyths
+//{
+//    public interface IDisableHealing
+//    {
+//        bool DisablesHealing { get; }
+//    }
+//}

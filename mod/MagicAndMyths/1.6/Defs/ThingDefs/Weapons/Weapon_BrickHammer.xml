@@ -58,7 +58,7 @@
      </li>
    </verbs> -->
     <comps>
-      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+      <li Class="EMF.CompProperties_EquippableAbility">
         <abilityDefs>
           <li>MagicAndMyths_ChargeAttack</li>
           <li>MagicAndMyths_KnockBack</li>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <MagicAndMyths.ResourceAbilityDef>
+    <EMF.ResourceAbilityDef>
       <defName>Spellblade_ToggleEarthStance</defName>
       <label>Bedrock Form</label>
       <description>Toggle the defensive earth stance. Provides protection and cleaving attacks but reduces mobility.</description>
@@ -25,5 +25,5 @@
           <allowDeactivation>true</allowDeactivation>
         </li>
       </comps>
-    </MagicAndMyths.ResourceAbilityDef>
+    </EMF.ResourceAbilityDef>
 </Defs>

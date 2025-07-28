@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+  <EMF.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
     <defName>MagicAndMyths_ElementalArmour_Lightning</defName>
     <label>Elemental Armour : Lightning</label>
     <description>Gain Lightning Armour</description>
@@ -19,10 +19,10 @@
       <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_AbilityAddStacks">
+      <li Class="EMF.CompProperties_AbilityAddStacks">
         <hediffDef>Spellblade_LightningArmorHediff</hediffDef>
         <stacksToGive>1</stacksToGive>
       </li>
     </comps>
-  </MagicAndMyths.ResourceAbilityDef>
+  </EMF.ResourceAbilityDef>
 </Defs>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <!-- should also reduce mood -->
-  <MagicAndMyths.StackingHediffDef>
+  <EMF.StackingHediffDef>
     <defName>MagicAndMyths_Necrosis</defName>
     <label>Necrosis</label>
     <description>A necrotic wound.</description>
     <maxSeverity>1.0</maxSeverity>
     <maxStacks>4</maxStacks>
-    <hediffClass>MagicAndMyths.HediffInjuryWithStacks</hediffClass>
+    <hediffClass>EMF.HediffInjuryWithStacks</hediffClass>
     <isBad>true</isBad>
     <useStagesAsStackCount>true</useStagesAsStackCount>
     <stackGainRefreshesDisappearsDuration>true</stackGainRefreshesDisappearsDuration>
@@ -40,5 +40,5 @@
         <showRemainingTime>true</showRemainingTime>
       </li>
     </comps>
-  </MagicAndMyths.StackingHediffDef>
+  </EMF.StackingHediffDef>
 </Defs>

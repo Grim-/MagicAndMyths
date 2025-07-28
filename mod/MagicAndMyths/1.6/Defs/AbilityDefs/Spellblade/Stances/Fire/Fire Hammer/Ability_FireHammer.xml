@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbilityDef>
+  <EMF.ResourceAbilityDef>
     <defName>MagicAndMyths_FireHammer</defName>
     <label>Fire Hammer</label>
     <description>Summon a colossal flaming hammer at the target location, slamming it down to inflict devastating fire damage in a wide radius.</description>
@@ -26,6 +26,6 @@
       <li Class="MagicAndMyths.CompProperties_FlameSweep">
       </li>
     </comps>
-  </MagicAndMyths.ResourceAbilityDef>
+  </EMF.ResourceAbilityDef>
 
 </Defs>

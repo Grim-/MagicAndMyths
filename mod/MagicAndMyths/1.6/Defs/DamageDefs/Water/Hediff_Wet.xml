@@ -33,14 +33,14 @@
       </li>
     </stages>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_ComboReactor">
+      <li Class="EMF.HediffCompProperties_ComboReactor">
         <damageReactions>
           <li>
             <reactionDamageType>
               <li>Lightning</li>
             </reactionDamageType>
-            <workerClass>MagicAndMyths.ComboReactionWorker_Stun</workerClass>
-            <reactionProperties Class="MagicAndMyths.StunReactionProperties">
+            <workerClass>EMF.ComboReactionWorker_Stun</workerClass>
+            <reactionProperties Class="EMF.StunReactionProperties">
               <stunTicks>500</stunTicks>
             </reactionProperties>
             <reactionEffecter>Impact_Toxic</reactionEffecter>
@@ -49,7 +49,7 @@
             <reactionDamageType>
               <li>Lightning</li>
             </reactionDamageType>
-            <workerClass>MagicAndMyths.ComboReactionWorker_DealDamage</workerClass>
+            <workerClass>EMF.ComboReactionWorker_DealDamage</workerClass>
             <reactionProperties>
               <damageDef>Lightning</damageDef>
               <damageRange>2~3</damageRange>

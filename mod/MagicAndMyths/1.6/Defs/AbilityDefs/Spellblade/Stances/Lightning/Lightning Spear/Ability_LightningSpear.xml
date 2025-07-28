@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbilityDef>
+  <EMF.ResourceAbilityDef>
     <defName>MagicAndMyths_LightningSpear</defName>
     <label>Lightning Spear</label>
     <description>Hurl a crackling spear of lightning toward the target location, damaging all enemies in its path. Upon impact, it creates an electrified zone that slows enemies and accelerates allies. Targets taking lightning damage within the zone trigger additional lightning strikes.</description>
@@ -34,5 +34,5 @@
         <projectileDef>Projectile_LightningSpear</projectileDef>
       </li>
     </comps>
-  </MagicAndMyths.ResourceAbilityDef>
+  </EMF.ResourceAbilityDef>
 </Defs>

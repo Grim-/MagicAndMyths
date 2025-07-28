@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EMF;
+using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -10,7 +11,7 @@ namespace MagicAndMyths
         {
             if (thing != null && thing.Map != null)
             {
-                List<Thing> targetsInCleaveRange = GenRadial.RadialDistinctThingsAround(thing.Position, thing.Map, 2, true).Where(x => FriendlyFireSettings.HostileOnly().CanTargetThing(x, dinfo.Instigator.Faction)).ToList();
+                List<Thing> targetsInCleaveRange = GenRadial.RadialDistinctThingsAround(thing.Position, thing.Map, 2, true).Where(x => FriendlyFireSettings.HostileOnly().CanTargetThing(x, dinfo.Instigator)).ToList();
 
                 DamageInfo cleaveDamage = new DamageInfo(dinfo);
                 cleaveDamage.SetAmount(cleaveDamage.Amount * 0.2f);

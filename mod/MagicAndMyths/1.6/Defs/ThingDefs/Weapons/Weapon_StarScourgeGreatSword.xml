@@ -46,7 +46,7 @@
       </li>
     </tools>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+      <li Class="EMF.CompProperties_EquippableAbility">
         <abilityDefs>
           <li>MagicAndMyths_StarCall</li>
           <li>MagicAndMyths_StarPull</li>

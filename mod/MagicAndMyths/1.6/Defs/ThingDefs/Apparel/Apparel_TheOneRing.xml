@@ -13,12 +13,12 @@
        <wornGraphicPath>Things/Apparel/Ring/Ring</wornGraphicPath>
      </apparel>
      <comps>
-       <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+       <li Class="EMF.CompProperties_EquippableAbility">
          <abilityDefs>
            <li>MagicAndMyths_Invisibility</li>
          </abilityDefs>
        </li>
-       <li Class="MagicAndMyths.CompProperties_CursedEquip">
+       <li Class="EMF.CompProperties_CursedEquip">
        </li>
      </comps>
    </ThingDef>

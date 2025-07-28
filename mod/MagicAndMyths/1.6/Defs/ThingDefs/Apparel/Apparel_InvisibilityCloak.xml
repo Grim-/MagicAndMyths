@@ -29,11 +29,7 @@
     </statBases>
     <apparel>
       <bodyPartGroups>
-        <li>Torso</li>
         <li>Neck</li>
-        <li>Shoulders</li>
-        <li>Arms</li>
-        <li>Legs</li>
       </bodyPartGroups>
       <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Cape/Cape</wornGraphicPath>
       <canBeDesiredForIdeo>false</canBeDesiredForIdeo>
@@ -52,7 +48,7 @@
       <displayPriority>235</displayPriority>
     </recipeMaker>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+      <li Class="EMF.CompProperties_EquippableAbility">
         <abilityDefs>
           <li>MagicAndMyths_Invisibility</li>
         </abilityDefs>

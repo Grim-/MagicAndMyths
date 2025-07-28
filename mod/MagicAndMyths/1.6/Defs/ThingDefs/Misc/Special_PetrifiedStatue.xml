@@ -4,7 +4,7 @@
     <defName>MagicAndMyths_PetrifiedStatue</defName>
     <label>petrified statue</label>
     <description>A once-living being turned to stone by magic. The victim remains conscious, trapped in a petrified state.</description>
-    <thingClass>MagicAndMyths.PetrifiedStatue</thingClass>
+    <thingClass>EMF.PetrifiedStatue</thingClass>
     <category>Building</category>
     <graphicData>
       <texPath>Misc/PetrifiedStatue</texPath>

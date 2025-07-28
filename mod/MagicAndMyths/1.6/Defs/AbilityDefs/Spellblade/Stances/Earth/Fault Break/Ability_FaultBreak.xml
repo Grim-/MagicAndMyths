@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbilityDef>
+  <EMF.ResourceAbilityDef>
     <defName>MagicAndMyths_FaultBreak</defName>
     <label>Fault Break</label>
     <description>Conjure a massive earthen hammer to strike the target location, causing earth and mud to erupt from the ground. Enemies in the area are periodically pulled toward the center of the effect.</description>
@@ -25,5 +25,5 @@
         <zoneDef>MagicAndMyths_EarthEnclosure</zoneDef>
       </li>
     </comps>
-  </MagicAndMyths.ResourceAbilityDef>
+  </EMF.ResourceAbilityDef>
 </Defs>

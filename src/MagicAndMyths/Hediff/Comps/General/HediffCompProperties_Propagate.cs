@@ -1,132 +1,133 @@
-﻿using RimWorld;
-using System.Linq;
-using Verse;
+﻿//using EMF;
+//using RimWorld;
+//using System.Linq;
+//using Verse;
 
-namespace MagicAndMyths
-{
-    public class HediffCompProperties_Propagate : HediffCompProperties
-    {
-        public int initialStack = 3;
-        public bool removeOnStackEmpty = true;
+//namespace MagicAndMyths
+//{
+//    public class HediffCompProperties_Propagate : HediffCompProperties
+//    {
+//        public int initialStack = 3;
+//        public bool removeOnStackEmpty = true;
 
-        public int ticksBetweenPropogation = 300;
+//        public int ticksBetweenPropogation = 300;
 
-        public float radius = 5f;
-        public bool canMerge = false;
+//        public float radius = 5f;
+//        public bool canMerge = false;
 
-        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
+//        public FriendlyFireSettings friendlyFireSettings = FriendlyFireSettings.HostileOnly();
 
-        public HediffCompProperties_Propagate()
-        {
-            compClass = typeof(HediffComp_Propagate);
-        }
-    }
+//        public HediffCompProperties_Propagate()
+//        {
+//            compClass = typeof(HediffComp_Propagate);
+//        }
+//    }
 
-    public class HediffComp_Propagate : HediffComp
-    {
-        private int remainingStack;
-        private int propogationTick = 0;
+//    public class HediffComp_Propagate : HediffComp
+//    {
+//        private int remainingStack;
+//        private int propogationTick = 0;
 
-        new public HediffCompProperties_Propagate Props => (HediffCompProperties_Propagate)props;
+//        new public HediffCompProperties_Propagate Props => (HediffCompProperties_Propagate)props;
 
-        public override void CompPostMake()
-        {
-            base.CompPostMake();
-            remainingStack = Props.initialStack;
-        }
+//        public override void CompPostMake()
+//        {
+//            base.CompPostMake();
+//            remainingStack = Props.initialStack;
+//        }
 
-        public override void CompPostTick(ref float severityAdjustment)
-        {
-            base.CompPostTick(ref severityAdjustment);
+//        public override void CompPostTick(ref float severityAdjustment)
+//        {
+//            base.CompPostTick(ref severityAdjustment);
 
-            if (remainingStack <= 0)
-                return;
+//            if (remainingStack <= 0)
+//                return;
 
-            if (Pawn?.Map == null)
-                return;
-
-
-            propogationTick++;
+//            if (Pawn?.Map == null)
+//                return;
 
 
-            if (propogationTick >= Props.ticksBetweenPropogation)
-            {
-                if (TryPropagate())
-                {
-                    Log.Message($"{this.parent.Label} propogated itself to a new host!");
-                }
-                propogationTick = 0;
-            }
-        }
-
-        private bool TryPropagate()
-        {
-            var potentialTargets = GenRadial.RadialDistinctThingsAround(Pawn.Position, Pawn.Map, Props.radius, true)
-                .OfType<Pawn>()
-                .Where(p =>  p.CanTargetThing(Pawn.Faction, Props.friendlyFireSettings))
-                .Where(p => Props.canMerge || !p.health.hediffSet.HasHediff(parent.def))
-                .ToList();
-
-            if (potentialTargets.Count == 0)
-                return false;
-
-            var target = potentialTargets.RandomElement();
-
-            if (target.health.hediffSet.HasHediff(parent.def))
-            {
-                if (Props.canMerge)
-                {
-                    var existingHediff = target.health.hediffSet.GetFirstHediffOfDef(parent.def);
-                    var existingComp = existingHediff.TryGetComp<HediffComp_Propagate>();
-                    if (existingComp != null)
-                    {
-                        existingComp.remainingStack++;
-                        remainingStack--;
-
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                Hediff newHediff = HediffMaker.MakeHediff(parent.def, target);
-
-                var newComp = newHediff.TryGetComp<HediffComp_Propagate>();
-                if (newComp != null)
-                {
-                    newComp.remainingStack = remainingStack - 1;
-                }
-
-                target.health.AddHediff(newHediff);
-                remainingStack--;
-
-                return true;
-            }
+//            propogationTick++;
 
 
-            return false;
-        }
+//            if (propogationTick >= Props.ticksBetweenPropogation)
+//            {
+//                if (TryPropagate())
+//                {
+//                    Log.Message($"{this.parent.Label} propogated itself to a new host!");
+//                }
+//                propogationTick = 0;
+//            }
+//        }
 
-        private static bool ShouldTarget(Faction targetFaction, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
-        {
-            if (targetFaction == null)
-                return canTargetNeutral;
+//        private bool TryPropagate()
+//        {
+//            var potentialTargets = GenRadial.RadialDistinctThingsAround(Pawn.Position, Pawn.Map, Props.radius, true)
+//                .OfType<Pawn>()
+//                .Where(p =>  p.CanTargetThing(Pawn.Faction, Props.friendlyFireSettings))
+//                .Where(p => Props.canMerge || !p.health.hediffSet.HasHediff(parent.def))
+//                .ToList();
 
-            if (targetFaction == sourceFaction && canTargetFriendly)
-                return true;
+//            if (potentialTargets.Count == 0)
+//                return false;
 
-            if (canTargetHostile && targetFaction.HostileTo(sourceFaction))
-                return true;
+//            var target = potentialTargets.RandomElement();
 
-            return targetFaction != sourceFaction && !targetFaction.HostileTo(sourceFaction) && canTargetNeutral;
-        }
+//            if (target.health.hediffSet.HasHediff(parent.def))
+//            {
+//                if (Props.canMerge)
+//                {
+//                    var existingHediff = target.health.hediffSet.GetFirstHediffOfDef(parent.def);
+//                    var existingComp = existingHediff.TryGetComp<HediffComp_Propagate>();
+//                    if (existingComp != null)
+//                    {
+//                        existingComp.remainingStack++;
+//                        remainingStack--;
 
-        public override string CompDescriptionExtra => base.CompDescriptionExtra + $"Stacks remaining : {remainingStack}";
+//                        return true;
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                Hediff newHediff = HediffMaker.MakeHediff(parent.def, target);
 
-        public override void CompExposeData()
-        {
-            base.CompExposeData();
-            Scribe_Values.Look(ref remainingStack, "remainingStack");
-        }
-    }
-}
+//                var newComp = newHediff.TryGetComp<HediffComp_Propagate>();
+//                if (newComp != null)
+//                {
+//                    newComp.remainingStack = remainingStack - 1;
+//                }
+
+//                target.health.AddHediff(newHediff);
+//                remainingStack--;
+
+//                return true;
+//            }
+
+
+//            return false;
+//        }
+
+//        private static bool ShouldTarget(Faction targetFaction, Faction sourceFaction, bool canTargetHostile, bool canTargetFriendly, bool canTargetNeutral)
+//        {
+//            if (targetFaction == null)
+//                return canTargetNeutral;
+
+//            if (targetFaction == sourceFaction && canTargetFriendly)
+//                return true;
+
+//            if (canTargetHostile && targetFaction.HostileTo(sourceFaction))
+//                return true;
+
+//            return targetFaction != sourceFaction && !targetFaction.HostileTo(sourceFaction) && canTargetNeutral;
+//        }
+
+//        public override string CompDescriptionExtra => base.CompDescriptionExtra + $"Stacks remaining : {remainingStack}";
+
+//        public override void CompExposeData()
+//        {
+//            base.CompExposeData();
+//            Scribe_Values.Look(ref remainingStack, "remainingStack");
+//        }
+//    }
+//}

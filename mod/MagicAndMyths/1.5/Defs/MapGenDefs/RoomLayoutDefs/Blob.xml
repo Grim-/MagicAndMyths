@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
-
-    <MagicAndMyths.RoomLayoutDef>
-      <defName>Blob</defName>
-      <workerClass>MagicAndMyths.BlobRoomShape</workerClass>
-    </MagicAndMyths.RoomLayoutDef>
-
-</Defs>

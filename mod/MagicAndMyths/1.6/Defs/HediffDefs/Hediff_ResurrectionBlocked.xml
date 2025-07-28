@@ -8,7 +8,7 @@
       <defaultLabelColor>(0.8, 0.35, 0.35)</defaultLabelColor>
       <isBad>true</isBad>
       <comps>
-        <li Class="MagicAndMyths.HediffCompProperties_DisableRessurection">
+        <li Class="EMF.HediffCompProperties_DisableRessurection">
         </li>
       </comps>
       <stages>

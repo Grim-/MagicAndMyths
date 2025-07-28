@@ -56,7 +56,7 @@
         </li>
       </tools>
       <modExtensions>
-        <li Class="SquadBehaviour.SquadMemberExtension">
+        <li MayRequire="com.emo.squads" Class="SquadBehaviour.SquadMemberExtension">
           <canEverJoinSquad>true</canEverJoinSquad>
           <overrideDefaultChecks>true</overrideDefaultChecks>
         </li>

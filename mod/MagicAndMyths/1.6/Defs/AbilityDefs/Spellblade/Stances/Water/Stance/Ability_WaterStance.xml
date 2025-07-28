@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+  <EMF.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
     <defName>Spellblade_ToggleWaterStance</defName>
     <label>Mistwalker Form</label>
     <description>Toggle the defensive water stance on or off.</description>
@@ -25,6 +25,6 @@
         <allowDeactivation>true</allowDeactivation>
       </li>
     </comps>
-  </MagicAndMyths.ResourceAbilityDef>
+  </EMF.ResourceAbilityDef>
 
 </Defs>

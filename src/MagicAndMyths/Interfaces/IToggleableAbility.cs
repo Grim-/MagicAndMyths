@@ -1,11 +1,11 @@
-﻿namespace MagicAndMyths
-{
-    public interface IToggleableAbility
-    {
+﻿//namespace MagicAndMyths
+//{
+//    public interface IToggleableAbility
+//    {
 
-        ResourceToggleAbilityDef ToggleDef { get; }
+//        ResourceToggleAbilityDef ToggleDef { get; }
 
-        void Activate(bool force = false);
-        void DeActivate(bool force = false);
-    }
-}
+//        void Activate(bool force = false);
+//        void DeActivate(bool force = false);
+//    }
+//}

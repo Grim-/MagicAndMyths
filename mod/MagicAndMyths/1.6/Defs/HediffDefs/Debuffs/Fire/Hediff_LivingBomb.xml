@@ -6,7 +6,7 @@
     <description>This pawn has had its molecular structure charged with explosive energy, they will detonate after a time, the damage and radius of this explosion increase with the severity.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_DamagePerInterval">
+      <li Class="EMF.HediffCompProperties_DamagePerInterval">
         <damageDef>Burn</damageDef>
         <damageAmount>0.1~0.3</damageAmount>
       </li>

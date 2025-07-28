@@ -1,7 +1,7 @@
-﻿namespace MagicAndMyths
-{
-    public interface IDisableTeleportingAbilities
-    {
-        bool DisablesTeleporting { get; }
-    }
-}
+﻿//namespace MagicAndMyths
+//{
+//    public interface IDisableTeleportingAbilities
+//    {
+//        bool DisablesTeleporting { get; }
+//    }
+//}

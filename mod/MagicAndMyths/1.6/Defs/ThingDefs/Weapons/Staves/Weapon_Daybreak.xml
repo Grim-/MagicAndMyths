@@ -58,7 +58,7 @@
       </li>
     </tools>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_EquippableAbility">
+      <li Class="EMF.CompProperties_EquippableAbility">
         <abilityDefs>
           <li>MagicAndMyths_Pyroball</li>
           <li>MagicAndMyths_CruelSun</li>

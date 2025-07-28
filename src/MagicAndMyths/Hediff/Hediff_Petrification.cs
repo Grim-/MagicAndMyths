@@ -1,49 +1,49 @@
-﻿using RimWorld;
-using Verse;
+﻿//using RimWorld;
+//using Verse;
 
-namespace MagicAndMyths
-{
-    public class Hediff_Petrification : HediffWithComps
-    {
-        public override string LabelInBrackets
-        {
-            get
-            {
-                return this.Severity.ToStringPercent();
-            }
-        }
+//namespace MagicAndMyths
+//{
+//    public class Hediff_Petrification : HediffWithComps
+//    {
+//        public override string LabelInBrackets
+//        {
+//            get
+//            {
+//                return this.Severity.ToStringPercent();
+//            }
+//        }
 
-        public override bool ShouldRemove => false;
+//        public override bool ShouldRemove => false;
 
-        public override void PostTick()
-        {
-            base.PostTick();
+//        public override void PostTick()
+//        {
+//            base.PostTick();
 
-            if (this.Severity >= 1.0f && pawn.Spawned)
-            {
-                AttemptPetrification();
-            }
-        }
+//            if (this.Severity >= 1.0f && pawn.Spawned)
+//            {
+//                AttemptPetrification();
+//            }
+//        }
 
-        private void AttemptPetrification()
-        {
-            if (pawn == null || !pawn.Spawned)
-                return;
+//        private void AttemptPetrification()
+//        {
+//            if (pawn == null || !pawn.Spawned)
+//                return;
 
-            Map map = pawn.Map;
-            IntVec3 position = pawn.Position;
+//            Map map = pawn.Map;
+//            IntVec3 position = pawn.Position;
 
-            PetrifiedStatue statue = PetrifiedStatue.PetrifyPawn(pawn, position, map);
-            if (statue != null)
-            {
-                Messages.Message($"{pawn.LabelShort} has been turned to stone.",
-                    statue, MessageTypeDefOf.NegativeEvent);
-            }
-        }
+//            PetrifiedStatue statue = PetrifiedStatue.PetrifyPawn(pawn, position, map);
+//            if (statue != null)
+//            {
+//                Messages.Message($"{pawn.LabelShort} has been turned to stone.",
+//                    statue, MessageTypeDefOf.NegativeEvent);
+//            }
+//        }
 
-        public override void ExposeData()
-        {
-            base.ExposeData();
-        }
-    }
-}
+//        public override void ExposeData()
+//        {
+//            base.ExposeData();
+//        }
+//    }
+//}

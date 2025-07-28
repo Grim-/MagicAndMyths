@@ -26,9 +26,9 @@
       </li>
     </stages>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_OnMeleeAttackDealCleaveDamage">
+      <li Class="EMF.HediffCompProperties_OnMeleeAttackDealCleaveDamage">
       </li>
-      <li Class="MagicAndMyths.HediffCompProperties_OnMeleeAttackAddHediff">
+      <li Class="EMF.HediffCompProperties_OnMeleeAttackAddHediff">
         <hediffDef>MudInEyes</hediffDef>
         <intialSeverity>0.1</intialSeverity>
         <severityIncrease>0.1</severityIncrease>

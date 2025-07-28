@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceToggleAbilityDef ParentName="MagicAndMyths_BaseStance">
+  <EMF.ResourceToggleAbilityDef ParentName="MagicAndMyths_BaseStance">
     <defName>MagicAndMyths_ElementalArmour_Fire</defName>
     <label>Elemental Armour : Fire</label>
     <description>Toggle your fire aura on or off. When active, flames surround the caster, dealing fire damage with a chance of burning melee attackers.</description>
@@ -21,9 +21,9 @@
       <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_ResourceToggleHediff">
+      <li Class="EMF.CompProperties_ResourceToggleHediff">
         <hediffDef>SpellBlade_ElementalArmour_Fire</hediffDef>
       </li>
     </comps>
-  </MagicAndMyths.ResourceToggleAbilityDef>
+  </EMF.ResourceToggleAbilityDef>
 </Defs>

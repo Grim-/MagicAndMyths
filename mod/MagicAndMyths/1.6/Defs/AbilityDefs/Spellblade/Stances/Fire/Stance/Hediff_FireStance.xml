@@ -21,13 +21,13 @@
       </li>
     </stages>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_OnMeleeAttackAddHediff">
+      <li Class="EMF.HediffCompProperties_OnMeleeAttackAddHediff">
         <hediffDef>Burn</hediffDef>
         <intialSeverity>0.1</intialSeverity>
         <severityIncrease>0.1</severityIncrease>
         <chanceToApply>0.5</chanceToApply>
       </li>
-      <li Class="MagicAndMyths.HediffCompProperties_OnMeleeAttackDealDamageResourceBoost">
+      <li Class="EMF.HediffCompProperties_OnMeleeAttackDealDamageResourceBoost">
         <damage>2~4</damage>
         <damageDef>Flame</damageDef>
         <chance>1</chance>

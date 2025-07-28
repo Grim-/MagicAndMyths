@@ -6,14 +6,14 @@
     <description>This pawn has been ignited.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_DamagePerInterval">
+      <li Class="EMF.HediffCompProperties_DamagePerInterval">
         <intervalTicks>1200</intervalTicks>
         <damageDef>Burn</damageDef>
         <damageAmount>1~1.3</damageAmount>
       </li>
       <li Class="HediffCompProperties_Disappears">
         <disappearsAfterTicks>2000</disappearsAfterTicks>
-                <showRemainingTime>true</showRemainingTime>
+        <showRemainingTime>true</showRemainingTime>
       </li>
     </comps>
   </HediffDef>

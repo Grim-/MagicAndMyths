@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
-  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance" Name="MagicAndMyths_BaseSpellBladeManaAbility" Abstract="true">
-    <resourceCost>10</resourceCost>
-    <resourceDef>Mana</resourceDef>
-  </MagicAndMyths.ResourceAbilityDef>
-
-</Defs>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbility Abstract="true" Name="MagicAndMyths_BaseManaAbility">
+  <EMF.ResourceAbility Abstract="true" Name="MagicAndMyths_BaseManaAbility">
     <resourceDef>Mana</resourceDef>
     <resourceCost>0</resourceCost>
-  </MagicAndMyths.ResourceAbility>
+  </EMF.ResourceAbility>
 </Defs>

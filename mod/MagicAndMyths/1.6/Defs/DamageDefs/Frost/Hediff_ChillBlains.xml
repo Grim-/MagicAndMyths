@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.StackingHediffDef ParentName="InjuryBase">
+  <EMF.StackingHediffDef ParentName="InjuryBase">
     <defName>MagicAndMyths_ChillBlains</defName>
     <label>chillblains</label>
     <description>This pawn's extremities are inflamed and painful from cold exposure, causing swelling and reduced dexterity.</description>
-    <hediffClass>MagicAndMyths.HediffInjuryWithStacks</hediffClass>
+    <hediffClass>EMF.HediffInjuryWithStacks</hediffClass>
     <initialStacks>1</initialStacks>
     <maxStacks>5</maxStacks>
     <useStagesAsStackCount>true</useStagesAsStackCount>
@@ -90,5 +90,5 @@
         <showRemainingTime>true</showRemainingTime>
       </li>
     </comps>
-  </MagicAndMyths.StackingHediffDef>
+  </EMF.StackingHediffDef>
 </Defs>

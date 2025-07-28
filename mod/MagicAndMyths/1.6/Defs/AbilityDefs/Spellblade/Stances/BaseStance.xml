@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbility Abstract="true" Name="MagicAndMyths_BaseStance" ParentName="MagicAndMyths_BaseManaAbility">
+  <EMF.ResourceAbility Abstract="true" Name="MagicAndMyths_BaseStance" ParentName="MagicAndMyths_BaseManaAbility">
     <cooldownTicksRange>0</cooldownTicksRange>
     <aiCanUse>false</aiCanUse>
     <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
@@ -13,5 +13,5 @@
       <targetable>False</targetable>
       <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
     </verbProperties>
-  </MagicAndMyths.ResourceAbility>
+  </EMF.ResourceAbility>
 </Defs>

@@ -289,7 +289,7 @@ namespace MagicAndMyths
                                 abilityCooldowns.Remove(abilityDef);
                             }
 
-                            if (ability is IToggleableAbility toggleAbility)
+                            if (ability is EMF.IToggleableAbility toggleAbility)
                             {
                                 toggleAbility.DeActivate();
                             }

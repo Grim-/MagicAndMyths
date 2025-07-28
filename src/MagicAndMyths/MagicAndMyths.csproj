@@ -72,6 +72,9 @@
       <HintPath>H:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="EMF">
+      <HintPath>H:\SteamLibrary\steamapps\common\RimWorld\Mods\EMF\1.6\Assemblies\EMF.dll</HintPath>
+    </Reference>
     <Reference Include="SquadBehaviour">
       <HintPath>D:\Games\RimWorld\Mods\SquadBehaviours\1.5\Assemblies\SquadBehaviour.dll</HintPath>
       <Private>False</Private>

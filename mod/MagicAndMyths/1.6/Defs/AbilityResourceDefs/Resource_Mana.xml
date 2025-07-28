@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.AbilityResourceDef>
+  <EMF.AbilityResourceDef>
     <defName>Mana</defName>
     <label>Mana</label>
     <resourceName>mana</resourceName>
@@ -13,6 +13,6 @@
     <baseScalingMultiplier>1</baseScalingMultiplier>
     <maxScalingMultiplier>20</maxScalingMultiplier>
     <barColor>(0.2, 0.4, 1.0)</barColor>
-  </MagicAndMyths.AbilityResourceDef>
+  </EMF.AbilityResourceDef>
 
 </Defs>

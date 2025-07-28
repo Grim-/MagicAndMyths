@@ -56,7 +56,7 @@
     </comps>
   </ThingDef>
 
-  <MagicAndMyths.LevelingResourceAbilityDef>
+  <EMF.LevelingResourceAbilityDef>
     <defName>MagicAndMyths_Fireball_Leveling</defName>
     <label>Fireballwww</label>
     <description>Use a hemogenic chemical reaction to launch a bony spine at the target. The spine exits through the skin from an opening between the collarbones. Given the method of launch, it is surprisingly easy to aim.</description>
@@ -85,7 +85,7 @@
 
     <!-- Base ability comps (used by Level 1 ONLY) -->
     <comps>
-      <li Class="MagicAndMyths.CompProperties_LaunchProjectileExtended">
+      <li Class="EMF.CompProperties_LaunchProjectileExtended">
         <projectileDef>Projectile_Fireball</projectileDef>
         <launchAmount>1</launchAmount>
       </li>
@@ -104,12 +104,12 @@
         <experienceRequired>150</experienceRequired>
         <resourceCostMultiplier>1.3</resourceCostMultiplier>
         <levelComps>
-          <li Class="MagicAndMyths.CompProperties_LaunchProjectileExtended">
+          <li Class="EMF.CompProperties_LaunchProjectileExtended">
             <projectileDef>Projectile_Death</projectileDef>
             <launchAmount>2</launchAmount>
           </li>
         </levelComps>
       </li>
     </levels>
-  </MagicAndMyths.LevelingResourceAbilityDef>
+  </EMF.LevelingResourceAbilityDef>
 </Defs>

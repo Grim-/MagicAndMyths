@@ -20,7 +20,7 @@
         <animalMentalStateAlias>WanderConfused</animalMentalStateAlias>
         <humanMentalState>WanderConfused</humanMentalState>
       </li>
-      <li Class="MagicAndMyths.HediffCompProperties_Propagate">
+      <li Class="EMF.HediffCompProperties_Propagate">
         <initialStack>2</initialStack>
         <removeOnStackEmpty>true</removeOnStackEmpty>
         <ticksBetweenPropogation>2400</ticksBetweenPropogation>

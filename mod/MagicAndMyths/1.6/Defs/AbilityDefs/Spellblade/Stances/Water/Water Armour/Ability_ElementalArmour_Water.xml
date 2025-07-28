@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
+  <EMF.ResourceAbilityDef ParentName="MagicAndMyths_BaseStance">
     <defName>MagicAndMyths_ElementalArmour_Water</defName>
     <label>Elemental Armour : Water</label>
     <description>Water</description>
@@ -19,14 +19,14 @@
       <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_AbilityAddStacks">
+      <li Class="EMF.CompProperties_AbilityAddStacks">
         <hediffDef>Spellblade_WaterArmorHediff</hediffDef>
         <stacksToGive>1</stacksToGive>
       </li>
     </comps>
-  </MagicAndMyths.ResourceAbilityDef>
+  </EMF.ResourceAbilityDef>
 
-  <MagicAndMyths.StackingHediffDef>
+  <EMF.StackingHediffDef>
     <defName>Spellblade_WaterArmorHediff</defName>
     <label>WAter Shield</label>
     <description>Water shield</description>
@@ -40,5 +40,5 @@
         <effecterDef>MagicAndMyths_WaterBubbles</effecterDef>
       </li>
     </comps>
-  </MagicAndMyths.StackingHediffDef>
+  </EMF.StackingHediffDef>
 </Defs>

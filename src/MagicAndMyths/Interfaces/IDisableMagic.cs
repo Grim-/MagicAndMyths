@@ -1,7 +1,7 @@
-﻿namespace MagicAndMyths
-{
-    public interface IDisableMagic
-    {
-        bool DisablesMagic { get; }
-    }
-}
+﻿//namespace MagicAndMyths
+//{
+//    public interface IDisableMagic
+//    {
+//        bool DisablesMagic { get; }
+//    }
+//}

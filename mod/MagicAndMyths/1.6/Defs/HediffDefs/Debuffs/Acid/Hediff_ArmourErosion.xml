@@ -47,13 +47,13 @@
       </li>
     </stages>
     <comps>
-      <li Class="MagicAndMyths.HediffCompProperties_ComboReactor">
+      <li Class="EMF.HediffCompProperties_ComboReactor">
         <damageReactions>
           <li>
             <reactionDamageType>
               <li>Burn</li>
             </reactionDamageType>
-            <workerClass>MagicAndMyths.ComboReactionWorker_DealDamage</workerClass>
+            <workerClass>EMF.ComboReactionWorker_DealDamage</workerClass>
             <reactionProperties>
               <damageDef>Burn</damageDef>
               <damageRange>10~15</damageRange>
@@ -63,7 +63,7 @@
           </li>
         </damageReactions>
       </li>
-      <li Class="MagicAndMyths.HediffCompProperties_SeverityPerInterval">
+      <li Class="EMF.HediffCompProperties_SeverityPerInterval">
         <intervalTicks>2400</intervalTicks>
         <severityChange>0.1~0.15</severityChange>
       </li>
