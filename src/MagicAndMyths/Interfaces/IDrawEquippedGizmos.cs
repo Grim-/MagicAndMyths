@@ -3,8 +3,8 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public interface IDrawEquippedGizmos
-    {
-        IEnumerable<Gizmo> GetEquippedGizmos();
-    }
+    //public interface IDrawEquippedGizmos
+    //{
+    //    IEnumerable<Gizmo> GetEquippedGizmos();
+    //}
 }

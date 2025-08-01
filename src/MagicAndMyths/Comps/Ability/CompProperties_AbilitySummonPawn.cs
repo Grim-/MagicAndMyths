@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using EMF;
+using RimWorld;
 using SquadBehaviour;
 using System.Collections.Generic;
 using Verse;

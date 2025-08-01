@@ -171,36 +171,18 @@
     <Compile Include="Gene\ResourceData.cs" />
     <Compile Include="Gizmo\Command_MultiAction.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_ChainLightningOnHediff.cs" />
-    <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_DisappearsStacks.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_ModifyDamage.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_OnMeleeAttackComboHediff.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffCompProperties_OnMeleeAttackDealDamageResourceBoost.cs" />
-    <Compile Include="Hediff\Comps\HediffCompProperties_DisableHealing.cs" />
-    <Compile Include="Hediff\Comps\HediffCompProperties_DisableMagic.cs" />
-    <Compile Include="Hediff\Comps\HediffCompProperties_DisableRessurection.cs" />
-    <Compile Include="Hediff\Comps\HediffCompProperties_DisableTeleporting.cs" />
-    <Compile Include="Hediff\Comps\Stack\HediffCompProperties_AddHediffAtMaxStacks.cs" />
-    <Compile Include="Hediff\Comps\Stack\HediffCompProperties_BaseStack.cs" />
     <Compile Include="Hediff\Comps\Interval\HediffCompProperties_ChangeStackPerInterval.cs" />
     <Compile Include="Hediff\Comps\Interval\HediffCompProperties_HealAOEPerInterval.cs" />
     <Compile Include="Hediff\Comps\General\HediffCompProperties_MoteMaintainer.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_ShowRadius.cs" />
-    <Compile Include="Hediff\Comps\Stack\HediffCompProperties_RemoveSelfAtMaxStacks.cs" />
-    <Compile Include="Hediff\HediffInjuryWithStacks.cs" />
-    <Compile Include="Hediff\IStackableHediff.cs" />
-    <Compile Include="Interfaces\IDisableHealing.cs" />
-    <Compile Include="Interfaces\IDisableMagic.cs" />
-    <Compile Include="Interfaces\IDisableRessurection.cs" />
-    <Compile Include="Interfaces\IDisableTeleportingAbilities.cs" />
-    <Compile Include="Interfaces\IToggleableAbility.cs" />
     <Compile Include="Comps\Ability\Toggle Comps\BaseToggleAbilityComp.cs" />
     <Compile Include="Comps\Ability\Hediff\CompProperties_AbilityAddStacks.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilityCancelStances.cs" />
-    <Compile Include="Comps\Ability\Resource\CompProperties_AbilityToggleWithResource.cs" />
-    <Compile Include="Comps\Ability\Resource\CompProperties_AbilityUseResource.cs" />
     <Compile Include="Comps\Ability\CompProperties_AbilityZoneEffect.cs" />
     <Compile Include="Comps\Ability\CompProperties_SpawnConalZoneEffect.cs" />
-    <Compile Include="Comps\Ability\Toggle Comps\CompProperties_ResourceToggleHediff.cs" />
     <Compile Include="Ability\ResourceAbility.cs" />
     <Compile Include="Ability\ResourceToggleAbility.cs" />
     <Compile Include="Gene\AbilityResourceDef.cs" />
@@ -217,7 +199,6 @@
     <Compile Include="Hediff\Comps\Event\Damaged\HediffComp_OnDamageTakenEffect.cs" />
     <Compile Include="Hediff\Comps\Event\Attack\HediffComp_OnMeleeAttackEffect.cs" />
     <Compile Include="Hediff\Comps\HediffCompProperties_EarthArmour.cs" />
-    <Compile Include="Hediff\HediffWithStacks.cs" />
     <Compile Include="MapGen\BSP\BspNode.cs" />
     <Compile Include="MapGen\BSP\BspNodePair.cs" />
     <Compile Include="MapGen\BSP\ConnectionPoints.cs" />
@@ -278,9 +259,6 @@
     <Compile Include="Projectile\ProjectilComps\ProjectileCompProperties_ImpactSubProjectiles.cs" />
     <Compile Include="Projectile\ProjectilComps\ProjectileCompProperties_SpawnsThingRadius.cs" />
     <Compile Include="Things\ActiveZone\Comps\CompProperties_ActiveZoneStartFires.cs" />
-    <Compile Include="Util\DamageScalingUtility.cs" />
-    <Compile Include="Util\FriendlyFireSettings.cs" />
-    <Compile Include="Util\HealParameters.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_Explosive.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableSpawnGas.cs" />
     <Compile Include="Comps\ThingComps\CompProperties_TimedDetonator.cs" />
@@ -328,13 +306,13 @@
     <Compile Include="Comps\Ability\Jump\CompProperties_LeapAttack.cs" />
     <Compile Include="Comps\Ability\Specific\CompProperties_StarPush.cs" />
     <Compile Include="Hediff\Comps\General\HediffCompProperties_Petrification.cs" />
-    <Compile Include="Hediff\Hediff_Petrification.cs" />
     <Compile Include="MagicAndMythsMod.cs" />
     <Compile Include="UI\ColorWidgets.cs" />
     <Compile Include="UI\EffecterDefEditorWindow.cs" />
     <Compile Include="UI\MoteEditorWindow.cs" />
     <Compile Include="Things\ActiveZone\ActiveZone.cs" />
     <Compile Include="Things\ActiveZone\Comps\ActiveZoneComp.cs" />
+    <Compile Include="UI\Window_StructureLayoutViewer.cs" />
     <Compile Include="Util\Effect Behaviours\StageVisualEffect.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectPetrify.cs" />
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectUnPetrify.cs" />
@@ -379,7 +357,6 @@
     <Compile Include="Comps\ThingComps\ArtifactEffects\CompProperties_ArtifactEffectChangeWeather.cs" />
     <Compile Include="Comps\ThingComps\Throwable\CompProperties_ThrowableStoredPawn.cs" />
     <Compile Include="AI\JobDriver_ChannelVerb.cs" />
-    <Compile Include="Util\SplashUtility.cs" />
     <Compile Include="Verb\VerbProperties_Channeled.cs" />
     <Compile Include="Verb\Verb_LaserBeam.cs" />
     <Compile Include="Comps\ThingComps\unused\Totem\CompProperties_BaseTotem.cs" />
@@ -436,7 +413,6 @@
     <Compile Include="Buildings\PetrifiedStatue.cs" />
     <Compile Include="Util\Effect Behaviours\FancyTeleporter.cs" />
     <Compile Include="MagicDebugActions.cs" />
-    <Compile Include="Util\TargetUtil.cs" />
     <Compile Include="Interfaces\IThrowableThing.cs" />
     <Compile Include="AI\JobDriver_PickupAndThrow.cs" />
     <Compile Include="Comps\ThingProperties\Comp_ThingProperties.cs" />
@@ -658,7 +634,6 @@
     <Compile Include="MapGen\Dungeon\Modifiers\MapModifier_FoodDrain.cs" />
     <Compile Include="MapGen\Dungeon\Modifiers\MapModifier_RandomFires.cs" />
     <Compile Include="MapGen\PortalMode.cs" />
-    <Compile Include="Util\PawnUtility_Duplicator.cs" />
     <Compile Include="Util\PortalUtils.cs" />
     <Compile Include="MapGen\StoredSiteData.cs" />
     <Compile Include="UI\Window_PortalUI.cs" />
@@ -679,8 +654,6 @@
     <Compile Include="Patch\GrowableStructurePatches.cs" />
     <Compile Include="Util\MagicUtil.cs" />
     <Compile Include="Extensions\DrawOffsetExt.cs" />
-    <Compile Include="Util\EventManager.cs" />
-    <Compile Include="Util\EventPatches.cs" />
     <Compile Include="Graphic\Graphic_ColorLerpable.cs" />
     <Compile Include="Transformation\CompProperties_RevertTransform.cs" />
     <Compile Include="Transformation\CompProperties_Transform.cs" />
@@ -715,7 +688,6 @@
     <Compile Include="Graphic\Graphic_MoteWithAgeSecsCustom.cs" />
     <Compile Include="Graphic\Graphic_SpinningProjectile.cs" />
     <Compile Include="Interfaces\IDrawEquippedGizmos.cs" />
-    <Compile Include="Util\BoundWeaponUtil.cs" />
     <Compile Include="Comps\Ability\Specific\CompProperties_AbilityLightningStrike.cs" />
     <Compile Include="Comps\Ability\CompProperties_ChainLightning.cs" />
     <Compile Include="Comps\Ability\CompProperties_Fly.cs" />
@@ -757,6 +729,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Buildings\Turret\" />
+    <Folder Include="Comps\Ability\Resource\" />
     <Folder Include="Comps\ThingComps\Use Effects\" />
     <Folder Include="MapGen\BSP\AI\" />
     <Folder Include="Network Styff\" />

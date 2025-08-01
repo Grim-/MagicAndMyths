@@ -384,6 +384,22 @@ namespace MagicAndMyths
             return totalHealed;
         }
 
+        [DebugAction("Magic And Myths", "View Structure Layout", false, false, false, false, false, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 100)]
+        private static List<DebugActionNode> ViewStructureLayout()
+        {
+            List<DebugActionNode> list = new List<DebugActionNode>();
+
+            foreach (StructureLayoutDef layoutDef in DefDatabase<StructureLayoutDef>.AllDefs)
+            {
+                list.Add(new DebugActionNode(layoutDef.defName, DebugActionType.Action, () =>
+                {
+                    Find.WindowStack.Add(new Window_StructureLayoutViewer(layoutDef));
+                }));
+            }
+
+            return list;
+        }
+
         [DebugAction("Magic And Myths", "Spawn in grid", false, false, false, false, false, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 100)]
         private static List<DebugActionNode> SetTerrainRect()
         {

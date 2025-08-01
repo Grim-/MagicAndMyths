@@ -395,34 +395,34 @@ namespace MagicAndMyths
             }
         }
 
-        [HarmonyPatch(typeof(Pawn_EquipmentTracker), "GetGizmos")]
-        public class EquipmentTracker_GetGizmos_Patch
-        {
-            static void Postfix(Pawn_EquipmentTracker __instance, ref IEnumerable<Gizmo> __result)
-            {
-                var originalGizmos = __result.ToList();
+        //[HarmonyPatch(typeof(Pawn_EquipmentTracker), "GetGizmos")]
+        //public class EquipmentTracker_GetGizmos_Patch
+        //{
+        //    static void Postfix(Pawn_EquipmentTracker __instance, ref IEnumerable<Gizmo> __result)
+        //    {
+        //        var originalGizmos = __result.ToList();
 
-                var additionalGizmos = new List<Gizmo>();
-                foreach (var eq in __instance.AllEquipmentListForReading)
-                {
-                    if (eq is IDrawEquippedGizmos equippedGizmos)
-                    {
-                        additionalGizmos.AddRange(equippedGizmos.GetEquippedGizmos());
-                    }
+        //        var additionalGizmos = new List<Gizmo>();
+        //        foreach (var eq in __instance.AllEquipmentListForReading)
+        //        {
+        //            if (eq is IDrawEquippedGizmos equippedGizmos)
+        //            {
+        //                additionalGizmos.AddRange(equippedGizmos.GetEquippedGizmos());
+        //            }
 
-                    foreach (var item in eq.AllComps)
-                    {
-                        if (item is IDrawEquippedGizmos compEquippedGizmos)
-                        {
-                            additionalGizmos.AddRange(compEquippedGizmos.GetEquippedGizmos());
-                        }
-                    }
+        //            foreach (var item in eq.AllComps)
+        //            {
+        //                if (item is IDrawEquippedGizmos compEquippedGizmos)
+        //                {
+        //                    additionalGizmos.AddRange(compEquippedGizmos.GetEquippedGizmos());
+        //                }
+        //            }
 
-                }
+        //        }
 
-                __result = originalGizmos.Concat(additionalGizmos);
-            }
-        }
+        //        __result = originalGizmos.Concat(additionalGizmos);
+        //    }
+        //}
 
         //public class Patch_EquipmentUtility_CanEquip
         //{
