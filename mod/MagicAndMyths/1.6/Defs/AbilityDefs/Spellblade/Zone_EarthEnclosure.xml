@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <EMF.ActiveZoneDef ParentName="EtherealThingBase">
-    <defName>MagicAndMyths_CookingPotZone</defName>
-    <label>Cooking Pot</label>
+    <defName>MagicAndMyths_EarthEnclosure</defName>
+    <label>Eathern enclosure</label>
     <tickerType>Normal</tickerType>
     <drawerType>MapMeshAndRealTime</drawerType>
     <thingClass>EMF.ActiveZone</thingClass>
@@ -18,20 +18,12 @@
       <drawSize>4</drawSize>
     </graphicData>
     <comps>
-      <li Class="EMF.CompProperties_ActiveZoneStartFires">
-      </li>
-      <li Class="EMF.CompProperties_ActiveZoneDamage">
-        <damageParms>
-          <damageDef>Burn</damageDef>
-          <damageAmount>3~5</damageAmount>
-        </damageParms>
-        <ticksBetweenDamage>200</ticksBetweenDamage>
-      </li>
       <li Class="EMF.CompProperties_DomainZone">
         <FilthDef>Filth_Fuel</FilthDef>
-        <WallDef>DungeonWall</WallDef>
+        <WallDef>Wall</WallDef>
         <FloorDef>Gravel</FloorDef>
       </li>
     </comps>
   </EMF.ActiveZoneDef>
+
 </Defs>

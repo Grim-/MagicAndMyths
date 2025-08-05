@@ -29,6 +29,7 @@
     <statBases>
       <Flammability>0</Flammability>
     </statBases>
+            <designationCategory></designationCategory>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <blockWind>true</blockWind>

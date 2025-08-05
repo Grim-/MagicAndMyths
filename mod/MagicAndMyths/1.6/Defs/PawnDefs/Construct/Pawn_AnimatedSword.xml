@@ -61,6 +61,10 @@
           <overrideDefaultChecks>true</overrideDefaultChecks>
         </li>
       </modExtensions>
+      <comps>
+        <li Class="EMF.CompProperties_TransformingThing">
+        </li>
+      </comps>
     </ThingDef>
 
     <BodyDef>

@@ -3,6 +3,7 @@
   <ThingDef ParentName="MMArtifactBase">
     <defName>MagicAndMyths_PowerAmethyst</defName>
     <label>power amethyst</label>
+        <thingClass>Apparel</thingClass>
     <description>A magnificent violet crystal that pulses with raw energy, electricity seems to dance within its faceted depths. The magic of this amethyst can be invoked to unleash devastating destruction across a vast area, after which it cannot be used again, the amethyst will explode with immense force if destroyed.</description>
     <possessionCount>1</possessionCount>
     <orderedTakeGroup>Artifact</orderedTakeGroup>
@@ -29,5 +30,30 @@
       <LifespanFactor>10</LifespanFactor>
       <Ability_CastingTime>0.5</Ability_CastingTime>
     </equippedStatOffsets>
+    <apparel>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+      <careIfWornByCorpse>false</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    </apparel>
+    <comps>
+      <li>
+        <compClass>CompEquippable</compClass>
+      </li>
+      <li Class="EMF.CompProperties_EquippableAbility">
+        <abilityDefs>
+          <li>MagicAndMyths_TEstBNeamalt</li>
+          <li>MagicAndMyths_FireballBarrage</li>
+          <li>Thor_ChainLightning</li>
+        </abilityDefs>
+      </li>
+    </comps>
   </ThingDef>
 </Defs>

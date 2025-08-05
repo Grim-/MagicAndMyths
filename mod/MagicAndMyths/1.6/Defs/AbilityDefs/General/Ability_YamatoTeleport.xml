@@ -5,7 +5,7 @@
     <label>Yamato Portal</label>
     <description>Use the yamato to cut through space and open a portal to any position on the map</description>
     <iconPath>Projectiles/Projectile_Fireball</iconPath>
-    <cooldownTicksRange>6000</cooldownTicksRange>
+    <cooldownTicksRange>1400</cooldownTicksRange>
     <category>Sanguophage</category>
     <displayOrder>200</displayOrder>
     <aiCanUse>true</aiCanUse>

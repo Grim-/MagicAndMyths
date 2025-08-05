@@ -24,6 +24,7 @@
     <neverMultiSelect>true</neverMultiSelect>
     <canOverlapZones>false</canOverlapZones>
     <mineable>false</mineable>
+            <designationCategory></designationCategory>
     <building>
       <ai_chillDestination>false</ai_chillDestination>
       <isInert>true</isInert>

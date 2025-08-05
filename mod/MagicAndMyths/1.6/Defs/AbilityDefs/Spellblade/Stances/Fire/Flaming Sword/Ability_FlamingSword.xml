@@ -21,7 +21,7 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_SpawnConalZoneEffect">
+      <li Class="EMF.CompProperties_SpawnConalZoneEffect">
         <zoneDef>MagicAndMyths_EarthEnclosure</zoneDef>
       </li>
     </comps>

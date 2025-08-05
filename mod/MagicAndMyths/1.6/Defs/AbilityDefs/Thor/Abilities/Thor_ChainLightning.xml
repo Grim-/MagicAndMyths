@@ -4,6 +4,7 @@
     <defName>Thor_ChainLightning</defName>
     <label>Thor_ChainLightning</label>
     <description>Thor_ChainLightning.</description>
+    <cooldownTicksRange>3400</cooldownTicksRange>
     <hostile>true</hostile>
     <verbProperties>
       <verbClass>Verb_CastAbility</verbClass>

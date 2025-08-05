@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.StructureLayoutDef>
+  <EMF.StructureLayoutDef>
     <defName>testmaze</defName>
     <stages>
       <li>
@@ -1954,6 +1954,6 @@
         <other />
       </li>
     </stages>
-  </MagicAndMyths.StructureLayoutDef>
+  </EMF.StructureLayoutDef>
 
 </Defs>

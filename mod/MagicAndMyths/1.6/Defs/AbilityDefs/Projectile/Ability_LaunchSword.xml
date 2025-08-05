@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_LaunchSword</defName>
+    <label>sword magic : impalement</label>
+    <description>Summon arcane portals around the caster that fire projectiles at the target.</description>
+    <iconPath>Projectiles/FireRain</iconPath>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <drawAimPie>true</drawAimPie>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_LaunchProjectileExtended">
+        <projectileDef>Projectile_Longsword</projectileDef>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

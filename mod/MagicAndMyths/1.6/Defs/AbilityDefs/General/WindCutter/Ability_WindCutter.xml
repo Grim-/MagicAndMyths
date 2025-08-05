@@ -21,8 +21,8 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_SpawnRadialZoneEffect">
-        <zoneDef>MagicAndMyths_CookingPotZone</zoneDef>
+      <li Class="EMF.CompProperties_SpawnRadialZoneEffect">
+        <zoneDef>WindZone</zoneDef>
         <zoneLifetime>1000</zoneLifetime>
       </li>
     </comps>

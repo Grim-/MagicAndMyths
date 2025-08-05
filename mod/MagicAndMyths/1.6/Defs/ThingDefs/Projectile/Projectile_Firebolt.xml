@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_Firebolt</defName>
+    <label>firebolt</label>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Fireball</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.8</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <explosionRadius>3.9</explosionRadius>
+      <speed>120</speed>
+      <arcHeightFactor>1.2</arcHeightFactor>
+    </projectile>
+  </ThingDef>
+
+</Defs>

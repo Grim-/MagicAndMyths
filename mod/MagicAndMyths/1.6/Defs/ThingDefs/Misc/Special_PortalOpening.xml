@@ -29,6 +29,7 @@
     <selectable>true</selectable>
     <canOverlapZones>false</canOverlapZones>
     <mineable>false</mineable>
+        <designationCategory></designationCategory>
     <building>
       <isInert>true</isInert>
       <repairable>false</repairable>

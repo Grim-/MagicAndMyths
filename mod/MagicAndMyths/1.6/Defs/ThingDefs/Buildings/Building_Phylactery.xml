@@ -36,7 +36,7 @@
     </building>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <pathCost>14</pathCost>
-    <designationCategory>Misc</designationCategory>
+        <designationCategory></designationCategory>
     <uiOrder>2100</uiOrder>
     <rotatable>false</rotatable>
   </ThingDef>

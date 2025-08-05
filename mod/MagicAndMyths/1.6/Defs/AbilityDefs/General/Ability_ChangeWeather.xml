@@ -12,9 +12,8 @@
     <verbProperties>
       <verbClass>Verb_CastAbility</verbClass>
       <range>45</range>
-      <targetParams>
-        <canTargetLocations>true</canTargetLocations>
-      </targetParams>
+      <targetable>False</targetable>
+      <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
     </verbProperties>
     <comps>
       <li Class="MagicAndMyths.CompProperties_AbilityChangeWeather">

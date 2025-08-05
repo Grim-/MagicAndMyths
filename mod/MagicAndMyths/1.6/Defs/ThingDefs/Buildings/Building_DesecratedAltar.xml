@@ -40,6 +40,7 @@
     <pathCost>14</pathCost>
     <uiOrder>2100</uiOrder>
     <rotatable>false</rotatable>
+            <designationCategory></designationCategory>
     <comps>
       <li Class="MagicAndMyths.CompProperties_MapWideApplyHediff">
         <ticksBetweenEffect>2000~3000</ticksBetweenEffect>

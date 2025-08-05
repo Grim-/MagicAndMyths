@@ -38,6 +38,7 @@
       <Steel>25</Steel>
     </costList>
     <designationHotKey>Misc1</designationHotKey>
+            <designationCategory></designationCategory>
     <building>
       <isInert>true</isInert>
       <repairable>false</repairable>

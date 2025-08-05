@@ -5,7 +5,6 @@
     <label>leap slam</label>
     <description>Leap to the target location slamming your weapon down dealing weapon damage in a radius around your landing location.</description>
     <iconPath>Projectiles/Projectile_Fireball</iconPath>
-    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
     <cooldownTicksRange>6000</cooldownTicksRange>
     <category>Sanguophage</category>
     <displayOrder>200</displayOrder>
@@ -21,8 +20,30 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_ThunderousImpact">
+      <li Class="EMF.CompProperties_DamageImpact">
+        <landingRadius>3</landingRadius>
         <landingEffecterDef>MagicAndMyths_GroundCrater</landingEffecterDef>
+        <damageParameters>
+          <useWeaponDamageIfAvailable>true</useWeaponDamageIfAvailable>
+          <weaponDamageMult>1.2~1.5</weaponDamageMult>
+          <armourPenAmount>0.15~0.25</armourPenAmount>
+        </damageParameters>
+        <friendlyFireSettings>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetFriendly>false</canTargetFriendly>
+          <canTargetNeutral>true</canTargetNeutral>
+          <canTargetSelf>false</canTargetSelf>
+        </friendlyFireSettings>
+      </li>
+      <li Class="EMF.CompProperties_StunImpact">
+        <landingRadius>2</landingRadius>
+        <stunTicks>120</stunTicks>
+        <friendlyFireSettings>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetFriendly>false</canTargetFriendly>
+          <canTargetNeutral>true</canTargetNeutral>
+          <canTargetSelf>false</canTargetSelf>
+        </friendlyFireSettings>
       </li>
     </comps>
   </AbilityDef>

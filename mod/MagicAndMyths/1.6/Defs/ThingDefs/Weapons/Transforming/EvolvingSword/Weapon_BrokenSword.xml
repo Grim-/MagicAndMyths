@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp">
+    <defName>MagicAndMyths_BrokenSword</defName>
+    <label>a broken blade</label>
+    <description>A broken blade with potent binding magic, once equipped it cannot be used by anyone else.</description>
+    <possessionCount>1</possessionCount>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Equipment/EvolvingSword/BrokenSword</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.6</drawSize>
+      <allowFlip>false</allowFlip>
+    </graphicData>
+    <smeltable>false</smeltable>
+    <recipeMaker IsNull="true" />
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <equipmentType>Primary</equipmentType>
+    <techLevel>Medieval</techLevel>
+    <thingSetMakerTags>
+      <li>RewardStandardQualitySuper</li>
+    </thingSetMakerTags>
+    <statBases>
+      <WorkToMake>20000</WorkToMake>
+      <Mass>1.3</Mass>
+    </statBases>
+    <equippedAngleOffset>35</equippedAngleOffset>
+    <tools>
+      <li>
+        <label>broken blade</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>1</cooldownTime>
+      </li>
+      <li>
+        <label>pommel</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>2.5</cooldownTime>
+      </li>
+    </tools>
+    <modExtensions>
+    </modExtensions>
+    <comps>
+    </comps>
+  </ThingDef>
+
+</Defs>

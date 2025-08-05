@@ -9,7 +9,7 @@
        <structureToPlace>TurretLayout1</structureToPlace>
    </MagicAndMyths.ObstacleDef_PlaceStructureLayout>
 
-   <MagicAndMyths.StructureLayoutDef>
+   <EMF.StructureLayoutDef>
      <defName>TurretLayout1</defName>
      <stages>
        <li>
@@ -943,5 +943,5 @@
          <other />
        </li>
      </stages>
-   </MagicAndMyths.StructureLayoutDef>
+   </EMF.StructureLayoutDef>
 </Defs>

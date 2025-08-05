@@ -30,7 +30,7 @@
     <costList>
       <Steel>1</Steel>
     </costList>
-    <designationCategory>Misc</designationCategory>
+    <designationCategory></designationCategory>
     <placeWorkers>
       <li>PlaceWorker_NotUnderRoof</li>
     </placeWorkers>

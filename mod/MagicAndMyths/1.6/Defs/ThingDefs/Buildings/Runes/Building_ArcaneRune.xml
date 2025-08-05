@@ -22,7 +22,7 @@
       <Beauty>4</Beauty>
     </statBases>
     <size>(3,3)</size>
-    <designationCategory>Misc</designationCategory>
+        <designationCategory></designationCategory>
     <fillPercent>0.15</fillPercent>
     <rotatable>false</rotatable>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>

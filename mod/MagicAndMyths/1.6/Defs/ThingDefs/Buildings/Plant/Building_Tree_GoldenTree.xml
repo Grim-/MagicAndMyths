@@ -27,6 +27,7 @@
         <MeditationPlantGrowthOffset>0</MeditationPlantGrowthOffset>
       </statBases>
       <ingestible />
+              <designationCategory></designationCategory>
       <preventSkyfallersLandingOn>true</preventSkyfallersLandingOn>
       <canScatterOver>false</canScatterOver>
       <plant>
@@ -48,7 +49,7 @@
         <immatureGraphicPath>Things/Plant/TreeAnima_Immature</immatureGraphicPath>
       </plant>
       <comps>
-        <li Class="MagicAndMyths.CompProperties_PlantCompFruitBearing">
+        <li Class="EMF.CompProperties_PlantCompFruitBearing">
           <possibleDrops>
             <li>
               <thingDef>RawBerries</thingDef>

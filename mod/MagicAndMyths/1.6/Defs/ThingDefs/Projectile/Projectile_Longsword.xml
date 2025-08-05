@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_Longsword</defName>
+    <label>longsword</label>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Longsword</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>3</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Cut</damageDef>
+      <damageAmountBase>30</damageAmountBase>
+      <speed>130</speed>
+    </projectile>
+  </ThingDef>
+</Defs>

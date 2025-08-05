@@ -21,6 +21,7 @@
       <Steel>25</Steel>
     </costList>
     <stuffCategories Inherit="false" Null="true"/>
+            <designationCategory></designationCategory>
     <designationHotKey>Misc1</designationHotKey>
     <useStuffTerrainAffordance>false</useStuffTerrainAffordance>
     <building>
@@ -46,6 +47,7 @@
     </statBases>
     <size>(2, 1)</size>
     <rotatable>true</rotatable>
+            <designationCategory></designationCategory>
     <graphicData>
       <texPath>Things/Building/SecurityDoor/SecurityDoor2x1_Underlayer_Mover</texPath>
       <graphicClass>Graphic_Single</graphicClass>

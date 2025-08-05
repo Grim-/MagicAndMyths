@@ -13,42 +13,18 @@
       <speed>70</speed>
     </projectile>
     <comps>
-      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactAOEHediff">
+      <li Class="EMF.ProjectileCompProperties_ImpactAOEHediff">
         <hediffDef>MagicAndMyths_Wet</hediffDef>
         <radius>4</radius>
       </li>
-      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactStartOrStopFires">
+      <li Class="EMF.ProjectileCompProperties_ImpactStartOrStopFires">
           <effecterDef>MagicAndMyths_ExplosionThree</effecterDef>
           <extinguishFires>true</extinguishFires>
           <fireAmount>10~30</fireAmount>
       </li>
-      <li Class="MagicAndMyths.ProjectileCompProperties_SpawnsThingRadius">
+      <li Class="EMF.ProjectileCompProperties_SplashThingRadius">
         <spawnsThingDef>Filth_Water</spawnsThingDef>
       </li>
     </comps>
   </ThingDef>
-
-  <ThingDef ParentName="BaseMagicProjectile">
-    <defName>Projectile_Bomb</defName>
-    <label>bomb</label>
-    <graphicData>
-      <texPath>Misc/Item_Bomb</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-    </graphicData>
-    <projectile>
-      <damageDef>Bomb</damageDef>
-      <damageAmountBase>9</damageAmountBase>
-      <speed>70</speed>
-      <explosionRadius>4</explosionRadius>
-      <flyOverhead>true</flyOverhead>
-    </projectile>
-    <comps>
-      <li Class="MagicAndMyths.ProjectileCompProperties_SpawnsThingRadius">
-        <spawnsThingDef>MagicAndMyths_SimpleBomb</spawnsThingDef>
-        <maxSpawnCount>4</maxSpawnCount>
-      </li>
-    </comps>
-  </ThingDef>
-
-
 </Defs>

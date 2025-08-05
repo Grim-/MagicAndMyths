@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <MagicAndMyths.GrowableStructureDef ParentName="TreeBase">
+  <EMF.GrowableStructureDef ParentName="TreeBase">
     <defName>TestGrowable</defName>
     <label>ewfefe</label>
     <tickerType>Normal</tickerType>
     <structureLayout>testmaze</structureLayout>
-    <thingClass>MagicAndMyths.Building_GrowableStructure</thingClass>
+    <thingClass>EMF.Building_GrowableStructure</thingClass>
     <previewColor>(0, 0.5, 0, 0.4)</previewColor>
     <drawGUIOverlay>True</drawGUIOverlay>
     <size>(2, 2)</size>
     <placeWorkers>
-      <li>MagicAndMyths.PlaceWorker_GrowableStructure</li>
+      <li>EMF.PlaceWorker_GrowableStructure</li>
     </placeWorkers>
     <graphicData>
       <texPath>Things/Plant/TreeAnima</texPath>
@@ -25,6 +25,7 @@
     <preventSkyfallersLandingOn>true</preventSkyfallersLandingOn>
     <canScatterOver>false</canScatterOver>
     <rootDef>TreeRoot</rootDef>
+    <designationCategory></designationCategory>
     <plant>
       <growDays>1</growDays>
       <visualSizeRange>1.8~2.5</visualSizeRange>
@@ -44,8 +45,10 @@
       <immatureGraphicPath>Things/Plant/TreeAnima_Immature</immatureGraphicPath>
     </plant>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_DirectGrower">
+      <li Class="EMF.CompProperties_DirectGrower">
+      </li>
+      <li Class="EMF.CompProperties_TransformingThing">
       </li>
     </comps>
-  </MagicAndMyths.GrowableStructureDef>
+  </EMF.GrowableStructureDef>
 </Defs>

@@ -11,6 +11,7 @@
     <tickerType>Normal</tickerType>
     <rotatable>false</rotatable>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory></designationCategory>
     <building>
       <ai_chillDestination>false</ai_chillDestination>
       <deconstructible>false</deconstructible>

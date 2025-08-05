@@ -38,20 +38,33 @@
         <li>Belt</li>
       </layers>
       <developmentalStageFilter>Child, Adult</developmentalStageFilter>
-      <wornGraphicPath>Tomes/TomeOfTheInferno</wornGraphicPath>
     </apparel>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_MagicalTome">
-        <abilityDefs>
-          <li>MagicAndMyths_SoveriegnsHandThrow</li>
-          <li>MagicAndMyths_Pyroball</li>
-          <li>MagicAndMyths_Fireball</li>
-        </abilityDefs>
-      </li>
     </comps>
     <allowedArchonexusCount>0</allowedArchonexusCount>
     <tradeTags>
       <li>Armor</li>
     </tradeTags>
+    <comps>
+      <li Class="MagicAndMyths.CompProperties_MagicalTome">
+        <maxLevel>3</maxLevel>
+        <baseXpRequired>50</baseXpRequired>
+        <xpRequiredMultiplier>1</xpRequiredMultiplier>
+        <levelAbilities>
+            <li>
+              <level>0</level>
+              <abilityDef>MagicAndMyths_Firebolt</abilityDef>
+            </li>
+            <li>
+              <level>1</level>
+              <abilityDef>MagicAndMyths_Fireball</abilityDef>
+            </li>
+            <li>
+              <level>2</level>
+              <abilityDef>MagicAndMyths_Pyroball</abilityDef>
+            </li>
+        </levelAbilities>
+      </li>
+    </comps>
   </ThingDef>
 </Defs>

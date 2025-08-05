@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_Pyroball</defName>
+    <label>fireball</label>
+    <graphicData>
+      <texPath>Projectiles/Projectile_Fireball</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.3</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>20</damageAmountBase>
+      <speed>50</speed>
+      <arcHeightFactor>2</arcHeightFactor>
+      <flyOverhead>true</flyOverhead>
+    </projectile>
+    <comps>
+      <li Class="EMF.ProjectileCompProperties_ImpactAOEDamage">
+        <damageDef>Burn</damageDef>
+        <effecterDef>MagicAndMyths_Explosion</effecterDef>
+        <damageAmount>15</damageAmount>
+        <radius>5</radius>
+      </li>
+      <li Class="EMF.ProjectileCompProperties_ImpactStartOrStopFires">
+          <effecterDef>MagicAndMyths_ExplosionThree</effecterDef>
+      </li>
+      <li Class="EMF.ProjectileCompProperties_ImpactCameraShake">
+      </li>
+      <li Class="EMF.ProjectileCompProperties_ImpactSubProjectiles">
+        <projectileDefs>
+          <li>Projectile_Firebolt</li>
+        </projectileDefs>
+        <friendlyFireSettings>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetFriendly>false</canTargetFriendly>
+        </friendlyFireSettings>
+        <targetSeekRadius>3</targetSeekRadius>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -5,7 +5,7 @@
     <label>Cruel sun</label>
     <description>Use the power of daylight to invoke a facisimilie of the sun, it will detonate after 200 ticks, dealing Flame damage and setting objects on fire.</description>
     <iconPath>Things/Item/Equipment/WeaponMelee/Knife</iconPath>
-    <cooldownTicksRange>6000</cooldownTicksRange>
+    <cooldownTicksRange>12000</cooldownTicksRange>
     <category>Sanguophage</category>
     <displayOrder>200</displayOrder>
     <aiCanUse>true</aiCanUse>
@@ -21,8 +21,9 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="CompProperties_AbilitySpawn">
-        <thingDef>MagicAndMyths_CruelSun</thingDef>
+      <li Class="EMF.CompProperties_SpawnRadialZoneEffect">
+        <zoneDef>MagicAndMyths_CruelSun</zoneDef>
+        <radius>5</radius>
       </li>
     </comps>
   </AbilityDef>

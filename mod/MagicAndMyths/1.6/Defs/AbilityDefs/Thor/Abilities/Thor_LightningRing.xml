@@ -5,6 +5,7 @@
     <label>LightningRing</label>
     <description>LightningRing.</description>
     <hostile>true</hostile>
+    <cooldownTicksRange>3400</cooldownTicksRange>
     <verbProperties>
       <verbClass>Verb_CastAbility</verbClass>
       <range>25</range>

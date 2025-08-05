@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseMagicProjectile">
+    <defName>Projectile_MoonArc</defName>
+    <label>moon arc</label>
+    <graphicData>
+      <texPath>VFX/Moon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <projectile>
+      <damageDef>Frost</damageDef>
+      <damageAmountBase>30</damageAmountBase>
+      <explosionRadius>3</explosionRadius>
+      <speed>20</speed>
+    </projectile>
+    <comps>
+      <li Class="EMF.ProjectileCompProperties_ImpactAOEDamage">
+        <damageDef>Frost</damageDef>
+        <effecterDef>MagicAndMyths_Explosion</effecterDef>
+        <damageAmount>7</damageAmount>
+        <radius>8</radius>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

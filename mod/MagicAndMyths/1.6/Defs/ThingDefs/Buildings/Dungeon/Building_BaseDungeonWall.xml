@@ -54,6 +54,7 @@
     <blockLight>true</blockLight>
     <canOverlapZones>false</canOverlapZones>
     <fertility>0</fertility>
+            <designationCategory></designationCategory>
     <stuffCategories>
       <li>Metallic</li>
       <li>Woody</li>

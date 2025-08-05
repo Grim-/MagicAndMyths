@@ -5,7 +5,6 @@
     <label>whirlwind</label>
     <description>Spin around dealing weapon damage to all targets in range.</description>
     <iconPath>Projectiles/Projectile_Fireball</iconPath>
-    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
     <cooldownTicksRange>6000</cooldownTicksRange>
     <category>Sanguophage</category>
     <displayOrder>200</displayOrder>
@@ -21,6 +20,19 @@
       </targetParams>
     </verbProperties>
     <comps>
+      <li Class="EMF.CompProperties_AbilityDamageInRadius">
+        <radius>3</radius>
+        <damageParms>
+          <damageAmount>8~12</damageAmount>
+          <damageDef>Cut</damageDef>
+          <useWeaponDamageIfAvailable>true</useWeaponDamageIfAvailable>
+        </damageParms>
+        <friendlyFireParms>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetNeutral>true</canTargetNeutral>
+          <canTargetFriendly>false</canTargetFriendly>
+        </friendlyFireParms>
+      </li>
     </comps>
   </AbilityDef>
 

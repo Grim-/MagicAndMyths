@@ -3,7 +3,6 @@
   <ThingDef ParentName="BaseMagicProjectile">
     <defName>Projectile_LightningSpear</defName>
     <label>lightning spear</label>
-    <thingClass>MagicAndMyths.Projectile_Extended</thingClass>
     <graphicData>
       <texPath>VFX/LightningSpear</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -15,11 +14,11 @@
       <speed>120</speed>
     </projectile>
     <comps>
-      <li Class="MagicAndMyths.ProjectileCompProperties_ImpactLightningStrike">
+      <li Class="EMF.ProjectileCompProperties_ImpactLightningStrike">
         <strikeDamageDef>Lightning</strikeDamageDef>
         <strikeRadius>2</strikeRadius>
       </li>
-      <li Class="MagicAndMyths.ProjectileCompProperties_SpawnsActiveZoneRadius">
+      <li Class="EMF.ProjectileCompProperties_SpawnsActiveZoneRadius">
         <spawnsThingDef>LightningSpearZone</spawnsThingDef>
       </li>
     </comps>

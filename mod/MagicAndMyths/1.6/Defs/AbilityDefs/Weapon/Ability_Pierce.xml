@@ -5,22 +5,36 @@
     <label>pierce</label>
     <description>Stab at a target dealing weapon damage, this damage ignores physical armour.</description>
     <iconPath>Projectiles/Projectile_Fireball</iconPath>
-    <abilityClass>MagicAndMyths.WeaponAbility</abilityClass>
     <cooldownTicksRange>6000</cooldownTicksRange>
     <category>Sanguophage</category>
     <displayOrder>200</displayOrder>
     <aiCanUse>true</aiCanUse>
     <verbProperties>
-      <verbClass>Verb_CastAbilityTouch</verbClass>
-      <range>1</range>
-      <warmupTime>0.1</warmupTime>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>10</range>
+      <warmupTime>0</warmupTime>
       <targetParams>
-        <canTargetLocations>false</canTargetLocations>
+        <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
         <canTargetItems>false</canTargetItems>
       </targetParams>
     </verbProperties>
     <comps>
+      <li Class="EMF.CompProperties_AbilityDamageInRect">
+        <length>10</length>
+        <width>2</width>
+        <effectMote>MagicAndMyths_PierceTrail</effectMote>
+        <damageParms>
+          <damageAmount>8~12</damageAmount>
+          <damageDef>Cut</damageDef>
+          <useWeaponDamageIfAvailable>true</useWeaponDamageIfAvailable>
+        </damageParms>
+        <friendlyFireParms>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetNeutral>true</canTargetNeutral>
+          <canTargetFriendly>false</canTargetFriendly>
+        </friendlyFireParms>
+      </li>
     </comps>
   </AbilityDef>
 
