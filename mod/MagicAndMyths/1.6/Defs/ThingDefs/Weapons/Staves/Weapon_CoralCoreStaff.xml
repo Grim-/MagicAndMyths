@@ -56,12 +56,6 @@
       </li>
     </tools>
     <comps>
-      <!-- <li Class="EMF.CompProperties_EquippableAbility">
-        <abilityDefs>
-          <li>MagicAndMyths_Pyroball</li>
-          <li>MagicAndMyths_CruelSun</li>
-        </abilityDefs>
-      </li> -->
     </comps>
   </ThingDef>
 

@@ -19,9 +19,6 @@ namespace MagicAndMyths
 
         }
 
-
-
-
         public static ThingFlyer QuickFlyer(this Thing thing, Map map, IntVec3 destination, Pawn throwerPawn = null)
         {
             ThingFlyer thingFlyer = ThingFlyer.MakeFlyer(MagicAndMythDefOf.MagicAndMyths_ThingFlyer, thing, destination, map, null, null, throwerPawn, thing.DrawPos, false);
@@ -75,51 +72,6 @@ namespace MagicAndMyths
 
             return false;
         }
-
-        //public static bool HasMagicDisabled(this Pawn pawn)
-        //{
-        //    if (pawn?.health?.hediffSet?.hediffs == null) 
-        //        return false;
-
-        //    for (int i = 0; i < pawn.health.hediffSet.hediffs.Count; i++)
-        //    {
-        //        var hediff = pawn.health.hediffSet.hediffs[i];
-        //        if (hediff.TryGetComp<HediffComp>() is IDisableMagic magicComp && magicComp.DisablesMagic)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-        //public static bool HasTeleportingDisabled(this Pawn pawn)
-        //{
-        //    if (pawn?.health?.hediffSet?.hediffs == null)
-        //        return false;
-
-        //    for (int i = 0; i < pawn.health.hediffSet.hediffs.Count; i++)
-        //    {
-        //        var hediff = pawn.health.hediffSet.hediffs[i];
-        //        if (hediff.TryGetComp<HediffComp>() is IDisableTeleportingAbilities magicComp && magicComp.DisablesTeleporting)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-        //public static bool HasRessurectionDisabled(this Pawn pawn)
-        //{
-        //    if (pawn?.health?.hediffSet?.hediffs == null) return false;
-
-        //    for (int i = 0; i < pawn.health.hediffSet.hediffs.Count; i++)
-        //    {
-        //        var hediff = pawn.health.hediffSet.hediffs[i];
-        //        if (hediff.TryGetComp<HediffComp>() is IDisableRessurection resComp && resComp.DisablesRessurection)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
 
         public static IntVec3 CalculatePushDirection(IntVec3 Origin, IntVec3 Position, float minPushDistance, float maxPushDistance)
         {
@@ -384,60 +336,6 @@ namespace MagicAndMyths
             return totalHealed;
         }
 
-        [DebugAction("Magic And Myths", "View Structure Layout", false, false, false, false, false, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 100)]
-        private static List<DebugActionNode> ViewStructureLayout()
-        {
-            List<DebugActionNode> list = new List<DebugActionNode>();
-
-            foreach (StructureLayoutDef layoutDef in DefDatabase<StructureLayoutDef>.AllDefs)
-            {
-                list.Add(new DebugActionNode(layoutDef.defName, DebugActionType.Action, () =>
-                {
-                    Find.WindowStack.Add(new Window_StructureLayoutViewer(layoutDef));
-                }));
-            }
-
-            return list;
-        }
-
-        [DebugAction("Magic And Myths", "Spawn in grid", false, false, false, false, false, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 100)]
-        private static List<DebugActionNode> SetTerrainRect()
-        {
-            List<DebugActionNode> list = new List<DebugActionNode>();
-            foreach (ThingDef localDef2 in DefDatabase<ThingDef>.AllDefs)
-            {
-                ThingDef localDef = localDef2;
-                if (localDef2.BuildableByPlayer)
-                {
-                    list.Add(new DebugActionNode(localDef.defName, DebugActionType.Action, () =>
-                    {
-                        ThingDef defName = localDef;
-
-                        DebugToolsGeneral.GenericRectTool(defName.defName, (CellRect cellRect) =>
-                        {
-                            IntVec2 sizePerCell = defName.Size;
-                            int stepX = sizePerCell.x + 1;
-                            int stepZ = sizePerCell.z + 1;
-
-                            for (int x = cellRect.minX; x + sizePerCell.x <= cellRect.maxX + 1; x += stepX)
-                            {
-                                for (int z = cellRect.minZ; z + sizePerCell.z <= cellRect.maxZ + 1; z += stepZ)
-                                {
-                                    IntVec3 spawnPos = new IntVec3(x, 0, z);
-                                    if (cellRect.Contains(spawnPos))
-                                    {
-                                        Thing thing = ThingMaker.MakeThing(defName, defName.MadeFromStuff ? ThingDefOf.Steel : null);
-                                        thing.SetFaction(Faction.OfPlayer);
-                                        GenSpawn.Spawn(thing, spawnPos, Find.CurrentMap);
-                                    }
-                                }
-                            }
-                        });
-                    }));
-                }
-            }
-            return list;
-        }
         public static bool IsControlledSummon(this Pawn pawn)
         {
             return pawn.health.hediffSet.HasHediff<Hediff_Undead>();

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <EffecterDef>
+    <defName>MagicAndMyths_Garganta</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_SprayerTriggered</subEffecterClass>
+        <scale>1</scale>
+        <ticksBetweenMotes>20</ticksBetweenMotes>
+        <positionLerpFactor>0</positionLerpFactor>
+        <positionRadius>0</positionRadius>
+        <moteDef>MagicAndMyths_Garganta</moteDef>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+      <defName>MagicAndMyths_Garganta</defName>
+      <thingClass>MoteAttached</thingClass>
+      <graphicData>
+        <texPath>Animations/GargantaOpening_1x8</texPath>
+        <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
+        <shaderType>TransparentAnimated</shaderType>
+        <drawSize>4</drawSize>
+        <shaderParameters>
+          <_NumFrames>8</_NumFrames>
+          <_Loop>0</_Loop>
+          <_FramesPerSec>8</_FramesPerSec>
+        </shaderParameters>
+      </graphicData>
+      <altitudeLayer>MoteOverhead</altitudeLayer>
+      <mote>
+        <fadeInTime>0</fadeInTime>
+        <solidTime>1</solidTime>
+        <fadeOutTime>0</fadeOutTime>
+      </mote>
+    </ThingDef>
+
+</Defs>

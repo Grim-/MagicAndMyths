@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+   <defName>MirrorImage</defName>
+   <label>mirror image</label>
+   <description>Creates illusory duplicates of the caster.</description>
+   <hediffClass>HediffWithComps</hediffClass>
+   <defaultLabelColor>(0.7, 0.7, 1.0)</defaultLabelColor>
+   <scenarioCanAdd>false</scenarioCanAdd>
+   <maxSeverity>1.0</maxSeverity>
+   <isBad>false</isBad>
+   <comps>
+     <li Class="EMF.HediffCompProperties_MirrorImage">
+       <imageAmount>4~6</imageAmount>
+       <imageRadius>8</imageRadius>
+       <imageOpacity>1</imageOpacity>
+     </li>
+     <li Class="HediffCompProperties_Disappears">
+       <disappearsAfterTicks>1800</disappearsAfterTicks>
+     </li>
+   </comps>
+  </HediffDef>
+
+</Defs>

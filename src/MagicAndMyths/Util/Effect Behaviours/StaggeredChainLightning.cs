@@ -36,7 +36,7 @@ namespace MagicAndMyths
         private bool inLingeringPhase = false;
 
         private List<TrackedMote> activeEffects = new List<TrackedMote>();
-        private static readonly ThingDef LightningMoteDef = DefDatabase<ThingDef>.GetNamed("MagicAndMyths_MoteMoonBeam");
+        private static readonly ThingDef LightningMoteDef = DefDatabase<ThingDef>.GetNamed("Mote_GraserBeamBase");
 
         private Mesh Mesh = null;
         public event Action<StaggeredChainLightning, Thing, Map> OnTargetHit;

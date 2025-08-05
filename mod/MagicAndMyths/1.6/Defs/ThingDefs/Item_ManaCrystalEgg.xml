@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ArtifactBase">
+    <defName>MagicAndMyths_ManaEgg</defName>
+    <label>mana egg</label>
+    <description>A one-use broad-wave psychic effector. The psychic pulse fills lower minds with terrifying imagery, driving all animals in the region into a manhunting rage. Animals currently under your control will not be affected.</description>
+    <graphicData>
+      <texPath>Things/ManaCrystal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <useHitPoints>true</useHitPoints>
+    <relicChance>3</relicChance>
+    <statBases>
+      <MarketValue>700</MarketValue>
+      <MaxHitPoints>80</MaxHitPoints>
+    </statBases>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <comps>
+      <li Class="EMF.CompProperties_EvolutionChamber">
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

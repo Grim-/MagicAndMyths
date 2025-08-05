@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_TEstBNeamalt</defName>
+    <label>test beam alt</label>
+    <description>Channel the cold into.</description>
+    <iconPath>UI/Abilities/FireSpew</iconPath>
+    <cooldownTicksRange>6000</cooldownTicksRange>
+    <jobDef>EMF_CastAbilityChannel</jobDef>
+    <aiCanUse>true</aiCanUse>
+    <sendMessageOnCooldownComplete>true</sendMessageOnCooldownComplete>
+    <warmupStartSound>FireSpew_Warmup</warmupStartSound>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>55</range>
+      <warmupTime>1</warmupTime>
+      <soundCast>FireSpew_Resolve</soundCast>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="EMF.CompProperties_AbilityEffectChannelableBeam">
+        <channelTicks>500</channelTicks>
+        <beamParameters>
+          <baseDamage>600</baseDamage>
+          <damageTickInterval>5</damageTickInterval>
+          <beamColor>(1,1,1)</beamColor>
+          <beamWidth>2</beamWidth>
+          <damageType>Bomb</damageType>
+          <impactBaseDamage>500</impactBaseDamage>
+          <travelingBeam>true</travelingBeam>
+          <stopOnHit>true</stopOnHit>
+          <tileBeam>true</tileBeam>
+          <beamStartEffecter>Deflect_Metal</beamStartEffecter>
+          <beamEndEffecter>Power_Cell_Sparks</beamEndEffecter>
+          <beamGraphic>
+            <texPath>VFX/ChakraCloakMiddle</texPath>
+            <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
+            <shaderParameters>
+              <_Color>(1, 1, 1, 1)</_Color>
+              <_DistortionTex>/Other/Ripples</_DistortionTex>
+              <_distortionIntensity>0.1</_distortionIntensity>
+              <_DistortionScale>0.4</_DistortionScale>
+              <_distortionScrollSpeed>(0.2, 0.2, 0.0)</_distortionScrollSpeed>
+            </shaderParameters>
+            <shaderType>MoteGlowDistorted</shaderType>
+          </beamGraphic>
+          <beamStartGraphic>
+            <texPath>VFX/ChakraCloakStart</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>MoteGlowDistorted</shaderType>
+            <drawSize>2</drawSize>
+            <shaderParameters>
+              <_Color>(1, 1, 1, 1)</_Color>
+              <_DistortionTex>/Other/Ripples</_DistortionTex>
+              <_distortionIntensity>0.1</_distortionIntensity>
+              <_DistortionScale>0.4</_DistortionScale>
+              <_distortionScrollSpeed>(0.2, 0.2, 0.0)</_distortionScrollSpeed>
+            </shaderParameters>
+          </beamStartGraphic>
+          <beamEndGraphic>
+            <texPath>VFX/ChakraCloakEnd</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>MoteGlowDistorted</shaderType>
+            <drawSize>4</drawSize>
+            <shaderParameters>
+              <_Color>(1, 1, 1, 1)</_Color>
+              <_DistortionTex>/Other/Ripples</_DistortionTex>
+              <_distortionIntensity>0.1</_distortionIntensity>
+              <_DistortionScale>0.4</_DistortionScale>
+              <_distortionScrollSpeed>(0.2, 0.2, 0.0)</_distortionScrollSpeed>
+            </shaderParameters>
+          </beamEndGraphic>
+        </beamParameters>
+      </li>
+    </comps>
+  </AbilityDef>
+
+</Defs>

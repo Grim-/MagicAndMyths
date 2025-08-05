@@ -41,7 +41,7 @@ namespace MagicAndMyths
         }
     }
 
-    public class Comp_PawnEnchant : ThingComp, IStatProvider
+    public class Comp_PawnEnchant : ThingComp
     {
         private List<ActiveEnchantData> activeEnchants = new List<ActiveEnchantData>();
         public List<ActiveEnchantData> ActiveEnchants => activeEnchants?.ToList() ?? new List<ActiveEnchantData>();

@@ -4,10 +4,10 @@ using Verse;
 
 namespace MagicAndMyths
 {
-    public interface IStatProvider
-    {
-        IEnumerable<StatModifier> GetStatOffsets(StatDef stat);
-        IEnumerable<StatModifier> GetStatFactors(StatDef stat);
-        string GetExplanation(StatDef stat);
-    }
+    //public interface IStatProvider
+    //{
+    //    IEnumerable<StatModifier> GetStatOffsets(StatDef stat);
+    //    IEnumerable<StatModifier> GetStatFactors(StatDef stat);
+    //    string GetExplanation(StatDef stat);
+    //}
 }

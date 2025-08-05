@@ -132,7 +132,6 @@ namespace MagicAndMyths
 
 		}
 
-		// Token: 0x060033CC RID: 13260 RVA: 0x001440D0 File Offset: 0x001422D0
 		protected IntVec3 GetForcedMissTarget(float forcedMissRadius)
 		{
 			int maxExclusive = GenRadial.NumCellsInRadius(forcedMissRadius);

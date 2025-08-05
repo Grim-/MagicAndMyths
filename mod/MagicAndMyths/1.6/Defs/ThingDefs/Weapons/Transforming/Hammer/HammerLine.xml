@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- Base Brick Hammer -->
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>MagicAndMyths_BrickHammerT</defName>
+    <label>Brick Hammer trasnf</label>
+    <description>A magical hammer that can transform.</description>
+    <possessionCount>1</possessionCount>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Equipment/Weapon_Samehada_Wrapped</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.6</drawSize>
+    </graphicData>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <equipmentType>Primary</equipmentType>
+    <costList>
+      <Steel>400</Steel>
+    </costList>
+    <smeltable>false</smeltable>
+    <recipeMaker IsNull="true" />
+    <techLevel>Spacer</techLevel>
+    <thingSetMakerTags><li>RewardStandardQualitySuper</li></thingSetMakerTags>
+    <statBases>
+      <WorkToMake>25000</WorkToMake>
+      <Mass>1.5</Mass>
+    </statBases>
+    <equippedAngleOffset>-30</equippedAngleOffset>
+    <tools>
+      <li>
+        <label>hammer head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>14</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>
+    </tools>
+    <comps>
+      <li Class="EMF.CompProperties_EquippableAbility">
+        <abilityDefs>
+          <li>MagicAndMyths_ChargeAttack</li>
+          <li>MagicAndMyths_LeapSlam</li>
+        </abilityDefs>
+      </li>
+      <li Class="EMF.CompProperties_TransformingThing">
+        <transformableForms>
+          <li>
+            <thingDef>MagicAndMyths_BrickHammer_WarForm</thingDef>
+          </li>
+        </transformableForms>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- War Form -->
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>MagicAndMyths_BrickHammer_WarForm</defName>
+    <label>War Hammer</label>
+    <description>A massive war hammer with increased power.</description>
+    <possessionCount>1</possessionCount>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Equipment/Weapon_Samehada</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>1.1</drawSize>
+    </graphicData>
+    <smeltable>false</smeltable>
+    <recipeMaker IsNull="true" />
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <equipmentType>Primary</equipmentType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <WorkToMake>25000</WorkToMake>
+      <Mass>3.0</Mass>
+    </statBases>
+    <equippedAngleOffset>-30</equippedAngleOffset>
+    <tools>
+      <li>
+        <label>massive head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>25</power>
+        <cooldownTime>2.5</cooldownTime>
+      </li>
+    </tools>
+    <comps>
+      <li Class="EMF.CompProperties_EquippableAbility">
+        <abilityDefs>
+          <li>MagicAndMyths_GroundSlam</li>
+        </abilityDefs>
+      </li>
+      <li Class="EMF.CompProperties_TransformingThing">
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

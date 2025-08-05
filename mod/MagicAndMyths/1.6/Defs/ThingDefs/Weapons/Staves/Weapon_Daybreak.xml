@@ -30,17 +30,95 @@
       <ComponentIndustrial>4</ComponentIndustrial>
     </costList>
     <verbs>
+      <li Class="EMF.VerbProperties_Beam">
+        <channelDurationTicks>300</channelDurationTicks>
+        <channelJobDef>MagicAndMyths_ChannelVerb</channelJobDef>
+        <beamParms>
+          <baseDamage>600</baseDamage>
+          <damageTickInterval>5</damageTickInterval>
+          <beamColor>(1,1,1)</beamColor>
+          <beamWidth>2</beamWidth>
+          <damageType>Bomb</damageType>
+          <impactBaseDamage>500</impactBaseDamage>
+          <travelingBeam>true</travelingBeam>
+          <stopOnHit>true</stopOnHit>
+          <tileBeam>true</tileBeam>
+          <beamStartEffecter>Deflect_Metal</beamStartEffecter>
+          <beamEndEffecter>Power_Cell_Sparks</beamEndEffecter>
+          <beamGraphic>
+            <texPath>VFX/ChakraCloakMiddle</texPath>
+            <graphicClass>Graphic_MoteWithAgeSecs</graphicClass>
+            <shaderParameters>
+              <_Color>(1, 1, 1, 1)</_Color>
+              <_DistortionTex>/Other/Ripples</_DistortionTex>
+              <_distortionIntensity>0.1</_distortionIntensity>
+              <_DistortionScale>0.4</_DistortionScale>
+              <_distortionScrollSpeed>(0.2, 0.2, 0.0)</_distortionScrollSpeed>
+            </shaderParameters>
+            <shaderType>MoteGlowDistorted</shaderType>
+          </beamGraphic>
+          <beamStartGraphic>
+            <texPath>VFX/ChakraCloakStart</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>MoteGlowDistorted</shaderType>
+            <drawSize>2</drawSize>
+            <shaderParameters>
+              <_Color>(1, 1, 1, 1)</_Color>
+              <_DistortionTex>/Other/Ripples</_DistortionTex>
+              <_distortionIntensity>0.1</_distortionIntensity>
+              <_DistortionScale>0.4</_DistortionScale>
+              <_distortionScrollSpeed>(0.2, 0.2, 0.0)</_distortionScrollSpeed>
+            </shaderParameters>
+          </beamStartGraphic>
+          <beamEndGraphic>
+            <texPath>VFX/ChakraCloakEnd</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>MoteGlowDistorted</shaderType>
+            <drawSize>4</drawSize>
+            <shaderParameters>
+              <_Color>(1, 1, 1, 1)</_Color>
+              <_DistortionTex>/Other/Ripples</_DistortionTex>
+              <_distortionIntensity>0.1</_distortionIntensity>
+              <_DistortionScale>0.4</_DistortionScale>
+              <_distortionScrollSpeed>(0.2, 0.2, 0.0)</_distortionScrollSpeed>
+            </shaderParameters>
+          </beamEndGraphic>
+        </beamParms>
+      </li>
       <li>
-        <verbClass>Verb_Shoot</verbClass>
+        <verbClass>Verb_ShootBeam</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
-        <defaultProjectile>Projectile_StaffDayBreakProjectile</defaultProjectile>
-        <warmupTime>0.9</warmupTime>
-        <range>22.9</range>
-        <burstShotCount>1</burstShotCount>
-        <ticksBetweenBurstShots>11</ticksBetweenBurstShots>
-        <soundCast>Shot_HeavySMG</soundCast>
-        <soundCastTail>GunTail_Heavy</soundCastTail>
+        <warmupTime>1.0</warmupTime>
+        <range>25</range>
+        <minRange>3</minRange>
+        <beamFullWidthRange>6.9</beamFullWidthRange>
+        <burstShotCount>5</burstShotCount>
+        <showBurstShotStats>false</showBurstShotStats>
+        <beamWidth>6</beamWidth>
+        <beamTotalDamage>20</beamTotalDamage>
+        <ticksBetweenBurstShots>22</ticksBetweenBurstShots>
+        <beamDamageDef>Beam</beamDamageDef>
+        <soundCastTail>GunTail_Medium</soundCastTail>
         <muzzleFlashScale>9</muzzleFlashScale>
+        <soundCastBeam>BeamGraser_Shooting</soundCastBeam>
+        <beamGroundFleckDef>Fleck_BeamBurn</beamGroundFleckDef>
+        <beamFleckChancePerTick>0.32</beamFleckChancePerTick>
+        <beamMaxDeviation>1.5</beamMaxDeviation>
+        <beamCurvature>0.6</beamCurvature>
+        <beamMoteDef>Mote_GraserBeamBase</beamMoteDef>
+        <beamEndEffecterDef>GraserBeam_End</beamEndEffecterDef>
+        <beamChanceToStartFire>0.85</beamChanceToStartFire>
+        <beamChanceToAttachFire>0.85</beamChanceToAttachFire>
+        <beamFireSizeRange>0.85~1.35</beamFireSizeRange>
+        <beamLineFleckDef>Fleck_BeamSpark</beamLineFleckDef>
+        <beamStartOffset>0.8</beamStartOffset>
+        <beamLineFleckChanceCurve>
+          <points>
+            <li>(0, 0)</li>
+            <li>(0.65, 0.4)</li>
+            <li>(1, 0.75)</li>
+          </points>
+        </beamLineFleckChanceCurve>
       </li>
     </verbs>
     <weaponTags>
@@ -61,7 +139,6 @@
       <li Class="EMF.CompProperties_EquippableAbility">
         <abilityDefs>
           <li>MagicAndMyths_Pyroball</li>
-          <li>MagicAndMyths_CruelSun</li>
         </abilityDefs>
       </li>
     </comps>

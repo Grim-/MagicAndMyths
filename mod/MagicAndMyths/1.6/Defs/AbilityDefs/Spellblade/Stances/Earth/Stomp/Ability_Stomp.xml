@@ -29,10 +29,12 @@
           <filthDef>Filth_Fuel</filthDef>
           <chance>0.6~1</chance>
         </li>
-        <li Class="MagicAndMyths.CompProperties_AbilityDamageInRadius">
+        <li Class="EMF.CompProperties_AbilityDamageInRadius">
           <radius>3</radius>
-          <damageDef>Blunt</damageDef>
-          <damage>1~2</damage>
+          <damageParms>
+            <damageDef>Blunt</damageDef>
+            <damageAmount>1~2</damageAmount>
+          </damageParms>
         </li>
         <li Class="MagicAndMyths.CompProperties_GrantHediffStackForValidTargetsInRadius">
           <radius>3</radius>

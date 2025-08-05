@@ -23,11 +23,13 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MagicAndMyths.CompProperties_AbilityDamageInRect">
+      <li Class="EMF.CompProperties_AbilityDamageInRect">
         <length>20</length>
         <width>3</width>
-        <damage>5</damage>
-        <damageDef>Cut</damageDef>
+        <damageParms>
+          <damageAmount>5</damageAmount>
+          <damageDef>Cut</damageDef>
+        </damageParms>
         <effectMote>MagicAndMyths_LightningSpear</effectMote>
       </li>
       <li Class="MagicAndMyths.CompProperties_LaunchProjectileExtended">

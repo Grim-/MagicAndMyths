@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <JobDef>
+      <defName>EMF_JobTransformIntoBuilding</defName>
+      <driverClass>EMF.JobDriver_TransformIntoBuilding</driverClass>
+      <reportString>transforming into building.</reportString>
+      <casualInterruptible>false</casualInterruptible>
+    </JobDef>
+
+    <JobDef>
+      <defName>EMF_JobDoWeaponTransformation</defName>
+      <driverClass>EMF.JobDriver_DoWeaponTransformation</driverClass>
+      <reportString>transforming into building.</reportString>
+      <casualInterruptible>false</casualInterruptible>
+    </JobDef>
+
+</Defs>

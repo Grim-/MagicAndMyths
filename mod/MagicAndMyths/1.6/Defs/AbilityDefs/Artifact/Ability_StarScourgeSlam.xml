@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>MagicAndMyths_StarScourgeSlam</defName>
+    <label>Star Scourge Slam</label>
+    <description>Slam the blades into the ground causing a powerful gravity shockwave</description>
+    <iconPath>Skills/Fly</iconPath>
+    <hostile>false</hostile>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>3</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="EMF.CompProperties_AbilityDamageInRadius">
+        <radius>3</radius>
+        <explosionEffecterDef>MagicAndMyths_EffectGravityPull</explosionEffecterDef>
+        <damageParms>
+          <damageAmount>10~15</damageAmount>
+          <damageDef>Bomb</damageDef>
+          <useWeaponDamageIfAvailable>true</useWeaponDamageIfAvailable>
+          <weaponDamageMult>6</weaponDamageMult>
+        </damageParms>
+        <friendlyFireParms>
+          <canTargetHostile>true</canTargetHostile>
+          <canTargetNeutral>true</canTargetNeutral>
+          <canTargetFriendly>false</canTargetFriendly>
+        </friendlyFireParms>
+      </li>
+    </comps>
+  </AbilityDef>
+
+
+</Defs>

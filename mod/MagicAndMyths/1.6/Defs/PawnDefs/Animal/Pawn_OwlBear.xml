@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+
+  <TrainableDef>
+    <defName>BeamAttack</defName>
+    <label>BeamAttack</label>
+    <description>Command the BeamAttack.</description>
+    <listPriority>0</listPriority>
+    <difficulty>200</difficulty>
+    <steps>2</steps>
+    <specialTrainable>true</specialTrainable>
+    <enablesAbility>MagicAndMyths_TEstBNeamalt</enablesAbility>
+  </TrainableDef>
+
   <ThingDef ParentName="AnimalThingBase">
     <defName>OwlBear</defName>
-        <label>owl bear</label>
+    <label>owl bear</label>
     <statBases>
       <MoveSpeed>4.6</MoveSpeed>
       <ComfyTemperatureMin>-40</ComfyTemperatureMin>
@@ -112,6 +124,13 @@
         <li>(0.0, 0, -0.06)</li>
         <li>(-0.3, 0, 0.1)</li>
       </headPosPerRotation>
+      <specialTrainables>
+        <li>Obedience</li>
+        <li>Release</li>
+        <li>AttackTarget</li>
+        <li>Forage</li>
+        <li>BeamAttack</li>
+      </specialTrainables>
     </race>
     <tradeTags>
       <li>AnimalUncommon</li>
@@ -119,6 +138,12 @@
     </tradeTags>
     <comps>
       <li Class="MagicAndMyths.CompProperties_GraphicUniqueColor">
+      </li>
+      <li Class="EMF.CompProperties_PawnEvolvable">
+        <evolutionTargets>
+          <li>Blink_Hound</li>
+        </evolutionTargets>
+        <evolutionChamberDef>MagicAndMyths_ManaEgg</evolutionChamberDef>
       </li>
     </comps>
   </ThingDef>
@@ -150,7 +175,7 @@
             <_NoiseTex>/Noise4</_NoiseTex>
             <_WaveDirectionX>0.1</_WaveDirectionX>
             <_WaveDirectionY>-0.1</_WaveDirectionY>
-        </shaderParameters>
+          </shaderParameters>
         </bodyGraphicData>
         <dessicatedBodyGraphicData>
           <texPath>Owlbear/Dessicated_Owlbear</texPath>

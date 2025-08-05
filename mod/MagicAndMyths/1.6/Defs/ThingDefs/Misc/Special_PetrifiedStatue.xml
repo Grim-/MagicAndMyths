@@ -39,11 +39,11 @@
     <comps>
       <li Class="CompProperties_Forbiddable"/>
     </comps>
-    <designationCategory>Misc</designationCategory>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <drawerType>RealtimeOnly</drawerType>
     <clearBuildingArea>true</clearBuildingArea>
     <repairEffect>ConstructMetal</repairEffect>
+    <designationCategory></designationCategory>
     <designationHotKey>Misc11</designationHotKey>
     <constructEffect>ConstructMetal</constructEffect>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+      <defName>MagicAndMyths_TestNaniteGear</defName>
+      <label>Nanite Gear : Riot</label>
+      <description>Transform arms into deadly protean blades through parasitic manipulation of tissue.</description>
+      <iconPath>Skills/Critical_strike</iconPath>
+      <displayGizmoWhileUndrafted>True</displayGizmoWhileUndrafted>
+      <disableGizmoWhileUndrafted>True</disableGizmoWhileUndrafted>
+      <stunTargetWhileCasting>false</stunTargetWhileCasting>
+      <verbProperties>
+        <verbClass>Verb_CastAbility</verbClass>
+        <range>0</range>
+        <warmupTime>0</warmupTime>
+        <soundCast>FireSpew_Resolve</soundCast>
+        <targetable>False</targetable>
+        <nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+      </verbProperties>
+      <comps>
+        <li Class="EMF.CompProperties_ToggleHediff">
+          <hediffDef>MagicAndMyths_TestNaniteGear</hediffDef>
+        </li>
+      </comps>
+  </AbilityDef>
+
+  <HediffDef>
+    <defName>MagicAndMyths_TestNaniteGear</defName>
+    <label>Nanite Gear : Riot</label>
+    <description>Nanite Gear</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.6, 0.4, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <comps>
+      <li Class="EMF.HediffCompProperties_Transformation">
+        <apparelToWear>
+          <li>Apparel_ArmorRecon</li>
+          <li>Apparel_ArmorHelmetRecon</li>
+        </apparelToWear>
+        <weaponToEquip>Gun_ThumpCannon</weaponToEquip>
+        <lockEquipment>true</lockEquipment>
+      </li>
+    </comps>
+  </HediffDef>
+</Defs>
